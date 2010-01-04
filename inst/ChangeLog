@@ -1,0 +1,9 @@
+$Date$
+
+permute ChangeLog
+
+Version 0.0-1 (opened January 4, 2010)
+
+	* SVN: Uploaded code to r-forge within vegan source tree.
+	This code base represents my working version as of today,
+	*not* the version in vegan at that time.
