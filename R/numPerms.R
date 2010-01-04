@@ -3,8 +3,9 @@
     ## constant holding types where something is permuted
     PTYPES <- c("free","grid","series")
     ## expand object if a numeric or integer vector of length 1
-    if((is.numeric(object) || is.integer(object)) && (length(object) == 1))
-         object <- seq_len(object)
+    if((is.numeric(object) || is.integer(object)) &&
+       (length(object) == 1))
+        object <- seq_len(object)
     ## number of observations in data
     nobs <- getNumObs(object)
     ## within perms object
@@ -18,7 +19,8 @@
     if(STRATA) {
         tab.strata <- table(control$strata)
         same.n <- length(unique(tab.strata))
-        if((BLOCKS$type %in% PTYPES || isTRUE(WITHIN$constant)) && same.n > 1)
+        if((BLOCKS$type %in% PTYPES || isTRUE(WITHIN$constant)) &&
+           same.n > 1)
             stop("All levels of strata must have same number of samples for chosen scheme")
         if(BLOCKS$type == "grid" && same.n > 1)
             stop("Unbalanced grid designs are not supported")
@@ -46,54 +48,53 @@
     ## blocks
     num.blocks <- 1
     if(BLOCKS$type %in% PTYPES) {
-        if(BLOCKS$type == "free")
-            num.blocks <- exp(lfactorial(length(levels(control$strata))))
+        num.blocks <- if(BLOCKS$type == "free")
+            exp(lfactorial(length(levels(control$strata))))
         else if(BLOCKS$type %in% c("series","grid")) {
             if(BLOCKS$mirror)
-                num.blocks <- blocks.multi * nobs
+                blocks.multi * nobs
             else
-                num.blocks <- nobs
+                nobs
         }
     }
     ## within
-    num.within <- 1
-    if(WITHIN$type %in% PTYPES) {
-        if(WITHIN$type == "free") {
-            if(STRATA)
-                num.within <- prod(factorial(tab.strata))
-            else
-                num.within <- exp(lfactorial(nobs))
-        } else if(WITHIN$type %in% c("series","grid")) {
-            if(STRATA) {
-                if(same.n > 1) {
-                    multi <- rep(2, length = length(tab.strata))
-                    multi[which(tab.strata == 2)] <- 1
-                    if(WITHIN$mirror) {
-                        num.within <- prod(multi * tab.strata)
-                    } else {
-                        num.within <- prod(tab.strata)
-                    }
+    if(!(WITHIN$type %in% PTYPES))
+        stop("Ambiguous permutation type in 'control$within$type'")
+
+    num.within <- if(WITHIN$type == "free") {
+        if(STRATA)
+            prod(factorial(tab.strata))
+        else
+            exp(lfactorial(nobs))
+    } else {
+        ##} else if(WITHIN$type %in% c("series","grid")) {
+        if(STRATA) {
+            if(same.n > 1) {
+                multi <- rep(2, length = length(tab.strata))
+                multi[which(tab.strata == 2)] <- 1
+                if(WITHIN$mirror) {
+                    prod(multi * tab.strata)
                 } else {
-                    if(WITHIN$mirror) {
-                        if(WITHIN$constant)
-                            num.within <- within.multi * unique(tab.strata)
-                        else
-                            num.within <- prod(within.multi * tab.strata)
-                    } else {
-                        if(WITHIN$constant)
-                            num.within <- unique(tab.strata)
-                        else
-                            num.within <- prod(tab.strata)
-                    }
+                    prod(tab.strata)
                 }
             } else {
-                if(WITHIN$mirror)
-                    num.within <- within.multi * nobs
-                else
-                    num.within <- nobs
+                if(WITHIN$mirror) {
+                    if(WITHIN$constant)
+                        within.multi * unique(tab.strata)
+                    else
+                        prod(within.multi * tab.strata)
+                } else {
+                    if(WITHIN$constant)
+                        unique(tab.strata)
+                    else
+                        prod(tab.strata)
+                }
             }
         } else {
-            stop("Ambiguous permutation type in 'control$type'")
+            if(WITHIN$mirror)
+                within.multi * nobs
+            else
+                nobs
         }
     }
     return(num.blocks * num.within)
