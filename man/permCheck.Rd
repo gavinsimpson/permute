@@ -1,6 +1,5 @@
 \name{permCheck}
 \alias{permCheck}
-\alias{numPerms}
 \alias{print.permCheck}
 \alias{print.summary.permCheck}
 \alias{summary.permCheck}
@@ -9,9 +8,7 @@
 \title{Utility functions for permutation schemes}
 \description{
   \code{permCheck} provides checking of permutation schemes for
-  validity. \code{numPerms} calculates the maximum number of
-  permutations possible under the current permutation
-  scheme. \code{allPerms} enumerates all possible permutations for the
+  validity. \code{allPerms} enumerates all possible permutations for the
   given scheme. \code{getNumObs} is a utility function to return the
   number of observations for a range of R and ordination
   objects. \code{permuplot} produces a graphical representation of the
@@ -21,8 +18,6 @@
 permCheck(object, control = permControl(), make.all = TRUE)
 
 \method{summary}{permCheck}(object, \dots)
-
-numPerms(object, control = permControl())
 
 permuplot(n, control = permControl(), col = par("col"),
           hcol = "red", shade = "lightgrey", xlim = NULL, ylim = NULL,
@@ -81,16 +76,6 @@ permuplot(n, control = permControl(), col = par("col"),
   permutations, and as such complete enumeration of all permutations is
   turned  on (\code{control$complete} is set to \code{TRUE}).
 
-  Function \code{numPerms} returns the number of permutations for the
-  passed \code{object} and the selected permutation
-  scheme. \code{object} can be one of a data frame, matrix, an object
-  for which a scores method exists, or a numeric or integer vector. In
-  the case of a numeric or integer vector, a vector of length 1 can be
-  used and it will be expanded to a vector of length \code{object}
-  (i.e., \code{1:object}) before computing the number of
-  permutations. As such, \code{object} can be the number of observations
-  not just the object containing the observations.
-
   Function \code{getNumObs} is a simple generic function to return the
   number of observations in a range of R objects. The default method
   will work for any object for which a \code{\link[vegan]{scores}}
@@ -119,52 +104,10 @@ permuplot(n, control = permControl(), col = par("col"),
   permutations possible and an object of class
   \code{"\link{permControl}"}.
 
-  For \code{allPerms}, and object of class \code{"allPerms"}, a matrix
-  whose rows are the set of all possible permutations for the supplies
-  number of observations and permutation scheme selected. The matrix has
-  two additional attributes \code{control} and
-  \code{observed}. Attribute \code{control} contains the argument
-  \code{control} (possibly updated via \code{permCheck}). Attribute 
-  \code{observed} contains argument \code{observed}.
-
-  For \code{numPerms}, the (numeric) number of possible permutations.
-
-  For \code{getNumObs}, the (numeric) number of observations in
-  \code{object}.
-
   For \code{permuplot}, a plot on the currently active device.
 }
 %\references{
 %}
-\note{
-  In general, mirroring \code{"series"} or \code{"grid"} designs doubles
-  or quadruples, respectively, the number of permutations without
-  mirroring (within levels of strata if present). This is \strong{not}
-  true in two special cases:
-  \enumerate{
-    \item In \code{"grid"} designs where the number of columns is equal
-    to 2, and
-    \item In \code{"series"} designs where the number of observations in
-    a series is equal to 2.
-  }
-
-  For example, with 2 observations there are 2 permutations for
-  \code{"series"} designs:
-  \enumerate{
-    \item 1-2, and
-    \item 2-1.
-  }
-  If these two permutations were mirrored, we would have:
-  \enumerate{
-    \item 2-1, and
-    \item 1-2.
-  }
-  It is immediately clear that this is the same set of permutations
-  without mirroring (if one reorders the rows). A similar situation
-  arises in \code{"grid"} designs where the number of \strong{columns}
-  per \emph{grid} is equal to 2. Note that the number of rows per
-  \emph{grid} is not an issue here.
-}
 \author{Gavin Simpson}
 \seealso{\code{\link{permuted.index}} and \code{\link{permControl}}.}
 
