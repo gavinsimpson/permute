@@ -8,21 +8,19 @@
         } else {
             X <- NULL
             for(i in 1:n)
-                X <- rbind(X, cbind(v[i],
-                                    Recall(n-1, v[-i])))
+                X <- rbind(X, cbind(v[i], Recall(n-1, v[-i])))
             X
         }
     }
-    `all.series` <- function(n, control) {
+    `all.series` <- function(n, nperms, mirror = FALSE) {
         v <- seq_len(n)
-        nperms <- numPerms(v, control = control)
 	X <- matrix(nrow = nperms, ncol = n)
 	for(i in v) {
             X[i,] <- seq(i, length = n)%%n + 1
 	}
         ## if mirroring, rev the cols of X[v,]
         ## but only if n > 2
-        if(control$mirror && (nperms > 2))
+        if(mirror && (nperms > 2))
             X[(n+1):(2*n),] <- X[v, rev(v)]
 	X
     }
@@ -35,10 +33,10 @@
         idx <- 1
         ## ncol == 2 is special case
         if(control$ncol == 2) {
-            X <- all.series(n, permControl(type = "series",
-                                           mirror = control$mirror,
-                                           constant = control$constant)
-                            )
+            X <- all.series(n,
+                            permControl(type = "series",
+                                        mirror = control$mirror,
+                                        constant = control$constant) )
         } else {
             for(i in seq_len(nr)) {
                 for(j in seq_len(nc)) {
@@ -84,7 +82,7 @@
             X[i,] <- unname(do.call(c, sp[perms[i,]]))
         X
     }
-    ## replacement for recursive function above
+    ## what does this do
     bar <- function(mat, n) {
         res <- vector(mode = "list", length = n)
         for(i in seq_len(n))
@@ -109,7 +107,7 @@
         stop("Number of possible permutations too big (> 'max')")
     type <- control$type
     ##if(type != "strata" && !is.null(control$strata)) {
-    if(!control$permute.strata && !is.null(control$strata)) {
+    if(control$blocks$type != "none") {
         ## permuting within blocks
         ## FIXME: allperms expects samples to be arranged
         ## in order of fac, i.e. all level 1, followed by
@@ -194,12 +192,15 @@
         }
     } else {
         ## not permuting within blocks or are permuting strata
-        res <- switch(type,
-                      free = all.free(n),
-                      series = all.series(n, control=control),
-                      grid = all.grid(n, control=control),
-                      strata = all.strata(n, control=control)
-                      )
+        res <-
+            switch(control$within$type,
+                   "free" = all.free(n),
+                   "series" =
+                   all.series(n, nperms,
+                              mirror = control$within$mirror),
+                   "grid" =
+                   all.grid(n, nperms,
+                            mirror = control$within$mirror))
     }
     ## some times storage.mode of res is numeric, sometimes
     ## it is integer, set to "integer" for comparisons using

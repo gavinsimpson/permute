@@ -58,11 +58,11 @@ allPerms(n, control = permControl(), max = 9999,
 }
 \author{Gavin Simpson}
 \examples{
-\dontrun{
 ## allPerms can work with a vector
 vec <- c(3,4,5)
 allPerms(vec) ## free permutation
 
+\dontrun{
 ## enumerate all possible permutations for a more complicated
 ## design
 fac <- gl(2,6)
