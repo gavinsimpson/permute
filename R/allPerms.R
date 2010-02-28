@@ -27,88 +27,98 @@
         stop("Number of possible permutations too large (> 'max')")
     type.wi <- ctrl$within$type
     if(type.wi != "none") {
-        ## permuting within blocks
-        tab <- table(ctrl$strata)
-        if(ctrl$within$constant) {
-            ## same permutation in each block
-            pg <- unique(tab)
-            ctrl.wi <- permControl(strata = NULL, within = ctrl$within)
-            nperms <- numPerms(pg, ctrl.wi)
-            ord <- switch(type.wi,
-                          free = allFree(pg),
-                          series = allSeries(pg, nperms, ctrl$within$mirror),
-                          grid = allGrid(pg, nperms, ctrl$within$nrow,
+        if(is.null(control$strata)) {
+            ##browser()
+            res <- switch(type.wi,
+                          free = allFree(n),
+                          series = allSeries(n, nperms, ctrl$within$mirror),
+                          grid = allGrid(n, nperms, ctrl$within$nrow,
                           ctrl$within$ncol, ctrl$within$mirror,
                           ctrl$within$constant))
-            perm.wi <- nrow(ord)
-            sp <- split(v, ctrl$strata)
-            res <- matrix(nrow = nperms, ncol = n)
-            for(i in seq_len(perm.wi))
-                res[i,] <- t(sapply(sp, function(x) x[ord[i,]]))
         } else {
-            ## different permutations within blocks
+            ## permuting within blocks
             tab <- table(ctrl$strata)
-            ng <- length(tab)
-            pg <- unique(tab)
-            if(length(pg) > 1) {
-                ## different number of observations per level of strata
-                if(type.wi == "grid")
-                    ## FIXME: this should not be needed once all checks are
-                    ## in place in permCheck()
-                    stop("Unbalanced grid designs are not supported")
-                ctrl.wi <- permControl(strata = NULL, within = ctrl$within)
-                sp <- split(v, ctrl$strata)
-                res <- vector(mode = "list", length = ng)
-                add <- c(0, cumsum(tab)[1:(ng-1)])
-                for(j in seq(along = tab)) {
-                    nperms <- numPerms(tab[j], ctrl.wi)
-                    ord <- switch(type.wi,
-                                  free = allFree(tab[j]),
-                                  series = allSeries(tab[j], nperms, ctrl$within$mirror))
-                    perm.wi <- nrow(ord)
-                    if(j == 1) {
-                        a <- 1
-                        b <- Nperms / perm.wi
-                    } else {
-                        b <- b/perm.wi
-                        a <- Nperms / (b*perm.wi)
-                    }
-                    res[[j]] <- matrix(rep(bar(ord+add[j], a),
-                                           each = b),
-                                       ncol = tab[j])
-                }
-                res <- do.call(cbind, res)
-                sp <- split(v, ctrl$strata)
-                res <- t(apply(res, 1,
-                               function(x, inds, v) {v[inds] <- inds[x]; v},
-                               unlist(sp), v))
-            } else {
-                ## same number of observations per level of strata
+            if(ctrl$within$constant) {
+                ## same permutation in each block
+                pg <- unique(tab)
                 ctrl.wi <- permControl(strata = NULL, within = ctrl$within)
                 nperms <- numPerms(pg, ctrl.wi)
-                ord <-
-                    switch(type.wi,
-                           free = allFree(pg),
-                           series = allSeries(pg, nperms, ctrl$within$mirror),
-                           grid = allGrid(pg, nperms, ctrl$within$nrow,
-                           ctrl$within$ncol, ctrl$within$mirror,
-                           ctrl$within$constant))
+                ord <- switch(type.wi,
+                              free = allFree(pg),
+                              series = allSeries(pg, nperms, ctrl$within$mirror),
+                              grid = allGrid(pg, nperms, ctrl$within$nrow,
+                              ctrl$within$ncol, ctrl$within$mirror,
+                              ctrl$within$constant))
                 perm.wi <- nrow(ord)
-                add <- seq(from = 0, by = pg, length.out = ng)
-                res <- vector(mode = "list", length = ng)
-                a <- 1
-                b <- Nperms / perm.wi
-                for(i in seq_len(ng)) {
-                    res[[i]] <- matrix(rep(bar(ord+add[i], a), each = b),
-                                       ncol = pg)
-                    a <- a*perm.wi
-                    b <- b/perm.wi
-                }
-                res <- do.call(cbind, res)
                 sp <- split(v, ctrl$strata)
-                res <- t(apply(res, 1,
-                               function(x, inds, v) {v[inds] <- inds[x]; v},
-                               unlist(sp), v))
+                res <- matrix(nrow = nperms, ncol = n)
+                for(i in seq_len(perm.wi))
+                    res[i,] <- t(sapply(sp, function(x) x[ord[i,]]))
+            } else {
+                ## different permutations within blocks
+                tab <- table(ctrl$strata)
+                ng <- length(tab)
+                pg <- unique(tab)
+                if(length(pg) > 1) {
+                    ## different number of observations per level of strata
+                    if(type.wi == "grid")
+                        ## FIXME: this should not be needed once all checks are
+                        ## in place in permCheck()
+                        stop("Unbalanced grid designs are not supported")
+                    ctrl.wi <- permControl(strata = NULL, within = ctrl$within)
+                    sp <- split(v, ctrl$strata)
+                    res <- vector(mode = "list", length = ng)
+                    add <- c(0, cumsum(tab)[1:(ng-1)])
+                    for(j in seq(along = tab)) {
+                        nperms <- numPerms(tab[j], ctrl.wi)
+                        ord <- switch(type.wi,
+                                      free = allFree(tab[j]),
+                                      series = allSeries(tab[j], nperms, ctrl$within$mirror))
+                        perm.wi <- nrow(ord)
+                        if(j == 1) {
+                            a <- 1
+                            b <- Nperms / perm.wi
+                        } else {
+                            b <- b/perm.wi
+                            a <- Nperms / (b*perm.wi)
+                        }
+                        res[[j]] <- matrix(rep(bar(ord+add[j], a),
+                                               each = b),
+                                           ncol = tab[j])
+                    }
+                    res <- do.call(cbind, res)
+                    sp <- split(v, ctrl$strata)
+                    res <- t(apply(res, 1,
+                                   function(x, inds, v) {v[inds] <- inds[x]; v},
+                                   unlist(sp), v))
+                } else {
+                    ## same number of observations per level of strata
+                    ctrl.wi <- permControl(strata = NULL, within = ctrl$within)
+                    nperms <- numPerms(pg, ctrl.wi)
+                    ord <-
+                        switch(type.wi,
+                               free = allFree(pg),
+                               series = allSeries(pg, nperms, ctrl$within$mirror),
+                               grid = allGrid(pg, nperms, ctrl$within$nrow,
+                               ctrl$within$ncol, ctrl$within$mirror,
+                               ctrl$within$constant))
+                    perm.wi <- nrow(ord)
+                    add <- seq(from = 0, by = pg, length.out = ng)
+                    res <- vector(mode = "list", length = ng)
+                    a <- 1
+                    b <- Nperms / perm.wi
+                    for(i in seq_len(ng)) {
+                        res[[i]] <- matrix(rep(bar(ord+add[i], a), each = b),
+                                           ncol = pg)
+                        a <- a*perm.wi
+                        b <- b/perm.wi
+                    }
+                    res <- do.call(cbind, res)
+                    sp <- split(v, ctrl$strata)
+                    res <- t(apply(res, 1,
+                                   function(x, inds, v) {v[inds] <- inds[x]; v},
+                                   unlist(sp), v))
+                }
             }
         }
     }
@@ -127,7 +137,9 @@
     ## identical to match the observed ordering
     storage.mode(res) <- "integer"
     if(!observed) {
-        obs.row <- apply(res, 1, function(x, v) {identical(x, v)}, v)
+        obs.v <- seq_len(n)
+        ##obs.row <- apply(res, 1, function(x, v) {identical(x, v)}, v)
+        obs.row <- apply(res, 1, function(x, v) {identical(x, v)}, obs.v)
         res <- res[!obs.row, ]
         ## reduce the number of permutations to get rid of the
         ## observed ordering
