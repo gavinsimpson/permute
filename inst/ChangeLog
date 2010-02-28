@@ -8,6 +8,10 @@ Version 0.0-2 (open February 28, 2010)
 	permutations when WITHIN == "none" and BLOCK != "none",
 	i.e. permuting strata.
 
+	* Utils: Utility functions defined inline within allPerms
+	moved to new proper functions and renamed; allFree, allSeries
+	allGrid, allStrata.
+
 Version 0.0-1 (closed February 28, 2010)
 
 	* SVN: Uploaded code to r-forge within vegan source tree.
