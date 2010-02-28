@@ -5,11 +5,7 @@
     idx <- 1
     ## ncol == 2 is special case
     if(nc == 2) {
-        X <- allSeries(n,
-                       permControl(within =
-                                   Within(type = "series",
-                                          mirror = mirror,
-                                          constant = constant)))
+        X <- allSeries(n, nperms = nperms, mirror = mirror)
     } else {
         for(i in seq_len(nr)) {
             for(j in seq_len(nc)) {
