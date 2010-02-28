@@ -4,6 +4,11 @@ permute ChangeLog
 
 Version 0.0-2 (open February 28, 2010)
 
+	* allPerms: Large update. allPerms now works for all
+	permutation designs *except* when permuting both blocks
+	and within blocks. This exception is handled with
+	.NotYetImplemented().
+
 	* numPerms: Wasn't returning the correct number of
 	permutations when WITHIN == "none" and BLOCK != "none",
 	i.e. permuting strata.
