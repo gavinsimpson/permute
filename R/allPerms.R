@@ -53,7 +53,8 @@
                 sp <- split(v, ctrl$strata)
                 res <- matrix(nrow = nperms, ncol = n)
                 for(i in seq_len(perm.wi))
-                    res[i,] <- t(sapply(sp, function(x) x[ord[i,]]))
+                    #res[i,] <- t(sapply(sp, function(x) x[ord[i,]]))
+                    res[i,] <- sapply(sp, function(x) x[ord[i,]])
             } else {
                 ## different permutations within blocks
                 tab <- table(ctrl$strata)
