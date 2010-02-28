@@ -55,6 +55,8 @@
                 blocks.multi * nobs
             else
                 nobs
+        } else {
+            1
         }
     }
     ## within
