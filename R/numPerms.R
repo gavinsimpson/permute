@@ -1,7 +1,7 @@
 `numPerms` <- function(object, control = permControl())
 {
     ## constant holding types where something is permuted
-    PTYPES <- c("free","grid","series")
+    PTYPES <- c("free","grid","series","none")
     ## expand object if a numeric or integer vector of length 1
     if((is.numeric(object) || is.integer(object)) &&
        (length(object) == 1))
@@ -61,7 +61,12 @@
     if(!(WITHIN$type %in% PTYPES))
         stop("Ambiguous permutation type in 'control$within$type'")
 
-    num.within <- if(WITHIN$type == "free") {
+    num.within <- if(WITHIN$type == "none") {
+        ## no within permutations
+        ## recall this is what we multiply num.blocks
+        ## by hence not 0
+        1
+    } else if(WITHIN$type == "free") {
         if(STRATA)
             prod(factorial(tab.strata))
         else
