@@ -62,20 +62,27 @@ allPerms(n, control = permControl(), max = 9999,
 vec <- c(3,4,5)
 allPerms(vec) ## free permutation
 
-\dontrun{
 ## enumerate all possible permutations for a more complicated
 ## design
 fac <- gl(2,6)
-ctrl <- permControl(type = "grid", mirror = FALSE, strata = fac,
-                    constant = TRUE, nrow = 3, ncol = 2)
-numPerms(1:12, control = ctrl)
-(tmp <- allPerms(12, control = ctrl, observed = TRUE))
-(tmp2 <- allPerms(12, control = ctrl))
+##ctrl <- permControl(type = "grid", mirror = FALSE, strata = fac,
+##                    constant = TRUE, nrow = 3, ncol = 2)
+ctrl <- permControl(strata = fac,
+                    within = Within(type = "grid", mirror = FALSE,
+                                    constant = TRUE, nrow = 3, ncol = 2))
+nobs <- length(fac)
+numPerms(seq_len(nobs), control = ctrl)
+(tmp <- allPerms(nobs, control = ctrl, observed = TRUE))
+(tmp2 <- allPerms(nobs, control = ctrl))
+
+\dontrun{
+## not currently working...
+## numPerms gives wrong answer...
 ## turn on mirroring
 ctrl$mirror <- TRUE
-numPerms(1:12, control = ctrl)
-(tmp3 <- allPerms(12, control = ctrl, observed = TRUE))
-(tmp4 <- allPerms(12, control = ctrl))
+numPerms(seq_len(nobs), control = ctrl)
+(tmp3 <- allPerms(nobs, control = ctrl, observed = TRUE))
+(tmp4 <- allPerms(nobs, control = ctrl))
 ## prints out details of the permutation scheme as
 ## well as the matrix of permutations
 summary(tmp)
