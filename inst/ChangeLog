@@ -2,8 +2,15 @@ $Date$
 
 permute ChangeLog
 
-Version 0.0-1 (opened January 4, 2010)
+Version 0.0-2 (open February 28, 2010)
+
+	* numPerms: Wasn't returning the correct number of
+	permutations when WITHIN == "none" and BLOCK != "none",
+	i.e. permuting strata.
+
+Version 0.0-1 (closed February 28, 2010)
 
 	* SVN: Uploaded code to r-forge within vegan source tree.
 	This code base represents my working version as of today,
 	*not* the version in vegan at that time.
+
