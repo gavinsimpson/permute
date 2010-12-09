@@ -178,12 +178,19 @@ vec4 <- permCheck(1:100, permControl(within =
                                      Within(type= "series",
                                                 mirror = TRUE)))
 all.equal(vec4$n, 200)
-%% FIXME - need all these updating to new API in permControl...
-\dontrun{
+
 ## enumerate all possible permutations
 fac <- gl(2,6)
-ctrl <- permControl(type = "grid", mirror = FALSE, strata = fac,
-                    constant = TRUE, nrow = 3, ncol = 2)
+ctrl <- permControl(strata = fac,
+                    within = Within(type = "grid", mirror = FALSE,
+                                    constant = TRUE, nrow = 3,
+                                    ncol = 2))
+permCheck(ctrl)
+
+%% FIXME - need all these updating to new API in permControl...
+%% Fixed one, above, but there may still be problems with some of
+%% the code below:
+\dontrun{
 numPerms(1:12, control = ctrl)
 (tmp <- allPerms(12, control = ctrl, observed = TRUE))
 (tmp2 <- allPerms(12, control = ctrl))
