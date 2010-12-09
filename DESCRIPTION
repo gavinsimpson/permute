@@ -1,10 +1,10 @@
 Package: permute
 Title: Functions for generating restricted permutations of data
-Version: 0.0-2
+Version: 0.0-3
 Date: $Date$
 Author: Gavin L. Simpson
 Maintainer: Gavin L. Simpson <gavin.simpson@ucl.ac.uk>
-Suggests: vegan
+Depends: vegan
 Description: Restricted experimental designs are commonly encountered
              in ecological data. Ordination analyses of such data are
              generally tested using permutation tests. The 'permute' 

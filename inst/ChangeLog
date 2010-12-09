@@ -2,7 +2,12 @@ $Date$
 
 permute ChangeLog
 
-Version 0.0-2 (open February 28, 2010)
+Version 0.0-3 (opened December 09, 2010)
+
+	* NAMESPACE: permute gets a NAMESPACE. Needed to shield
+	functions form ones of similar name in vegan.
+
+Version 0.0-2 (closed December 09, 2010)
 
 	* allPerms: Large update. allPerms now works for all
 	permutation designs *except* when permuting both blocks

@@ -1,0 +1,18 @@
+## Visible functions:
+export(`allPerms`, `Blocks`, `getNumObs`, `numPerms`, `permCheck`,
+       `permControl`, `permute`, `permuted.index`, `Within`)
+
+## S3 Methods
+# print methods
+S3method(`print`, `allPerms`)
+S3method(`print`, `permCheck`)
+S3method(`print`, `permControl`)
+S3method(`print`, `summary.allPerms`)
+S3method(`print`, `summary.permCheck`)
+# summary methods
+S3method(`summary`, `allPerms`)
+S3method(`summary`, `permCheck`)
+# getNumObs methods
+S3method(`getNumObs`, `default`)
+S3method(`getNumObs`, `numeric`)
+S3method(`getNumObs`, `integer`)
