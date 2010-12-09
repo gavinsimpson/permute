@@ -185,7 +185,7 @@ ctrl <- permControl(strata = fac,
                     within = Within(type = "grid", mirror = FALSE,
                                     constant = TRUE, nrow = 3,
                                     ncol = 2))
-permCheck(ctrl)
+permCheck(1:12, ctrl)
 
 %% FIXME - need all these updating to new API in permControl...
 %% Fixed one, above, but there may still be problems with some of
