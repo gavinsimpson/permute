@@ -75,17 +75,18 @@ numPerms(seq_len(nobs), control = ctrl)
 (tmp <- allPerms(nobs, control = ctrl, observed = TRUE))
 (tmp2 <- allPerms(nobs, control = ctrl))
 
-\dontrun{
-## not currently working...
-## numPerms gives wrong answer...
 ## turn on mirroring
-ctrl$mirror <- TRUE
+ctrl$within$mirror <- TRUE
 numPerms(seq_len(nobs), control = ctrl)
 (tmp3 <- allPerms(nobs, control = ctrl, observed = TRUE))
 (tmp4 <- allPerms(nobs, control = ctrl))
+
+%\dontrun{
 ## prints out details of the permutation scheme as
 ## well as the matrix of permutations
-summary(tmp)
-summary(tmp2)
-}
+% FIXME: uncomment the two lines below when we remove old permute
+% code from vegan and have vegan depend on permute
+##summary(tmp3)
+##summary(tmp4)
+%}
 }
