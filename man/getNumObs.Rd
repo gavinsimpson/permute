@@ -3,6 +3,10 @@
 \alias{getNumObs.default}
 \alias{getNumObs.integer}
 \alias{getNumObs.numeric}
+\alias{nobs.numeric}
+\alias{nobs.integer}
+\alias{nobs.matrix}
+\alias{nobs.cca}
 
 \title{Number of observations in a given object}
 \description{
