@@ -1,5 +1,5 @@
-\name{permuted.index}
-\alias{permuted.index}
+\name{shuffle}
+\alias{shuffle}
 \alias{permControl}
 \alias{Blocks}
 \alias{Within}
@@ -12,13 +12,13 @@
   line transects, spatial grids and blocking factors.
 }
 \usage{
-permuted.index(n, control = permControl())
+shuffle(n, control = permControl())
 
 permControl(strata = NULL, nperm = 199, complete = FALSE,
             within = Within(),
             blocks = Blocks(),
             maxperm = 9999, minperm = 99,
-            all.perms = NULL)
+            all.perms = NULL, observed = FALSE)
 
 Within(type = c("free","series","grid","none"),
        constant = FALSE, mirror = FALSE,
@@ -51,18 +51,20 @@ permute(i, n, control)
   \item{minperm}{the lower limit to the number of possible permutations
     at which complete enumeration is performed. See argument
     \code{complete} and Details, below.}
+  \item{all.perms}{an object of class \code{allPerms}, the result of a
+    call to \code{\link{allPerms}}.}
+  \item{observed}{logical; should the observed permutation be returned
+    as part of the set of all permutations?}
   \item{constant}{logical; should the same permutation be used within
     each level of strata? If \code{FALSE} a separate, possibly restricted,
     permutation is produced for each level of \code{strata}.}
   \item{mirror}{logical; should mirroring of sequences be allowed?}
   \item{ncol, nrow}{numeric; the number of columns and rows of samples
     in the spatial grid respectiavly.}
-  \item{all.perms}{an object of class \code{allPerms}, the result of a
-    call to \code{\link{allPerms}}.}
   \item{i}{integer; row of \code{control$all.perms} to return.}
 }
 \details{
-  \code{permuted.index} can generate permutations for a wide range of
+  \code{shuffle} can generate permutations for a wide range of
   restricted permutation schemes. A small selection of the available
   combinations of options is provided in the Examples section below.
 
@@ -95,19 +97,19 @@ permute(i, n, control)
   \code{NULL} and \code{control$complete} is \code{TRUE}.
 }
 \value{
-  For \code{permuted.index} a vector of length \code{n} containing a
+  For \code{shuffle} a vector of length \code{n} containing a
   permutation of the observations 1, \ldots, n using the permutation
   scheme described by argument \code{control}.
   
   For \code{permControl} a list with components for each of the possible
   arguments.
 }
-\note{
-  \code{permuted.index} is currently used in one Vegan function;
-  \code{\link[vegan]{permutest.betadisper}}. Over time, the other functions
-  that currently use the older \code{\link[vegan]{permuted.index}} will be
-  updated to use \code{permuted.index}.
-}
+%\note{
+%  \code{shuffle} is currently used in one Vegan function;
+%  \code{\link[vegan]{permutest.betadisper}}. Over time, the other functions
+%  that currently use the older \code{\link[vegan]{shuffle}} will be
+%  updated to use \code{shuffle}.
+%}
 %\references{
 %}
 \author{Gavin Simpson}
@@ -118,24 +120,24 @@ permute(i, n, control)
 set.seed(1234)
 
 ## unrestricted permutations
-permuted.index(20)
+shuffle(20)
 
 ## observations represent a time series of line transect
 CTRL <- permControl(within = Within(type = "series"))
-permuted.index(20, control = CTRL)
+shuffle(20, control = CTRL)
 
 ## observations represent a time series of line transect
 ## but with mirroring allowed
 CTRL <- permControl(within = Within(type = "series",
                                     mirror = TRUE))
-permuted.index(20, control = CTRL)
+shuffle(20, control = CTRL)
 
 ## observations represent a spatial grid, 5rx4c
 nr <- 5
 nc <- 4
 CTRL <- permControl(within = Within(type = "grid", ncol = nc,
                                      nrow = nr))
-perms <- permuted.index(20, control = CTRL)
+perms <- shuffle(20, control = CTRL)
 ## view the permutation as a grid
 matrix(matrix(1:20, nrow = nr, ncol = nc)[perms],
        ncol = nc, nrow = nr)
@@ -144,21 +146,21 @@ matrix(matrix(1:20, nrow = nr, ncol = nc)[perms],
 block <- gl(4, 5)
 CTRL <- permControl(strata = block,
                     within = Within(type = "free"))
-permuted.index(20, CTRL)
+shuffle(20, CTRL)
 ## as above but same random permutation within strata
 CTRL <- permControl(strata = block,
                     within = Within(type = "free", constant = TRUE))
-permuted.index(20, CTRL)
+shuffle(20, CTRL)
 
 ## time series within each level of block
 CTRL <- permControl(strata = block,
                     within = Within(type = "series"))
-permuted.index(20, CTRL)
+shuffle(20, CTRL)
 ## as above, but  with same permutation for each level
 CTRL <- permControl(strata = block,
                     within = Within(type = "series",
                                     constant = TRUE))
-permuted.index(20, CTRL)
+shuffle(20, CTRL)
 
 ## spatial grids within each level of block, 4 x (5r x 5c)
 nr <- 5
@@ -169,34 +171,34 @@ CTRL <- permControl(strata = block,
                     within = Within(type = "grid",
                                     ncol = nc,
                                     nrow = nr))
-permuted.index(100, CTRL)
+shuffle(100, CTRL)
 ## as above, but with same permutation for each level
 CTRL <- permControl(strata = block,
                     within = Within(type = "grid",
                                     ncol = nc,
                                     nrow = nr,
                                     constant = TRUE))
-permuted.index(100, CTRL)
+shuffle(100, CTRL)
 
 ## permuting levels of block instead of observations
 block <- gl(4, 5)
 CTRL <- permControl(strata = block,
                     blocks = Blocks(type = "free"),
                     within = Within(type = "none"))
-permuted.index(20, CTRL)
+shuffle(20, CTRL)
 ## permuting levels of block instead of observations
 ## but blocks represent a time series
 CTRL <- permControl(strata = block,
                     blocks = Blocks(type = "series"),
                     within = Within(type = "none"))
-permuted.index(20, CTRL)
+shuffle(20, CTRL)
 
 ## permuting levels of block but blocks represent a time series
 ## free permutation within blocks
 CTRL <- permControl(strata = block,
                     blocks = Blocks(type = "series"),
                     within = Within(type = "free"))
-permuted.index(20, CTRL)
+shuffle(20, CTRL)
 
 ## Simple function using permute() to assess significance
 ## of a t.test  

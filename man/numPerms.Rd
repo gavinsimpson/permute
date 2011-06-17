@@ -60,7 +60,7 @@ numPerms(object, control = permControl())
   \emph{grid} is not an issue here.
 }
 \author{Gavin Simpson}
-\seealso{\code{\link{permuted.index}} and \code{\link{permControl}}.}
+\seealso{\code{\link{shuffle}} and \code{\link{permControl}}.}
 \examples{
 ## permutation design --- see ?permControl
 ctrl <- permControl() ## defaults to freely exchangeable

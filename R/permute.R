@@ -4,7 +4,7 @@ permute <- function(i, n, control) {
     else {
         if(control$complete)
             warning("'$all.perms' is NULL, yet '$complete = TRUE'.\nReturning a random permutation.")
-        perm <- permuted.index(n, control)
+        perm <- shuffle(n, control)
     }
     return(perm)
 }

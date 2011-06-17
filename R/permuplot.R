@@ -1,3 +1,5 @@
+## This is totally wrong and needs updating to match the new
+## code in permute...
 `permuplot` <- function(n, control = permControl(),
                         col = par("col"),
                         hcol = "red",
@@ -103,7 +105,7 @@
                        }),
                        stop("Unsupport permutation 'type'"))
             }
-            perms <- permuted.index2(n, control = control)
+            perms <- shuffle2(n, control = control)
             perms <- tapply(perms, control$strata, function(x) x)
             if(is.null(main))
                 main <- paste("Stratum:", names(tab))
@@ -173,7 +175,7 @@
                          sep = "      ")
         plot.new()
         plot.window(xlim, ylim, asp = 1, ...)
-        labs <- permuted.index2(n, control=control)
+        labs <- shuffle(n, control=control)
         cols <- switch(control$type,
                        free = rep(col, n),
                        series = c(hcol, rep(col, n-1)),

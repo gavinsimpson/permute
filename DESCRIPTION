@@ -1,6 +1,6 @@
 Package: permute
 Title: Functions for generating restricted permutations of data
-Version: 0.0-3
+Version: 0.5-0
 Date: $Date$
 Author: Gavin L. Simpson
 Maintainer: Gavin L. Simpson <gavin.simpson@ucl.ac.uk>

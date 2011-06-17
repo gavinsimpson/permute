@@ -1,4 +1,4 @@
-`permuted.index` <-
+`shuffle` <-
     function (n, control = permControl())
 {
     `pStrata` <- function(strata, type, mirror = FALSE, start = NULL,

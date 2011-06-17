@@ -55,7 +55,7 @@ permuplot(n, control = permControl(), col = par("col"),
 \details{
   \code{permCheck}, \code{allPerms}, \code{numPerms} and
   \code{permuplot} are utility functions for working with the new
-  permutation schemes available in \code{\link{permuted.index}}.
+  permutation schemes available in \code{\link{shuffle}}.
 
   \code{permCheck} is used to check the current permutation schemes
   against the object to which it will be applied. It calculates the
@@ -109,7 +109,7 @@ permuplot(n, control = permControl(), col = par("col"),
 %\references{
 %}
 \author{Gavin Simpson}
-\seealso{\code{\link{permuted.index}} and \code{\link{permControl}}.}
+\seealso{\code{\link{shuffle}} and \code{\link{permControl}}.}
 
 \examples{
 \dontrun{

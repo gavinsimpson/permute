@@ -139,15 +139,15 @@
     storage.mode(res) <- "integer"
     if(!observed) {
         obs.v <- seq_len(n)
-        ##obs.row <- apply(res, 1, function(x, v) {identical(x, v)}, v)
-        obs.row <- apply(res, 1, function(x, v) {identical(x, v)}, obs.v)
+        ##obs.row <- apply(res, 1, function(x, v) {identical(x, v)}, obs.v)
+        obs.row <- apply(res, 1, function(x, obs.v) all(x == obs.v), obs.v)
         res <- res[!obs.row, ]
         ## reduce the number of permutations to get rid of the
         ## observed ordering
         control$nperm <- control$nperm - 1
     }
     class(res) <- "allPerms"
-    attr(res, "control") <- control
+    ##attr(res, "control") <- control
     attr(res, "observed") <- observed
     return(res)
 }

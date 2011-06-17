@@ -1,6 +1,6 @@
 ## Visible functions:
 export(`allPerms`, `Blocks`, `getNumObs`, `numPerms`, `permCheck`,
-       `permControl`, `permute`, `permuted.index`, `Within`)
+       `permControl`, `permute`, `shuffle`, `Within`)
 
 ## S3 Methods
 # print methods

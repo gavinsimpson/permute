@@ -2,7 +2,11 @@ $Date$
 
 permute ChangeLog
 
-Version 0.0-3 (opened December 09, 2010)
+Version 0.5-0 (opened June 17, 2011)
+
+	* shuffle: renamed permuted.index() to shuffle()
+
+Version 0.0-3 (closed June 17, 2011)
 
 	* NAMESPACE: permute gets a NAMESPACE. Needed to shield
 	functions form ones of similar name in vegan.
