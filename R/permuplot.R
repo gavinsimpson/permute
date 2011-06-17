@@ -105,7 +105,7 @@
                        }),
                        stop("Unsupport permutation 'type'"))
             }
-            perms <- shuffle2(n, control = control)
+            perms <- shuffle(n, control = control)
             perms <- tapply(perms, control$strata, function(x) x)
             if(is.null(main))
                 main <- paste("Stratum:", names(tab))
