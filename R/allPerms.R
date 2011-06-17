@@ -9,6 +9,12 @@
             res[[i]] <- mat
         do.call(rbind, res)
     }
+    BAE <- function(mat, n) {
+        res <- list()
+        res[[1]] <- mat
+        res <- rep(res, n)
+        do.call(rbind, res)
+    }
     ## start
     v <- n
     ## expand n if a numeric or integer vector of length 1
