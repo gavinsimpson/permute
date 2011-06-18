@@ -2,6 +2,9 @@
 export(`allPerms`, `Blocks`, `getNumObs`, `numPerms`, `permCheck`,
        `permControl`, `permute`, `shuffle`, `Within`)
 
+## Imports
+importFrom(`stats`, `nobs`)
+
 ## S3 Methods
 # print methods
 S3method(`print`, `allPerms`)
@@ -16,3 +19,8 @@ S3method(`summary`, `permCheck`)
 S3method(`getNumObs`, `default`)
 S3method(`getNumObs`, `numeric`)
 S3method(`getNumObs`, `integer`)
+## nobs() methods
+S3method(`nobs`, `numeric`)
+S3method(`nobs`, `integer`)
+S3method(`nobs`, `matrix`)
+S3method(`nobs`, `cca`)
