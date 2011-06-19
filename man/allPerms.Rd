@@ -70,16 +70,16 @@ fac <- gl(2,6)
 ctrl <- permControl(strata = fac,
                     within = Within(type = "grid", mirror = FALSE,
                                     constant = TRUE, nrow = 3, ncol = 2))
-nobs <- length(fac)
-numPerms(seq_len(nobs), control = ctrl)
-(tmp <- allPerms(nobs, control = ctrl, observed = TRUE))
-(tmp2 <- allPerms(nobs, control = ctrl))
+Nobs <- length(fac)
+numPerms(seq_len(Nobs), control = ctrl)
+(tmp <- allPerms(Nobs, control = ctrl, observed = TRUE))
+(tmp2 <- allPerms(Nobs, control = ctrl))
 
 ## turn on mirroring
 ctrl$within$mirror <- TRUE
-numPerms(seq_len(nobs), control = ctrl)
-(tmp3 <- allPerms(nobs, control = ctrl, observed = TRUE))
-(tmp4 <- allPerms(nobs, control = ctrl))
+numPerms(seq_len(Nobs), control = ctrl)
+(tmp3 <- allPerms(Nobs, control = ctrl, observed = TRUE))
+(tmp4 <- allPerms(Nobs, control = ctrl))
 
 %\dontrun{
 ## prints out details of the permutation scheme as

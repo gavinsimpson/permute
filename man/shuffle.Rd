@@ -218,7 +218,7 @@ pt.test <- function(x, group, control) {
     ## check the control object
     control <- permCheck(x, control)$control
     ## number of observations
-    nobs <- getNumObs(x)
+    Nobs <- getNumObs(x)
     ## group names
     lev <- names(table(group))
     ## vector to hold results, +1 because of observed t
@@ -228,7 +228,7 @@ pt.test <- function(x, group, control) {
     ## generate randomisation distribution of t
     for(i in seq_along(t.permu)) {
         ## return a permutation
-        want <- permute(i, nobs, control)
+        want <- permute(i, Nobs, control)
         ## calculate permuted t
         t.permu[i+1] <- t.statistic(x[want][group == lev[1]],
                                     x[want][group == lev[2]])

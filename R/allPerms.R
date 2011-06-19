@@ -9,7 +9,7 @@
             res[[i]] <- mat
         do.call(rbind, res)
     }
-    BAE <- function(mat, n) {
+    BAR <- function(mat, n) {
         res <- list()
         res[[1]] <- mat
         res <- rep(res, n)
@@ -33,8 +33,7 @@
         stop("Number of possible permutations too large (> 'max')")
     type.wi <- ctrl$within$type
     if(type.wi != "none") {
-        if(is.null(control$strata)) {
-            ##browser()
+        if(is.null(ctrl$strata)) {
             res <- switch(type.wi,
                           free = allFree(n),
                           series = allSeries(n, nperms, ctrl$within$mirror),
@@ -76,7 +75,7 @@
                     sp <- split(v, ctrl$strata)
                     res <- vector(mode = "list", length = ng)
                     add <- c(0, cumsum(tab)[1:(ng-1)])
-                    for(j in seq(along = tab)) {
+                    for(j in seq_along(tab)) {
                         nperms <- numPerms(tab[j], ctrl.wi)
                         ord <- switch(type.wi,
                                       free = allFree(tab[j]),
