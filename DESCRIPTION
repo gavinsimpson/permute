@@ -4,7 +4,6 @@ Version: 0.5-0
 Date: $Date$
 Author: Gavin L. Simpson
 Maintainer: Gavin L. Simpson <gavin.simpson@ucl.ac.uk>
-Depends: vegan
 Description: Restricted experimental designs are commonly encountered
              in ecological data. Ordination analyses of such data are
              generally tested using permutation tests. The 'permute' 
