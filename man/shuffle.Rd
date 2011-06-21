@@ -5,6 +5,15 @@
 \alias{Within}
 \alias{print.permControl}
 \alias{permute}
+\alias{getBlocks}
+\alias{getBlocks.default}
+\alias{getBlocks.permControl}
+\alias{getWithin}
+\alias{getWithin.default}
+\alias{getWithin.permControl}
+\alias{getStrata}
+\alias{getStrata.default}
+\alias{getStrata.permControl}
 
 \title{Unrestricted and restricted permutations}
 \description{
@@ -28,6 +37,18 @@ Blocks(type = c("free","series","grid","none"),
        mirror = FALSE, ncol = NULL, nrow = NULL)
 
 permute(i, n, control)
+
+getWithin(object, ...)
+
+\method{getWithin}{permControl}(object, ...)
+
+getBlocks(object, ...)
+
+\method{getBlocks}{permControl}(object, ...)
+
+getStrata(object, ...)
+
+\method{getStrata}{permControl}(object, ...)
 }
 
 \arguments{
@@ -60,8 +81,10 @@ permute(i, n, control)
     permutation is produced for each level of \code{strata}.}
   \item{mirror}{logical; should mirroring of sequences be allowed?}
   \item{ncol, nrow}{numeric; the number of columns and rows of samples
-    in the spatial grid respectiavly.}
+    in the spatial grid respectively.}
   \item{i}{integer; row of \code{control$all.perms} to return.}
+  \item{object}{An R object to dispatch on.}
+  \item{\dots}{Arguments passed on to other methods.}
 }
 \details{
   \code{shuffle} can generate permutations for a wide range of
