@@ -1,6 +1,5 @@
 `allPerms` <- function(n, control = permControl(), max = 9999,
-                       observed = FALSE)
-{
+                       observed = FALSE) {
     ## what does this do - used below to generate the
     ## permutations when constant == FALSE
     bar <- function(mat, n) {
@@ -10,9 +9,7 @@
         do.call(rbind, res)
     }
     BAR <- function(mat, n) {
-        res <- list()
-        res[[1]] <- mat
-        res <- rep(res, n)
+        res <- rep(list(mat), n)
         do.call(rbind, res)
     }
     ## start
@@ -21,7 +18,7 @@
     if((is.numeric(n) || is.integer(n)) && (length(n) == 1))
          v <- seq_len(n)
     ## number of observations in data
-    n <- getNumObs(v)
+    n <- nobs(v) ## getNumObs
     ## check permutation scheme and update control
     pcheck <- permCheck(v, control = control, make.all = FALSE)
     ctrl <- pcheck$control
@@ -135,7 +132,26 @@
             res <- allStrata(n, control = control)
         } else {
             ## permuting blocks AND within blocks
-            .NotYetImplemented()
+            ## need a local CTRL that just permutes blocks
+            ctrl.b <- permControl(strata = getStrata(ctrl),
+                                  within = Within(type = "none"),
+                                  blocks = getBlocks(ctrl))
+            ## number of permutations for just the block level
+            perm.b <- numPerms(n, control = ctrl.b)
+            ## get all permutations for the block level
+            shuff.b <- allStrata(n, control = ctrl.b)
+            ## copy the set of permutations for within blocks
+            ## perm.b times - results is a list
+            res.b <- rep(list(res), perm.b)
+            res.b <- lapply(seq_along(res.b),
+                            function(i, wi, bl) {
+                                t(apply(wi[[i]], 1,
+                                        function(x, bl, i) {
+                                            x[bl[i,]]
+                                        }, bl = bl, i = i))
+                            },
+                            wi = res.b, bl = shuff.b)
+            res <- do.call(rbind, res.b)
         }
     }
     ## some times storage.mode of res is numeric, sometimes
@@ -156,3 +172,59 @@
     attr(res, "observed") <- observed
     return(res)
 }
+
+## Extractor functions for blocks and within
+getBlocks <- function(object, ...) {
+    UseMethod("getBlocks")
+}
+
+getBlocks.default <- function(object, ...) {
+    stop("No default method for 'getBlocks()'")
+}
+
+getBlocks.permControl <- function(object, ...) {
+    object$blocks
+}
+
+getWithin <- function(object, ...) {
+    UseMethod("getWithin")
+}
+
+getWithin.default <- function(object, ...) {
+    stop("No default method for 'getWithin()'")
+}
+
+getWithin.permControl <- function(object, ...) {
+    object$within
+}
+
+getStrata <- function(object, ...) {
+    UseMethod("getStrata")
+}
+
+getStrata.default <- function(object, ...) {
+    stop("No default method for 'getStrata()'")
+}
+
+getStrata.permControl <- function(object, ...) {
+    object$strata
+}
+
+## suppose we can also have setBlocks() etc...
+## to update the control object in place....
+
+
+## enumerate all possible permutations for a more complicated
+## design
+## fac <- gl(2,6)
+##ctrl <- permControl(type = "grid", mirror = FALSE, strata = fac,
+##                    constant = TRUE, nrow = 3, ncol = 2)
+## ctrl <- permControl(strata = fac,
+##                     within = Within(type = "grid", mirror = FALSE,
+##                     constant = TRUE, nrow = 3, ncol = 2),
+##                     blocks = Blocks(type = "free"))
+## Nobs <- length(fac)
+## numPerms(seq_len(Nobs), control = ctrl)
+## numPerms(Nobs, control = ctrl) ## works just as well
+## (tmp <- allPerms(Nobs, control = ctrl, observed = TRUE))
+## (tmp2 <- allPerms(Nobs, control = ctrl))
