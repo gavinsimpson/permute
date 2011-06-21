@@ -112,7 +112,7 @@ permuplot(n, control = permControl(), col = par("col"),
 \seealso{\code{\link{shuffle}} and \code{\link{permControl}}.}
 
 \examples{
-\dontrun{
+%\dontrun{
 ## use example data from ?pyrifos in package vegan
 require(vegan)
 example(pyrifos)
@@ -127,12 +127,12 @@ summary(check1)
 
 ## no strata but data are series with no mirroring, so 132 permutations
 CONTROL <- permControl(within = Within(type = "series",
-                                                      mirror = FALSE))
+                                       mirror = FALSE))
 permCheck(pyrifos, CONTROL)
 
 ## no strata but data are series with mirroring, so 264 permutations
 CONTROL <- permControl(within = Within(type = "series",
-                                                      mirror = TRUE))
+                                       mirror = TRUE))
 permCheck(pyrifos, control = CONTROL)
 
 ## unrestricted within strata
@@ -166,7 +166,7 @@ permCheck(pyrifos, control = permControl(strata = ditch,
 permCheck(pyrifos, permControl(strata = ditch,
                                within = Within(type = "none"),
                                blocks = Blocks(type = "free")))
-}
+%}
 
 ## this should also also for arbitrary vectors
 vec1 <- permCheck(1:100)
@@ -187,23 +187,24 @@ ctrl <- permControl(strata = fac,
                                     ncol = 2))
 permCheck(1:12, ctrl)
 
-%% FIXME - need all these updating to new API in permControl...
-%% Fixed one, above, but there may still be problems with some of
-%% the code below:
-\dontrun{
 numPerms(1:12, control = ctrl)
 (tmp <- allPerms(12, control = ctrl, observed = TRUE))
 (tmp2 <- allPerms(12, control = ctrl))
-## turn on mirroring
-ctrl$mirror <- TRUE
+
+## turn on mirroring %%FIXME needs a proper method to do this
+ctrl$within$mirror <- TRUE
 numPerms(1:12, control = ctrl)
 (tmp3 <- allPerms(12, control = ctrl, observed = TRUE))
 (tmp4 <- allPerms(12, control = ctrl))
 ## prints out details of the permutation scheme as
 ## well as the matrix of permutations
-summary(tmp)
+summary(tmp) %% FIXME these don't print the scheme
 summary(tmp2)
 
+%% FIXME - need all these updating to new API in permControl...
+%% Fixed one, above, but there may still be problems with some of
+%% the code below:
+\dontrun{
 ## different numbers of observations per level of strata
 fac <- factor(rep(1:3, times = c(3,2,2)))
 ## free permutations in levels of strata
