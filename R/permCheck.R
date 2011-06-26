@@ -7,7 +7,7 @@
        (is.integer(object) || is.numeric(object)))
         object <- seq_len(object)
     ## check the number of observations in object
-    nobs <- getNumObs(object)
+    nobs <- nobs(object)
     ## sample permutation type
     type <- control$within$type
     ## if strata, check nobs == length of strata

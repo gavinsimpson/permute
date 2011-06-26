@@ -18,7 +18,7 @@
     if((is.numeric(n) || is.integer(n)) && (length(n) == 1))
          v <- seq_len(n)
     ## number of observations in data
-    n <- nobs(v) ## getNumObs
+    n <- nobs(v)
     ## check permutation scheme and update control
     pcheck <- permCheck(v, control = control, make.all = FALSE)
     ctrl <- pcheck$control

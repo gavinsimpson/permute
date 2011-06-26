@@ -241,7 +241,7 @@ pt.test <- function(x, group, control) {
     ## check the control object
     control <- permCheck(x, control)$control
     ## number of observations
-    Nobs <- getNumObs(x)
+    Nobs <- nobs(x)
     ## group names
     lev <- names(table(group))
     ## vector to hold results, +1 because of observed t

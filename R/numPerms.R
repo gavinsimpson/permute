@@ -7,7 +7,7 @@
        (length(object) == 1))
         object <- seq_len(object)
     ## number of observations in data
-    nobs <- getNumObs(object)
+    nobs <- nobs(object)
     ## within perms object
     WITHIN <- control$within
     ## strata perms object

@@ -10,7 +10,7 @@
 numPerms(object, control = permControl())
 }
 \arguments{
-  \item{object}{any object handled by \code{\link{getNumObs}}.}
+  \item{object}{any object handled by \code{\link{nobs}}.}
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
     \code{\link{permControl}}.}
@@ -60,19 +60,21 @@ numPerms(object, control = permControl())
   \emph{grid} is not an issue here.
 }
 \author{Gavin Simpson}
-\seealso{\code{\link{shuffle}} and \code{\link{permControl}}.}
+\seealso{\code{\link{shuffle}} and
+  \code{\link{permControl}}. Additional \code{\link{nobs}} methods are
+  provide, see \code{\link{nobs-methods}}.}
 \examples{
 ## permutation design --- see ?permControl
 ctrl <- permControl() ## defaults to freely exchangeable
 
 ## vector
 v <- 1:10
-(obs <- getNumObs(v))
+(obs <- nobs(v))
 numPerms(v, control = ctrl)
 
 ## integer
 len <- length(v)
-(obs <- getNumObs(len))
+(obs <- nobs(len))
 numPerms(len, control = ctrl)
 
 ## new design, objects are a time series
