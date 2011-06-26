@@ -5,6 +5,8 @@ permute ChangeLog
 Version 0.5-0 (opened June 17, 2011)
 
 	* shuffle: renamed permuted.index() to shuffle()
+	* Vignette: the package has a vignette, which is very much
+	a work-in-progress.
 
 Version 0.0-3 (closed June 17, 2011)
 
