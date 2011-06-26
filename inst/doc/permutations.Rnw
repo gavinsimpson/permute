@@ -1,0 +1,167 @@
+\documentclass[article,shortnames]{Z}
+\usepackage{thumbpdf}
+
+%\VignetteIndexEntry{Restricted permutations; using the permute package}
+%\VignettePackage{permute}
+%\VignetteDepends{vegan}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% almost as usual
+\author{Gavin L. Simpson\\Environmental Change Research Centre --- UCL}
+\title{Restricted permutations; using the \pkg{permute} Package}
+
+%% for pretty printing and a nice hypersummary also set:
+\Plainauthor{Gavin L. Simpson} %% comma-separated
+\Plaintitle{Using the permute Package} %% without formatting
+\Shorttitle{Using the permuet Package} %% a short title (if necessary)
+
+%% an abstract and keywords
+\Abstract{
+}
+\Keywords{permutations, restricted permutations, time series, transects, spatial grids, split-plot designs, Monte Carlo resampling, \proglang{R}}
+\Plainkeywords{permutations, restricted permutations, time series, transects, spatial grids, split-plot designs, Monte Carlo resampling, R} %% without formatting
+%% at least one keyword must be supplied
+
+%% publication information
+%% NOTE: This needs to filled out ONLY IF THE PAPER WAS ACCEPTED.
+%% If it was not (yet) accepted, leave them commented.
+%% \Volume{13}
+%% \Issue{9}
+%% \Month{September}
+%% \Year{2004}
+%% \Submitdate{2004-09-29}
+%% \Acceptdate{2004-09-29}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+% \Address{
+%   Gavin L. Simpson\\
+%   Environmental Change Research Centre\\
+%   UCL Department of Geography\\
+%   Pearson Building\\
+%   Gower Street\\
+%   London, UK, WC1E 6BT\\
+%   E-mail: \email{gavin.simpson@ucl.ac.uk}\\
+%   URL: \url{http://www.homepages.ucl.ac.uk/~ucfagls/}
+% }
+%% It is also possible to add a telephone and fax number
+%% before the e-mail in the following format:
+%% Telephone: +43/1/31336-5053
+%% Fax: +43/1/31336-734
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%% include your article here, just as usual
+%% Note that you should use the \pkg{}, \proglang{} and \code{} commands.
+<<preliminary,results=hide,echo=false>>=
+options("prompt" = "R> ", "continue" = "+ ")
+options(useFancyQuotes="UTF-8")
+@
+\section{Introduction}
+In classical frequentist statistics, the significance of a relationship or model is determined by reference to a null distribution for the test statistic. This distribution is derived mathematically and the probability of achieving a test statistic as large or larger if the null hypothesis were true is looked-up from this null distribution. In deriving this probability, some assumptions about the data or the errors are made. If these assumptions are violated, then the validity of the derived $p$-value may be questioned.
+
+An alternative to deriving the null dsitribution from theory is to generate a null distribution for the test statistic by randomly shuffling the data in some manner, refitting the model and deriving values for the test statistic for the permuted data. The level of significance of the test can be computed as the proportion of values of the test statistic from the null distribution that are equal to or larger than the observed value.
+
+In many data sets, simply shuffling the data at random is inappropriate; under the null hypothesis, that data are not freely exchangeable. If there is temporal or spatial correlation, or the samples are clustered in some way, such as multiple samples collected from each of a number of fields. The \pkg{permute} was designed to provide facilities for generating these restricted permutations for use in randomisation tests.
+
+\section{Simple randomisation}
+As an illustration of both randomisation and the use of the \pkg{permute} package we consider a small data set of mandible length measurements on specimens of the golden jackal (\emph{Canis aureus}) from the British Museum of Natural History, London, UK. These data were collected as part of a study comparing prehistoric and modern canids \citep{higham80}, and were analysed by \citet{manly07}. There are ten measurements of mandible length on both male and female specimens. The data are available in the \code{jackal} data frame supplied with \pkg{permute}.
+
+<<load_jackal>>=
+require(permute)
+data(jackal)
+jackal
+@
+
+The interest is whether there is a difference in the mean mandible length between male and femal golden jackals. The null hypothesis is that there is no difference in mandible length betwene the two sexes, whilst the alternative hypothesis is that males have larger mandibles. The usual statistical test of this hypothesis is a one-sided $t$ test, which can be applied using \code{t.test()}
+
+<<ttest_jackal>>=
+jack.t <-t.test(Length ~ Sex, data = jackal, var.equal = TRUE, alternative = "greater")
+jack.t
+@
+
+The observed $t$ is \Sexpr{with(jack.t, round(statistic, 3))} with \Sexpr{with(jack.t, parameter)} df. The probability of observing a value this large or larger if the null hypothesis were true is \Sexpr{with(jack.t, round(p.value, 4))}. Several assumptions have been made in deriving this $p$-value, namely
+
+\begin{enumerate}
+  \item random sampling of individuals from the populations of interest,
+  \item equal population standard deviations for males and females, and
+  \item that the mandible lengths are normally distributed within the sexes.
+\end{enumerate}
+
+Assumption 1 is unlikely to be valid for museum specimens such as these, that have been collected in some unknown manner. Assumption 2 may be valid, Fisher's $F$-test and a Fligner-Killeen test both suggest that the standard deviations of the two populations do not differ significantly
+<<ftest_jackal>>=
+var.test(Length ~ Sex, data = jackal)
+fligner.test(Length ~ Sex, data = jackal)
+@
+This assumption may be relaxed using \code{var.equal = FALSE} (the default) in our call to \code{t.test()}, to employ Welch's modification for un-equal variances. Assumption 3 may be valid, but with such a small sample we are able to reliably test this.
+
+A randomisation test of the same hypothesis can be performed by randomly allocating ten of the mandible lengths to the male group and the remaining lengths to the female group. This randomisation is justified under the null hypothesis because the observed difference in mean mandible length between the two sexes is just a typical value for the difference in a sample if there were no difference in the population. An appropriate test statistic needs to be selected. We could use the $t$ statistic as derived in the $t$-test. Alternatively, we could base our randomisation test on the difference of means $D_i$ (male - female).
+
+The main function in \pkg{permute} for providing random permutations is \code{shuffle()}. We can write our own randomisation test for the \code{jackal} data by first creating a function to compute the difference of means for two groups
+<<meanFun>>=
+meanDif <- function(x, grp) {
+ mean(x[grp == "Male"]) - mean(x[grp == "Female"])
+}
+@
+which can be used in a simple \code{for()} loop to generate the null distribution for the difference of means. First, we allocate some storage to hold the null difference of means; here we use 4999 random permutations so allocate a vector of length 5000. Then we iterate, randomly generating an ordering of the \code{Sex} vector and computing the difference means for that permutation.
+<<randJackal>>=
+Djackal <- numeric(length = 5000)
+N <- nrow(jackal)
+set.seed(42)
+for(i in seq_len(length(Djackal) - 1)) {
+    perm <- shuffle(N)
+    Djackal[i] <- with(jackal, meanDif(Length, Sex[perm]))
+}
+Djackal[5000] <- with(jackal, meanDif(Length, Sex))
+@
+The observed difference of means was added to the null distribution, because under the null hypothesis the observed allocation of mandible lengths to male and female jackals is just one of the possible random allocations.
+
+The null distribuion of $D_i$ can be visualised using a histogram, as shown in Figure~\ref{hist_jackal}. The observed difference of means (\Sexpr{round(Djackal[5000], 2)}) is indicated by the red tickmark.
+
+<<hist_jackal, fig=false, echo=true, eval=false, keep.source=true>>=
+hist(Djackal, main = "",
+     xlab = expression("Mean difference (Male - Female) in mm"))
+rug(Djackal[5000], col = "red", lwd = 2)
+@
+The number of values in the randomisation distribution equal to or larger than the observed difference is
+<<>>=
+(Dbig <- sum(Djackal >= Djackal[5000]))
+@
+giving a permutational $p$-value of
+<<>>=
+Dbig / length(Djackal)
+@
+which is comparable with that determined from the frequestist $t$-test, and indicate strong evidence against the null hypothesis of no difference.
+\begin{figure}[t]
+  \centering
+<<draw_hist_jackal, fig=true, echo=false>>=
+<<hist_jackal>>
+@
+\caption{\label{hist_jackal}Distribution of the difference of mean mandible length in random allocations, ten to each sex.}
+\end{figure}
+
+In total there $^{20}C_{10} = \Sexpr{formatC(choose(20,10), big.mark = ",", format = "f", digits = 0)}$ possible allocations of the 20 observations to two groups of ten
+<<>>=
+choose(20, 10)
+@
+so we have only evaluted a small proportion of these in the randomisation test.
+
+The main workhorse function we used above was \code{shuffle()}. In this example, we could have used the base R function \code{sample()} to generate the randomised indices \code{perm} that were used to permute the \code{Sex} factor. Where \code{shuffle()} comes into it's own is for generating permutation indicies from restricted permutation designs.
+
+\section{The shuffle() function}
+In the previous section I introduced the \code{shuffle()} function to generate permutation indicies for use in a randomisation test. Now we will take a closer look at \code{shuffle()} and explore the various restricted permutation designs from which it can generate permutation indicies.
+
+\section*{Computational details}
+<<seesionInfo, results=tex>>=
+toLatex(sessionInfo())
+@
+\bibliography{permute}
+\end{document}
