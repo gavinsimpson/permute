@@ -2,7 +2,15 @@ $Date$
 
 permute ChangeLog
 
-Version 0.5-0 (opened June 17, 2011)
+Version 0.5-1 (opened June 28, 2011)
+
+	* shuffle: now returns seq_len(n) for no permutation within
+	blocks or of blocks.
+
+	* tests: testing using the `testthat` package. Initial
+	infrasctructure.
+
+Version 0.5-0 (closed June 28, 2011)
 
 	* shuffle: renamed permuted.index() to shuffle()
 	* Vignette: the package has a vignette, which is very much
