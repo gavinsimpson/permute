@@ -80,7 +80,8 @@
                    "grid" =
                    pGrid(nrow = control$within$nrow,
                          ncol = control$within$ncol,
-                         mirror = control$within$mirror)
+                         mirror = control$within$mirror),
+                   "none" = seq_len(n)
                    )
     } else {
         ## If strata present, either permute samples, strata or both
