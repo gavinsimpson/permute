@@ -5,7 +5,7 @@
 \alias{shuffleSeries}
 \alias{shuffleStrata}
 
-\title{Utility functions for Unrestricted and restricted permutations}
+\title{Utility functions for unrestricted and restricted permutations}
 \description{
   Unrestricted and restricted permutations for time series,
   line transects, spatial grids and blocking factors.
@@ -43,8 +43,22 @@ shuffleStrata(strata, type, mirror = FALSE, start = NULL, flip = NULL,
     \code{"series"}.}
 }
 \details{
+  These are developer-level functions for generating permuted indexes
+  from one of several restricted and unrestricted designs.
+
+  \code{shuffleFree} is a wrapper to code underlying
+  \code{\link{sample}}, but without the extra over head of sanity
+  checks. It is defined as \code{.Internal(sample(x, size, FALSE,
+  NULL))}. You must arrange for the correct values to be supplied, where
+  \code{x} is a vector of indices to sample from, and \code{size} is the
+  number of indices to sample. Sampling is done without replacement and
+  without regard to prior probabilities. Argument \code{size} is allowed
+  so that one can draw a single observation at random from the indices
+  \code{x}. In general use, \code{size} would be set equal to
+  \code{length{x}}.
 }
 \value{
+  A integer vector of permuted indices.
 }
 %\note{
 %  \code{shuffle} is currently used in one Vegan function;
