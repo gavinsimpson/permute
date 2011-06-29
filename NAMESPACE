@@ -1,18 +1,20 @@
-## Visible functions:
+### Visible functions:
 export(`allPerms`, `Blocks`, `numPerms`, `permCheck`,
-       `permControl`, `permute`, `shuffle`, `Within`)
+       `permControl`, `permute`, `shuffle`, `Within`,
+       `shuffleFree`, `shuffleSeries`, `shuffleGrid`, `shuffleStrata`,
+       `getBlocks`, `getWithin`, `getStrata`)
 
-## Imports
+### Imports
 importFrom(`stats`, `nobs`)
 
-## S3 Methods
-# print methods
+### S3 Methods
+## print methods
 S3method(`print`, `allPerms`)
 S3method(`print`, `permCheck`)
 S3method(`print`, `permControl`)
 S3method(`print`, `summary.allPerms`)
 S3method(`print`, `summary.permCheck`)
-# summary methods
+## summary methods
 S3method(`summary`, `allPerms`)
 S3method(`summary`, `permCheck`)
 ## nobs() methods
@@ -20,3 +22,10 @@ S3method(`nobs`, `numeric`)
 S3method(`nobs`, `integer`)
 S3method(`nobs`, `matrix`)
 S3method(`nobs`, `data.frame`)
+## getFoo methods
+S3method(`getBlocks`, `default`)
+S3method(`getBlocks`, `permControl`)
+S3method(`getWithin`, `default`)
+S3method(`getWithin`, `permControl`)
+S3method(`getStrata`, `default`)
+S3method(`getStrata`, `permControl`)
