@@ -2,7 +2,14 @@ $Date$
 
 permute ChangeLog
 
-Version 0.5-1 (opened June 28, 2011)
+Version 0.5-2 (opened 5, 2011)
+
+	* shuffelSet: new function to generate a set of `n`
+	permutations without the overhead of `n` repeated calls to
+	`shuffle()`. Currently only for designs without
+	strata/blocks.
+
+Version 0.5-1 (closed July 5, 2011)
 
 	* shuffle: now returns seq_len(n) for no permutation within
 	blocks or of blocks.

@@ -2,7 +2,8 @@
 export(`allPerms`, `Blocks`, `numPerms`, `permCheck`,
        `permControl`, `permute`, `shuffle`, `Within`,
        `shuffleFree`, `shuffleSeries`, `shuffleGrid`, `shuffleStrata`,
-       `getBlocks`, `getWithin`, `getStrata`)
+       `getBlocks`, `getWithin`, `getStrata`,
+       `shuffleSet`)
 
 ### Imports
 importFrom(`stats`, `nobs`)
