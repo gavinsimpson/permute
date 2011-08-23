@@ -37,7 +37,7 @@
 \examples{
 ## vector
 len <- sample(1:10, 1)
-v <- numeric(sample(1:100, len))
+v <- as.numeric(sample(1:100, len))
 len
 obs <- nobs(v)
 isTRUE(all.equal(len, obs))
