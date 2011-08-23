@@ -5,8 +5,13 @@ export(`allPerms`, `Blocks`, `numPerms`, `permCheck`,
        `getBlocks`, `getWithin`, `getStrata`,
        `shuffleSet`)
 
-### Imports
-importFrom(`stats`, `nobs`)
+### Imports: nobs() only exists in R 2.13.0 for import. We define the
+### same nobs() generic in permute for export in older R.
+if (getRversion() >= "2.13.0") {
+    importFrom(`stats`, `nobs`)
+} else {
+    export(nobs)
+}
 
 ### S3 Methods
 ## print methods
