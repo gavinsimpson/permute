@@ -1,12 +1,10 @@
-`shuffle` <-
-    function (n, control = permControl())
-{
+`shuffle` <- function (n, control = permControl()) {
     ## If no strata then permute all samples using stated scheme
     if(is.null(control$strata)) {
         out <-
             switch(control$within$type,
                    "free" = shuffleFree(n, n),
-                   "series" = shuffleSeries(1:n,
+                   "series" = shuffleSeries(seq_len(n),
                    mirror = control$within$mirror),
                    "grid" = shuffleGrid(nrow = control$within$nrow,
                    ncol = control$within$ncol,
@@ -18,9 +16,9 @@
 
         ## permute strata?
         if(control$blocks$type == "none") {
-            out <- 1:n
+            out <- seq_len(n)
         } else {
-            flip <- runif(1L) < 0.5
+            flip <- runif(1L) < 0.5 ## why are we doing this? Null better?
             out <- shuffleStrata(control$strata,
                                  type = control$blocks$type,
                                  mirror = control$blocks$mirror,
