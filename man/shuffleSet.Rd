@@ -61,6 +61,11 @@ shuffleSet(10, 10, permControl(within = Within(type = "series")))
 CTRL <- permControl(within = Within(type = "series", mirror = TRUE))
 shuffleSet(10, 10, CTRL)
 
+## Permuting strata
+grp <- gl(4,5) ## 4 groups of 5 observations
+CTRL <- permControl(strata = grp, within = Within(type = "none"),
+                                  blocks = Blocks(type = "free"))
+shuffleSet(20, 10, control = CTRL)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
