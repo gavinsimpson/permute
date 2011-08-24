@@ -23,10 +23,10 @@
     pcheck <- permCheck(v, control = control, make.all = FALSE)
     ctrl <- pcheck$control
     ## get max number of permutations
-    Nperms <- pcheck$n
+    nperms <- pcheck$n
     ## sanity check - don't let this run away to infinity
     ## esp with type = "free"
-    if(Nperms > max)
+    if(nperms > max)
         stop("Number of possible permutations too large (> 'max')")
     type.wi <- ctrl$within$type
     if(type.wi != "none") {
