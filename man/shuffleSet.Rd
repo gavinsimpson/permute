@@ -66,6 +66,26 @@ grp <- gl(4,5) ## 4 groups of 5 observations
 CTRL <- permControl(strata = grp, within = Within(type = "none"),
                                   blocks = Blocks(type = "free"))
 shuffleSet(20, 10, control = CTRL)
+
+## 10 random permutations in presence of strata
+block <- gl(4, 5)
+CTRL <- permControl(strata = block,
+                    within = Within(type = "free"))
+shuffleSet(20, 10, CTRL)
+## as above but same random permutation within strata
+CTRL <- permControl(strata = block,
+                    within = Within(type = "free", constant = TRUE))
+shuffleSet(20, 10, CTRL)
+
+## time series within each level of block
+CTRL <- permControl(strata = block,
+                    within = Within(type = "series"))
+shuffleSet(20, 10, CTRL)
+## as above, but  with same permutation for each level
+CTRL <- permControl(strata = block,
+                    within = Within(type = "series",
+                                    constant = TRUE))
+shuffleSet(20, 10, CTRL)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
