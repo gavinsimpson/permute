@@ -24,16 +24,6 @@
 \Plainkeywords{permutations, restricted permutations, time series, transects, spatial grids, split-plot designs, Monte Carlo resampling, R} %% without formatting
 %% at least one keyword must be supplied
 
-%% publication information
-%% NOTE: This needs to filled out ONLY IF THE PAPER WAS ACCEPTED.
-%% If it was not (yet) accepted, leave them commented.
-%% \Volume{13}
-%% \Issue{9}
-%% \Month{September}
-%% \Year{2004}
-%% \Submitdate{2004-09-29}
-%% \Acceptdate{2004-09-29}
-
 %% The address of (at least) one author should be given
 %% in the following format:
 % \Address{
@@ -81,7 +71,7 @@ data(jackal)
 jackal
 @
 
-The interest is whether there is a difference in the mean mandible length between male and femal golden jackals. The null hypothesis is that there is no difference in mandible length betwene the two sexes, whilst the alternative hypothesis is that males have larger mandibles. The usual statistical test of this hypothesis is a one-sided $t$ test, which can be applied using \code{t.test()}
+The interest is whether there is a difference in the mean mandible length between male and femal golden jackals. The null hypothesis is that there is zero difference in mandible length betwene the two sexes or that females have larger mandible. The alternative hypothesis is that males have larger mandibles. The usual statistical test of this hypothesis is a one-sided $t$ test, which can be applied using \code{t.test()}
 
 <<ttest_jackal>>=
 jack.t <-t.test(Length ~ Sex, data = jackal, var.equal = TRUE, alternative = "greater")
@@ -158,6 +148,81 @@ The main workhorse function we used above was \code{shuffle()}. In this example,
 
 \section{The shuffle() function}
 In the previous section I introduced the \code{shuffle()} function to generate permutation indicies for use in a randomisation test. Now we will take a closer look at \code{shuffle()} and explore the various restricted permutation designs from which it can generate permutation indicies.
+
+\code{shuffle()} has two arguments: i) \code{n}, the number of observations in the data set to be permuted, and ii) \code{control}, a list that defines the permutation design describing how the samples should be permuted.
+<<>>=
+args(shuffle)
+@
+A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{permControl()}, which return a list specifying all the options available for controling the sorts of permutations returned by \code{shuffle()}
+<<>>=
+str(permControl())
+@
+The defaults describe a random permutation design where all objects are freely exchangeable. Using these defaults, \code{shuffle(1:10)} amounts to \code{sample(1:10, 10, replace = FALSE)}:
+<<>>=
+set.seed(2)
+(r1 <- shuffle(1:10))
+set.seed(2)
+(r2 <- sample(1:10, 10, replace = FALSE))
+all.equal(r1, r2)
+@
+
+\subsection{Generating restricted permutations}
+Several types of permutation are available in \pkg{permute}:
+
+\begin{itemize}
+  \item Free permutation of objects
+  \item Time series or line transect designs, where the temporal or spatial ordering is preserved.
+  \item Spatial grid designs, where the spatial ordering is preserved in both coordinate directions
+  \item Permutation of blocks or groups of samples.
+\end{itemize}
+
+The first three of these can be nested within the levels of a factor or to the levels of that factor, or to both. Such flexibility allows the analysis of split-plot designs using permutation tests.
+
+\code{permControl()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{permControl()} has two main arguments that specify how samples are permuted \emph{within} blocks of samples or at the block level itself. These are \code{within} and \code{blocks}. Two convenience functions, \code{Within()} and \code{Blocks()} can be used to set the various options for permutation.
+
+For example, to permute the observations \code{1:10} assuming a time series desing for the entire set of observations, the following control object would be used
+
+<<keep.source=true>>=
+set.seed(4)
+x <- 1:10
+CTRL <- permControl(within = Within(type = "series"))
+perm <- shuffle(10, control = CTRL)
+perm
+x[perm] ## equivalent
+@
+
+It is assumed that the observations are in temporal or transect order. We only specified the type of permutation within blocks, the remaining options were set to their defaults via \code{Within()}.
+
+A more complex design, with three blocks, and a 3 by 3 spatial grid arrangement within each block can be created as follows
+
+<<keep.source=true>>=
+set.seed(4)
+block <- gl(3, 9)
+CTRL <- permControl(strata = block,
+                    within = Within(type = "grid", ncol = 3, nrow = 3))
+perm <- shuffle(length(block), control = CTRL)
+perm
+@
+
+Visualising the permutation as the 3 matrices may help illustrate how the data have been shuffled
+
+<<keep.source=true>>=
+## Original
+lapply(split(1:27, block), matrix, ncol = 3)
+## Shuffled
+lapply(split(perm, block), matrix, ncol = 3)
+@
+
+In the first grid, the lower-left corner of the grid was set to row 2 and column 2 of the original, to row 1 and column 2 in the second grid, and to row 3 column 2 in the third grid. To have the same permutation within each level of \code{block}, \code{constant = TRUE} needs to be specified
+
+<<>>=
+set.seed(4)
+CTRL <- permControl(strata = block,
+                    within = Within(type = "grid", ncol = 3, nrow = 3,
+                                    constant = TRUE))
+perm2 <- shuffle(length(block), control = CTRL)
+lapply(split(perm2, block), matrix, ncol = 3)
+@
 
 \section*{Computational details}
 <<seesionInfo, results=tex>>=
