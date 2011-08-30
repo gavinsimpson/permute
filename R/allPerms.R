@@ -73,17 +73,17 @@
                     res <- vector(mode = "list", length = ng)
                     add <- c(0, cumsum(tab)[1:(ng-1)])
                     for(j in seq_along(tab)) {
-                        nperms <- numPerms(tab[j], ctrl.wi)
+                        np <- numPerms(tab[j], ctrl.wi)
                         ord <- switch(type.wi,
                                       free = allFree(tab[j]),
-                                      series = allSeries(tab[j], nperms, ctrl$within$mirror))
+                                      series = allSeries(tab[j], np, ctrl$within$mirror))
                         perm.wi <- nrow(ord)
                         if(j == 1) {
                             a <- 1
-                            b <- Nperms / perm.wi
+                            b <- np / perm.wi
                         } else {
                             b <- b/perm.wi
-                            a <- Nperms / (b*perm.wi)
+                            a <- np / (b*perm.wi)
                         }
                         res[[j]] <- matrix(rep(bar(ord+add[j], a),
                                                each = b),
@@ -97,19 +97,19 @@
                 } else {
                     ## same number of observations per level of strata
                     ctrl.wi <- permControl(strata = NULL, within = ctrl$within)
-                    nperms <- numPerms(pg, ctrl.wi)
+                    np <- numPerms(pg, ctrl.wi)
                     ord <-
                         switch(type.wi,
                                free = allFree(pg),
-                               series = allSeries(pg, nperms, ctrl$within$mirror),
-                               grid = allGrid(pg, nperms, ctrl$within$nrow,
+                               series = allSeries(pg, np, ctrl$within$mirror),
+                               grid = allGrid(pg, np, ctrl$within$nrow,
                                ctrl$within$ncol, ctrl$within$mirror,
                                ctrl$within$constant))
                     perm.wi <- nrow(ord)
                     add <- seq(from = 0, by = pg, length.out = ng)
                     res <- vector(mode = "list", length = ng)
                     a <- 1
-                    b <- Nperms / perm.wi
+                    b <- np / perm.wi
                     for(i in seq_len(ng)) {
                         res[[i]] <- matrix(rep(bar(ord+add[i], a), each = b),
                                            ncol = pg)
