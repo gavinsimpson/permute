@@ -87,8 +87,8 @@
                                        "free" = shuffleFree,
                                        "series" = shuffleSeries,
                                        "grid" = shuffleGrid)
+                            tmp[i,][which(MATCH)] <- gr[do.call(FUN, Args)]
                         }
-                        tmp[i,][which(MATCH)] <- gr[do.call(FUN, Args)]
                     }
                 }
             }
