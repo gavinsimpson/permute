@@ -4,19 +4,23 @@ permute ChangeLog
 
 Version 0.5-3 (opened August 23, 2011)
 
+	* shuffleSet: now handles all permutation types that are
+	available in shuffle().
+
 	* nobs.Rd: fixed an example which created a numeric vector of
 	zeros instead of changing sampled vector to numeric. The example
 	yielded an error in R 2.14.0 (under development) where only one
 	argument was accepted for numeric() and two or more args cause an
 	error. The two isTRUE() cases should be true only exceptionally,
 	and may call for a fix.
+
 	* NAMESPACE, nobs-methods.R: The package relied on import(stats,
 	nobs), but that works only in R 2.13 and failed in R 2.12.2. Now
 	we define and export nobs() generic in permute package for older
 	R. The help file still gives a warning for missing documentation
 	of nobs in R 2.12.2 and prior, but there is no obvious fix to
-	this. 
-	
+	this.
+
 Version 0.5-2 (closed August 23, 2011)
 
 	* shuffelSet: new function to generate a set of `n`
