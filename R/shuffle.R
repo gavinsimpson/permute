@@ -64,8 +64,9 @@
                                    out[gr][shuffleFree(n.gr, n.gr)]
                                },
                                "series" =
-                               shuffleSeries(gr, mirror = control$within$mirror,
-                                             start = start, flip = flip),
+                               gr[shuffleSeries(seq_len(n.gr),
+                                                mirror = control$within$mirror,
+                                                start = start, flip = flip)],
                                "grid" =
                                gr[shuffleGrid(nrow = control$within$nrow,
                                               ncol = control$within$ncol,
