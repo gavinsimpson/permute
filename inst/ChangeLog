@@ -2,7 +2,15 @@ $Date$
 
 permute ChangeLog
 
-Version 0.5-3 (opened August 23, 2011)
+Version 0.5-4 (opened August 31, 2011)
+
+	* permCheck: deprecate `permCheck()` in favour of `check()`.
+
+	* allPerms: code clean-up
+
+	* preparing for first release to CRAN.
+
+Version 0.5-3 (closed August 31, 2011)
 
 	* shuffleSet: now handles all permutation types that are
 	available in shuffle().
