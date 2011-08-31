@@ -46,7 +46,7 @@
             stop("'n' and length of 'strata' don't match.")
     }
     ## check the control design
-    control <- permCheck(n, control = control)$control
+    control <- check(n, control = control)$control
     if(use.strata) {
         n.grp <- length(tab)
         opar <- par(no.readonly=TRUE, mar=c(2,2,2,1)+0.1,

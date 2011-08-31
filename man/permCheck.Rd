@@ -1,23 +1,21 @@
-\name{permCheck}
-\alias{permCheck}
-\alias{print.permCheck}
-\alias{print.summary.permCheck}
-\alias{summary.permCheck}
+\name{check}
+\alias{check}
+\alias{permCheck} % for the deprecated function
+\alias{print.check}
+\alias{print.summary.check}
+\alias{summary.check}
 \alias{permuplot}
 
 \title{Utility functions for permutation schemes}
 \description{
-  \code{permCheck} provides checking of permutation schemes for
-  validity. \code{allPerms} enumerates all possible permutations for the
-  given scheme. \code{getNumObs} is a utility function to return the
-  number of observations for a range of R and ordination
-  objects. \code{permuplot} produces a graphical representation of the
+  \code{check} provides checking of permutation schemes for
+  validity. \code{permuplot} produces a graphical representation of the
   selected permutation design.
 }
 \usage{
-permCheck(object, control = permControl(), make.all = TRUE)
+check(object, control = permControl(), make.all = TRUE)
 
-\method{summary}{permCheck}(object, \dots)
+\method{summary}{check}(object, \dots)
 
 permuplot(n, control = permControl(), col = par("col"),
           hcol = "red", shade = "lightgrey", xlim = NULL, ylim = NULL,
@@ -28,13 +26,13 @@ permuplot(n, control = permControl(), col = par("col"),
 \arguments{
   \item{object}{an R object. See Details for a
     complete description, especially for \code{numPerms}. For
-    \code{\link{summary.permCheck}} an object of class
-    \code{"permCheck"}. For \code{\link{summary.allPerms}} an object of
+    \code{\link{summary.check}} an object of class
+    \code{"check"}. For \code{\link{summary.allPerms}} an object of
     class \code{"allPerms"}.} 
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
     \code{\link{permControl}}.}
-  \item{make.all}{logical; should \code{permCheck} generate all
+  \item{make.all}{logical; should \code{check} generate all
     possible permutations? Useful if want to check permutation design
     but not produce the matrix of all permutations.}
   \item{n}{the number of observations or an 'object' from which the
@@ -53,17 +51,16 @@ permuplot(n, control = permControl(), col = par("col"),
     moment.}
 }
 \details{
-  \code{permCheck}, \code{allPerms}, \code{numPerms} and
-  \code{permuplot} are utility functions for working with the new
-  permutation schemes available in \code{\link{shuffle}}.
+  \code{check} and \code{permuplot} are utility functions for working
+  with the new permutation schemes available in \code{\link{shuffle}}.
 
-  \code{permCheck} is used to check the current permutation schemes
+  \code{check} is used to check the current permutation schemes
   against the object to which it will be applied. It calculates the
   maximum number of possible permutations for the number of observations
   in \code{object} and the permutation scheme described by
   \code{control}. The returned object contains component \code{control},
   an object of class \code{"permControl"} suitably modified if
-  \code{permCheck} identifies a problem.
+  \code{check} identifies a problem.
 
   The main problem is requesting more permutations than possible with
   the number of observations and the permutation design. In such cases,
@@ -76,11 +73,11 @@ permuplot(n, control = permControl(), col = par("col"),
   permutations, and as such complete enumeration of all permutations is
   turned  on (\code{control$complete} is set to \code{TRUE}).
 
-  Function \code{getNumObs} is a simple generic function to return the
-  number of observations in a range of R objects. The default method
-  will work for any object for which a \code{\link[vegan]{scores}}
-  method exists. This includes matrices and data frames, as well as
-  specific methods for numeric or integer vectors.
+  % Function \code{getNumObs} is a simple generic function to return the
+  % number of observations in a range of R objects. The default method
+  % will work for any object for which a \code{\link[vegan]{scores}}
+  % method exists. This includes matrices and data frames, as well as
+  % specific methods for numeric or integer vectors.
 
   \code{permuplot} is a graphical utility function, which produces a
   graphical representation of a permutation design. It takes the number
@@ -100,7 +97,7 @@ permuplot(n, control = permControl(), col = par("col"),
   standard ordering for matrices - columns are filled first.
 }
 \value{
-  For \code{permCheck} a list containing the maximum number of
+  For \code{check} a list containing the maximum number of
   permutations possible and an object of class
   \code{"\link{permControl}"}.
 
@@ -122,59 +119,59 @@ example(pyrifos)
 
 ## no restrictions - lots of perms
 CONTROL <- permControl(within = Within(type = "free"))
-(check1 <- permCheck(pyrifos, CONTROL))
+(check1 <- check(pyrifos, CONTROL))
 summary(check1)
 
 ## no strata but data are series with no mirroring, so 132 permutations
 CONTROL <- permControl(within = Within(type = "series",
                                        mirror = FALSE))
-permCheck(pyrifos, CONTROL)
+check(pyrifos, CONTROL)
 
 ## no strata but data are series with mirroring, so 264 permutations
 CONTROL <- permControl(within = Within(type = "series",
                                        mirror = TRUE))
-permCheck(pyrifos, control = CONTROL)
+check(pyrifos, control = CONTROL)
 
 ## unrestricted within strata
-permCheck(pyrifos, control = permControl(strata = ditch,
+check(pyrifos, control = permControl(strata = ditch,
                    within = Within(type = "free")))
 
 ## time series within strata, no mirroring
-permCheck(pyrifos, control = permControl(strata = ditch,
+check(pyrifos, control = permControl(strata = ditch,
                    within = Within(type = "series",
                                                   mirror = FALSE)))
 
 ## time series within strata, with mirroring
-permCheck(pyrifos, control = permControl(strata = ditch,
+check(pyrifos, control = permControl(strata = ditch,
                    within = Within(type = "series",
                                                   mirror = TRUE)))
 
 ## time series within strata, no mirroring, same permutation
 ## within strata
-permCheck(pyrifos, control = permControl(strata = ditch,
+check(pyrifos, control = permControl(strata = ditch,
                    within = Within(type = "series",
                                    constant = TRUE)))
 
 ## time series within strata, with mirroring, same permutation
 ## within strata
-permCheck(pyrifos, control = permControl(strata = ditch,
+check(pyrifos, control = permControl(strata = ditch,
                    within = Within(type = "series",
                                                   mirror = TRUE,
                                                   constant = TRUE)))
 
 ## permute strata
-permCheck(pyrifos, permControl(strata = ditch,
+check(pyrifos, permControl(strata = ditch,
                                within = Within(type = "none"),
                                blocks = Blocks(type = "free")))
 %}
 
 ## this should also also for arbitrary vectors
-vec1 <- permCheck(1:100)
-vec2 <- permCheck(1:100, permControl())
+vec1 <- check(1:100)
+vec2 <- check(1:100, permControl())
 all.equal(vec1, vec2)
-vec3 <- permCheck(1:100, permControl(within = Within(type = "series")))
+vec3 <- check(1:100, permControl(within = Within(type = "series")))
 all.equal(100, vec3$n)
-vec4 <- permCheck(1:100, permControl(within =
+vec4 <- check(1:100, permControl(within =
                                      Within(type= "series",
                                                 mirror = TRUE)))
 all.equal(vec4$n, 200)
@@ -185,7 +182,7 @@ ctrl <- permControl(strata = fac,
                     within = Within(type = "grid", mirror = FALSE,
                                     constant = TRUE, nrow = 3,
                                     ncol = 2))
-permCheck(1:12, ctrl)
+check(1:12, ctrl)
 
 numPerms(1:12, control = ctrl)
 (tmp <- allPerms(12, control = ctrl, observed = TRUE))

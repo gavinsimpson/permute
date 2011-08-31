@@ -69,7 +69,7 @@ shuffleStrata(strata, type, mirror = FALSE, start = NULL, flip = NULL,
 %\references{
 %}
 \author{Gavin Simpson}
-\seealso{\code{\link{permCheck}}, a utility function for checking
+\seealso{\code{\link{check}}, a utility function for checking
   permutation scheme described by
   \code{\link{permControl}}. \code{\link{shuffle}} as a user-oriented
   wrapper to these functions.}

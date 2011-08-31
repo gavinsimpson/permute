@@ -1,4 +1,4 @@
-`print.summary.permCheck` <- function(x, ...)
+`print.summary.check` <- function(x, ...)
 {
     cat(paste("Number of possible permutations:", x$n, "\n"))
     print(x$control)

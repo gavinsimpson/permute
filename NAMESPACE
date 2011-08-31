@@ -1,5 +1,5 @@
 ### Visible functions:
-export(`allPerms`, `Blocks`, `numPerms`, `permCheck`,
+export(`allPerms`, `Blocks`, `numPerms`, `check`, `permCheck`,
        `permControl`, `permute`, `shuffle`, `Within`,
        `shuffleFree`, `shuffleSeries`, `shuffleGrid`, `shuffleStrata`,
        `getBlocks`, `getWithin`, `getStrata`,
@@ -16,13 +16,13 @@ if (getRversion() >= "2.13.0") {
 ### S3 Methods
 ## print methods
 S3method(`print`, `allPerms`)
-S3method(`print`, `permCheck`)
+S3method(`print`, `check`)
 S3method(`print`, `permControl`)
 S3method(`print`, `summary.allPerms`)
-S3method(`print`, `summary.permCheck`)
+S3method(`print`, `summary.check`)
 ## summary methods
 S3method(`summary`, `allPerms`)
-S3method(`summary`, `permCheck`)
+S3method(`summary`, `check`)
 ## nobs() methods
 S3method(`nobs`, `numeric`)
 S3method(`nobs`, `integer`)

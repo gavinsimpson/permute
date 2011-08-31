@@ -53,7 +53,7 @@ allPerms(n, control = permControl(), max = 9999,
   number of observations and permutation scheme selected. The matrix has
   two additional attributes \code{control} and
   \code{observed}. Attribute \code{control} contains the argument
-  \code{control} (possibly updated via \code{permCheck}). Attribute 
+  \code{control} (possibly updated via \code{check}). Attribute 
   \code{observed} contains argument \code{observed}.
 }
 \author{Gavin Simpson}

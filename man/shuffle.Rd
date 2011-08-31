@@ -136,7 +136,7 @@ getStrata(object, ...)
 %\references{
 %}
 \author{Gavin Simpson}
-\seealso{\code{\link{permCheck}}, a utility function for checking
+\seealso{\code{\link{check}}, a utility function for checking
   permutation scheme described by \code{\link{permControl}}.}
 
 \examples{
@@ -239,7 +239,7 @@ pt.test <- function(x, group, control) {
         (xbar - ybar) / (pooled * sqrt(1/m + 1/n))
     }
     ## check the control object
-    control <- permCheck(x, control)$control
+    control <- check(x, control)$control
     ## number of observations
     Nobs <- nobs(x)
     ## group names

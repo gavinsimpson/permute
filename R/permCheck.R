@@ -1,5 +1,5 @@
-`permCheck` <- function(object, control = permControl(),
-                        make.all = TRUE)
+`check` <- function(object, control = permControl(),
+                    make.all = TRUE)
 {
     ## if object is numeric or integer and of length 1,
     ## extend the object
@@ -49,6 +49,13 @@
                                       observed = FALSE)
     }
     retval <- list(n = num.pos, control = control)
-    class(retval) <- "permCheck"
+    class(retval) <- "check"
     retval
+}
+
+## depricate check
+`permCheck` <- function(object, control = permControl(),
+                        make.all = TRUE) {
+    .Deprecated(new = "check", "permute")
+    check(object = object, control = control, make.all = make.all)
 }

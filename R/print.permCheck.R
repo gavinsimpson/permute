@@ -1,4 +1,4 @@
-`print.permCheck` <- function(x, ...)
+`print.check` <- function(x, ...)
 {
     print(x$n)
 }

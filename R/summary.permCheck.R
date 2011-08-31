@@ -1,5 +1,5 @@
-`summary.permCheck` <- function(object, ...)
+`summary.check` <- function(object, ...)
 {
-    class(object) <- "summary.permCheck"
+    class(object) <- "summary.check"
     object
 }
