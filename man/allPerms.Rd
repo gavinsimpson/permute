@@ -56,6 +56,15 @@ allPerms(n, control = permControl(), max = 9999,
   \code{control} (possibly updated via \code{check}). Attribute 
   \code{observed} contains argument \code{observed}.
 }
+\section{Warning}{
+  This function currently assumes that any strata are represented by
+  contiguous blocks in the order of the levels of \code{strata}. This is
+  unlike \code{\link{shuffle}} and \code{\link{shuffleSet}}.
+
+  If permuting the strata themselves, a balanced design is required (the
+  same number of observations in each level of \code{strata}. This is
+  common to all functions in the package.
+}
 \author{Gavin Simpson}
 \examples{
 ## allPerms can work with a vector
@@ -86,7 +95,7 @@ numPerms(seq_len(Nobs), control = ctrl)
 ## well as the matrix of permutations
 % FIXME: uncomment the two lines below when we remove old permute
 % code from vegan and have vegan depend on permute
-##summary(tmp3)
-##summary(tmp4)
+summary(tmp3)
+summary(tmp4)
 %}
 }

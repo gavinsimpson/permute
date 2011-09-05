@@ -2,6 +2,13 @@ $Date$
 
 permute ChangeLog
 
+Version 0.6-0 (opened September 5, 2011)
+
+	* allPerms: added warning regarding current need for samples
+	to be arranged in order of any strata.
+
+	* Release: Pushed to CRAN. First beta release.
+
 Version 0.5-4 (opened August 31, 2011)
 
 	* permCheck: deprecate `permCheck()` in favour of `check()`.
