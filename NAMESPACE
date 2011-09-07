@@ -3,7 +3,7 @@ export(`allPerms`, `Blocks`, `numPerms`, `check`, `permCheck`,
        `permControl`, `permute`, `shuffle`, `Within`,
        `shuffleFree`, `shuffleSeries`, `shuffleGrid`, `shuffleStrata`,
        `getBlocks`, `getWithin`, `getStrata`,
-       `shuffleSet`)
+       `shuffleSet`, `permuplot`)
 
 ### Imports: nobs() only exists in R 2.13.0 for import. We define the
 ### same nobs() generic in permute for export in older R.

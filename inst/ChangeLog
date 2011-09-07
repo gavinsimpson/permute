@@ -2,7 +2,11 @@ $Date$
 
 permute ChangeLog
 
-Version 0.6-0 (opened September 5, 2011)
+Version 0.6-1 (opened September 7, 2011)
+
+	* NAMESPACE: export(permuplot)
+
+Version 0.6-0 (released to CRAN on September 7, 2011)
 
 	* allPerms: added warning regarding current need for samples
 	to be arranged in order of any strata.
