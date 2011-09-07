@@ -2,11 +2,15 @@ $Date$
 
 permute ChangeLog
 
-Version 0.6-1 (opened September 7, 2011)
+Version 0.6-1 (released to CRAN on September 7, 2011)
 
 	* NAMESPACE: export(permuplot)
 
-Version 0.6-0 (released to CRAN on September 7, 2011)
+	* check.Rd: temporarily supress some of the examples to run
+	only on vegan >= 2.0-0. Needed during transition to pass
+	checks on CRAN until version 2.0-0 is released.
+
+Version 0.6-0 (closed September 7, 2011)
 
 	* allPerms: added warning regarding current need for samples
 	to be arranged in order of any strata.

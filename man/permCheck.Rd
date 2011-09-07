@@ -110,6 +110,11 @@ permuplot(n, control = permControl(), col = par("col"),
 
 \examples{
 %\dontrun{
+
+## Only for vegan >= 2.0-0
+vers <- packageDescription("vegan")$Version
+
+if(vers >= "2.0-0") {
 ## use example data from ?pyrifos in package vegan
 require(vegan)
 example(pyrifos)
@@ -120,7 +125,7 @@ example(pyrifos)
 ## no restrictions - lots of perms
 CONTROL <- permControl(within = Within(type = "free"))
 (check1 <- check(pyrifos, CONTROL))
-summary(check1)
+##summary(check1)
 
 ## no strata but data are series with no mirroring, so 132 permutations
 CONTROL <- permControl(within = Within(type = "series",
@@ -195,8 +200,9 @@ numPerms(1:12, control = ctrl)
 (tmp4 <- allPerms(12, control = ctrl))
 ## prints out details of the permutation scheme as
 ## well as the matrix of permutations
-summary(tmp) %% FIXME these don't print the scheme
-summary(tmp2)
+##summary(tmp) %% FIXME these don't print the scheme
+##summary(tmp2)
+}
 
 %% FIXME - need all these updating to new API in permControl...
 %% Fixed one, above, but there may still be problems with some of
