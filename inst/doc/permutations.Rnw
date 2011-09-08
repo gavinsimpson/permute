@@ -157,10 +157,10 @@ A series of convenience functions are provided that allow the user to set-up eve
 <<>>=
 str(permControl())
 @
-The defaults describe a random permutation design where all objects are freely exchangeable. Using these defaults, \code{shuffle(1:10)} amounts to \code{sample(1:10, 10, replace = FALSE)}:
+The defaults describe a random permutation design where all objects are freely exchangeable. Using these defaults, \code{shuffle(10)} amounts to \code{sample(1:10, 10, replace = FALSE)}:
 <<>>=
 set.seed(2)
-(r1 <- shuffle(1:10))
+(r1 <- shuffle(10))
 set.seed(2)
 (r2 <- sample(1:10, 10, replace = FALSE))
 all.equal(r1, r2)
