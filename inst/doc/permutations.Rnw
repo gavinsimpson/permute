@@ -46,7 +46,6 @@
 
 %% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \begin{document}
 
 %% include your article here, just as usual
@@ -58,7 +57,7 @@ options(useFancyQuotes="UTF-8")
 \section{Introduction}
 In classical frequentist statistics, the significance of a relationship or model is determined by reference to a null distribution for the test statistic. This distribution is derived mathematically and the probability of achieving a test statistic as large or larger if the null hypothesis were true is looked-up from this null distribution. In deriving this probability, some assumptions about the data or the errors are made. If these assumptions are violated, then the validity of the derived $p$-value may be questioned.
 
-An alternative to deriving the null dsitribution from theory is to generate a null distribution for the test statistic by randomly shuffling the data in some manner, refitting the model and deriving values for the test statistic for the permuted data. The level of significance of the test can be computed as the proportion of values of the test statistic from the null distribution that are equal to or larger than the observed value.
+An alternative to deriving the null distribution from theory is to generate a null distribution for the test statistic by randomly shuffling the data in some manner, refitting the model and deriving values for the test statistic for the permuted data. The level of significance of the test can be computed as the proportion of values of the test statistic from the null distribution that are equal to or larger than the observed value.
 
 In many data sets, simply shuffling the data at random is inappropriate; under the null hypothesis, that data are not freely exchangeable. If there is temporal or spatial correlation, or the samples are clustered in some way, such as multiple samples collected from each of a number of fields. The \pkg{permute} was designed to provide facilities for generating these restricted permutations for use in randomisation tests.
 
@@ -71,7 +70,7 @@ data(jackal)
 jackal
 @
 
-The interest is whether there is a difference in the mean mandible length between male and femal golden jackals. The null hypothesis is that there is zero difference in mandible length betwene the two sexes or that females have larger mandible. The alternative hypothesis is that males have larger mandibles. The usual statistical test of this hypothesis is a one-sided $t$ test, which can be applied using \code{t.test()}
+The interest is whether there is a difference in the mean mandible length between male and female golden jackals. The null hypothesis is that there is zero difference in mandible length between the two sexes or that females have larger mandible. The alternative hypothesis is that males have larger mandibles. The usual statistical test of this hypothesis is a one-sided $t$ test, which can be applied using \code{t.test()}
 
 <<ttest_jackal>>=
 jack.t <-t.test(Length ~ Sex, data = jackal, var.equal = TRUE, alternative = "greater")
@@ -91,7 +90,7 @@ Assumption 1 is unlikely to be valid for museum specimens such as these, that ha
 var.test(Length ~ Sex, data = jackal)
 fligner.test(Length ~ Sex, data = jackal)
 @
-This assumption may be relaxed using \code{var.equal = FALSE} (the default) in our call to \code{t.test()}, to employ Welch's modification for un-equal variances. Assumption 3 may be valid, but with such a small sample we are able to reliably test this.
+This assumption may be relaxed using \code{var.equal = FALSE} (the default) in our call to \code{t.test()}, to employ Welch's modification for unequal variances. Assumption 3 may be valid, but with such a small sample we are able to reliably test this.
 
 A randomisation test of the same hypothesis can be performed by randomly allocating ten of the mandible lengths to the male group and the remaining lengths to the female group. This randomisation is justified under the null hypothesis because the observed difference in mean mandible length between the two sexes is just a typical value for the difference in a sample if there were no difference in the population. An appropriate test statistic needs to be selected. We could use the $t$ statistic as derived in the $t$-test. Alternatively, we could base our randomisation test on the difference of means $D_i$ (male - female).
 
@@ -114,7 +113,7 @@ Djackal[5000] <- with(jackal, meanDif(Length, Sex))
 @
 The observed difference of means was added to the null distribution, because under the null hypothesis the observed allocation of mandible lengths to male and female jackals is just one of the possible random allocations.
 
-The null distribuion of $D_i$ can be visualised using a histogram, as shown in Figure~\ref{hist_jackal}. The observed difference of means (\Sexpr{round(Djackal[5000], 2)}) is indicated by the red tickmark.
+The null distribution of $D_i$ can be visualised using a histogram, as shown in Figure~\ref{hist_jackal}. The observed difference of means (\Sexpr{round(Djackal[5000], 2)}) is indicated by the red tick mark.
 
 <<hist_jackal, fig=false, echo=true, eval=false, keep.source=true>>=
 hist(Djackal, main = "",
@@ -129,7 +128,7 @@ giving a permutational $p$-value of
 <<>>=
 Dbig / length(Djackal)
 @
-which is comparable with that determined from the frequestist $t$-test, and indicate strong evidence against the null hypothesis of no difference.
+which is comparable with that determined from the frequentist $t$-test, and indicate strong evidence against the null hypothesis of no difference.
 \begin{figure}[t]
   \centering
 <<draw_hist_jackal, fig=true, echo=false>>=
@@ -142,18 +141,18 @@ In total there $^{20}C_{10} = \Sexpr{formatC(choose(20,10), big.mark = ",", form
 <<>>=
 choose(20, 10)
 @
-so we have only evaluted a small proportion of these in the randomisation test.
+so we have only evaluated a small proportion of these in the randomisation test.
 
-The main workhorse function we used above was \code{shuffle()}. In this example, we could have used the base R function \code{sample()} to generate the randomised indices \code{perm} that were used to permute the \code{Sex} factor. Where \code{shuffle()} comes into it's own is for generating permutation indicies from restricted permutation designs.
+The main workhorse function we used above was \code{shuffle()}. In this example, we could have used the base R function \code{sample()} to generate the randomised indices \code{perm} that were used to permute the \code{Sex} factor. Where \code{shuffle()} comes into it's own is for generating permutation indices from restricted permutation designs.
 
-\section{The shuffle() function}
-In the previous section I introduced the \code{shuffle()} function to generate permutation indicies for use in a randomisation test. Now we will take a closer look at \code{shuffle()} and explore the various restricted permutation designs from which it can generate permutation indicies.
+\section{The shuffle() and shuffleSet() functions}
+In the previous section I introduced the \code{shuffle()} function to generate permutation indices for use in a randomisation test. Now we will take a closer look at \code{shuffle()} and explore the various restricted permutation designs from which it can generate permutation indices.
 
 \code{shuffle()} has two arguments: i) \code{n}, the number of observations in the data set to be permuted, and ii) \code{control}, a list that defines the permutation design describing how the samples should be permuted.
 <<>>=
 args(shuffle)
 @
-A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{permControl()}, which return a list specifying all the options available for controling the sorts of permutations returned by \code{shuffle()}
+A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{permControl()}, which return a list specifying all the options available for controlling the sorts of permutations returned by \code{shuffle()}
 <<>>=
 str(permControl())
 @
@@ -180,7 +179,7 @@ The first three of these can be nested within the levels of a factor or to the l
 
 \code{permControl()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{permControl()} has two main arguments that specify how samples are permuted \emph{within} blocks of samples or at the block level itself. These are \code{within} and \code{blocks}. Two convenience functions, \code{Within()} and \code{Blocks()} can be used to set the various options for permutation.
 
-For example, to permute the observations \code{1:10} assuming a time series desing for the entire set of observations, the following control object would be used
+For example, to permute the observations \code{1:10} assuming a time series design for the entire set of observations, the following control object would be used
 
 <<keep.source=true>>=
 set.seed(4)
@@ -213,9 +212,10 @@ lapply(split(1:27, block), matrix, ncol = 3)
 lapply(split(perm, block), matrix, ncol = 3)
 @
 
-In the first grid, the lower-left corner of the grid was set to row 2 and column 2 of the original, to row 1 and column 2 in the second grid, and to row 3 column 2 in the third grid. To have the same permutation within each level of \code{block}, \code{constant = TRUE} needs to be specified
+In the first grid, the lower-left corner of the grid was set to row 2 and column 2 of the original, to row 1 and column 2 in the second grid, and to row 3 column 2 in the third grid.
 
-<<>>=
+To have the same permutation within each level of \code{block}, use the \code{constant} argument of the \code{Within()} function, setting it to \code{TRUE}
+<<keep.source=TRUE>>=
 set.seed(4)
 CTRL <- permControl(strata = block,
                     within = Within(type = "grid", ncol = 3, nrow = 3,
@@ -223,6 +223,21 @@ CTRL <- permControl(strata = block,
 perm2 <- shuffle(length(block), control = CTRL)
 lapply(split(perm2, block), matrix, ncol = 3)
 @
+
+\subsection{Generating sets of permutations with shuffleSet()}
+There are several reasons why one might wish to generate a set of $n$ permutations instead of repeatedly generating permutations one at a time. Interpreting the permutation design happens each time \code{shuffle()} is called. This is an unnecessary computational burden, especially if you want to perform tests with large numbers of permutations. Furthermore, having the set of permutations available allows for expedited use with other functions, they can be iterated over using \code{for} loops or the \code{apply} family of functions, and the set of permutations can be exported for use outside of R.
+
+The \code{shuffleSet()} function allows the generation of sets of permutations from any of the designs available in \pkg{permute}. \code{shuffleSet()} takes an additional argument to that of \code{shuffle()}, \code{nset}, which is the number of permutations required for the set. Internally, \code{shuffle()} and \code{shuffleSet()} are very similar, with the major difference being that \code{shuffleSet()} arranges repeated calls to the workhorse permutation-generating functions with only the overhead associated with interpreting the permutation design once. \code{shuffleSet()} returns a matrix where the rows represent different permutations in the set.
+
+As an illustration, consider again the simple time series example from earlier. Here I generate a set of 5 permutations from the design, with the results returned as a matrix
+
+<<keep.source=true>>=
+set.seed(4)
+CTRL <- permControl(within = Within(type = "series"))
+pset <- shuffleSet(10, nset = 5, control = CTRL)
+pset
+@
+
 
 \section*{Computational details}
 <<seesionInfo, results=tex>>=
