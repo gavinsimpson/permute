@@ -33,7 +33,7 @@
         start.col <- shuffleFree(ncol, 1L)
     ir <- seq(start.row, length=nrow) %% nrow
     ic <- seq(start.col, length=ncol) %% ncol
-    if(!is.null(flip)) {
+    if(!is.null(flip) && mirror) {
         if(any(flip)) {
             if(flip[1L])
                 ir <- rev(ir)
@@ -57,7 +57,7 @@
     if(is.null(start))
         start <- shuffleFree(n, 1L)
     out <- seq(start, length = n) %% n + 1L
-    if(!is.null(flip)) {
+    if(!is.null(flip) && mirror) {
         if(flip)
             out <- rev(out)
     } else {
