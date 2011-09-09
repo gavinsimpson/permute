@@ -111,10 +111,6 @@ permuplot(n, control = permControl(), col = par("col"),
 \examples{
 %\dontrun{
 
-## Only for vegan >= 2.0-0
-vers <- packageDescription("vegan")$Version
-
-if(vers >= "2.0-0") {
 ## use example data from ?pyrifos in package vegan
 require(vegan)
 example(pyrifos)
@@ -202,7 +198,7 @@ numPerms(1:12, control = ctrl)
 ## well as the matrix of permutations
 ##summary(tmp) %% FIXME these don't print the scheme
 ##summary(tmp2)
-}
+
 
 %% FIXME - need all these updating to new API in permControl...
 %% Fixed one, above, but there may still be problems with some of
