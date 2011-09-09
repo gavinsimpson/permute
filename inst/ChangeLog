@@ -4,12 +4,16 @@ permute ChangeLog
 
 Version 0.7-0
 
-	* Vignette: silly typo is example code illustrating shuffle()
+	* Vignette: silly typo is example code illustrating shuffle().
+	New section on `shuffleSet()`.
 
 	* check.Rd: undo the hack needed to pass checks prior to
 	vegan 2.0 being on CRAN.
 
 	* Suggests: now needs vegan >= 2.0-0
+
+	* shuffleGrid: was doing random flipping of permutations even
+	if `mirror = FALSE` for the `constant = TRUE` case.
 
 Version 0.6-1 (released to CRAN on September 7, 2011)
 
