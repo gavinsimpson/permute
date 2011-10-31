@@ -16,7 +16,7 @@ Version 0.7-0
 	if `mirror = FALSE` for the `constant = TRUE` case.
 
 	* shuffleStrata: assumed that the samples were in contiguous
-	blocks. Reporter by Cajo ter Braak
+	blocks. Reported by Cajo ter Braak
 
 Version 0.6-1 (released to CRAN on September 7, 2011)
 
