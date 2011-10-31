@@ -2,27 +2,27 @@
 `shuffleStrata` <- function(strata, type, mirror = FALSE, start = NULL,
                             flip = NULL, nrow, ncol, start.row = NULL,
                             start.col = NULL) {
-    lev <- length(levels(strata))
+    lev <- length(LEVS <- levels(strata))
     ngr <- length(strata) / lev
-    sp <- split(seq(along = strata), strata)
-    if(type == "free") {
-        unname(do.call(c, sp[shuffleFree(lev, lev)]))
-    } else if(type == "series") {
-        unname(do.call(c,
-                       sp[shuffleSeries(seq_len(lev),
-                                        mirror = mirror,
-                                        start = start,
-                                        flip = flip)]))
-    } else if(type == "grid") {
-        unname(do.call(c,
-                       sp[shuffleGrid(nrow = nrow, ncol = ncol,
-                                      mirror = mirror,
-                                      start.row = start.row,
-                                      start.col = start.col,
-                                      flip = flip)]))
+    SEQ <- seq_len(lev)
+    sp <- split(out <- seq_along(strata), strata)
+    perm <- if(type == "free") {
+        shuffleFree(lev, lev)
+    } else if (type == "series") {
+        shuffleSeries(SEQ, mirror = mirror, start = start,
+                      flip = flip)
+    } else if (type == "grid") {
+        shuffleGrid(nrow = nrow, ncol = ncol, mirror = mirror,
+                    start.row = start.row, start.col = start.col,
+                    flip = flip)
     } else {
         stop("Invalid permutation type.")
     }
+    for(i in SEQ) {
+        want <- which(strata == LEVS[i])
+        out[want] <- sp[[perm[i]]]
+    }
+    out
 }
 
 `shuffleGrid` <- function(nrow, ncol, mirror = FALSE, start.row = NULL,
