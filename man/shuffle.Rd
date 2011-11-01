@@ -133,8 +133,16 @@ getStrata(object, ...)
 %  that currently use the older \code{\link[vegan]{shuffle}} will be
 %  updated to use \code{shuffle}.
 %}
-%\references{
-%}
+\references{
+  \code{shuffle()} is modelled after the permutation schemes of Canoco
+  3.1 (ter Braak, 1990); see also Besag & Clifford (1989).
+
+  Besag, J. and Clifford, P. (1989) Generalized Monte Carlo significance
+  tests. \emph{Biometrika} \strong{76}; 633--642.
+
+  ter Braak, C. J. F. (1990). \emph{Update notes: CANOCO version
+    3.1}. Wageningen: Agricultural Mathematics Group. (UR).
+}
 \author{Gavin Simpson}
 \seealso{\code{\link{check}}, a utility function for checking
   permutation scheme described by \code{\link{permControl}}.}

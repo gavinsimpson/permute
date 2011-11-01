@@ -44,7 +44,16 @@ shuffleSet(n, nset = 1, control = permControl())
 %}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
+\references{
+  \code{shuffle()} is modelled after the permutation schemes of Canoco
+  3.1 (ter Braak, 1990); see also Besag & Clifford (1989).
 
+  Besag, J. and Clifford, P. (1989) Generalized Monte Carlo significance
+  tests. \emph{Biometrika} \strong{76}; 633--642.
+
+  ter Braak, C. J. F. (1990). \emph{Update notes: CANOCO version
+    3.1}. Wageningen: Agricultural Mathematics Group. (UR).
+}
 \seealso{
   See \code{\link{shuffle}} for generating a single permutation, and
   \code{\link{permControl}} for setting up permutation designs.
