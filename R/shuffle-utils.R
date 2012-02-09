@@ -68,5 +68,5 @@
 }
 
 `shuffleFree` <- function(x, size) {
-    .Internal(sample(x, size, FALSE, NULL))
+    sample.int(x, size, replace = FALSE)
 }
