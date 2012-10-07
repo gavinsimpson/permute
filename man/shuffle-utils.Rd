@@ -48,8 +48,8 @@ shuffleStrata(strata, type, mirror = FALSE, start = NULL, flip = NULL,
 
   \code{shuffleFree} is a wrapper to code underlying
   \code{\link{sample}}, but without the extra over head of sanity
-  checks. It is defined as \code{.Internal(sample(x, size, FALSE,
-  NULL))}. You must arrange for the correct values to be supplied, where
+  checks. It is defined as \code{sample.int(x, size, replace = FALSE)}.
+  You must arrange for the correct values to be supplied, where
   \code{x} is a vector of indices to sample from, and \code{size} is the
   number of indices to sample. Sampling is done without replacement and
   without regard to prior probabilities. Argument \code{size} is allowed
