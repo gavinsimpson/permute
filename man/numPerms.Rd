@@ -64,6 +64,7 @@ numPerms(object, control = permControl())
   \code{\link{permControl}}. Additional \code{\link{nobs}} methods are
   provide, see \code{\link{nobs-methods}}.}
 \examples{
+\dontrun{ %FIXME update this for blocks
 ## permutation design --- see ?permControl
 ctrl <- permControl() ## defaults to freely exchangeable
 
@@ -84,4 +85,5 @@ numPerms(v, control = ctrl)
 ## turn on mirroring
 ctrl <- permControl(within = Within(type = "series", mirror = TRUE))
 numPerms(v, control = ctrl)
+}
 }

@@ -24,12 +24,11 @@ test_that("shuffle() returns integers", {
 ## test what shuffle returns when permuting only the strata
 ## must *not* assume that the samples are in contiguous blocks
 test_that("shuffle() works for non-contigous blocks of samples", {
-    ## permuting levels of block instead of observations
+    ## permuting levels of Plots instead of observations
     ## non-contiguous blocks - checks that r1972 continues to work
-    block <- factor(rep(1:4, 5))
-    CTRL <- permControl(strata = block,
-                        blocks = Blocks(type = "free"),
-                        within = Within(type = "none"))
+  Plot <- factor(rep(1:4, 5))
+  CTRL <- permControl(plots = Plots(strata = Plot, type = "free"),
+                      within = Within(type = "none"))
     n <- 20
     set.seed(2)
     result <- shuffle(n, CTRL)
@@ -40,5 +39,5 @@ test_that("shuffle() works for non-contigous blocks of samples", {
                          19,18,17,20))
     expect_that(result, is_identical_to(out1))
     out2 <- factor(as.integer(rep(c(3,2,1,4), 5)), levels = 1:4)
-    expect_that(block[result], is_identical_to(out2))
+    expect_that(Plot[result], is_identical_to(out2))
 })

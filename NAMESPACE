@@ -1,8 +1,8 @@
 ### Visible functions:
 export(`allPerms`, `Blocks`, `numPerms`, `check`, `permCheck`,
-       `permControl`, `permute`, `shuffle`, `Within`,
+       `permControl`, `permute`, `shuffle`, `Within`, `Plots`,
        `shuffleFree`, `shuffleSeries`, `shuffleGrid`, `shuffleStrata`,
-       `getBlocks`, `getWithin`, `getStrata`,
+       `getBlocks`, `getWithin`, `getStrata`, `getType`,
        `shuffleSet`, `permuplot`)
 
 ### Imports: nobs() only exists in R 2.13.0 for import. We define the
@@ -35,3 +35,5 @@ S3method(`getWithin`, `default`)
 S3method(`getWithin`, `permControl`)
 S3method(`getStrata`, `default`)
 S3method(`getStrata`, `permControl`)
+S3method(`getType`, `default`)
+S3method(`getType`, `permControl`)

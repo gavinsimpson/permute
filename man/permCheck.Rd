@@ -109,8 +109,8 @@ permuplot(n, control = permControl(), col = par("col"),
 \seealso{\code{\link{shuffle}} and \code{\link{permControl}}.}
 
 \examples{
-%\dontrun{
 
+\dontrun{ % FIXME these below need updating for plots and blocks
 ## use example data from ?pyrifos in package vegan
 require(vegan)
 example(pyrifos)
@@ -164,8 +164,9 @@ check(pyrifos, control = permControl(strata = ditch,
 check(pyrifos, permControl(strata = ditch,
                                within = Within(type = "none"),
                                blocks = Blocks(type = "free")))
-%}
+}
 
+\dontrun{ % FIXME needs updating to work with plots and blocks
 ## this should also also for arbitrary vectors
 vec1 <- check(1:100)
 vec2 <- check(1:100, permControl())
@@ -198,7 +199,7 @@ numPerms(1:12, control = ctrl)
 ## well as the matrix of permutations
 ##summary(tmp) %% FIXME these don't print the scheme
 ##summary(tmp2)
-
+}
 
 %% FIXME - need all these updating to new API in permControl...
 %% Fixed one, above, but there may still be problems with some of

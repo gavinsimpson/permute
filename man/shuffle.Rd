@@ -3,6 +3,7 @@
 \alias{permControl}
 \alias{Blocks}
 \alias{Within}
+\alias{Plots}
 \alias{print.permControl}
 \alias{permute}
 \alias{getBlocks}
@@ -14,6 +15,9 @@
 \alias{getStrata}
 \alias{getStrata.default}
 \alias{getStrata.permControl}
+\alias{getType}
+\alias{getType.default}
+\alias{getType.permControl}
 
 \title{Unrestricted and restricted permutations}
 \description{
@@ -23,18 +27,18 @@
 \usage{
 shuffle(n, control = permControl())
 
-permControl(strata = NULL, nperm = 199, complete = FALSE,
-            within = Within(),
-            blocks = Blocks(),
-            maxperm = 9999, minperm = 99,
-            all.perms = NULL, observed = FALSE)
+permControl(within = Within(), plots = Plots(), blocks = Blocks(),
+            nperm = 199, complete = FALSE, maxperm = 9999,
+            minperm = 99, all.perms = NULL, observed = FALSE)
 
 Within(type = c("free","series","grid","none"),
        constant = FALSE, mirror = FALSE,
        ncol = NULL, nrow = NULL)
 
-Blocks(type = c("free","series","grid","none"),
-       mirror = FALSE, ncol = NULL, nrow = NULL)
+Plots(strata = NULL, type = c("free","series","grid","none"),
+      mirror = FALSE, ncol = NULL, nrow = NULL)
+
+Blocks(strata = NULL)
 
 permute(i, n, control)
 
@@ -48,7 +52,12 @@ getBlocks(object, ...)
 
 getStrata(object, ...)
 
-\method{getStrata}{permControl}(object, ...)
+\method{getStrata}{permControl}(object, which = c("plots", "blocks"),
+drop = TRUE, ...)
+
+getType(object, ...)
+
+\method{getType}{permControl}(object, which = c("plots", "within"), ...)
 }
 
 \arguments{
@@ -62,9 +71,10 @@ getStrata(object, ...)
   \item{nperm}{the number of permutations.}
   \item{complete}{logical; should complete enumeration of all
     permutations be performed?}
-  \item{within, blocks}{Permutation designs for samples within the
-    levels of \code{strata} (\code{within}) or for the blocks (strata)
-    themselves.}
+  \item{within, plots, blocks}{Permutation designs for samples within the
+    levels of \code{plots} (\code{within}), permutation of \code{plots}
+    themselves, or for the definition of blocking structures which
+    further restrict permutations (\code{blocks}.}
   \item{type}{the type of permutations required. One of \code{"free"},
     \code{"series"}, \code{"grid"} or \code{"none"}. See Details.}
   \item{maxperm}{the maximum number of permutations to
@@ -84,6 +94,9 @@ getStrata(object, ...)
     in the spatial grid respectively.}
   \item{i}{integer; row of \code{control$all.perms} to return.}
   \item{object}{An R object to dispatch on.}
+  \item{which}{character; which level of restriction to extract
+    information for.}
+  \item{drop}{logical; should un-used factor levels be dropped?}
   \item{\dots}{Arguments passed on to other methods.}
 }
 \details{
@@ -174,21 +187,21 @@ matrix(matrix(1:20, nrow = nr, ncol = nc)[perms],
        ncol = nc, nrow = nr)
 
 ## random permutations in presence of strata
-block <- gl(4, 5)
-CTRL <- permControl(strata = block,
+plots <- Plots(strata = gl(4, 5))
+CTRL <- permControl(plots = plots,
                     within = Within(type = "free"))
 shuffle(20, CTRL)
 ## as above but same random permutation within strata
-CTRL <- permControl(strata = block,
+CTRL <- permControl(plots = plots,
                     within = Within(type = "free", constant = TRUE))
 shuffle(20, CTRL)
 
 ## time series within each level of block
-CTRL <- permControl(strata = block,
+CTRL <- permControl(plots = plots,
                     within = Within(type = "series"))
 shuffle(20, CTRL)
 ## as above, but  with same permutation for each level
-CTRL <- permControl(strata = block,
+CTRL <- permControl(plots = plots,
                     within = Within(type = "series",
                                     constant = TRUE))
 shuffle(20, CTRL)
@@ -197,37 +210,33 @@ shuffle(20, CTRL)
 nr <- 5
 nc <- 5
 nb <- 4 ## number of blocks
-block <- gl(nb, 25)
-CTRL <- permControl(strata = block,
+plots <- Plots(gl(nb, 25))
+CTRL <- permControl(plots = plots,
                     within = Within(type = "grid",
                                     ncol = nc,
                                     nrow = nr))
 shuffle(100, CTRL)
 ## as above, but with same permutation for each level
-CTRL <- permControl(strata = block,
+CTRL <- permControl(plots = plots,
                     within = Within(type = "grid",
                                     ncol = nc,
                                     nrow = nr,
                                     constant = TRUE))
 shuffle(100, CTRL)
 
-## permuting levels of block instead of observations
-block <- gl(4, 5)
-CTRL <- permControl(strata = block,
-                    blocks = Blocks(type = "free"),
+## permuting levels of plots instead of observations
+CTRL <- permControl(plots = Plots(gl(4, 5), type = "free"),
                     within = Within(type = "none"))
 shuffle(20, CTRL)
-## permuting levels of block instead of observations
-## but blocks represent a time series
-CTRL <- permControl(strata = block,
-                    blocks = Blocks(type = "series"),
+## permuting levels of plots instead of observations
+## but plots represent a time series
+CTRL <- permControl(plots = Plots(gl(4, 5), type = "series"),
                     within = Within(type = "none"))
 shuffle(20, CTRL)
 
-## permuting levels of block but blocks represent a time series
-## free permutation within blocks
-CTRL <- permControl(strata = block,
-                    blocks = Blocks(type = "series"),
+## permuting levels of plots but plots represent a time series
+## free permutation within plots
+CTRL <- permControl(plots = Plots(gl(4, 5), type = "series"),
                     within = Within(type = "free"))
 shuffle(20, CTRL)
 
@@ -247,7 +256,7 @@ pt.test <- function(x, group, control) {
         (xbar - ybar) / (pooled * sqrt(1/m + 1/n))
     }
     ## check the control object
-    control <- check(x, control)$control
+    #control <- check(x, control)$control
     ## number of observations
     Nobs <- nobs(x)
     ## group names

@@ -71,27 +71,27 @@ CTRL <- permControl(within = Within(type = "series", mirror = TRUE))
 shuffleSet(10, 10, CTRL)
 
 ## Permuting strata
-grp <- gl(4,5) ## 4 groups of 5 observations
-CTRL <- permControl(strata = grp, within = Within(type = "none"),
-                                  blocks = Blocks(type = "free"))
+## 4 groups of 5 observations
+CTRL <- permControl(within = Within(type = "none"),
+                    plots = Plots(strata = gl(4,5), type = "free"))
 shuffleSet(20, 10, control = CTRL)
 
-## 10 random permutations in presence of strata
-block <- gl(4, 5)
-CTRL <- permControl(strata = block,
+## 10 random permutations in presence of Plot-level strata
+plotStrata <- Plots(strata = gl(4,5))
+CTRL <- permControl(plots = plotStrata,
                     within = Within(type = "free"))
-shuffleSet(20, 10, CTRL)
-## as above but same random permutation within strata
-CTRL <- permControl(strata = block,
+shuffleSet(20, 10, control = CTRL)
+## as above but same random permutation within Plot-level strata
+CTRL <- permControl(plots = plotStrata,
                     within = Within(type = "free", constant = TRUE))
 shuffleSet(20, 10, CTRL)
 
-## time series within each level of block
-CTRL <- permControl(strata = block,
+## time series within each level of Plot strata
+CTRL <- permControl(plots = plotStrata,
                     within = Within(type = "series"))
 shuffleSet(20, 10, CTRL)
-## as above, but  with same permutation for each level
-CTRL <- permControl(strata = block,
+## as above, but  with same permutation for each Plot-level stratum
+CTRL <- permControl(plots = plotStrata,
                     within = Within(type = "series",
                                     constant = TRUE))
 shuffleSet(20, 10, CTRL)

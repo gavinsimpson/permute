@@ -2,6 +2,39 @@ $Date$
 
 permute ChangeLog
 
+Version 0.7-2
+
+	* Major API change: Added capability to handle true blocking
+	constraints, as suggested by Cajo ter Braak. We now have
+
+	  o Blocks: samples are *never* permuted between blocks. Blocks
+	    can't be permuted either.
+	  o Plots: these define groups of samples, for example the
+	    whole plots in a split-plot design, or repeated measures
+	    on a set of sites. The sites are the "plots". Plots can
+	    be permuted using any of the restricted schemes offered
+	    in permute.
+	  o Within: these are the samples, the rows in the data set.
+	    They can be nested in Plots and/or in Blocks.
+
+	This capability has made it into permControl(), shuffle() and
+	shuffleSet(), though the latter certainly has one major bug
+	in the case where there is more than one Block.
+
+	Most other functionality is broken as the above change has
+	altered the permControl object in a way that is not backwards
+	compatible.
+
+	Note that the 0.7.x branch is a development branch and should
+	not be used in ernest until I work through all the implications
+	of this change. Rest assured, I won't be doing this again!
+
+Version 0.7-1
+
+	* allPerms: implement Doug Bates version which simplifies and
+	speeds up the code. A faste RcppEigen-based version also exists
+	but will need larger changes to the package to implement.
+
 Version 0.7-0
 
 	* Vignette: silly typo is example code illustrating shuffle().

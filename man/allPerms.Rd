@@ -67,6 +67,7 @@ allPerms(n, control = permControl(), max = 9999,
 }
 \author{Gavin Simpson}
 \examples{
+\dontrun{ % FIXME - this needs updating for blocks
 ## allPerms can work with a vector
 vec <- c(3,4,5)
 allPerms(vec) ## free permutation
@@ -89,13 +90,14 @@ ctrl$within$mirror <- TRUE
 numPerms(seq_len(Nobs), control = ctrl)
 (tmp3 <- allPerms(Nobs, control = ctrl, observed = TRUE))
 (tmp4 <- allPerms(Nobs, control = ctrl))
+}
 
-%\dontrun{
+\dontrun{
 ## prints out details of the permutation scheme as
 ## well as the matrix of permutations
 % FIXME: uncomment the two lines below when we remove old permute
 % code from vegan and have vegan depend on permute
 summary(tmp3)
 summary(tmp4)
-%}
+}
 }

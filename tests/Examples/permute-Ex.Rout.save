@@ -1,0 +1,948 @@
+
+R version 2.15.2 Patched (2012-10-29 r61043) -- "Trick or Treat"
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "permute"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('permute')
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("allPerms")
+> ### * allPerms
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: allPerms
+> ### Title: Complete enumeration of all possible permutations
+> ### Aliases: allPerms print.allPerms summary.allPerms
+> ###   print.summary.allPerms
+> 
+> ### ** Examples
+> 
+> ## allPerms can work with a vector
+> vec <- c(3,4,5)
+> allPerms(vec) ## free permutation
+     [,1] [,2] [,3]
+[1,]    1    3    2
+[2,]    2    1    3
+[3,]    2    3    1
+[4,]    3    1    2
+[5,]    3    2    1
+> 
+> ## enumerate all possible permutations for a more complicated
+> ## design
+> fac <- gl(2,6)
+> ##ctrl <- permControl(type = "grid", mirror = FALSE, strata = fac,
+> ##                    constant = TRUE, nrow = 3, ncol = 2)
+> ctrl <- permControl(strata = fac,
++                     within = Within(type = "grid", mirror = FALSE,
++                                     constant = TRUE, nrow = 3, ncol = 2))
+> Nobs <- length(fac)
+> numPerms(seq_len(Nobs), control = ctrl)
+[1] 6
+> (tmp <- allPerms(Nobs, control = ctrl, observed = TRUE))
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+[1,]    2    3    4    5    6    1    8    9   10    11    12     7
+[2,]    3    4    5    6    1    2    9   10   11    12     7     8
+[3,]    4    5    6    1    2    3   10   11   12     7     8     9
+[4,]    5    6    1    2    3    4   11   12    7     8     9    10
+[5,]    6    1    2    3    4    5   12    7    8     9    10    11
+[6,]    1    2    3    4    5    6    7    8    9    10    11    12
+> (tmp2 <- allPerms(Nobs, control = ctrl))
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+[1,]    2    3    4    5    6    1    8    9   10    11    12     7
+[2,]    3    4    5    6    1    2    9   10   11    12     7     8
+[3,]    4    5    6    1    2    3   10   11   12     7     8     9
+[4,]    5    6    1    2    3    4   11   12    7     8     9    10
+[5,]    6    1    2    3    4    5   12    7    8     9    10    11
+> 
+> ## turn on mirroring
+> ctrl$within$mirror <- TRUE
+> numPerms(seq_len(Nobs), control = ctrl)
+[1] 12
+> (tmp3 <- allPerms(Nobs, control = ctrl, observed = TRUE))
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    2    3    4    5    6    1    8    9   10    11    12     7
+ [2,]    3    4    5    6    1    2    9   10   11    12     7     8
+ [3,]    4    5    6    1    2    3   10   11   12     7     8     9
+ [4,]    5    6    1    2    3    4   11   12    7     8     9    10
+ [5,]    6    1    2    3    4    5   12    7    8     9    10    11
+ [6,]    1    2    3    4    5    6    7    8    9    10    11    12
+ [7,]    1    6    5    4    3    2    7   12   11    10     9     8
+ [8,]    2    1    6    5    4    3    8    7   12    11    10     9
+ [9,]    3    2    1    6    5    4    9    8    7    12    11    10
+[10,]    4    3    2    1    6    5   10    9    8     7    12    11
+[11,]    5    4    3    2    1    6   11   10    9     8     7    12
+[12,]    6    5    4    3    2    1   12   11   10     9     8     7
+> (tmp4 <- allPerms(Nobs, control = ctrl))
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    2    3    4    5    6    1    8    9   10    11    12     7
+ [2,]    3    4    5    6    1    2    9   10   11    12     7     8
+ [3,]    4    5    6    1    2    3   10   11   12     7     8     9
+ [4,]    5    6    1    2    3    4   11   12    7     8     9    10
+ [5,]    6    1    2    3    4    5   12    7    8     9    10    11
+ [6,]    1    6    5    4    3    2    7   12   11    10     9     8
+ [7,]    2    1    6    5    4    3    8    7   12    11    10     9
+ [8,]    3    2    1    6    5    4    9    8    7    12    11    10
+ [9,]    4    3    2    1    6    5   10    9    8     7    12    11
+[10,]    5    4    3    2    1    6   11   10    9     8     7    12
+[11,]    6    5    4    3    2    1   12   11   10     9     8     7
+> 
+> ## prints out details of the permutation scheme as
+> ## well as the matrix of permutations
+> summary(tmp3)
+
+	Complete enumeration of permutations
+
+Permutation Scheme:
+NULL
+Contains observed ordering?: Yes 
+
+All permutations:
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    2    3    4    5    6    1    8    9   10    11    12     7
+ [2,]    3    4    5    6    1    2    9   10   11    12     7     8
+ [3,]    4    5    6    1    2    3   10   11   12     7     8     9
+ [4,]    5    6    1    2    3    4   11   12    7     8     9    10
+ [5,]    6    1    2    3    4    5   12    7    8     9    10    11
+ [6,]    1    2    3    4    5    6    7    8    9    10    11    12
+ [7,]    1    6    5    4    3    2    7   12   11    10     9     8
+ [8,]    2    1    6    5    4    3    8    7   12    11    10     9
+ [9,]    3    2    1    6    5    4    9    8    7    12    11    10
+[10,]    4    3    2    1    6    5   10    9    8     7    12    11
+[11,]    5    4    3    2    1    6   11   10    9     8     7    12
+[12,]    6    5    4    3    2    1   12   11   10     9     8     7
+> summary(tmp4)
+
+	Complete enumeration of permutations
+
+Permutation Scheme:
+NULL
+Contains observed ordering?: No 
+
+All permutations:
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    2    3    4    5    6    1    8    9   10    11    12     7
+ [2,]    3    4    5    6    1    2    9   10   11    12     7     8
+ [3,]    4    5    6    1    2    3   10   11   12     7     8     9
+ [4,]    5    6    1    2    3    4   11   12    7     8     9    10
+ [5,]    6    1    2    3    4    5   12    7    8     9    10    11
+ [6,]    1    6    5    4    3    2    7   12   11    10     9     8
+ [7,]    2    1    6    5    4    3    8    7   12    11    10     9
+ [8,]    3    2    1    6    5    4    9    8    7    12    11    10
+ [9,]    4    3    2    1    6    5   10    9    8     7    12    11
+[10,]    5    4    3    2    1    6   11   10    9     8     7    12
+[11,]    6    5    4    3    2    1   12   11   10     9     8     7
+> 
+> 
+> 
+> cleanEx()
+> nameEx("jackal")
+> ### * jackal
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: jackal
+> ### Title: Mandible lengths of male and female golden jackals
+> ### Aliases: jackal
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(jackal)
+> str(jackal)
+'data.frame':	20 obs. of  2 variables:
+ $ Length: num  120 107 110 116 114 111 113 117 114 112 ...
+ $ Sex   : Factor w/ 2 levels "Male","Female": 1 1 1 1 1 1 1 1 1 1 ...
+> 
+> ## boxplot of mandible length vs sex
+> plot(Length ~ Sex, data = jackal)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("nobs")
+> ### * nobs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: nobs-methods
+> ### Title: Number of observations in a given object
+> ### Aliases: nobs-methods nobs.numeric nobs.integer nobs.matrix
+> ###   nobs.data.frame
+> 
+> ### ** Examples
+> 
+> ## numeric vector
+> len <- sample(1:10, 1)
+> v <- as.numeric(sample(1:100, len))
+> len
+[1] 3
+> obs <- nobs(v)
+> isTRUE(all.equal(len, obs))
+[1] TRUE
+> 
+> ## integer
+> len <- sample(1L:10L, 1)
+> obs <- nobs(len)
+> isTRUE(all.equal(len, obs))
+[1] FALSE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("numPerms")
+> ### * numPerms
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: numPerms
+> ### Title: Number of possible permutations for a given object
+> ### Aliases: numPerms
+> 
+> ### ** Examples
+> 
+> ## permutation design --- see ?permControl
+> ctrl <- permControl() ## defaults to freely exchangeable
+> 
+> ## vector
+> v <- 1:10
+> (obs <- nobs(v))
+[1] 10
+> numPerms(v, control = ctrl)
+[1] 3628800
+> 
+> ## integer
+> len <- length(v)
+> (obs <- nobs(len))
+[1] 1
+> numPerms(len, control = ctrl)
+[1] 3628800
+> 
+> ## new design, objects are a time series
+> ctrl <- permControl(within = Within(type = "series"))
+> numPerms(v, control = ctrl)
+[1] 10
+> ## number of permutations possible drastically reduced...
+> ## turn on mirroring
+> ctrl <- permControl(within = Within(type = "series", mirror = TRUE))
+> numPerms(v, control = ctrl)
+[1] 20
+> 
+> 
+> 
+> cleanEx()
+> nameEx("permCheck")
+> ### * permCheck
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: check
+> ### Title: Utility functions for permutation schemes
+> ### Aliases: check permCheck print.check print.summary.check summary.check
+> ###   permuplot
+> ### Keywords: utilities design methods
+> 
+> ### ** Examples
+> 
+> 
+> ## use example data from ?pyrifos in package vegan
+> require(vegan)
+Loading required package: vegan
+This is vegan 2.0-5
+> example(pyrifos)
+
+pyrifs> data(pyrifos)
+
+pyrifs> ditch <- gl(12, 1, length=132)
+
+pyrifs> week <- gl(11, 12, labels=c(-4, -1, 0.1, 1, 2, 4, 8, 12, 15, 19, 24))
+
+pyrifs> dose <- factor(rep(c(0.1, 0, 0, 0.9, 0, 44, 6, 0.1, 44, 0.9, 0, 6), 11))
+> 
+> ## Demonstrate the maximum number of permutations for the pyrifos data
+> ## under a series of permutation schemes
+> 
+> ## no restrictions - lots of perms
+> CONTROL <- permControl(within = Within(type = "free"))
+> (check1 <- check(pyrifos, CONTROL))
+[1] 1.118249e+224
+> ##summary(check1)
+> 
+> ## no strata but data are series with no mirroring, so 132 permutations
+> CONTROL <- permControl(within = Within(type = "series",
++                                        mirror = FALSE))
+> check(pyrifos, CONTROL)
+[1] 132
+> 
+> ## no strata but data are series with mirroring, so 264 permutations
+> CONTROL <- permControl(within = Within(type = "series",
++                                        mirror = TRUE))
+> check(pyrifos, control = CONTROL)
+[1] 264
+> 
+> ## unrestricted within strata
+> check(pyrifos, control = permControl(strata = ditch,
++                    within = Within(type = "free")))
+[1] 1.636321e+91
+> 
+> ## time series within strata, no mirroring
+> check(pyrifos, control = permControl(strata = ditch,
++                    within = Within(type = "series",
++                                                   mirror = FALSE)))
+[1] 3.138428e+12
+> 
+> ## time series within strata, with mirroring
+> check(pyrifos, control = permControl(strata = ditch,
++                    within = Within(type = "series",
++                                                   mirror = TRUE)))
+[1] 1.2855e+16
+> 
+> ## time series within strata, no mirroring, same permutation
+> ## within strata
+> check(pyrifos, control = permControl(strata = ditch,
++                    within = Within(type = "series",
++                                    constant = TRUE)))
+[1] 11
+> 
+> ## time series within strata, with mirroring, same permutation
+> ## within strata
+> check(pyrifos, control = permControl(strata = ditch,
++                    within = Within(type = "series",
++                                                   mirror = TRUE,
++                                                   constant = TRUE)))
+[1] 22
+> 
+> ## permute strata
+> check(pyrifos, permControl(strata = ditch,
++                                within = Within(type = "none"),
++                                blocks = Blocks(type = "free")))
+[1] 479001600
+> 
+> ## this should also also for arbitrary vectors
+> vec1 <- check(1:100)
+> vec2 <- check(1:100, permControl())
+> all.equal(vec1, vec2)
+[1] TRUE
+> vec3 <- check(1:100, permControl(within = Within(type = "series")))
+> all.equal(100, vec3$n)
+[1] TRUE
+> vec4 <- check(1:100, permControl(within =
++                                      Within(type= "series",
++                                                 mirror = TRUE)))
+> all.equal(vec4$n, 200)
+[1] TRUE
+> 
+> ## enumerate all possible permutations
+> fac <- gl(2,6)
+> ctrl <- permControl(strata = fac,
++                     within = Within(type = "grid", mirror = FALSE,
++                                     constant = TRUE, nrow = 3,
++                                     ncol = 2))
+> check(1:12, ctrl)
+[1] 6
+> 
+> numPerms(1:12, control = ctrl)
+[1] 6
+> (tmp <- allPerms(12, control = ctrl, observed = TRUE))
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+[1,]    2    3    4    5    6    1    8    9   10    11    12     7
+[2,]    3    4    5    6    1    2    9   10   11    12     7     8
+[3,]    4    5    6    1    2    3   10   11   12     7     8     9
+[4,]    5    6    1    2    3    4   11   12    7     8     9    10
+[5,]    6    1    2    3    4    5   12    7    8     9    10    11
+[6,]    1    2    3    4    5    6    7    8    9    10    11    12
+> (tmp2 <- allPerms(12, control = ctrl))
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+[1,]    2    3    4    5    6    1    8    9   10    11    12     7
+[2,]    3    4    5    6    1    2    9   10   11    12     7     8
+[3,]    4    5    6    1    2    3   10   11   12     7     8     9
+[4,]    5    6    1    2    3    4   11   12    7     8     9    10
+[5,]    6    1    2    3    4    5   12    7    8     9    10    11
+> 
+> ## turn on mirroring %%FIXME needs a proper method to do this
+> ctrl$within$mirror <- TRUE
+> numPerms(1:12, control = ctrl)
+[1] 12
+> (tmp3 <- allPerms(12, control = ctrl, observed = TRUE))
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    2    3    4    5    6    1    8    9   10    11    12     7
+ [2,]    3    4    5    6    1    2    9   10   11    12     7     8
+ [3,]    4    5    6    1    2    3   10   11   12     7     8     9
+ [4,]    5    6    1    2    3    4   11   12    7     8     9    10
+ [5,]    6    1    2    3    4    5   12    7    8     9    10    11
+ [6,]    1    2    3    4    5    6    7    8    9    10    11    12
+ [7,]    1    6    5    4    3    2    7   12   11    10     9     8
+ [8,]    2    1    6    5    4    3    8    7   12    11    10     9
+ [9,]    3    2    1    6    5    4    9    8    7    12    11    10
+[10,]    4    3    2    1    6    5   10    9    8     7    12    11
+[11,]    5    4    3    2    1    6   11   10    9     8     7    12
+[12,]    6    5    4    3    2    1   12   11   10     9     8     7
+> (tmp4 <- allPerms(12, control = ctrl))
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+ [1,]    2    3    4    5    6    1    8    9   10    11    12     7
+ [2,]    3    4    5    6    1    2    9   10   11    12     7     8
+ [3,]    4    5    6    1    2    3   10   11   12     7     8     9
+ [4,]    5    6    1    2    3    4   11   12    7     8     9    10
+ [5,]    6    1    2    3    4    5   12    7    8     9    10    11
+ [6,]    1    6    5    4    3    2    7   12   11    10     9     8
+ [7,]    2    1    6    5    4    3    8    7   12    11    10     9
+ [8,]    3    2    1    6    5    4    9    8    7    12    11    10
+ [9,]    4    3    2    1    6    5   10    9    8     7    12    11
+[10,]    5    4    3    2    1    6   11   10    9     8     7    12
+[11,]    6    5    4    3    2    1   12   11   10     9     8     7
+> ## prints out details of the permutation scheme as
+> ## well as the matrix of permutations
+> ##summary(tmp) %% FIXME these don't print the scheme
+> ##summary(tmp2)
+> 
+> 
+> ## Not run: 
+> ##D ## different numbers of observations per level of strata
+> ##D fac <- factor(rep(1:3, times = c(3,2,2)))
+> ##D ## free permutations in levels of strata
+> ##D numPerms(7, permControl(type = "free", strata = fac))
+> ##D allPerms(7, permControl(type = "free", strata = fac))
+> ##D ## series permutations in levels of strata
+> ##D numPerms(7, permControl(type = "series", strata = fac))
+> ##D allPerms(7, permControl(type = "series", strata = fac))
+> ##D 
+> ##D ## allPerms can work with a vector
+> ##D vec <- c(3,4,5)
+> ##D allPerms(vec)
+> ##D 
+> ##D ## Tests for permuplot
+> ##D n <- 25
+> ##D ## standard permutation designs
+> ##D permuplot(n, permControl(type = "free"))
+> ##D permuplot(n, permControl(type = "series"))
+> ##D permuplot(n, permControl(type = "grid", nrow = 5, ncol = 5))
+> ##D 
+> ##D ## restricted perms with mirroring
+> ##D permuplot(n, permControl(type = "series", mirror = TRUE))
+> ##D permuplot(n, permControl(type = "grid", nrow = 5, ncol = 5,
+> ##D                              mirror = TRUE))
+> ##D 
+> ##D ## perms within strata
+> ##D fac <- gl(6, 20)
+> ##D control <- permControl(type = "free", strata = fac)
+> ##D permuplot(120, control = control, cex = 0.8)
+> ##D control <- permControl(type = "series", strata = fac)
+> ##D permuplot(120, control = control, cex = 0.8)
+> ##D fac <- gl(6, 25)
+> ##D control <- permControl(type = "grid", strata = fac,
+> ##D                        nrow = 5, ncol = 5)
+> ##D permuplot(150, control = control, cex = 0.8)
+> ##D 
+> ##D ## perms within strata with mirroring
+> ##D fac <- gl(6, 20)
+> ##D control <- permControl(type = "series", strata = fac,
+> ##D                        mirror = TRUE)
+> ##D permuplot(120, control = control, cex = 0.8)
+> ##D fac <- gl(6, 25)
+> ##D control <- permControl(type = "grid", strata = fac,
+> ##D                        nrow = 5, ncol = 5, mirror = TRUE)
+> ##D permuplot(150, control = control, cex = 0.8)
+> ##D 
+> ##D ## same perms within strata
+> ##D fac <- gl(6, 20)
+> ##D control <- permControl(type = "free", strata = fac,
+> ##D                        constant = TRUE)
+> ##D permuplot(120, control = control, cex = 0.8)
+> ##D control <- permControl(type = "series", strata = fac,
+> ##D                        constant = TRUE)
+> ##D permuplot(120, control = control, cex = 0.8)
+> ##D fac <- gl(6, 25)
+> ##D control <- permControl(type = "grid", strata = fac,
+> ##D                        nrow = 5, ncol = 5, constant = TRUE)
+> ##D permuplot(150, control = control, cex = 0.8)
+> ##D 
+> ##D ## same perms within strata with mirroring
+> ##D fac <- gl(6, 20)
+> ##D control <- permControl(type = "series", strata = fac,
+> ##D                        mirror = TRUE, constant = TRUE)
+> ##D permuplot(120, control = control, cex = 0.8)
+> ##D fac <- gl(6, 25)
+> ##D control <- permControl(type = "grid", strata = fac,
+> ##D                        nrow = 5, ncol = 5, mirror = TRUE,
+> ##D                        constant = TRUE)
+> ##D permuplot(150, control = control, cex = 0.8)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:vegan’
+
+> nameEx("shuffle-utils")
+> ### * shuffle-utils
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: shuffle-utils
+> ### Title: Utility functions for unrestricted and restricted permutations
+> ### Aliases: shuffle-utils shuffleFree shuffleGrid shuffleSeries
+> ###   shuffleStrata
+> ### Keywords: htest design
+> 
+> ### ** Examples
+> 
+> set.seed(3)
+> 
+> ## draw 1 value at random from the set 1:10
+> shuffleFree(1:10, 1)
+[1] 1
+> 
+> ## permute the series 1:10
+> x <- 1:10
+> shuffleSeries(x)                ## with random starting point
+ [1] 10  1  2  3  4  5  6  7  8  9
+> shuffleSeries(x, start = 5L)    ## known starting point
+ [1]  6  7  8  9 10  1  2  3  4  5
+> shuffleSeries(x, flip = TRUE)   ## random start, forced mirror
+ [1]  5  6  7  8  9 10  1  2  3  4
+> shuffleSeries(x, mirror = TRUE) ## random start, possibly mirror
+ [1]  5  6  7  8  9 10  1  2  3  4
+> 
+> ## permute a grid of size 3x3
+> shuffleGrid(3, 3)                      ## random starting row/col
+[1] 6 4 5 9 7 8 3 1 2
+> shuffleGrid(3, 3, start.row = 2,
++             start.col = 3)             ## with known row/col
+[1] 3 1 2 6 4 5 9 7 8
+> shuffleGrid(3, 3, flip = rep(TRUE, 2)) ## random start, forced mirror
+[1] 8 9 7 2 3 1 5 6 4
+> 
+> 
+> 
+> cleanEx()
+> nameEx("shuffle")
+> ### * shuffle
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: shuffle
+> ### Title: Unrestricted and restricted permutations
+> ### Aliases: shuffle permControl Blocks Within print.permControl permute
+> ###   getBlocks getBlocks.default getBlocks.permControl getWithin
+> ###   getWithin.default getWithin.permControl getStrata getStrata.default
+> ###   getStrata.permControl
+> ### Keywords: htest design
+> 
+> ### ** Examples
+> 
+> set.seed(1234)
+> 
+> ## unrestricted permutations
+> shuffle(20)
+ [1]  3 12 11 18 14 10  1  4  8  6  7  5 20 15  2  9 17 16 19 13
+> 
+> ## observations represent a time series of line transect
+> CTRL <- permControl(within = Within(type = "series"))
+> shuffle(20, control = CTRL)
+ [1]  8  9 10 11 12 13 14 15 16 17 18 19 20  1  2  3  4  5  6  7
+> 
+> ## observations represent a time series of line transect
+> ## but with mirroring allowed
+> CTRL <- permControl(within = Within(type = "series",
++                                     mirror = TRUE))
+> shuffle(20, control = CTRL)
+ [1]  7  6  5  4  3  2  1 20 19 18 17 16 15 14 13 12 11 10  9  8
+> 
+> ## observations represent a spatial grid, 5rx4c
+> nr <- 5
+> nc <- 4
+> CTRL <- permControl(within = Within(type = "grid", ncol = nc,
++                                      nrow = nr))
+> perms <- shuffle(20, control = CTRL)
+> ## view the permutation as a grid
+> matrix(matrix(1:20, nrow = nr, ncol = nc)[perms],
++        ncol = nc, nrow = nr)
+     [,1] [,2] [,3] [,4]
+[1,]    7   12   17    2
+[2,]    8   13   18    3
+[3,]    9   14   19    4
+[4,]   10   15   20    5
+[5,]    6   11   16    1
+> 
+> ## random permutations in presence of strata
+> block <- gl(4, 5)
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "free"))
+> shuffle(20, CTRL)
+ [1]  5  3  4  2  1  8  7  6  9 10 14 11 15 12 13 18 20 16 17 19
+> ## as above but same random permutation within strata
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "free", constant = TRUE))
+> shuffle(20, CTRL)
+ [1]  3  5  2  1  4  8 10  7  6  9 13 15 12 11 14 18 20 17 16 19
+> 
+> ## time series within each level of block
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "series"))
+> shuffle(20, CTRL)
+ [1]  2  3  4  5  1  8  9 10  6  7 15 11 12 13 14 19 20 16 17 18
+> ## as above, but  with same permutation for each level
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "series",
++                                     constant = TRUE))
+> shuffle(20, CTRL)
+ [1]  2  3  4  5  1  7  8  9 10  6 12 13 14 15 11 17 18 19 20 16
+> 
+> ## spatial grids within each level of block, 4 x (5r x 5c)
+> nr <- 5
+> nc <- 5
+> nb <- 4 ## number of blocks
+> block <- gl(nb, 25)
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "grid",
++                                     ncol = nc,
++                                     nrow = nr))
+> shuffle(100, CTRL)
+  [1]  24  25  21  22  23   4   5   1   2   3   9  10   6   7   8  14  15  11
+ [19]  12  13  19  20  16  17  18  27  28  29  30  26  32  33  34  35  31  37
+ [37]  38  39  40  36  42  43  44  45  41  47  48  49  50  46  56  57  58  59
+ [55]  60  61  62  63  64  65  66  67  68  69  70  71  72  73  74  75  51  52
+ [73]  53  54  55  83  84  85  81  82  88  89  90  86  87  93  94  95  91  92
+ [91]  98  99 100  96  97  78  79  80  76  77
+> ## as above, but with same permutation for each level
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "grid",
++                                     ncol = nc,
++                                     nrow = nr,
++                                     constant = TRUE))
+> shuffle(100, CTRL)
+  [1]  23  24  25  21  22   3   4   5   1   2   8   9  10   6   7  13  14  15
+ [19]  11  12  18  19  20  16  17  48  49  50  46  47  28  29  30  26  27  33
+ [37]  34  35  31  32  38  39  40  36  37  43  44  45  41  42  73  74  75  71
+ [55]  72  53  54  55  51  52  58  59  60  56  57  63  64  65  61  62  68  69
+ [73]  70  66  67  98  99 100  96  97  78  79  80  76  77  83  84  85  81  82
+ [91]  88  89  90  86  87  93  94  95  91  92
+> 
+> ## permuting levels of block instead of observations
+> block <- gl(4, 5)
+> CTRL <- permControl(strata = block,
++                     blocks = Blocks(type = "free"),
++                     within = Within(type = "none"))
+> shuffle(20, CTRL)
+ [1] 11 12 13 14 15  1  2  3  4  5  6  7  8  9 10 16 17 18 19 20
+> ## permuting levels of block instead of observations
+> ## but blocks represent a time series
+> CTRL <- permControl(strata = block,
++                     blocks = Blocks(type = "series"),
++                     within = Within(type = "none"))
+> shuffle(20, CTRL)
+ [1]  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20  1  2  3  4  5
+> 
+> ## permuting levels of block but blocks represent a time series
+> ## free permutation within blocks
+> CTRL <- permControl(strata = block,
++                     blocks = Blocks(type = "series"),
++                     within = Within(type = "free"))
+> shuffle(20, CTRL)
+ [1]  2  1  3  4  5  6 10  9  7  8 11 12 13 14 15 16 18 20 17 19
+> 
+> ## Simple function using permute() to assess significance
+> ## of a t.test  
+> pt.test <- function(x, group, control) {
++     ## function to calculate t
++     t.statistic <- function(x, y) {
++         m <- length(x)
++         n <- length(y)
++         ## means and variances, but for speed
++         xbar <- mean(x)
++         ybar <- mean(y)
++         xvar <- var(x)
++         yvar <- var(y)
++         pooled <- sqrt(((m-1)*xvar + (n-1)*yvar) / (m+n-2))
++         (xbar - ybar) / (pooled * sqrt(1/m + 1/n))
++     }
++     ## check the control object
++     control <- check(x, control)$control
++     ## number of observations
++     Nobs <- nobs(x)
++     ## group names
++     lev <- names(table(group))
++     ## vector to hold results, +1 because of observed t
++     t.permu <- numeric(length = control$nperm) + 1
++     ## calculate observed t
++     t.permu[1] <- t.statistic(x[group == lev[1]], x[group == lev[2]])
++     ## generate randomisation distribution of t
++     for(i in seq_along(t.permu)) {
++         ## return a permutation
++         want <- permute(i, Nobs, control)
++         ## calculate permuted t
++         t.permu[i+1] <- t.statistic(x[want][group == lev[1]],
++                                     x[want][group == lev[2]])
++     }
++     ## pval from permutation test
++     pval <- sum(abs(t.permu) >= abs(t.permu[1])) / (control$nperm + 1)
++     ## return value
++     return(list(t.stat = t.permu[1], pval = pval))
++ }
+> 
+> ## generate some data with slightly different means
+> set.seed(1234)
+> gr1 <- rnorm(20, mean = 9)
+> gr2 <- rnorm(20, mean = 10)
+> dat <- c(gr1, gr2)
+> ## grouping variable
+> grp <- gl(2, 20, labels = paste("Group", 1:2))
+> ## create the permutation design
+> control <- permControl(nperm = 999,
++                        within = Within(type = "free"))
+> ## perform permutation t test
+> perm.val <- pt.test(dat, grp, control)
+> perm.val
+$t.stat
+[1] -2.342064
+
+$pval
+[1] 0.024
+
+> 
+> ## compare perm.val with the p-value from t.test()
+> t.test(dat ~ grp, var.equal = TRUE)
+
+	Two Sample t-test
+
+data:  dat by grp 
+t = -2.3421, df = 38, p-value = 0.02452
+alternative hypothesis: true difference in means is not equal to 0 
+95 percent confidence interval:
+ -1.25582408 -0.09136416 
+sample estimates:
+mean in group Group 1 mean in group Group 2 
+             8.749336              9.422930 
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("shuffleSet")
+> ### * shuffleSet
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: shuffleSet
+> ### Title: Generate a set of permutations from the specified design.
+> ### Aliases: shuffleSet
+> ### Keywords: htest design
+> 
+> ### ** Examples
+> 
+> ## simple random permutations, 5 permutations in set
+> shuffleSet(n = 10, nset = 10)
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]    3    4    5    7    2    8    9    6   10     1
+ [2,]    3    2    6   10    5    7    8    4    1     9
+ [3,]   10    2    6    1    9    8    7    5    3     4
+ [4,]    5    6    4    2   10    8    9    1    7     3
+ [5,]    9    6    7    4    8   10    1    2    3     5
+ [6,]    5    8    4    2    1    6    7    9    3    10
+ [7,]   10    3    4    9    8    2    5    7    1     6
+ [8,]    4    8    3    9    7    5   10    2    6     1
+ [9,]    5    7    4    3   10    2    9    1    8     6
+[10,]    3    1    6    7    5    4    2    8   10     9
+> 
+> ## series random permutations, 10 permutations in set
+> shuffleSet(10, 10, permControl(within = Within(type = "series")))
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]    8    9   10    1    2    3    4    5    6     7
+ [2,]    5    6    7    8    9   10    1    2    3     4
+ [3,]    4    5    6    7    8    9   10    1    2     3
+ [4,]    1    2    3    4    5    6    7    8    9    10
+ [5,]    8    9   10    1    2    3    4    5    6     7
+ [6,]    4    5    6    7    8    9   10    1    2     3
+ [7,]    3    4    5    6    7    8    9   10    1     2
+ [8,]    6    7    8    9   10    1    2    3    4     5
+ [9,]    1    2    3    4    5    6    7    8    9    10
+[10,]    7    8    9   10    1    2    3    4    5     6
+> 
+> ## series random permutations, 10 permutations in set,
+> ## with possible mirroring
+> CTRL <- permControl(within = Within(type = "series", mirror = TRUE))
+> shuffleSet(10, 10, CTRL)
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]    1    2    3    4    5    6    7    8    9    10
+ [2,]    4    3    2    1   10    9    8    7    6     5
+ [3,]    2    1   10    9    8    7    6    5    4     3
+ [4,]    8    7    6    5    4    3    2    1   10     9
+ [5,]    6    7    8    9   10    1    2    3    4     5
+ [6,]   10    9    8    7    6    5    4    3    2     1
+ [7,]    5    4    3    2    1   10    9    8    7     6
+ [8,]    8    7    6    5    4    3    2    1   10     9
+ [9,]    6    5    4    3    2    1   10    9    8     7
+[10,]    4    5    6    7    8    9   10    1    2     3
+> 
+> ## Permuting strata
+> grp <- gl(4,5) ## 4 groups of 5 observations
+> CTRL <- permControl(strata = grp, within = Within(type = "none"),
++                                   blocks = Blocks(type = "free"))
+> shuffleSet(20, 10, control = CTRL)
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+ [1,]   11   12   13   14   15    1    2    3    4     5    16    17    18
+ [2,]   16   17   18   19   20    6    7    8    9    10    11    12    13
+ [3,]   16   17   18   19   20    6    7    8    9    10    11    12    13
+ [4,]    1    2    3    4    5   16   17   18   19    20     6     7     8
+ [5,]    1    2    3    4    5   11   12   13   14    15    16    17    18
+ [6,]   11   12   13   14   15    6    7    8    9    10     1     2     3
+ [7,]   11   12   13   14   15    1    2    3    4     5     6     7     8
+ [8,]    6    7    8    9   10    1    2    3    4     5    11    12    13
+ [9,]    6    7    8    9   10   11   12   13   14    15    16    17    18
+[10,]    1    2    3    4    5    6    7    8    9    10    11    12    13
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+ [1,]    19    20     6     7     8     9    10
+ [2,]    14    15     1     2     3     4     5
+ [3,]    14    15     1     2     3     4     5
+ [4,]     9    10    11    12    13    14    15
+ [5,]    19    20     6     7     8     9    10
+ [6,]     4     5    16    17    18    19    20
+ [7,]     9    10    16    17    18    19    20
+ [8,]    14    15    16    17    18    19    20
+ [9,]    19    20     1     2     3     4     5
+[10,]    14    15    16    17    18    19    20
+> 
+> ## 10 random permutations in presence of strata
+> block <- gl(4, 5)
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "free"))
+> shuffleSet(20, 10, CTRL)
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+ [1,]    4    5    3    1    2   10    8    9    7     6    12    11    13
+ [2,]    4    2    1    5    3    8    6   10    9     7    12    11    15
+ [3,]    5    1    3    2    4    7    8    9   10     6    12    11    14
+ [4,]    2    1    5    3    4    9    8    7    6    10    12    13    14
+ [5,]    4    5    2    3    1    6   10    7    9     8    13    12    11
+ [6,]    1    5    2    4    3    6    7   10    8     9    11    13    14
+ [7,]    2    1    3    4    5    9    6   10    8     7    14    11    12
+ [8,]    1    5    3    2    4    8    6    7   10     9    14    12    15
+ [9,]    5    2    4    3    1    7   10    6    9     8    15    11    12
+[10,]    3    1    5    4    2    7    9    6   10     8    11    12    13
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+ [1,]    15    14    16    19    18    17    20
+ [2,]    14    13    18    20    16    19    17
+ [3,]    15    13    18    17    16    20    19
+ [4,]    11    15    17    20    16    18    19
+ [5,]    14    15    16    20    18    17    19
+ [6,]    15    12    16    17    20    18    19
+ [7,]    15    13    20    16    18    19    17
+ [8,]    13    11    20    19    18    16    17
+ [9,]    14    13    17    20    16    18    19
+[10,]    15    14    20    16    18    17    19
+> ## as above but same random permutation within strata
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "free", constant = TRUE))
+> shuffleSet(20, 10, CTRL)
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+ [1,]    3    5    4    1    2    8   10    9    6     7    13    15    14
+ [2,]    3    2    5    1    4    8    7   10    6     9    13    12    15
+ [3,]    3    5    2    4    1    8   10    7    9     6    13    15    12
+ [4,]    2    4    3    1    5    7    9    8    6    10    12    14    13
+ [5,]    1    5    3    2    4    6   10    8    7     9    11    15    13
+ [6,]    2    3    1    4    5    7    8    6    9    10    12    13    11
+ [7,]    4    1    3    2    5    9    6    8    7    10    14    11    13
+ [8,]    4    2    3    1    5    9    7    8    6    10    14    12    13
+ [9,]    5    2    3    4    1   10    7    8    9     6    15    12    13
+[10,]    3    2    1    4    5    8    7    6    9    10    13    12    11
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+ [1,]    11    12    18    20    19    16    17
+ [2,]    11    14    18    17    20    16    19
+ [3,]    14    11    18    20    17    19    16
+ [4,]    11    15    17    19    18    16    20
+ [5,]    12    14    16    20    18    17    19
+ [6,]    14    15    17    18    16    19    20
+ [7,]    12    15    19    16    18    17    20
+ [8,]    11    15    19    17    18    16    20
+ [9,]    14    11    20    17    18    19    16
+[10,]    14    15    18    17    16    19    20
+> 
+> ## time series within each level of block
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "series"))
+> shuffleSet(20, 10, CTRL)
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+ [1,]    4    5    1    2    3    9   10    6    7     8    15    11    12
+ [2,]    3    4    5    1    2    9   10    6    7     8    12    13    14
+ [3,]    1    2    3    4    5    6    7    8    9    10    11    12    13
+ [4,]    3    4    5    1    2    9   10    6    7     8    12    13    14
+ [5,]    5    1    2    3    4    7    8    9   10     6    14    15    11
+ [6,]    2    3    4    5    1    8    9   10    6     7    14    15    11
+ [7,]    3    4    5    1    2    9   10    6    7     8    13    14    15
+ [8,]    2    3    4    5    1    7    8    9   10     6    11    12    13
+ [9,]    3    4    5    1    2    7    8    9   10     6    12    13    14
+[10,]    4    5    1    2    3    6    7    8    9    10    15    11    12
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+ [1,]    13    14    17    18    19    20    16
+ [2,]    15    11    16    17    18    19    20
+ [3,]    14    15    17    18    19    20    16
+ [4,]    15    11    16    17    18    19    20
+ [5,]    12    13    16    17    18    19    20
+ [6,]    12    13    20    16    17    18    19
+ [7,]    11    12    16    17    18    19    20
+ [8,]    14    15    19    20    16    17    18
+ [9,]    15    11    20    16    17    18    19
+[10,]    13    14    17    18    19    20    16
+> ## as above, but  with same permutation for each level
+> CTRL <- permControl(strata = block,
++                     within = Within(type = "series",
++                                     constant = TRUE))
+> shuffleSet(20, 10, CTRL)
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+ [1,]    2    3    4    5    1    7    8    9   10     6    12    13    14
+ [2,]    2    3    4    5    1    7    8    9   10     6    12    13    14
+ [3,]    3    4    5    1    2    8    9   10    6     7    13    14    15
+ [4,]    5    1    2    3    4   10    6    7    8     9    15    11    12
+ [5,]    4    5    1    2    3    9   10    6    7     8    14    15    11
+ [6,]    4    5    1    2    3    9   10    6    7     8    14    15    11
+ [7,]    5    1    2    3    4   10    6    7    8     9    15    11    12
+ [8,]    2    3    4    5    1    7    8    9   10     6    12    13    14
+ [9,]    1    2    3    4    5    6    7    8    9    10    11    12    13
+[10,]    4    5    1    2    3    9   10    6    7     8    14    15    11
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+ [1,]    15    11    17    18    19    20    16
+ [2,]    15    11    17    18    19    20    16
+ [3,]    11    12    18    19    20    16    17
+ [4,]    13    14    20    16    17    18    19
+ [5,]    12    13    19    20    16    17    18
+ [6,]    12    13    19    20    16    17    18
+ [7,]    13    14    20    16    17    18    19
+ [8,]    15    11    17    18    19    20    16
+ [9,]    14    15    16    17    18    19    20
+[10,]    12    13    19    20    16    17    18
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.723 0.012 0.758 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

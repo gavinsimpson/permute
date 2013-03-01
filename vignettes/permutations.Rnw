@@ -172,12 +172,12 @@ Several types of permutation are available in \pkg{permute}:
   \item Free permutation of objects
   \item Time series or line transect designs, where the temporal or spatial ordering is preserved.
   \item Spatial grid designs, where the spatial ordering is preserved in both coordinate directions
-  \item Permutation of blocks or groups of samples.
+  \item Permutation of plots or groups of samples.
 \end{itemize}
 
 The first three of these can be nested within the levels of a factor or to the levels of that factor, or to both. Such flexibility allows the analysis of split-plot designs using permutation tests.
 
-\code{permControl()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{permControl()} has two main arguments that specify how samples are permuted \emph{within} blocks of samples or at the block level itself. These are \code{within} and \code{blocks}. Two convenience functions, \code{Within()} and \code{Blocks()} can be used to set the various options for permutation.
+\code{permControl()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{permControl()} has two main arguments that specify how samples are permuted \emph{within} plots of samples or at the plot level itself. These are \code{within} and \code{plots}. Two convenience functions, \code{Within()} and \code{Plots()} can be used to set the various options for permutation.
 
 For example, to permute the observations \code{1:10} assuming a time series design for the entire set of observations, the following control object would be used
 
@@ -190,16 +190,16 @@ perm
 x[perm] ## equivalent
 @
 
-It is assumed that the observations are in temporal or transect order. We only specified the type of permutation within blocks, the remaining options were set to their defaults via \code{Within()}.
+It is assumed that the observations are in temporal or transect order. We only specified the type of permutation within plots, the remaining options were set to their defaults via \code{Within()}.
 
-A more complex design, with three blocks, and a 3 by 3 spatial grid arrangement within each block can be created as follows
+A more complex design, with three plots, and a 3 by 3 spatial grid arrangement within each plot can be created as follows
 
 <<keep.source=true>>=
 set.seed(4)
-block <- gl(3, 9)
-CTRL <- permControl(strata = block,
-                    within = Within(type = "grid", ncol = 3, nrow = 3))
-perm <- shuffle(length(block), control = CTRL)
+plt <- gl(3, 9)
+CTRL <- permControl(within = Within(type = "grid", ncol = 3, nrow = 3),
+                    plots = Plots(strata = plt))
+perm <- shuffle(length(plt), control = CTRL)
 perm
 @
 
@@ -207,21 +207,21 @@ Visualising the permutation as the 3 matrices may help illustrate how the data h
 
 <<keep.source=true>>=
 ## Original
-lapply(split(1:27, block), matrix, ncol = 3)
+lapply(split(seq_along(plt), plt), matrix, ncol = 3)
 ## Shuffled
-lapply(split(perm, block), matrix, ncol = 3)
+lapply(split(perm, plt), matrix, ncol = 3)
 @
 
 In the first grid, the lower-left corner of the grid was set to row 2 and column 2 of the original, to row 1 and column 2 in the second grid, and to row 3 column 2 in the third grid.
 
-To have the same permutation within each level of \code{block}, use the \code{constant} argument of the \code{Within()} function, setting it to \code{TRUE}
+To have the same permutation within each level of \code{plt}, use the \code{constant} argument of the \code{Within()} function, setting it to \code{TRUE}
 <<keep.source=TRUE>>=
 set.seed(4)
-CTRL <- permControl(strata = block,
-                    within = Within(type = "grid", ncol = 3, nrow = 3,
-                                    constant = TRUE))
-perm2 <- shuffle(length(block), control = CTRL)
-lapply(split(perm2, block), matrix, ncol = 3)
+CTRL <- permControl(within = Within(type = "grid", ncol = 3, nrow = 3,
+                                    constant = TRUE),
+                    plots = Plots(strata = plt))
+perm2 <- shuffle(length(plt), control = CTRL)
+lapply(split(perm2, plt), matrix, ncol = 3)
 @
 
 \subsection{Generating sets of permutations with shuffleSet()}

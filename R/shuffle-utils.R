@@ -70,3 +70,15 @@
 `shuffleFree` <- function(x, size) {
     sample.int(x, size, replace = FALSE)
 }
+
+## wrapper function when shuffling without any strata at all at any level
+`shuffleNoStrata` <- function(n, control) {
+    type <- control$within$type
+    switch(type,
+           "free" = shuffleFree(n, n),
+           "series" = shuffleSeries(seq_len(n), mirror = control$within$mirror),
+           "grid" = shuffleGrid(nrow = control$within$nrow,
+           ncol = control$within$ncol, mirror = control$within$mirror),
+           "none" = seq_len(n)
+           )
+}

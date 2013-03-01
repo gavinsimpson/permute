@@ -37,7 +37,7 @@
             if(WI$constant) {
                 ## same permutation in each block
                 pg <- unique(tab)
-                ctrl.wi <- permControl(strata = NULL, within = WI)
+                ctrl.wi <- permControl(within = WI)
                 nperms <- numPerms(pg, ctrl.wi)
                 ord <- switch(type.wi,
                               free = allFree(pg),
@@ -62,7 +62,7 @@
                         ## FIXME: this should not be needed once all checks are
                         ## in place in check()
                         stop("Unbalanced grid designs are not supported")
-                    ctrl.wi <- permControl(strata = NULL, within = WI)
+                    ctrl.wi <- permControl(within = WI)
                     sp <- split(v, STRATA)
                     res <- vector(mode = "list", length = ng)
                     add <- c(0, cumsum(tab)[1:(ng-1)])
@@ -90,7 +90,7 @@
                                    unlist(sp), v))
                 } else {
                     ## same number of observations per level of strata
-                    ctrl.wi <- permControl(strata = NULL, within = WI)
+                    ctrl.wi <- permControl(within = WI)
                     np <- numPerms(pg, ctrl.wi)
                     ord <-
                         switch(type.wi,
@@ -126,6 +126,7 @@
         if(type.wi == "none") {
             res <- allStrata(n, control = control)
         } else {
+          ## FIXME - this need updating to work with the new code
             ## permuting blocks AND within blocks
             ## need a local CTRL that just permutes blocks
             ctrl.b <- permControl(strata = STRATA,

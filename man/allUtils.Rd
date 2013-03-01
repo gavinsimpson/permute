@@ -15,7 +15,7 @@
 }
 
 \usage{
-allFree(n, v = 1:n)
+allFree(n, v = seq_len(n))
 
 allSeries(n, nperms, mirror = FALSE)
 
