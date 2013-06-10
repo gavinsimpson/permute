@@ -49,13 +49,13 @@ getStrata.default <- function(object, ...) {
 }
 
 getStrata.permControl <- function(object,
-                                  which = c("plots","blocks"), 
+                                  which = c("plots","blocks"),
                                   drop = TRUE, ...) {
     which <- match.arg(which)
     if(isTRUE(all.equal(which, "plots")))
         strata <- object$plots$strata
     else if(isTRUE(all.equal(which, "blocks")))
-        strata <- object$blocks$strata
+        strata <- object$blocks #object$blocks$strata
     else
         stop("Ambiguous `which`")
     if(isTRUE(drop) && !is.null(strata))
@@ -65,7 +65,7 @@ getStrata.permControl <- function(object,
 
 ## Get type of permutation
 getType <- function(object, ...) {
-  UseMethod("getType")
+    UseMethod("getType")
 }
 
 getType.default <- function(object, ...) {
@@ -74,14 +74,49 @@ getType.default <- function(object, ...) {
 
 getType.permControl <- function(object,
                                 which = c("plots","within"), ...) {
-  which <- match.arg(which)
+    which <- match.arg(which)
   if(isTRUE(all.equal(which, "plots")))
-    type <- getPlots(object)$type
+      type <- getPlots(object)$type
   else if(isTRUE(all.equal(which, "within")))
-    type <- getWithin(object)$type
+      type <- getWithin(object)$type
   else
-    stop("Ambiguous `which`")
+      stop("Ambiguous `which`")
   type
 }
 ## suppose we can also have setBlocks() etc...
 ## to update the control object in place....
+
+## Get mirroring status
+`getMirror` <- function(object, ...) {
+    UseMethod("getMirror")
+}
+
+`getMirror.default` <- function(object, ...) {
+    stop("No default method for 'getMirror()'")
+}
+
+`getMirror.permControl` <- function(object,
+                                    which = c("plots","within"), ...) {
+    which <- match.arg(which)
+  if(isTRUE(all.equal(which, "plots")))
+      mirror <- getPlots(object)$mirror
+  else if(isTRUE(all.equal(which, "within")))
+      mirror <- getWithin(object)$mirror
+  else
+      stop("Ambiguous `which`")
+  mirror
+}
+
+## Get constant status - i.e. same permutation in each Plot
+`getConstant` <- function(object, ...) {
+    UseMethod("getConstant")
+}
+
+`getConstant.default` <- function(object, ...) {
+    stop("No default method for 'getConstant()'")
+}
+
+`getConstant.permControl` <- function(object, ...) {
+    getWithin(object)$constant
+}
+

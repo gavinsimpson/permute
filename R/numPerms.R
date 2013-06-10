@@ -1,108 +1,157 @@
-`numPerms` <- function(object, control = permControl())
-{
-    ## constant holding types where something is permuted
-    PTYPES <- c("free","grid","series","none")
-    ## expand object if a numeric or integer vector of length 1
-    if((is.numeric(object) || is.integer(object)) &&
-       (length(object) == 1))
-        object <- seq_len(object)
-    ## number of observations in data
-    nobs <- nobs(object)
-    ## within perms object
-    WITHIN <- control$within
-    ## strata perms object
-    BLOCKS <- control$blocks
-    ## are strata present?
-    STRATA <- !is.null(control$strata)
-    ## check that when permuting strata or constant within strata,
-    ## strata have same number of samples
-    if(STRATA) {
-        tab.strata <- table(control$strata)
-        same.n <- length(unique(tab.strata))
-        if((BLOCKS$type %in% PTYPES || isTRUE(WITHIN$constant)) &&
-           same.n > 1)
-            stop("All levels of strata must have same number of samples for chosen scheme")
-        if(BLOCKS$type == "grid" && same.n > 1)
-            stop("Unbalanced grid designs are not supported")
-    }
-    ## generate multiplier for restricted permutations
-    if(WITHIN$type %in% c("series","grid")) {
-        within.multi <- 2
-        if(WITHIN$type == "grid" && WITHIN$ncol > 2) {
-            within.multi <- 4
-        } else {
-            if(nobs == 2)
-                within.multi <- 1
-        }
-    }
-    if(BLOCKS$type %in% c("series","grid")) {
-        blocks.multi <- 2
-        if(BLOCKS$type == "grid" && BLOCKS$ncol > 2) {
-            blocks.multi <- 4
-        } else {
-            if(nobs == 2)
-                blocks.multi <- 1
-        }
-    }
-    ## calculate number of possible permutations
-    ## blocks
-    num.blocks <- 1
-    if(BLOCKS$type %in% PTYPES) {
-        num.blocks <- if(BLOCKS$type == "free")
-            exp(lfactorial(length(levels(control$strata))))
-        else if(BLOCKS$type %in% c("series","grid")) {
-            if(BLOCKS$mirror)
-                blocks.multi * nobs
-            else
-                nobs
-        } else {
-            1
-        }
-    }
-    ## within
-    if(!(WITHIN$type %in% PTYPES))
-        stop("Ambiguous permutation type in 'control$within$type'")
+`numPerms` <- function(object, control = permControl()) {
+  ## constant holding types where something is permuted
+  TYPES <- c("free","grid","series","none")
 
-    num.within <- if(WITHIN$type == "none") {
-        ## no within permutations
-        ## recall this is what we multiply num.blocks
-        ## by hence not 0
-        1
-    } else if(WITHIN$type == "free") {
-        if(STRATA)
-            prod(factorial(tab.strata))
-        else
-            exp(lfactorial(nobs))
+  ## expand object if a numeric or integer vector of length 1
+  if((is.numeric(object) || is.integer(object)) &&
+     (length(object) == 1))
+    object <- seq_len(object)
+  ## number of observations in data
+  n <- nobs(object)
+
+  ## get the permutation levels from control
+  WI <- getWithin(control)
+  PL <- getPlots(control)
+  BL <- getBlocks(control)
+
+  ## any strata to permute within / blocking?
+  BLOCKS <- getStrata(control, which = "blocks")
+  PSTRATA <- getStrata(control, which = "plots")
+  typeP <- getType(control, which = "plots")
+  typeW <- getType(control, which = "within")
+
+  ## mirroring?
+  mirrorP <- getMirror(control, which = "plots")
+  mirrorW <- getMirror(control, which = "within")
+
+  ## constant - i.e. same perm within each plot?
+  constantW <- getConstant(control)
+
+  ## Some checks; i) Plot strata must be of same size when permuting strata
+  ##                 or having the same constant permutation within strata
+  ##             ii) In grid designs, grids must be of the same size for all
+  ##                 strata
+  ##
+  ## FIXME - this probably should be in check()!
+  if(!is.null(PSTRATA)) {
+    tab <- table(PSTRATA)
+    same.n <- length(unique(tab))
+    if((typeP %in% TYPES || isTRUE(WI$constant)) && same.n > 1) {
+      stop("All levels of strata must have same number of samples for chosen scheme")
+    }
+    if(typeP == "grid" && same.n > 1) {
+      stop("Unbalanced grid designs are not supported")
+    }
+  }
+
+  ## the various designs allowed imply multipliers to number of samples
+  ## for the restricted permutations
+
+  ## within types
+  if(typeW %in% c("series","grid")) {
+    mult.wi <- 2
+    if(isTRUE(all.equal(typeW, "grid")) && typeW$ncol > 2) {
+      mult.wi <- 4
     } else {
-        ##} else if(WITHIN$type %in% c("series","grid")) {
-        if(STRATA) {
+      if(isTRUE(all.equal(n, 2)))
+        mult.wi <- 1
+    }
+  }
+  ## plot-level types
+  if(typeP %in% c("series","grid")) {
+    mult.p <- 2
+    if(isTRUE(all.equal(typeP, "grid")) && typeP$ncol > 2) {
+      mult.p <- 4
+    } else {
+      if(isTRUE(all.equal(n, 2)))
+        mult.p <- 1
+    }
+  }
+
+  ## within
+  ## another check - shouldn't this be moved? FIXME
+  if(!typeW %in% TYPES) {
+    stop("Ambiguous permutation type in 'control$within$type'")
+  }
+
+  ## calculate the number of possible permutations
+
+  ## Compute number of permutations for each block
+  if(is.null(BLOCKS))
+      BLOCKS <- factor(rep(1, n))
+
+  ## split an index vector
+  indv <- seq_len(n)
+  spl <- split(indv, BLOCKS)
+
+  ## loop over the components of spl & apply doNumPerms
+  np <- lapply(spl, doNumPerms, mult.p, mult.wi, typeP, typeW, PSTRATA,
+               mirrorP, mirrorW, constantW)
+
+  ## multiply up n perms per block
+  do.call(prod, np)
+}
+
+`doNumPerms` <- function(obs, mult.p, mult.wi, typeP, typeW, PSTRATA,
+                         mirrorP, mirrorW, constantW) {
+    n <- nobs(obs) ## obs is index vector for object, split by blocks
+
+    ## need only those strata for the current block. As obs is the index
+    ## vector, split by block, this now gives nobs per plot strata 
+    tab <- table(PSTRATA[obs])
+    same.n <- length(unitab <- unique(tab))
+
+    ## plots
+    num.p <- if(isTRUE(all.equal(typeP, "free"))) {
+        exp(lfactorial(length(levels(PSTRATA))))
+    } else if(typeP %in% c("series", "grid")) {
+        if(isTRUE(mirrorP)) {
+            mult.p * n
+        } else {
+            n
+        }
+    } else {
+        1
+    }
+
+    num.wi <- if(isTRUE(all.equal(typeW, "none"))) {
+        ## no within permutations. note we multiply num.p by this
+        ## values so it is 1 not 0!!
+        1
+    } else if(isTRUE(all.equal(typeW, "free"))) {
+        if(!is.null(PSTRATA)) {
+            prod(factorial(tab))
+        } else {
+            exp(lfactorial(n))
+        }
+    } else {
+        if(!is.null(PSTRATA)) {
             if(same.n > 1) {
-                multi <- rep(2, length = length(tab.strata))
-                multi[which(tab.strata == 2)] <- 1
-                if(WITHIN$mirror) {
-                    prod(multi * tab.strata)
+                multi <- rep(2, length = length(tab))
+                multi[which(tab == 2)] <- 1
+                if(mirrorW) {
+                    prod(multi * tab)
                 } else {
-                    prod(tab.strata)
+                    prod(tab)
                 }
             } else {
-                if(WITHIN$mirror) {
-                    if(WITHIN$constant)
-                        within.multi * unique(tab.strata)
+                if(mirrorW) {
+                    if(constantW)
+                        mult.wi * unitab
                     else
-                        prod(within.multi * tab.strata)
+                        prod(mult.wi * tab)
                 } else {
-                    if(WITHIN$constant)
-                        unique(tab.strata)
+                    if(constantW)
+                        unitab ## FIXME: unitab[1]?? (unique(tab)[1])
                     else
-                        prod(tab.strata)
+                        prod(tab)
                 }
             }
         } else {
-            if(WITHIN$mirror)
-                within.multi * nobs
+            if(mirrorW)
+                mult.wi * n
             else
-                nobs
+                n
         }
     }
-    return(num.blocks * num.within)
 }

@@ -6,18 +6,6 @@
 \alias{Plots}
 \alias{print.permControl}
 \alias{permute}
-\alias{getBlocks}
-\alias{getBlocks.default}
-\alias{getBlocks.permControl}
-\alias{getWithin}
-\alias{getWithin.default}
-\alias{getWithin.permControl}
-\alias{getStrata}
-\alias{getStrata.default}
-\alias{getStrata.permControl}
-\alias{getType}
-\alias{getType.default}
-\alias{getType.permControl}
 
 \title{Unrestricted and restricted permutations}
 \description{
@@ -27,7 +15,7 @@
 \usage{
 shuffle(n, control = permControl())
 
-permControl(within = Within(), plots = Plots(), blocks = Blocks(),
+permControl(within = Within(), plots = Plots(), blocks = NULL,
             nperm = 199, complete = FALSE, maxperm = 9999,
             minperm = 99, all.perms = NULL, observed = FALSE)
 
@@ -38,26 +26,7 @@ Within(type = c("free","series","grid","none"),
 Plots(strata = NULL, type = c("free","series","grid","none"),
       mirror = FALSE, ncol = NULL, nrow = NULL)
 
-Blocks(strata = NULL)
-
 permute(i, n, control)
-
-getWithin(object, ...)
-
-\method{getWithin}{permControl}(object, ...)
-
-getBlocks(object, ...)
-
-\method{getBlocks}{permControl}(object, ...)
-
-getStrata(object, ...)
-
-\method{getStrata}{permControl}(object, which = c("plots", "blocks"),
-drop = TRUE, ...)
-
-getType(object, ...)
-
-\method{getType}{permControl}(object, which = c("plots", "within"), ...)
 }
 
 \arguments{
@@ -74,7 +43,10 @@ getType(object, ...)
   \item{within, plots, blocks}{Permutation designs for samples within the
     levels of \code{plots} (\code{within}), permutation of \code{plots}
     themselves, or for the definition of blocking structures which
-    further restrict permutations (\code{blocks}.}
+    further restrict permutations (\code{blocks}. \code{within} and
+    \code{plots} each require a named list as produced by \code{Within}
+    and \code{Plots} respectively. \code{blocks} takes a factor, the
+    levels of which define the blocking structure.}
   \item{type}{the type of permutations required. One of \code{"free"},
     \code{"series"}, \code{"grid"} or \code{"none"}. See Details.}
   \item{maxperm}{the maximum number of permutations to
@@ -93,10 +65,6 @@ getType(object, ...)
   \item{ncol, nrow}{numeric; the number of columns and rows of samples
     in the spatial grid respectively.}
   \item{i}{integer; row of \code{control$all.perms} to return.}
-  \item{object}{An R object to dispatch on.}
-  \item{which}{character; which level of restriction to extract
-    information for.}
-  \item{drop}{logical; should un-used factor levels be dropped?}
   \item{\dots}{Arguments passed on to other methods.}
 }
 \details{
@@ -239,6 +207,11 @@ shuffle(20, CTRL)
 CTRL <- permControl(plots = Plots(gl(4, 5), type = "series"),
                     within = Within(type = "free"))
 shuffle(20, CTRL)
+
+## permuting within blocks
+grp <- gl(2, 10) # 2 groups of 10 samples each
+CTRL <- permControl(blocks = grp)
+shuffle(length(grp), control = CTRL)
 
 ## Simple function using permute() to assess significance
 ## of a t.test  

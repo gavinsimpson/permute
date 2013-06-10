@@ -64,7 +64,6 @@ numPerms(object, control = permControl())
   \code{\link{permControl}}. Additional \code{\link{nobs}} methods are
   provide, see \code{\link{nobs-methods}}.}
 \examples{
-\dontrun{ %FIXME update this for blocks
 ## permutation design --- see ?permControl
 ctrl <- permControl() ## defaults to freely exchangeable
 
@@ -82,8 +81,17 @@ numPerms(len, control = ctrl)
 ctrl <- permControl(within = Within(type = "series"))
 numPerms(v, control = ctrl)
 ## number of permutations possible drastically reduced...
-## turn on mirroring
+## ...turn on mirroring
 ctrl <- permControl(within = Within(type = "series", mirror = TRUE))
 numPerms(v, control = ctrl)
-}
+
+## Try blocking - 2 groups of 5
+bl <- numPerms(v, control = permControl(blocks = gl(2,5)))
+bl
+
+## should be same as
+pl <- numPerms(v, control = permControl(plots =
+                                        Plots(strata = gl(2,5))))
+pl
+stopifnot(all.equal(bl, pl))
 }

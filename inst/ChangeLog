@@ -2,6 +2,21 @@ $Date$
 
 permute ChangeLog
 
+Version 0.7-3
+
+	* Tweak to 0.7-2 API changes: argument `blocks` no longer takes
+	a list from helper function `Blocks()`. It is easier and simpler
+	if this just takes a factor. In essence, `blocks` in synonymous
+	with `strata` from `vegan::permuted.index` and the new change will
+	allow for an easier transition.
+
+	* get-methods: New extractor functions `getMirror()`, and
+	`getConstant()` which retrieve the mirroring and constant elements
+	of a permutation design.
+
+	* numPerms: updated to work with the new API and now handles
+	blocking. Exmaples now pass checks again.
+
 Version 0.7-2
 
 	* Major API change: Added capability to handle true blocking

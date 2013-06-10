@@ -16,7 +16,7 @@
 
 `permControl` <- function(within = Within(),
                           plots = Plots(),
-                          blocks = Blocks(),
+                          blocks = NULL, #Blocks(),
                           nperm = 199, complete = FALSE,
                           maxperm = 9999, minperm = 99,
                           all.perms = NULL,
@@ -28,5 +28,5 @@
                 all.perms = all.perms, observed = observed,
                 name.strata = deparse(substitute(strata)))
     class(out) <- "permControl"
-    return(out)
+    out
 }
