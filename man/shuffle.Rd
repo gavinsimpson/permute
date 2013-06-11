@@ -1,13 +1,6 @@
 \name{shuffle}
 \alias{shuffle}
-\alias{permControl}
-\alias{Blocks}
-\alias{Within}
-\alias{Plots}
-\alias{print.permControl}
 \alias{permute}
-\alias{how}
-\alias{print.how}
 
 \title{Unrestricted and restricted permutations}
 \description{
@@ -17,21 +10,6 @@
 \usage{
 shuffle(n, control = permControl())
 
-permControl(within = Within(), plots = Plots(), blocks = NULL,
-            nperm = 199, complete = FALSE, maxperm = 9999,
-            minperm = 99, all.perms = NULL, observed = FALSE)
-
-how(within = Within(), plots = Plots(), blocks = NULL,
-    nperm = 199, complete = FALSE, maxperm = 9999,
-    minperm = 99, all.perms = NULL, observed = FALSE)
-
-Within(type = c("free","series","grid","none"),
-       constant = FALSE, mirror = FALSE,
-       ncol = NULL, nrow = NULL)
-
-Plots(strata = NULL, type = c("free","series","grid","none"),
-      mirror = FALSE, ncol = NULL, nrow = NULL)
-
 permute(i, n, control)
 }
 
@@ -39,39 +17,8 @@ permute(i, n, control)
   \item{n}{numeric; the length of the returned vector of permuted
     values. Usually the number of observations under consideration.}
   \item{control}{a list of control values describing properties of the
-    permutation design, as returned by a call to \code{permControl}.}
-  \item{strata}{An integer vector or factor specifying the strata for
-    permutation. If supplied, observations are permuted only within the
-    specified strata.}
-  \item{nperm}{the number of permutations.}
-  \item{complete}{logical; should complete enumeration of all
-    permutations be performed?}
-  \item{within, plots, blocks}{Permutation designs for samples within the
-    levels of \code{plots} (\code{within}), permutation of \code{plots}
-    themselves, or for the definition of blocking structures which
-    further restrict permutations (\code{blocks}. \code{within} and
-    \code{plots} each require a named list as produced by \code{Within}
-    and \code{Plots} respectively. \code{blocks} takes a factor, the
-    levels of which define the blocking structure.}
-  \item{type}{the type of permutations required. One of \code{"free"},
-    \code{"series"}, \code{"grid"} or \code{"none"}. See Details.}
-  \item{maxperm}{the maximum number of permutations to
-    perform. Currently unused.}
-  \item{minperm}{the lower limit to the number of possible permutations
-    at which complete enumeration is performed. See argument
-    \code{complete} and Details, below.}
-  \item{all.perms}{an object of class \code{allPerms}, the result of a
-    call to \code{\link{allPerms}}.}
-  \item{observed}{logical; should the observed permutation be returned
-    as part of the set of all permutations?}
-  \item{constant}{logical; should the same permutation be used within
-    each level of strata? If \code{FALSE} a separate, possibly restricted,
-    permutation is produced for each level of \code{strata}.}
-  \item{mirror}{logical; should mirroring of sequences be allowed?}
-  \item{ncol, nrow}{numeric; the number of columns and rows of samples
-    in the spatial grid respectively.}
+    permutation design, as returned by a call to \code{how}.}
   \item{i}{integer; row of \code{control$all.perms} to return.}
-  \item{\dots}{Arguments passed on to other methods.}
 }
 \details{
   \code{shuffle} can generate permutations for a wide range of
