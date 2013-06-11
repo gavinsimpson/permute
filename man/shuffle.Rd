@@ -25,27 +25,6 @@ permute(i, n, control)
   restricted permutation schemes. A small selection of the available
   combinations of options is provided in the Examples section below.
 
-  Argument \code{mirror} determines whether grid or series permutations
-  can be mirrored. Consider the sequence 1,2,3,4. The relationship
-  between consecutive observations is preserved if we reverse the
-  sequence to 4,3,2,1. If there is no inherent direction in your
-  experimental design, mirrored permutations can be considered
-  part of the Null model, and as such increase the number of possible
-  permutations. The default is to not use mirroring so you must
-  explicitly turn this on using \code{mirror = TRUE} in
-  \code{permControl}.
-
-  To permute \code{strata} rather than the observations within the
-  levels of \code{strata}, use \code{permute.strata = TRUE}. However, note
-  that the number of observations within each level of strata
-  \strong{must} be equal! 
-
-  For some experiments, such as BACI designs, one might wish to use the
-  same permutation within each level of strata. This is controlled by
-  argument \code{constant}. If \code{constant = TRUE} then the same
-  permutation will be generated for each level of \code{strata}. The
-  default is \code{constant = FALSE}.
-
   \code{permute} is a higher level utility function for use in a loop
   within a function implementing a permutation test. The main purpose of
   \code{permute} is to return the correct permutation in each iteration
