@@ -27,6 +27,10 @@
   ## constant - i.e. same perm within each plot?
   constantW <- getConstant(control)
 
+  ## grid dimensions
+  colW <- getCol(control, which = "within")
+  colP <- getRow(control, which = "plots")
+
   ## Some checks; i) Plot strata must be of same size when permuting strata
   ##                 or having the same constant permutation within strata
   ##             ii) In grid designs, grids must be of the same size for all
@@ -36,7 +40,7 @@
   if(!is.null(PSTRATA)) {
     tab <- table(PSTRATA)
     same.n <- length(unique(tab))
-    if((typeP %in% TYPES || isTRUE(WI$constant)) && same.n > 1) {
+    if((typeP %in% TYPES || isTRUE(constantW)) && same.n > 1) {
       stop("All levels of strata must have same number of samples for chosen scheme")
     }
     if(typeP == "grid" && same.n > 1) {
@@ -47,10 +51,12 @@
   ## the various designs allowed imply multipliers to number of samples
   ## for the restricted permutations
 
+  mult.p <- mult.wi <- 1
+
   ## within types
   if(typeW %in% c("series","grid")) {
     mult.wi <- 2
-    if(isTRUE(all.equal(typeW, "grid")) && typeW$ncol > 2) {
+    if(isTRUE(all.equal(typeW, "grid")) && !is.null(colW) && colW > 2) {
       mult.wi <- 4
     } else {
       if(isTRUE(all.equal(n, 2)))
@@ -60,7 +66,7 @@
   ## plot-level types
   if(typeP %in% c("series","grid")) {
     mult.p <- 2
-    if(isTRUE(all.equal(typeP, "grid")) && typeP$ncol > 2) {
+    if(isTRUE(all.equal(typeP, "grid")) && !is.null(colP) && colP > 2) {
       mult.p <- 4
     } else {
       if(isTRUE(all.equal(n, 2)))
@@ -97,8 +103,8 @@
     n <- nobs(obs) ## obs is index vector for object, split by blocks
 
     ## need only those strata for the current block. As obs is the index
-    ## vector, split by block, this now gives nobs per plot strata 
-    tab <- table(PSTRATA[obs])
+    ## vector, split by block, this now gives nobs per plot strata
+    tab <- table(PSTRATA)#[obs] # table(PSTRATA[obs])
     same.n <- length(unitab <- unique(tab))
 
     ## plots

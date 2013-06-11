@@ -6,6 +6,8 @@
 \alias{Plots}
 \alias{print.permControl}
 \alias{permute}
+\alias{how}
+\alias{print.how}
 
 \title{Unrestricted and restricted permutations}
 \description{
@@ -18,6 +20,10 @@ shuffle(n, control = permControl())
 permControl(within = Within(), plots = Plots(), blocks = NULL,
             nperm = 199, complete = FALSE, maxperm = 9999,
             minperm = 99, all.perms = NULL, observed = FALSE)
+
+how(within = Within(), plots = Plots(), blocks = NULL,
+    nperm = 199, complete = FALSE, maxperm = 9999,
+    minperm = 99, all.perms = NULL, observed = FALSE)
 
 Within(type = c("free","series","grid","none"),
        constant = FALSE, mirror = FALSE,

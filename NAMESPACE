@@ -4,7 +4,7 @@ export(`allPerms`, `Blocks`, `numPerms`, `check`, `permCheck`,
        `shuffleFree`, `shuffleSeries`, `shuffleGrid`, `shuffleStrata`,
        `getBlocks`, `getWithin`, `getStrata`, `getType`, `getMirror`,
        `getConstant`, `getPlots`,
-       `shuffleSet`, `permuplot`)
+       `shuffleSet`, `permuplot`, `how`)
 
 ### Imports: nobs() only exists in R 2.13.0 for import. We define the
 ### same nobs() generic in permute for export in older R.
@@ -18,6 +18,7 @@ if (getRversion() >= "2.13.0") {
 ## print methods
 S3method(`print`, `allPerms`)
 S3method(`print`, `check`)
+S3method(`print`, `how`)
 S3method(`print`, `permControl`)
 S3method(`print`, `summary.allPerms`)
 S3method(`print`, `summary.check`)

@@ -98,13 +98,13 @@ getType.permControl <- function(object,
 `getMirror.permControl` <- function(object,
                                     which = c("plots","within"), ...) {
     which <- match.arg(which)
-  if(isTRUE(all.equal(which, "plots")))
-      mirror <- getPlots(object)$mirror
-  else if(isTRUE(all.equal(which, "within")))
-      mirror <- getWithin(object)$mirror
-  else
-      stop("Ambiguous `which`")
-  mirror
+    if(isTRUE(all.equal(which, "plots")))
+        mirror <- getPlots(object)$mirror
+    else if(isTRUE(all.equal(which, "within")))
+        mirror <- getWithin(object)$mirror
+    else
+        stop("Ambiguous `which`")
+    mirror
 }
 
 ## Get constant status - i.e. same permutation in each Plot
@@ -120,3 +120,68 @@ getType.permControl <- function(object,
     getWithin(object)$constant
 }
 
+## Get the number of rows and colums from grid designs
+`getRow` <- function(object, ...) {
+    UseMethod("getRow")
+}
+
+`getRow.default` <- function(object, ...) {
+    NROW(object)
+}
+
+`getRow.permControl` <- function(object, which = c("plots","within"),
+                                 ...) {
+    which <- match.arg(which)
+    if(isTRUE(all.equal(which, "plots")))
+        nrow <- getPlots(object)$nrow
+    else if(isTRUE(all.equal(which, "within")))
+        nrow <- getWithin(object)$nrow
+    else
+        stop("Ambiguous `which`")
+    nrow
+}
+
+`getCol` <- function(object, ...) {
+    UseMethod("getCol")
+}
+
+`getCol.default` <- function(object, ...) {
+    NCOL(object)
+}
+
+`getCol.permControl` <- function(object, which = c("plots","within"),
+                                 ...) {
+    which <- match.arg(which)
+    if(isTRUE(all.equal(which, "plots")))
+        ncol <- getPlots(object)$ncol
+    else if(isTRUE(all.equal(which, "within")))
+        ncol <- getWithin(object)$ncol
+    else
+        stop("Ambiguous `which`")
+    ncol
+}
+
+`getDim` <- function(object, ...) {
+    UseMethod("getDim")
+}
+
+`getDim.default` <- function(object, ...) {
+    dim(object)
+}
+
+`getDim.permControl` <- function(object, which = c("plots","within"),
+                                 ...) {
+    which <- match.arg(which)
+    if(isTRUE(all.equal(which, "plots"))) {
+        PL <- getPlots(object)
+        nc <- PL$ncol
+        nr <- PL$nrow
+    } else if(isTRUE(all.equal(which, "within"))) {
+        WI <- getWithin(object)
+        nc <- WI$ncol
+        nr <- WI$nrow
+    } else {
+        stop("Ambiguous `which`")
+    }
+    c(nr, nc)
+}

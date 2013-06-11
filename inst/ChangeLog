@@ -12,10 +12,21 @@ Version 0.7-3
 
 	* get-methods: New extractor functions `getMirror()`, and
 	`getConstant()` which retrieve the mirroring and constant elements
-	of a permutation design.
+	of a permutation design. Also added `getRow()`, `getCol()` and
+	`getDim()`, which extract the row and column dimensions of a
+	grid permutation design, or both.
 
 	* numPerms: updated to work with the new API and now handles
 	blocking. Exmaples now pass checks again.
+
+	* allPerms: updated to the new API.
+
+	* how: new function, a copy of `permControl()` and will eventually
+	replace that function. Has a `print` method, but again this is
+	just a copy or something that is currently not working with the new
+	API.
+
+	* TODO: started a TODO list of things I know are broken or needed.
 
 Version 0.7-2
 

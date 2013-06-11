@@ -21,6 +21,15 @@
 \alias{getPlots}
 \alias{getPlots.default}
 \alias{getPlots.permControl}
+\alias{getRow}
+\alias{getRow.default}
+\alias{getRow.permControl}
+\alias{getCol}
+\alias{getCol.default}
+\alias{getCol.permControl}
+\alias{getDim}
+\alias{getDim.default}
+\alias{getDim.permControl}
 
 \title{Extractor functions to access components of a permutation design}
 \description{
@@ -61,6 +70,18 @@ getMirror(object, ...)
 getConstant(object, ...)
 
 \method{getConstant}{permControl}(object, ...)
+
+getCol(object, ...)
+
+\method{getCol}{permControl}(object, which = c("plots", "within"), ...)
+
+getRow(object, ...)
+
+\method{getRow}{permControl}(object, which = c("plots", "within"), ...)
+
+getDim(object, ...)
+
+\method{getDim}{permControl}(object, which = c("plots", "within"), ...)
 }
 
 \arguments{

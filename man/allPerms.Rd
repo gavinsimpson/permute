@@ -67,7 +67,6 @@ allPerms(n, control = permControl(), max = 9999,
 }
 \author{Gavin Simpson}
 \examples{
-\dontrun{ % FIXME - this needs updating for blocks
 ## allPerms can work with a vector
 vec <- c(3,4,5)
 allPerms(vec) ## free permutation
@@ -75,13 +74,12 @@ allPerms(vec) ## free permutation
 ## enumerate all possible permutations for a more complicated
 ## design
 fac <- gl(2,6)
-##ctrl <- permControl(type = "grid", mirror = FALSE, strata = fac,
-##                    constant = TRUE, nrow = 3, ncol = 2)
-ctrl <- permControl(strata = fac,
-                    within = Within(type = "grid", mirror = FALSE,
-                                    constant = TRUE, nrow = 3, ncol = 2))
+ctrl <- permControl(within = Within(type = "grid", mirror = FALSE,
+                                    constant = TRUE,
+                                    nrow = 3, ncol = 2),
+                    plots = Plots(strata = fac))
 Nobs <- length(fac)
-numPerms(seq_len(Nobs), control = ctrl)
+numPerms(seq_len(Nobs), control = ctrl) ## 6
 (tmp <- allPerms(Nobs, control = ctrl, observed = TRUE))
 (tmp2 <- allPerms(Nobs, control = ctrl))
 
@@ -90,14 +88,9 @@ ctrl$within$mirror <- TRUE
 numPerms(seq_len(Nobs), control = ctrl)
 (tmp3 <- allPerms(Nobs, control = ctrl, observed = TRUE))
 (tmp4 <- allPerms(Nobs, control = ctrl))
-}
 
-\dontrun{
 ## prints out details of the permutation scheme as
 ## well as the matrix of permutations
-% FIXME: uncomment the two lines below when we remove old permute
-% code from vegan and have vegan depend on permute
 summary(tmp3)
 summary(tmp4)
-}
 }
