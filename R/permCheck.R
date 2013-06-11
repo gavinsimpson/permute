@@ -53,7 +53,7 @@
     retval
 }
 
-## depricate check
+## deprecate check
 `permCheck` <- function(object, control = permControl(),
                         make.all = TRUE) {
     .Deprecated(new = "check", "permute")
