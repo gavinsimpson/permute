@@ -141,12 +141,9 @@ check(pyrifos,
       control = how(plots = Plots(strata = ditch),
                     within = Within(type = "series", mirror = TRUE,
                                     constant = TRUE)))
-
-\dontrun{ % FIXME these fail in allStrata needing 235.5 Gb RAM!!
 ## permute strata
 check(pyrifos, how(plots = Plots(strata = ditch, type = "free"),
                    within = Within(type = "none")))
-}
 
 ## this should also also for arbitrary vectors
 vec1 <- check(1:100)

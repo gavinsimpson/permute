@@ -160,4 +160,7 @@
                 n
         }
     }
+
+    ## return
+    num.p * num.wi
 }

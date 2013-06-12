@@ -8,7 +8,7 @@
     ## number of observations in data
     n <- nobs(v)
     ## check permutation scheme and update control
-    ## pcheck <- check(v, control = control, make.all = FALSE)
+    pcheck <- check(v, control = control, make.all = FALSE)
     ## ctrl <- pcheck$control
 
     ## get max number of permutations
