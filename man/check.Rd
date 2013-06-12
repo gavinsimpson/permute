@@ -1,6 +1,7 @@
 \name{check}
 \alias{check}
 \alias{permCheck} % for the deprecated function
+\alias{permCheck-deprecated} % for the deprecated function
 \alias{print.check}
 \alias{print.summary.check}
 \alias{summary.check}
@@ -73,12 +74,6 @@ permuplot(n, control = how(), col = par("col"),
   permutations, and as such complete enumeration of all permutations is
   turned  on (\code{control$complete} is set to \code{TRUE}).
 
-  % Function \code{getNumObs} is a simple generic function to return the
-  % number of observations in a range of R objects. The default method
-  % will work for any object for which a \code{\link[vegan]{scores}}
-  % method exists. This includes matrices and data frames, as well as
-  % specific methods for numeric or integer vectors.
-
   \code{permuplot} is a graphical utility function, which produces a
   graphical representation of a permutation design. It takes the number
   of observations and an object returned by \code{\link{how}} as
@@ -103,9 +98,7 @@ permuplot(n, control = how(), col = par("col"),
 
   For \code{permuplot}, a plot on the currently active device.
 }
-%\references{
-%}
-\author{Gavin Simpson}
+\author{Gavin L. Simpson}
 \seealso{\code{\link{shuffle}} and \code{\link{how}}.}
 
 \examples{

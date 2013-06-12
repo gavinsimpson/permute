@@ -1,6 +1,7 @@
 \name{permControl-deprecated}
 \alias{permControl}
 \alias{print.permControl}
+\alias{print.permControl-deprecated}
 
 \title{How to define a permutation design?}
 
@@ -74,7 +75,7 @@ permControl(within = Within(), plots = Plots(), blocks = NULL,
   ter Braak, C. J. F. (1990). \emph{Update notes: CANOCO version
     3.1}. Wageningen: Agricultural Mathematics Group. (UR).
 }
-\author{Gavin Simpson}
+\author{Gavin L. Simpson}
 \seealso{\code{\link{shuffle}} for permuting from a design,
   \code{\link{check}}, a utility function for checking permutation
   schemedesign described by \code{\link{how}}.}

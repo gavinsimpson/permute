@@ -4,7 +4,10 @@ permute ChangeLog
 
 Version 0.7-4
 
-	*
+	* Deprecated functions: Completed the deprecation of `permCheck()`
+	and `permControl()`. These functions will be made defunct following
+	the release of version 0.8-0, with a view to complete removal from
+	version 0.9-0 onwards.
 
 Version 0.7-3
 
