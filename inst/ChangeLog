@@ -2,6 +2,10 @@ $Date$
 
 permute ChangeLog
 
+Version 0.7-4
+
+	*
+
 Version 0.7-3
 
 	* Tweak to 0.7-2 API changes: argument `blocks` no longer takes
