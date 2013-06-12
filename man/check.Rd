@@ -183,77 +183,17 @@ fac <- factor(rep(1:3, times = c(3,2,2)))
 ## free permutations in levels of strata
 numPerms(7, how(within = Within(type = "free"),
                 plots = Plots(strata = fac, type = "none")))
-%% FIXME - need all these updating to new API in how...
-%% Fixed one, above, but there may still be problems with some of
-%% the code below:
-\dontrun{
 allPerms(7, how(within = Within(type = "free"),
                 plots = Plots(strata = fac)))
 ## series permutations in levels of strata
-numPerms(7, how(type = "series", strata = fac))
-allPerms(7, how(type = "series", strata = fac))
+ctrl <- how(within = Within(type = "series"), plots = Plots(strata = fac))
+numPerms(7, control = ctrl)
+allPerms(7, control = ctrl)
 
-## allPerms can work with a vector
-vec <- c(3,4,5)
-allPerms(vec)
+%% FIXME - need all these updating to new API in how...
+%% moved permuplot examples out of package until I can fix it
+%% properly
 
-## Tests for permuplot
-n <- 25
-## standard permutation designs
-permuplot(n, how(type = "free"))
-permuplot(n, how(type = "series"))
-permuplot(n, how(type = "grid", nrow = 5, ncol = 5))
-
-## restricted perms with mirroring
-permuplot(n, how(type = "series", mirror = TRUE))
-permuplot(n, how(type = "grid", nrow = 5, ncol = 5,
-                             mirror = TRUE))
-
-## perms within strata
-fac <- gl(6, 20)
-control <- how(type = "free", strata = fac)
-permuplot(120, control = control, cex = 0.8)
-control <- how(type = "series", strata = fac)
-permuplot(120, control = control, cex = 0.8)
-fac <- gl(6, 25)
-control <- how(type = "grid", strata = fac,
-                       nrow = 5, ncol = 5)
-permuplot(150, control = control, cex = 0.8)
-
-## perms within strata with mirroring
-fac <- gl(6, 20)
-control <- how(type = "series", strata = fac,
-                       mirror = TRUE)
-permuplot(120, control = control, cex = 0.8)
-fac <- gl(6, 25)
-control <- how(type = "grid", strata = fac,
-                       nrow = 5, ncol = 5, mirror = TRUE)
-permuplot(150, control = control, cex = 0.8)
-
-## same perms within strata
-fac <- gl(6, 20)
-control <- how(type = "free", strata = fac,
-                       constant = TRUE)
-permuplot(120, control = control, cex = 0.8)
-control <- how(type = "series", strata = fac,
-                       constant = TRUE)
-permuplot(120, control = control, cex = 0.8)
-fac <- gl(6, 25)
-control <- how(type = "grid", strata = fac,
-                       nrow = 5, ncol = 5, constant = TRUE)
-permuplot(150, control = control, cex = 0.8)
-
-## same perms within strata with mirroring
-fac <- gl(6, 20)
-control <- how(type = "series", strata = fac,
-                       mirror = TRUE, constant = TRUE)
-permuplot(120, control = control, cex = 0.8)
-fac <- gl(6, 25)
-control <- how(type = "grid", strata = fac,
-                       nrow = 5, ncol = 5, mirror = TRUE,
-                       constant = TRUE)
-permuplot(150, control = control, cex = 0.8)
-}
 }
 \keyword{ utilities }
 \keyword{ design }
