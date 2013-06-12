@@ -12,7 +12,7 @@
   selected permutation design.
 }
 \usage{
-check(object, control = how(), make.all = TRUE)
+check(object, control = how(), make.all = TRUE, observed = FALSE)
 
 \method{summary}{check}(object, \dots)
 
@@ -33,6 +33,8 @@ permuplot(n, control = how(), col = par("col"),
   \item{make.all}{logical; should \code{permCheck} generate all
     possible permutations? Useful if want to check permutation design
     but not produce the matrix of all permutations.}
+  \item{observed}{logical; if making all possible permutations, should
+    the set include the observed permutation too?}
   \item{n}{the number of observations or an 'object' from which the
     number of observations can be determined via \code{getNumObs}.}
   \item{col, xlim, ylim, main, sub, ann, cex}{Graphical parameters.}
