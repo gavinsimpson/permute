@@ -1,4 +1,4 @@
-`shuffleSet2` <- function(n, nset = 1, control = permControl()) {
+`shuffleSet2` <- function(n, nset = 1, control = how()) {
     Set <- matrix(nrow = nset, ncol = n)
     WI <- getWithin(control)
     strata <- getStrata(control)

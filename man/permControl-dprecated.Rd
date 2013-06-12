@@ -1,9 +1,6 @@
-\name{how}
-\alias{how}
-\alias{print.how}
-\alias{Blocks}
-\alias{Within}
-\alias{Plots}
+\name{permControl-deprecated}
+\alias{permControl}
+\alias{print.permControl}
 
 \title{How to define a permutation design?}
 
@@ -14,16 +11,9 @@
 }
 
 \usage{
-how(within = Within(), plots = Plots(), blocks = NULL,
-    nperm = 199, complete = FALSE, maxperm = 9999,
-    minperm = 99, all.perms = NULL, observed = FALSE)
-
-Within(type = c("free","series","grid","none"),
-       constant = FALSE, mirror = FALSE,
-       ncol = NULL, nrow = NULL)
-
-Plots(strata = NULL, type = c("none","free","series","grid"),
-      mirror = FALSE, ncol = NULL, nrow = NULL)
+permControl(within = Within(), plots = Plots(), blocks = NULL,
+            nperm = 199, complete = FALSE, maxperm = 9999,
+            minperm = 99, all.perms = NULL, observed = FALSE)
 }
 
 \arguments{
@@ -37,8 +27,6 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   \item{nperm}{the number of permutations.}
   \item{complete}{logical; should complete enumeration of all
     permutations be performed?}
-  \item{type}{the type of permutations required. One of \code{"free"},
-    \code{"series"}, \code{"grid"} or \code{"none"}. See Details.}
   \item{maxperm}{the maximum number of permutations to
     perform. Currently unused.}
   \item{minperm}{the lower limit to the number of possible permutations
@@ -48,20 +36,8 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
     call to \code{\link{allPerms}}.}
   \item{observed}{logical; should the observed permutation be returned
     as part of the set of all permutations?}
-  \item{constant}{logical; should the same permutation be used within
-    each level of strata? If \code{FALSE} a separate, possibly restricted,
-    permutation is produced for each level of \code{strata}.}
-  \item{mirror}{logical; should mirroring of sequences be allowed?}
-  \item{ncol, nrow}{numeric; the number of columns and rows of samples
-    in the spatial grid respectively.}
-  \item{strata}{An integer vector or factor specifying the strata for
-    permutation.}
 }
 \details{
-  \code{shuffle} can generate permutations for a wide range of
-  restricted permutation schemes. A small selection of the available
-  combinations of options is provided in the Examples section below.
-
   Argument \code{mirror} determines whether grid or series permutations
   can be mirrored. Consider the sequence 1,2,3,4. The relationship
   between consecutive observations is preserved if we reverse the
@@ -70,7 +46,7 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   part of the Null model, and as such increase the number of possible
   permutations. The default is to not use mirroring so you must
   explicitly turn this on using \code{mirror = TRUE} in
-  \code{how}.
+  \code{permControl}.
 
   To permute plots rather than the observations within plots (the
   levels of \code{strata}), use \code{Within(type = "none")} and
@@ -85,7 +61,8 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   default is \code{constant = FALSE}.
 }
 \value{  
-  For \code{how} a list with components for each of the possible arguments.
+  For \code{permControl} a list with components for each
+  of the possible arguments.
 }
 \references{
   \code{shuffle()} is modelled after the permutation schemes of Canoco
@@ -100,5 +77,5 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
 \author{Gavin Simpson}
 \seealso{\code{\link{shuffle}} for permuting from a design,
   \code{\link{check}}, a utility function for checking permutation
-  design described by \code{how}.}
+  schemedesign described by \code{\link{how}}.}
 \keyword{ utils  }

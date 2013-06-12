@@ -1,4 +1,4 @@
-`numPerms` <- function(object, control = permControl()) {
+`numPerms` <- function(object, control = how()) {
   ## constant holding types where something is permuted
   TYPES <- c("free","grid","series","none")
 
@@ -40,7 +40,7 @@
   if(!is.null(PSTRATA)) {
     tab <- table(PSTRATA)
     same.n <- length(unique(tab))
-    if((typeP %in% TYPES || isTRUE(constantW)) && same.n > 1) {
+    if((typeP != "none" || isTRUE(constantW)) && same.n > 1) {
       stop("All levels of strata must have same number of samples for chosen scheme")
     }
     if(typeP == "grid" && same.n > 1) {

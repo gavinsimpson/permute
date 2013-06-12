@@ -8,7 +8,7 @@
   line transects, spatial grids and blocking factors.
 }
 \usage{
-shuffle(n, control = permControl())
+shuffle(n, control = how())
 
 permute(i, n, control)
 }
@@ -37,7 +37,7 @@ permute(i, n, control)
   permutation of the observations 1, \ldots, n using the permutation
   scheme described by argument \code{control}.
   
-  For \code{permControl} a list with components for each of the possible
+  For \code{how} a list with components for each of the possible
   arguments.
 }
 %\note{
@@ -58,7 +58,7 @@ permute(i, n, control)
 }
 \author{Gavin Simpson}
 \seealso{\code{\link{check}}, a utility function for checking
-  permutation scheme described by \code{\link{permControl}}.}
+  permutation scheme described by \code{\link{how}}.}
 
 \examples{
 set.seed(1234)
@@ -67,20 +67,18 @@ set.seed(1234)
 shuffle(20)
 
 ## observations represent a time series of line transect
-CTRL <- permControl(within = Within(type = "series"))
+CTRL <- how(within = Within(type = "series"))
 shuffle(20, control = CTRL)
 
 ## observations represent a time series of line transect
 ## but with mirroring allowed
-CTRL <- permControl(within = Within(type = "series",
-                                    mirror = TRUE))
+CTRL <- how(within = Within(type = "series", mirror = TRUE))
 shuffle(20, control = CTRL)
 
 ## observations represent a spatial grid, 5rx4c
 nr <- 5
 nc <- 4
-CTRL <- permControl(within = Within(type = "grid", ncol = nc,
-                                     nrow = nr))
+CTRL <- how(within = Within(type = "grid", ncol = nc, nrow = nr))
 perms <- shuffle(20, control = CTRL)
 ## view the permutation as a grid
 matrix(matrix(1:20, nrow = nr, ncol = nc)[perms],
@@ -88,22 +86,19 @@ matrix(matrix(1:20, nrow = nr, ncol = nc)[perms],
 
 ## random permutations in presence of strata
 plots <- Plots(strata = gl(4, 5))
-CTRL <- permControl(plots = plots,
-                    within = Within(type = "free"))
+CTRL <- how(plots = plots, within = Within(type = "free"))
 shuffle(20, CTRL)
 ## as above but same random permutation within strata
-CTRL <- permControl(plots = plots,
-                    within = Within(type = "free", constant = TRUE))
+CTRL <- how(plots = plots, within = Within(type = "free",
+            constant = TRUE))
 shuffle(20, CTRL)
 
 ## time series within each level of block
-CTRL <- permControl(plots = plots,
-                    within = Within(type = "series"))
+CTRL <- how(plots = plots, within = Within(type = "series"))
 shuffle(20, CTRL)
 ## as above, but  with same permutation for each level
-CTRL <- permControl(plots = plots,
-                    within = Within(type = "series",
-                                    constant = TRUE))
+CTRL <- how(plots = plots, within = Within(type = "series",
+            constant = TRUE))
 shuffle(20, CTRL)
 
 ## spatial grids within each level of block, 4 x (5r x 5c)
@@ -111,38 +106,34 @@ nr <- 5
 nc <- 5
 nb <- 4 ## number of blocks
 plots <- Plots(gl(nb, 25))
-CTRL <- permControl(plots = plots,
-                    within = Within(type = "grid",
-                                    ncol = nc,
-                                    nrow = nr))
+CTRL <- how(plots = plots,
+            within = Within(type = "grid", ncol = nc, nrow = nr))
 shuffle(100, CTRL)
 ## as above, but with same permutation for each level
-CTRL <- permControl(plots = plots,
-                    within = Within(type = "grid",
-                                    ncol = nc,
-                                    nrow = nr,
-                                    constant = TRUE))
+CTRL <- how(plots = plots,
+            within = Within(type = "grid", ncol = nc, nrow = nr,
+                            constant = TRUE))
 shuffle(100, CTRL)
 
 ## permuting levels of plots instead of observations
-CTRL <- permControl(plots = Plots(gl(4, 5), type = "free"),
-                    within = Within(type = "none"))
+CTRL <- how(plots = Plots(gl(4, 5), type = "free"),
+            within = Within(type = "none"))
 shuffle(20, CTRL)
 ## permuting levels of plots instead of observations
 ## but plots represent a time series
-CTRL <- permControl(plots = Plots(gl(4, 5), type = "series"),
-                    within = Within(type = "none"))
+CTRL <- how(plots = Plots(gl(4, 5), type = "series"),
+            within = Within(type = "none"))
 shuffle(20, CTRL)
 
 ## permuting levels of plots but plots represent a time series
 ## free permutation within plots
-CTRL <- permControl(plots = Plots(gl(4, 5), type = "series"),
-                    within = Within(type = "free"))
+CTRL <- how(plots = Plots(gl(4, 5), type = "series"),
+            within = Within(type = "free"))
 shuffle(20, CTRL)
 
 ## permuting within blocks
 grp <- gl(2, 10) # 2 groups of 10 samples each
-CTRL <- permControl(blocks = grp)
+CTRL <- how(blocks = grp)
 shuffle(length(grp), control = CTRL)
 
 ## Simple function using permute() to assess significance
@@ -161,7 +152,7 @@ pt.test <- function(x, group, control) {
         (xbar - ybar) / (pooled * sqrt(1/m + 1/n))
     }
     ## check the control object
-    #control <- check(x, control)$control
+    #control <- check(x, control)$control ## FIXME
     ## number of observations
     Nobs <- nobs(x)
     ## group names
@@ -192,8 +183,7 @@ dat <- c(gr1, gr2)
 ## grouping variable
 grp <- gl(2, 20, labels = paste("Group", 1:2))
 ## create the permutation design
-control <- permControl(nperm = 999,
-                       within = Within(type = "free"))
+control <- how(nperm = 999, within = Within(type = "free"))
 ## perform permutation t test
 perm.val <- pt.test(dat, grp, control)
 perm.val

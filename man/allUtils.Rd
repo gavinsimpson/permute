@@ -32,8 +32,7 @@ allStrata(n, control)
   \item{nr,nc}{integer; number of rows and columns of grid designs.}
   \item{constant}{logical; same permutation within each block?}
   \item{control}{a list of control values describing properties of the
-    permutation design, as returned by a call to
-    \code{\link{permControl}}.}
+    permutation design, as returned by a call to \code{\link{how}}.}
 }
 
 \details{

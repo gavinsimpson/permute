@@ -3,8 +3,9 @@ export(`allPerms`, `Blocks`, `numPerms`, `check`, `permCheck`,
        `permControl`, `permute`, `shuffle`, `Within`, `Plots`,
        `shuffleFree`, `shuffleSeries`, `shuffleGrid`, `shuffleStrata`,
        `getBlocks`, `getWithin`, `getStrata`, `getType`, `getMirror`,
-       `getConstant`, `getPlots`,
-       `shuffleSet`, `permuplot`, `how`)
+       `getConstant`, `getPlots`, `getRow`, `getCol`, `getDim`,
+       `getNperm`,`getMaxperm`, `getMinperm`, `getComplete`, `shuffleSet`,
+       `permuplot`,`how`)
 
 ### Imports: nobs() only exists in R 2.13.0 for import. We define the
 ### same nobs() generic in permute for export in older R.
@@ -32,16 +33,35 @@ S3method(`nobs`, `matrix`)
 S3method(`nobs`, `data.frame`)
 ## getFoo methods
 S3method(`getBlocks`, `default`)
+S3method(`getBlocks`, `how`)
 S3method(`getBlocks`, `permControl`)
 S3method(`getPlots`, `default`)
+S3method(`getPlots`, `how`)
 S3method(`getPlots`, `permControl`)
 S3method(`getWithin`, `default`)
+S3method(`getWithin`, `how`)
 S3method(`getWithin`, `permControl`)
 S3method(`getStrata`, `default`)
+S3method(`getStrata`, `how`)
 S3method(`getStrata`, `permControl`)
 S3method(`getType`, `default`)
+S3method(`getType`, `how`)
 S3method(`getType`, `permControl`)
 S3method(`getMirror`, `default`)
+S3method(`getMirror`, `how`)
 S3method(`getMirror`, `permControl`)
 S3method(`getConstant`, `default`)
+S3method(`getConstant`, `how`)
 S3method(`getConstant`, `permControl`)
+S3method(`getNperm`, `default`)
+S3method(`getNperm`, `how`)
+S3method(`getNperm`, `permControl`)
+S3method(`getMaxperm`, `default`)
+S3method(`getMaxperm`, `how`)
+S3method(`getMaxperm`, `permControl`)
+S3method(`getMinperm`, `default`)
+S3method(`getMinperm`, `how`)
+S3method(`getMinperm`, `permControl`)
+S3method(`getComplete`, `default`)
+S3method(`getComplete`, `how`)
+S3method(`getComplete`, `permControl`)

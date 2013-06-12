@@ -152,9 +152,9 @@ In the previous section I introduced the \code{shuffle()} function to generate p
 <<>>=
 args(shuffle)
 @
-A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{permControl()}, which return a list specifying all the options available for controlling the sorts of permutations returned by \code{shuffle()}
+A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{how()}, which return a list specifying all the options available for controlling the sorts of permutations returned by \code{shuffle()}
 <<>>=
-str(permControl())
+str(how())
 @
 The defaults describe a random permutation design where all objects are freely exchangeable. Using these defaults, \code{shuffle(10)} amounts to \code{sample(1:10, 10, replace = FALSE)}:
 <<>>=
@@ -177,14 +177,14 @@ Several types of permutation are available in \pkg{permute}:
 
 The first three of these can be nested within the levels of a factor or to the levels of that factor, or to both. Such flexibility allows the analysis of split-plot designs using permutation tests.
 
-\code{permControl()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{permControl()} has two main arguments that specify how samples are permuted \emph{within} plots of samples or at the plot level itself. These are \code{within} and \code{plots}. Two convenience functions, \code{Within()} and \code{Plots()} can be used to set the various options for permutation.
+\code{how()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{how()} has two main arguments that specify how samples are permuted \emph{within} plots of samples or at the plot level itself. These are \code{within} and \code{plots}. Two convenience functions, \code{Within()} and \code{Plots()} can be used to set the various options for permutation.
 
 For example, to permute the observations \code{1:10} assuming a time series design for the entire set of observations, the following control object would be used
 
 <<keep.source=true>>=
 set.seed(4)
 x <- 1:10
-CTRL <- permControl(within = Within(type = "series"))
+CTRL <- how(within = Within(type = "series"))
 perm <- shuffle(10, control = CTRL)
 perm
 x[perm] ## equivalent
@@ -197,7 +197,7 @@ A more complex design, with three plots, and a 3 by 3 spatial grid arrangement w
 <<keep.source=true>>=
 set.seed(4)
 plt <- gl(3, 9)
-CTRL <- permControl(within = Within(type = "grid", ncol = 3, nrow = 3),
+CTRL <- how(within = Within(type = "grid", ncol = 3, nrow = 3),
                     plots = Plots(strata = plt))
 perm <- shuffle(length(plt), control = CTRL)
 perm
@@ -217,7 +217,7 @@ In the first grid, the lower-left corner of the grid was set to row 2 and column
 To have the same permutation within each level of \code{plt}, use the \code{constant} argument of the \code{Within()} function, setting it to \code{TRUE}
 <<keep.source=TRUE>>=
 set.seed(4)
-CTRL <- permControl(within = Within(type = "grid", ncol = 3, nrow = 3,
+CTRL <- how(within = Within(type = "grid", ncol = 3, nrow = 3,
                                     constant = TRUE),
                     plots = Plots(strata = plt))
 perm2 <- shuffle(length(plt), control = CTRL)
@@ -233,7 +233,7 @@ As an illustration, consider again the simple time series example from earlier. 
 
 <<keep.source=true>>=
 set.seed(4)
-CTRL <- permControl(within = Within(type = "series"))
+CTRL <- how(within = Within(type = "series"))
 pset <- shuffleSet(10, nset = 5, control = CTRL)
 pset
 @

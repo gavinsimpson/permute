@@ -71,7 +71,7 @@ shuffleStrata(strata, type, mirror = FALSE, start = NULL, flip = NULL,
 \author{Gavin Simpson}
 \seealso{\code{\link{check}}, a utility function for checking
   permutation scheme described by
-  \code{\link{permControl}}. \code{\link{shuffle}} as a user-oriented
+  \code{\link{how}}. \code{\link{shuffle}} as a user-oriented
   wrapper to these functions.}
 
 \examples{

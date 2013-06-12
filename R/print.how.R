@@ -1,54 +1,89 @@
-`print.how` <- function(x, ...)
-{
+`print.how` <- function(x, ...) {
+
     ## only for objects of correct class
     stopifnot(class(x) == "how")
-    ## set-up the messages we wish to print
-    if (!is.null(x$strata)) {
-        if(x$blocks$type == "none") {
-            msg.perm.strata <- "Strata unpermuted\n"
-        } else {
-            if(x$blocks$type == "grid") {
-                msg.grid.strata <- paste("Strata are a spatial grid of dimension",
-                                         x$blocks$nrow, "*",
-                                         x$blocks$ncol, "\n")
-            }
-            msg.perm.strata <- paste("Permutation type:", x$blocks$type, "\n")
-            msg.mirror.strata <- paste("Mirrored permutations for Strata?:",
-                                       ifelse(x$blocks$mirror, "Yes", "No"), "\n")
-        }
-        msg.strata <- paste("Permutations are stratified within:", x$name.strata, "\n")
+
+    ## prefix to add to sub-elements
+    pfix <- "  " 
+
+    cat("\n")
+    writeLines(strwrap("Permutation Design:"))
+    cat("\n")
+    
+    ## Blocks
+    writeLines("Blocks:")
+    blocks <- getBlocks(x)
+    if (is.null(blocks)) {
+        writeLines(strwrap("Defined by: none", prefix = pfix))
     } else {
-        msg.strata <- "Permutations are unstratified\n"
+        writeLines(strwrap(paste("Blocks:", x$blocks.name),
+                           prefix = pfix))
     }
-    msg.perm.sample <- paste("Permutation type:", x$within$type, "\n")
-    if(x$within$type == "grid")
-        msg.grid.sample <- paste("Data are spatial grid(s) of dimension",
-                                 x$within$nrow, "*", x$within$ncol, "\n")
-    msg.nperm <- paste("No. of permutations:", x$nperm,
-                       ifelse(x$complete, "(complete enumeration)", ""),
-                       "\n")
-    msg.mirror.sample <- paste("Mirrored permutations for Samples?:",
-                               ifelse(x$within$mirror, "Yes", "No"), "\n")
-    msg.constant <- paste("Use same permutation within strata?:",
-                          ifelse(x$within$constant, "Yes", "No"), "\n")
-    ## print out the messages
+    
     cat("\n")
-    cat(msg.nperm)
-    cat("\n**** STRATA ****\n")
-    if(exists("msg.strata"))
-        cat(msg.strata)
-    if(exists("msg.perm.strata"))
-        cat(msg.perm.strata)
-    if(exists("msg.mirror.strata"))
-        cat(msg.mirror.strata)
-    if(exists("msg.grid.strata"))
-        cat(msg.grid.strata)
-    cat("\n**** SAMPLES ****\n")
-    cat(msg.perm.sample)
-    if(exists("msg.grid.sample"))
-        cat(msg.grid.sample)
-    cat(msg.mirror.sample)
-    if(exists("msg.perm.strata"))
-        cat(msg.constant)
+    
+    ## Plots
+    writeLines("Plots:")
+    plots <- getStrata(x, which = "plots")
+    ptype <- getType(x, which = "plots")
+    if (is.null(plots)) {
+        writeLines(strwrap("Defined by: none", prefix = pfix))
+    } else {
+        writeLines(strwrap(paste("Plots:", plots$plots.name),
+                           prefix = pfix))
+        writeLines(strwrap(paste("Permutation type:", ptype),
+                           prefix = pfix))
+        mirrorP <- getMirror(x, which = "plots")
+        writeLines(strwrap(paste("Mirrored?:", if(mirrorP) "Yes" else "No"),
+                           prefix = pfix))
+        if(isTRUE(all.equal(ptype, "grid"))) {
+            nr <- getRow(x, which = "plots")
+            nr.t <- if(nr > 1) "rows" else "row"
+            nc <- getCol(x, which = "plots")
+            nc.t <- if(nc > 1) "cols" else "col"
+            writeLines(strwrap(paste("Grid dimensions:", nr, nr.t, " ",
+                                     nc, nc.t),
+                               prefix = pfix))
+        }
+    }
+    
     cat("\n")
+    
+    ## Within plots
+    writeLines("Within Plots:")
+    wtype <- getType(x, which = "within")
+    writeLines(strwrap(paste("Permutation type:", wtype), prefix = pfix))
+    mirrorW <- getMirror(x, which = "within")
+    constantW <- getConstant(x)
+    txt <- "Different permutation within each Plot?:"
+    if(isTRUE(ptype %in% c("series", "grid"))) {
+        writeLines(strwrap(paste("Mirrored?:", if(mirrorW) "Yes" else "No"),
+                           prefix = pfix))
+        writeLines(strwrap(paste(txt, if(constantW) "No" else "Yes"),
+                           prefix = pfix))
+    }
+    if(isTRUE(all.equal(wtype, "grid"))) {
+        nr <- getRow(x, which = "within")
+        nr.t <- if(nr > 1) "rows" else "row"
+        nc <- getCol(x, which = "within")
+        nc.t <- if(nc > 1) "cols" else "col"
+        writeLines(strwrap(paste("Grid dimensions:", nr, nr.t, " ",
+                                 nc, nc.t),
+                           prefix = pfix))
+    }
+    
+    cat("\n")
+    
+    ## Meta data
+    writeLines("Permutation details:")
+    writeLines(strwrap(paste("Number of permutations requested:",
+                             getNperm(x)), prefix = pfix))
+    writeLines(strwrap(paste("Max. number of permutations allowed:",
+                             getMaxperm(x)), prefix = pfix))
+    complete <- getComplete(x)
+    txt <- paste("Evaluate all permutations?:",
+                 if(complete$complete) "Yes." else "No.",
+                 "  Activation limit:", complete$minperm)
+    writeLines(strwrap(txt, prefix = pfix))
+    
 }

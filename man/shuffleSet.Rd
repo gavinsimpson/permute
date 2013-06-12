@@ -11,7 +11,7 @@
   set of permutations.
 }
 \usage{
-shuffleSet(n, nset = 1, control = permControl())
+shuffleSet(n, nset = 1, control = how())
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,7 +22,7 @@ shuffleSet(n, nset = 1, control = permControl())
     numeric; the number of permutations to generate for the set
   }
   \item{control}{
-    an object of class \code{"permControl"} describing a valid
+    an object of class \code{"how"} describing a valid
     permutation design.
   }
 }
@@ -56,47 +56,46 @@ shuffleSet(n, nset = 1, control = permControl())
 }
 \seealso{
   See \code{\link{shuffle}} for generating a single permutation, and
-  \code{\link{permControl}} for setting up permutation designs.
+  \code{\link{how}} for setting up permutation designs.
 }
 \examples{
 ## simple random permutations, 5 permutations in set
 shuffleSet(n = 10, nset = 10)
 
 ## series random permutations, 10 permutations in set
-shuffleSet(10, 10, permControl(within = Within(type = "series")))
+shuffleSet(10, 10, how(within = Within(type = "series")))
 
 ## series random permutations, 10 permutations in set,
 ## with possible mirroring
-CTRL <- permControl(within = Within(type = "series", mirror = TRUE))
+CTRL <- how(within = Within(type = "series", mirror = TRUE))
 shuffleSet(10, 10, CTRL)
 
 ## Permuting strata
 ## 4 groups of 5 observations
-CTRL <- permControl(within = Within(type = "none"),
-                    plots = Plots(strata = gl(4,5), type = "free"))
+CTRL <- how(within = Within(type = "none"),
+            plots = Plots(strata = gl(4,5), type = "free"))
 shuffleSet(20, 10, control = CTRL)
 
 ## 10 random permutations in presence of Plot-level strata
 plotStrata <- Plots(strata = gl(4,5))
-CTRL <- permControl(plots = plotStrata,
-                    within = Within(type = "free"))
+CTRL <- how(plots = plotStrata,
+            within = Within(type = "free"))
 shuffleSet(20, 10, control = CTRL)
 ## as above but same random permutation within Plot-level strata
-CTRL <- permControl(plots = plotStrata,
-                    within = Within(type = "free", constant = TRUE))
+CTRL <- how(plots = plotStrata,
+            within = Within(type = "free", constant = TRUE))
 shuffleSet(20, 10, CTRL)
 
 ## time series within each level of Plot strata
-CTRL <- permControl(plots = plotStrata,
-                    within = Within(type = "series"))
+CTRL <- how(plots = plotStrata,
+            within = Within(type = "series"))
 shuffleSet(20, 10, CTRL)
 ## as above, but  with same permutation for each Plot-level stratum
-CTRL <- permControl(plots = plotStrata,
-                    within = Within(type = "series",
-                                    constant = TRUE))
+CTRL <- how(plots = plotStrata,
+            within = Within(type = "series", constant = TRUE))
 shuffleSet(20, 10, CTRL)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ htest }
-\keyword{ design }% __ONLY ONE__ keyword per line
+\keyword{ design }

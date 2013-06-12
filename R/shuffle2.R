@@ -1,5 +1,5 @@
 ## new version of shuffle() that allows for blocking
-`shuffle` <- function(n, control = permControl()) {
+`shuffle` <- function(n, control = how()) {
   ## get blocking, if any
   Block <- getStrata(control, which = "blocks")
   if(is.null(Block))

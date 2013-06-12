@@ -12,19 +12,35 @@ Version 0.7-3
 
 	* get-methods: New extractor functions `getMirror()`, and
 	`getConstant()` which retrieve the mirroring and constant elements
-	of a permutation design. Also added `getRow()`, `getCol()` and
-	`getDim()`, which extract the row and column dimensions of a
-	grid permutation design, or both.
+	of a permutation design.
+
+	Also added `getRow()`, `getCol()` and `getDim()`, which extract
+	the row and column dimensions of a grid permutation design, or
+	both.
+
+	In addition, new methods `getNperm()` and `getMaxperm()` return
+	the number of permutations requested and the maximum nuber that
+	should be allowed, respectively. New method `getComplete` extracts
+	details of the complete enumeration features of permute.
 
 	* numPerms: updated to work with the new API and now handles
 	blocking. Exmaples now pass checks again.
 
 	* allPerms: updated to the new API.
 
+	* check: updated to the new API.
+
 	* how: new function, a copy of `permControl()` and will eventually
-	replace that function. Has a `print` method, but again this is
-	just a copy or something that is currently not working with the new
-	API.
+	replace that function. Has a new `print` method.
+
+	Begun process of *deprecating* `permControl()` and its `print`
+	method.
+
+	* permControl, how: the `strata.name` component of the returned
+	object is no called `blocks.name`.
+
+	* Plots: now returns the object name supplied as argument `strata`
+	as component `plots.name`.
 
 	* TODO: started a TODO list of things I know are broken or needed.
 

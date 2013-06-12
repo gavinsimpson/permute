@@ -1,6 +1,6 @@
 ## This is totally wrong and needs updating to match the new
 ## code in permute...
-`permuplot` <- function(n, control = permControl(),
+`permuplot` <- function(n, control = how(),
                         col = par("col"),
                         hcol = "red",
                         shade = "lightgrey",

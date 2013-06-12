@@ -12,7 +12,7 @@
                 nperm = nperm, complete = complete,
                 maxperm = maxperm, minperm = minperm,
                 all.perms = all.perms, observed = observed,
-                name.strata = deparse(substitute(strata)))
+                blocks.name = deparse(substitute(blocks)))
     class(out) <- "how"
     out
 }

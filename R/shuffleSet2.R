@@ -1,5 +1,5 @@
 ## new version of shuffleSet() that allows for blocking
-`shuffleSet` <- function(n, nset = 1, control = permControl()) {
+`shuffleSet` <- function(n, nset = 1, control = how()) {
   ## get blocking, if any
   Block <- getStrata(control, which = "blocks")
   if(is.null(Block))

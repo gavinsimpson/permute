@@ -10,7 +10,7 @@
   permutations for a given R object and a specified permutation design.
 }
 \usage{
-allPerms(n, control = permControl(), max = 9999,
+allPerms(n, control = how(), max = 9999,
          observed = FALSE)
 
 \method{summary}{allPerms}(object, \dots)
@@ -20,7 +20,7 @@ allPerms(n, control = permControl(), max = 9999,
     number of observations can be determined via \code{getNumObs}.}
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
-    \code{\link{permControl}}.}
+    \code{\link{how}}.}
   \item{max}{the maximum number of permutations, below which complete
     enumeration will be attempted. See Details.}
   \item{observed}{logical, should the observed ordering of samples be
@@ -74,7 +74,7 @@ allPerms(vec) ## free permutation
 ## enumerate all possible permutations for a more complicated
 ## design
 fac <- gl(2,6)
-ctrl <- permControl(within = Within(type = "grid", mirror = FALSE,
+ctrl <- how(within = Within(type = "grid", mirror = FALSE,
                                     constant = TRUE,
                                     nrow = 3, ncol = 2),
                     plots = Plots(strata = fac))

@@ -3,7 +3,7 @@ Title: Functions for generating restricted permutations of data
 Version: 0.7-3
 Date: $Date$
 Author: Gavin L. Simpson
-Maintainer: Gavin L. Simpson <gavin.simpson@ucl.ac.uk>
+Maintainer: Gavin L. Simpson <gavin.simpson@uregina.ca>
 Suggests: vegan (>= 2.0-0), testthat (>= 0.5)
 Description: The 'permute' package implements a set of restricted permutation
 	     designs for freely exchangeable, line transects (time series),
