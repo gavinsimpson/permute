@@ -45,7 +45,8 @@
     for (i in seq_along(spl)) {
         out[[i]] <-
             doAllPerms(spl[[i]], strataP, typeW, typeP, mirrorW,
-                       mirrorP, constantW, dimW, dimP, control)
+                       mirrorP, constantW, dimW, dimP, control,
+                       nperms = nperms)
     }
 
     ## bind all the blocks together
@@ -65,7 +66,7 @@
 }
 
 `doAllPerms` <- function(obs, strataP, typeW, typeP, mirrorW, mirrorP,
-                         constantW, dimW, dimP, control) {
+                         constantW, dimW, dimP, control, nperms) {
     ## replicate a matrix by going via a list and bind together
     repMat <- function(mat, n) {
         res <- rep(list(mat), n)
