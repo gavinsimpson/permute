@@ -1,7 +1,5 @@
 \name{check}
 \alias{check}
-\alias{permCheck} % for the deprecated function
-\alias{permCheck-deprecated} % for the deprecated function
 \alias{print.check}
 \alias{print.summary.check}
 \alias{summary.check}
@@ -28,12 +26,11 @@ permuplot(n, control = how(), col = par("col"),
   \item{object}{an R object. See Details for a
     complete description, especially for \code{numPerms}. For
     \code{\link{summary.check}} an object of class
-    \code{"check"}. For \code{\link{summary.allPerms}} an object of
-    class \code{"allPerms"}.} 
+    \code{"check"}.} 
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
     \code{\link{how}}.}
-  \item{make.all}{logical; should \code{check} generate all
+  \item{make.all}{logical; should \code{permCheck} generate all
     possible permutations? Useful if want to check permutation design
     but not produce the matrix of all permutations.}
   \item{n}{the number of observations or an 'object' from which the
@@ -93,15 +90,10 @@ permuplot(n, control = how(), col = par("col"),
 }
 \value{
   For \code{check} a list containing the maximum number of
-  permutations possible and an object of class
-  \code{"\link{how}"}.
-
-  For \code{permuplot}, a plot on the currently active device.
+  permutations possible and an object of class \code{"\link{how}"}.
 }
 \author{Gavin L. Simpson}
-\seealso{\code{\link{shuffle}} and \code{\link{how}}.}
-
-\examples{
+\seealso{\code{\link{shuffle}} and \code{\link{how}}.}\examples{
 
 ## use example data from ?pyrifos in package vegan
 require(vegan)
@@ -137,7 +129,6 @@ check(pyrifos,
       control = how(plots = Plots(strata = ditch),
                     within = Within(type = "series", mirror = TRUE)))
 
-\dontrun{ % FIXME these fail in allStrata needing 235.5 Gb RAM!!
 ## time series within strata, no mirroring, same permutation
 ## within strata
 check(pyrifos,
@@ -151,6 +142,7 @@ check(pyrifos,
                     within = Within(type = "series", mirror = TRUE,
                                     constant = TRUE)))
 
+\dontrun{ % FIXME these fail in allStrata needing 235.5 Gb RAM!!
 ## permute strata
 check(pyrifos, how(plots = Plots(strata = ditch, type = "free"),
                    within = Within(type = "none")))
@@ -195,7 +187,8 @@ numPerms(7, how(within = Within(type = "free"),
 %% Fixed one, above, but there may still be problems with some of
 %% the code below:
 \dontrun{
-allPerms(7, how(type = "free", strata = fac))
+allPerms(7, how(within = Within(type = "free"),
+                plots = Plots(strata = fac)))
 ## series permutations in levels of strata
 numPerms(7, how(type = "series", strata = fac))
 allPerms(7, how(type = "series", strata = fac))
