@@ -29,8 +29,7 @@ shuffleSet(n, nset, control = how())
   }
 }
 \details{
-  Currently, only the simple case of permutations not in the presence of
-  blocks (strata) is implemented.
+  TODO
 }
 \value{
   Returns a matrix of permutations, where each row is a separate
