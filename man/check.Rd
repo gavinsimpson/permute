@@ -121,8 +121,8 @@ check(pyrifos, control = how(plots = Plots(strata = ditch),
 
 ## time series within strata, no mirroring
 check(pyrifos,
-     control = how(plots = Plots(strata = ditch),
-                   within = Within(type = "series", mirror = FALSE)))
+      control = how(plots = Plots(strata = ditch),
+                    within = Within(type = "series", mirror = FALSE)))
 
 ## time series within strata, with mirroring
 check(pyrifos,
