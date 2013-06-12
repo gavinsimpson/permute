@@ -24,9 +24,10 @@
     
     ## Plots
     writeLines("Plots:")
-    plots <- getStrata(x, which = "plots")
+    plotStr <- getStrata(x, which = "plots")
+    plots <- getPlots(x)
     ptype <- getType(x, which = "plots")
-    if (is.null(plots)) {
+    if (is.null(plotStr)) {
         writeLines(strwrap("Defined by: none", prefix = pfix))
     } else {
         writeLines(strwrap(paste("Plots:", plots$plots.name),
