@@ -106,6 +106,8 @@
                 }
             } else {
                 ## different permutations within blocks
+                nperms <- numPerms(sum(tab), control)
+                
                 ng <- length(tab)
                 ##pg <- unique(tab)
                 if(length(pg) > 1) {
@@ -126,10 +128,10 @@
                         permW <- nrow(ord)
                         if(j == 1) {
                             a <- 1
-                            b <- np / permW
+                            b <- nperms / np
                         } else {
-                            b <- b/permW
-                            a <- np / (b*permW)
+                            b <- b / np
+                            a <- nperms / (b * np)
                         }
                         res[[j]] <- matrix(rep(repMat(ord+add[j], a),
                                                each = b),
