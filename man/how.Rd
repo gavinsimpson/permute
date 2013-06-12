@@ -101,4 +101,11 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
 \seealso{\code{\link{shuffle}} for permuting from a design,
   \code{\link{check}}, a utility function for checking permutation
   design described by \code{how}.}
+\examples{
+plts <- gl(4,10)
+blks <- gl(2,20)
+how(within = Within(type = "series", mirror = TRUE),
+    plots = Plots(strata = plts, type = "series"),
+    blocks = blks)
+}
 \keyword{ utils  }
