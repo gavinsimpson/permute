@@ -11,7 +11,7 @@
   set of permutations.
 }
 \usage{
-shuffleSet(n, nset = 1, control = how())
+shuffleSet(n, nset, control = how())
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,7 +19,9 @@ shuffleSet(n, nset = 1, control = how())
     numeric; the number of observations in the sample set.
   }
   \item{nset}{
-    numeric; the number of permutations to generate for the set
+    numeric; the number of permutations to generate for the set. Can be
+    missing, the default, in which case \code{nset} is determined from
+    \code{control}.
   }
   \item{control}{
     an object of class \code{"how"} describing a valid
