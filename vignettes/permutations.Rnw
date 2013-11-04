@@ -9,13 +9,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% almost as usual
-\author{Gavin L. Simpson\\Environmental Change Research Centre --- UCL}
+\author{Gavin L. Simpson\\University of Regina}
 \title{Restricted permutations; using the \pkg{permute} Package}
 
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Gavin L. Simpson} %% comma-separated
-\Plaintitle{Using the permute Package} %% without formatting
-\Shorttitle{Using the permuet Package} %% a short title (if necessary)
+\Plaintitle{Restricted permutations; using the permute Package} %% without formatting
+\Shorttitle{Using the permute Package} %% a short title (if necessary)
 
 %% an abstract and keywords
 \Abstract{
@@ -72,8 +72,9 @@ jackal
 
 The interest is whether there is a difference in the mean mandible length between male and female golden jackals. The null hypothesis is that there is zero difference in mandible length between the two sexes or that females have larger mandible. The alternative hypothesis is that males have larger mandibles. The usual statistical test of this hypothesis is a one-sided $t$ test, which can be applied using \code{t.test()}
 
-<<ttest_jackal>>=
-jack.t <-t.test(Length ~ Sex, data = jackal, var.equal = TRUE, alternative = "greater")
+<<ttest_jackal, keep.source=true>>=
+jack.t <- t.test(Length ~ Sex, data = jackal, var.equal = TRUE,
+                 alternative = "greater")
 jack.t
 @
 
@@ -152,7 +153,7 @@ In the previous section I introduced the \code{shuffle()} function to generate p
 <<>>=
 args(shuffle)
 @
-A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{how()}, which return a list specifying all the options available for controlling the sorts of permutations returned by \code{shuffle()}
+A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{how()}, which returns a list specifying all the options available for controlling the sorts of permutations returned by \code{shuffle()}
 <<>>=
 str(how())
 @
@@ -173,11 +174,12 @@ Several types of permutation are available in \pkg{permute}:
   \item Time series or line transect designs, where the temporal or spatial ordering is preserved.
   \item Spatial grid designs, where the spatial ordering is preserved in both coordinate directions
   \item Permutation of plots or groups of samples.
+  \item Blocking factors which restrict permutations to within blocks. The preceding designs can be nested within blocks.
 \end{itemize}
 
-The first three of these can be nested within the levels of a factor or to the levels of that factor, or to both. Such flexibility allows the analysis of split-plot designs using permutation tests.
+The first three of these can be nested within the levels of a factor or to the levels of that factor, or to both. Such flexibility allows the analysis of split-plot designs using permutation tests, especially when combined with blocks.
 
-\code{how()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{how()} has two main arguments that specify how samples are permuted \emph{within} plots of samples or at the plot level itself. These are \code{within} and \code{plots}. Two convenience functions, \code{Within()} and \code{Plots()} can be used to set the various options for permutation.
+\code{how()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{how()} has two main arguments that specify how samples are permuted \emph{within} plots of samples or at the plot level itself. These are \code{within} and \code{plots}. Two convenience functions, \code{Within()} and \code{Plots()} can be used to set the various options for permutation. Blocks operate at the uppermost level of this hierarchy; blocks define groups of plots, each of which contain groups of samples.
 
 For example, to permute the observations \code{1:10} assuming a time series design for the entire set of observations, the following control object would be used
 
@@ -198,7 +200,7 @@ A more complex design, with three plots, and a 3 by 3 spatial grid arrangement w
 set.seed(4)
 plt <- gl(3, 9)
 CTRL <- how(within = Within(type = "grid", ncol = 3, nrow = 3),
-                    plots = Plots(strata = plt))
+            plots = Plots(strata = plt))
 perm <- shuffle(length(plt), control = CTRL)
 perm
 @
@@ -218,8 +220,8 @@ To have the same permutation within each level of \code{plt}, use the \code{cons
 <<keep.source=TRUE>>=
 set.seed(4)
 CTRL <- how(within = Within(type = "grid", ncol = 3, nrow = 3,
-                                    constant = TRUE),
-                    plots = Plots(strata = plt))
+                            constant = TRUE),
+            plots = Plots(strata = plt))
 perm2 <- shuffle(length(plt), control = CTRL)
 lapply(split(perm2, plt), matrix, ncol = 3)
 @
@@ -227,7 +229,13 @@ lapply(split(perm2, plt), matrix, ncol = 3)
 \subsection{Generating sets of permutations with shuffleSet()}
 There are several reasons why one might wish to generate a set of $n$ permutations instead of repeatedly generating permutations one at a time. Interpreting the permutation design happens each time \code{shuffle()} is called. This is an unnecessary computational burden, especially if you want to perform tests with large numbers of permutations. Furthermore, having the set of permutations available allows for expedited use with other functions, they can be iterated over using \code{for} loops or the \code{apply} family of functions, and the set of permutations can be exported for use outside of R.
 
-The \code{shuffleSet()} function allows the generation of sets of permutations from any of the designs available in \pkg{permute}. \code{shuffleSet()} takes an additional argument to that of \code{shuffle()}, \code{nset}, which is the number of permutations required for the set. Internally, \code{shuffle()} and \code{shuffleSet()} are very similar, with the major difference being that \code{shuffleSet()} arranges repeated calls to the workhorse permutation-generating functions with only the overhead associated with interpreting the permutation design once. \code{shuffleSet()} returns a matrix where the rows represent different permutations in the set.
+The \code{shuffleSet()} function allows the generation of sets of permutations from any of the designs available in \pkg{permute}. \code{shuffleSet()} takes an additional argument to that of \code{shuffle()}, \code{nset}, which is the number of permutations required for the set. \code{nset} can be missing, in which case the number of permutations in the set is looked for in the object passed to \code{control}; using this, the desired number of permutation can be set at the time the design is created via the \code{nperm} argument of \code{how()}. For example,
+
+<<results=hide>>=
+how(nperm = 10, within = Within(type = "series"))
+@
+
+Internally, \code{shuffle()} and \code{shuffleSet()} are very similar, with the major difference being that \code{shuffleSet()} arranges repeated calls to the workhorse permutation-generating functions with only the overhead associated with interpreting the permutation design once. \code{shuffleSet()} returns a matrix where the rows represent different permutations in the set.
 
 As an illustration, consider again the simple time series example from earlier. Here I generate a set of 5 permutations from the design, with the results returned as a matrix
 
@@ -238,6 +246,20 @@ pset <- shuffleSet(10, nset = 5, control = CTRL)
 pset
 @
 
+\section{Defining permutation designs}
+In this section examples are given of how various permutation designs can be specified using \code{how()}. It is not the intention to provide exhaustive coverage of all possible designs that can be produced; such a list would be tedious to both write \emph{and} read. Instead, the main features and options will be described through a series of examples. The reader should then be able to put together the various options to create the exact structure required.
+
+\subsection{Set the number of permutations}
+It may be useful to specify the number of permutations required in a permutation test alongside the permutation design. This is done via the \code{nperm} argument, as seen earlier. If nothing else is specified
+<<results=hide>>=
+how(nperm = 999)
+@
+would indicate 999 random permutations where the samples are all freely exchangeable.
+
+One advantage of using \code{nperm} is that \code{shuffleSet()} will use this if the \code{nset} argument is not specified. Additionally, \code{shuffleSet()} will check to see if the desired number of permutations is possible given the data and the requested design. This is done via the function \code{check()}, which is discussed later.
+
+\subsection{Permuting samples at the lowest level}
+At the lowest level of a permutation design in \pkg{permute}
 
 \section*{Computational details}
 <<seesionInfo, results=tex>>=
