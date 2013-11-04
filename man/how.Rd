@@ -104,8 +104,14 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
 \examples{
 plts <- gl(4,10)
 blks <- gl(2,20)
-how(within = Within(type = "series", mirror = TRUE),
-    plots = Plots(strata = plts, type = "series"),
-    blocks = blks)
+h1 <- how(within = Within(type = "series", mirror = TRUE),
+          plots = Plots(strata = plts, type = "series"),
+          blocks = blks)
+
+## The design can be updated...
+## ... remove the blocking:
+update(h1, blocks = NULL)
+## ... or switch the type of shuffling at a level:
+update(h1, plots = Plots(strata = plts, type = "none"))
 }
 \keyword{ utils  }

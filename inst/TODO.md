@@ -11,12 +11,33 @@ A TODO list for **permute** - or things I know are broken or needed.
    object already exists and want to tweak it. Example is in `?allPerms`
    where I turn mirroring on via
 
-       ctrl$within$mirror <- TRUE
+        ctrl$within$mirror <- TRUE
 
-   But how? Best idea currently is an `update.permControl` method. The
-   generic is in namespace `stats`. Or a `modify()` function, perhaps
-   coupled with specific replacement functions for certain components.
+    But how? Best idea currently is an `update.permControl` method. The
+    generic is in namespace `stats`. Or a `modify()` function, perhaps
+    coupled with specific replacement functions for certain components.
+   
+    *DONE, in part, in 0.7-5* The matched call is now returned by `how()`
+    and this allows `update()` to do its work with no further effort from
+    me. What isn't so neat is that currently this means you need to type
+    out in full any specification of `within` and `plots` as these take
+    the results of function calls. Hence we have, from `./man/how.Rd`
+    
+        plts <- gl(4,10)
+        blks <- gl(2,20)
+        h1 <- how(within = Within(type = "series", mirror = TRUE),
+                  plots = Plots(strata = plts, type = "series"),
+                  blocks = blks)
 
+        ## The design can be updated...
+        ## ... remove the blocking:
+        update(h1, blocks = NULL)
+        ## ... or switch the type of shuffling at a level:
+        update(h1, plots = Plots(strata = plts, type = "none"))
+        
+    Where in the second `update()` the entire `Plots()` call needs to
+    repeated to change just one part, the `type`.
+         
  * `permControl` - deprecate this in favour of `how` as in "how to
    permute"? *DONE Completed in 0.7-4*
 
@@ -26,4 +47,4 @@ A TODO list for **permute** - or things I know are broken or needed.
    easy without a lot of work to visualise all possible schemes.
 
  * `check` insists on returning all permutations *without* the observed
-   on.
+   one.

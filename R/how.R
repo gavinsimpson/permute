@@ -12,7 +12,8 @@
                 nperm = nperm, complete = complete,
                 maxperm = maxperm, minperm = minperm,
                 all.perms = all.perms, observed = observed,
-                blocks.name = deparse(substitute(blocks)))
+                blocks.name = deparse(substitute(blocks)),
+                call = match.call())
     class(out) <- "how"
     out
 }

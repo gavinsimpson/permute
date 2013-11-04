@@ -2,6 +2,11 @@ $Date$
 
 permute ChangeLog
 
+Version 0.7-5
+
+	* how: the matched call is now returned permitting the use of
+	`update()` to update elements of a stored permutation design object.
+
 Version 0.7-4
 
 	* Deprecated functions: Completed the deprecation of `permCheck()`
