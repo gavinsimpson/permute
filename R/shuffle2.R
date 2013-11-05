@@ -33,6 +33,9 @@
     ## collect strata at Plot level
     Pstrata <- getStrata(control, which = "plots", drop = TRUE)
     plotCTRL <- getPlots(control)
+    ## ...which need to be reduced to only those for `ind`
+    Pstrata <- Pstrata[ind]
+    plotCTRL <- plotCTRL[ind]
 
     n <- length(ind)
     sn <- seq_len(n)
