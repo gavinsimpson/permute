@@ -150,15 +150,15 @@ The main workhorse function we used above was \code{shuffle()}. In this example,
 In the previous section I introduced the \code{shuffle()} function to generate permutation indices for use in a randomisation test. Now we will take a closer look at \code{shuffle()} and explore the various restricted permutation designs from which it can generate permutation indices.
 
 \code{shuffle()} has two arguments: i) \code{n}, the number of observations in the data set to be permuted, and ii) \code{control}, a list that defines the permutation design describing how the samples should be permuted.
-<<>>=
+<<show_args>>=
 args(shuffle)
 @
 A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{how()}, which returns a list specifying all the options available for controlling the sorts of permutations returned by \code{shuffle()}
-<<>>=
+<<show_str>>=
 str(how())
 @
 The defaults describe a random permutation design where all objects are freely exchangeable. Using these defaults, \code{shuffle(10)} amounts to \code{sample(1:10, 10, replace = FALSE)}:
-<<>>=
+<<compare_shuffle_sample>>=
 set.seed(2)
 (r1 <- shuffle(10))
 set.seed(2)
@@ -183,7 +183,7 @@ The first three of these can be nested within the levels of a factor or to the l
 
 For example, to permute the observations \code{1:10} assuming a time series design for the entire set of observations, the following control object would be used
 
-<<keep.source=true>>=
+<<series1, keep.source=true>>=
 set.seed(4)
 x <- 1:10
 CTRL <- how(within = Within(type = "series"))
@@ -196,7 +196,7 @@ It is assumed that the observations are in temporal or transect order. We only s
 
 A more complex design, with three plots, and a 3 by 3 spatial grid arrangement within each plot can be created as follows
 
-<<keep.source=true>>=
+<<grid1, keep.source=true>>=
 set.seed(4)
 plt <- gl(3, 9)
 CTRL <- how(within = Within(type = "grid", ncol = 3, nrow = 3),
@@ -207,7 +207,7 @@ perm
 
 Visualising the permutation as the 3 matrices may help illustrate how the data have been shuffled
 
-<<keep.source=true>>=
+<<vis_grid1, keep.source=true>>=
 ## Original
 lapply(split(seq_along(plt), plt), matrix, ncol = 3)
 ## Shuffled
@@ -217,7 +217,7 @@ lapply(split(perm, plt), matrix, ncol = 3)
 In the first grid, the lower-left corner of the grid was set to row 2 and column 2 of the original, to row 1 and column 2 in the second grid, and to row 3 column 2 in the third grid.
 
 To have the same permutation within each level of \code{plt}, use the \code{constant} argument of the \code{Within()} function, setting it to \code{TRUE}
-<<keep.source=TRUE>>=
+<<grid_2, keep.source=TRUE>>=
 set.seed(4)
 CTRL <- how(within = Within(type = "grid", ncol = 3, nrow = 3,
                             constant = TRUE),
@@ -231,7 +231,7 @@ There are several reasons why one might wish to generate a set of $n$ permutatio
 
 The \code{shuffleSet()} function allows the generation of sets of permutations from any of the designs available in \pkg{permute}. \code{shuffleSet()} takes an additional argument to that of \code{shuffle()}, \code{nset}, which is the number of permutations required for the set. \code{nset} can be missing, in which case the number of permutations in the set is looked for in the object passed to \code{control}; using this, the desired number of permutation can be set at the time the design is created via the \code{nperm} argument of \code{how()}. For example,
 
-<<results=hide>>=
+<<series_2, results=hide>>=
 how(nperm = 10, within = Within(type = "series"))
 @
 
@@ -239,7 +239,7 @@ Internally, \code{shuffle()} and \code{shuffleSet()} are very similar, with the 
 
 As an illustration, consider again the simple time series example from earlier. Here I generate a set of 5 permutations from the design, with the results returned as a matrix
 
-<<keep.source=true>>=
+<<shuffleSet_1, keep.source=true>>=
 set.seed(4)
 CTRL <- how(within = Within(type = "series"))
 pset <- shuffleSet(10, nset = 5, control = CTRL)
