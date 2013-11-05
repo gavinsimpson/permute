@@ -4,12 +4,12 @@
     stopifnot(class(x) == "how")
 
     ## prefix to add to sub-elements
-    pfix <- "  " 
+    pfix <- "  "
 
     cat("\n")
     writeLines(strwrap("Permutation Design:"))
     cat("\n")
-    
+
     ## Blocks
     writeLines("Blocks:")
     blocks <- getBlocks(x)
@@ -19,9 +19,9 @@
         writeLines(strwrap(paste("Blocks:", x$blocks.name),
                            prefix = pfix))
     }
-    
+
     cat("\n")
-    
+
     ## Plots
     writeLines("Plots:")
     plotStr <- getStrata(x, which = "plots")
@@ -47,9 +47,9 @@
                                prefix = pfix))
         }
     }
-    
+
     cat("\n")
-    
+
     ## Within plots
     writeLines("Within Plots:")
     wtype <- getType(x, which = "within")
@@ -57,7 +57,7 @@
     mirrorW <- getMirror(x, which = "within")
     constantW <- getConstant(x)
     txt <- "Different permutation within each Plot?:"
-    if(isTRUE(ptype %in% c("series", "grid"))) {
+    if(isTRUE(wtype %in% c("series", "grid"))) {
         writeLines(strwrap(paste("Mirrored?:", if(mirrorW) "Yes" else "No"),
                            prefix = pfix))
         writeLines(strwrap(paste(txt, if(constantW) "No" else "Yes"),
@@ -72,9 +72,9 @@
                                  nc, nc.t),
                            prefix = pfix))
     }
-    
+
     cat("\n")
-    
+
     ## Meta data
     writeLines("Permutation details:")
     writeLines(strwrap(paste("Number of permutations requested:",
@@ -86,5 +86,5 @@
                  if(complete$complete) "Yes." else "No.",
                  "  Activation limit:", complete$minperm)
     writeLines(strwrap(txt, prefix = pfix))
-    
+
 }

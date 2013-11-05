@@ -8,6 +8,9 @@ Version 0.7-5
 	`update()` to update elements of a stored permutation design object.
 	Suggested by Jari Oksanen.
 
+	The `print` method for class "how" wasn't printing details of
+	mirroring or constant settings for within-plot components.
+
 	* numPerms: fixed a bug where `numPerms()` was ignoring Blocks when
 	computing the number of possible permutations.
 
