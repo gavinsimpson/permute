@@ -35,17 +35,20 @@
         BLOCKS <- factor(rep(1, n))
 
     ## split v by blocks
-    spl <- split(v, BLOCKS)
+    spl <- split(seq_len(n), BLOCKS)
     nb <- length(spl) # number of blocks
 
     ## result object
     out <- vector(mode = "list", length = nb)
 
+    ## null-out Blocks in control
+    control2 <- update(control, blocks = NULL)
+
     ## loop over blocks and return allPerms on each block
     for (i in seq_along(spl)) {
         out[[i]] <-
             doAllPerms(spl[[i]], strataP, typeW, typeP, mirrorW,
-                       mirrorP, constantW, dimW, dimP, control,
+                       mirrorP, constantW, dimW, dimP, control2,
                        nperms = nperms)
     }
 
@@ -65,6 +68,7 @@
     out
 }
 
+
 `doAllPerms` <- function(obs, strataP, typeW, typeP, mirrorW, mirrorP,
                          constantW, dimW, dimP, control, nperms) {
     ## replicate a matrix by going via a list and bind together
@@ -74,6 +78,17 @@
     }
 
     n <- length(obs)
+
+    ## subset strataP to take only the obs indices and drop the unused
+    ## levels
+    if (!is.null(strataP)) {
+        strataP <- droplevels(strataP[obs])
+    }
+
+    ## also need to update the $strata component of control
+    ## FIXME: this really should have a toplevel function to set/update
+    ## sub-components of control
+    control$plots$strata <- strataP
 
     ## permuting within?
     if (typeW != "none") {
@@ -108,7 +123,7 @@
             } else {
                 ## different permutations within blocks
                 nperms <- numPerms(sum(tab), control)
-                
+
                 ng <- length(tab)
                 ##pg <- unique(tab)
                 if(length(pg) > 1) {

@@ -17,6 +17,9 @@ Version 0.7-5
 	* Within, Plots: as with `how()`, the matched call is now returned
 	as part of the list object, allowing desirable `update()` behaviour.
 
+	* allPerms, doAllPerms: now correctly work in presence of blocks,
+	and where there are no plots.
+
 Version 0.7-4
 
 	* Deprecated functions: Completed the deprecation of `permCheck()`
