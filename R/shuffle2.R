@@ -35,7 +35,6 @@
     plotCTRL <- getPlots(control)
     ## ...which need to be reduced to only those for `ind`
     Pstrata <- Pstrata[ind]
-    plotCTRL <- plotCTRL[ind]
 
     n <- length(ind)
     sn <- seq_len(n)
@@ -52,7 +51,7 @@
             perm <- sn
         } else {                               ## YES
             flip <- runif(1L) < 0.5 ## logical, passed on & used only if mirroring
-            perm <- shuffleStrata(Pstrata[ind], ## take only the ind values
+            perm <- shuffleStrata(Pstrata,
                                   type = typeP,
                                   mirror = plotCTRL$mirror,
                                   flip = flip,
