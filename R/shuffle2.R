@@ -62,7 +62,7 @@
         ## permute the samples within Plot strata
         if(!isTRUE(all.equal(typeW, "none"))) { ## NOTE the `!`
             ## house keeping to track permuted strata - used later
-            tab <- table(Pstrata[ind][perm])
+            tab <- table(Pstrata[perm])
             levs <- names(tab) ## levels of Plot strata in this split
 
             ## use same permutation within each level of strata?
@@ -91,7 +91,7 @@
             for(lv in levs) {
                 ## must re-order strata here on basis of out as they
                 ## may have been permuted above
-                MATCH <- Pstrata[ind][perm] == lv
+                MATCH <- Pstrata[perm] == lv
                 gr <- perm[MATCH]
                 if((n.gr <- length(gr)) > 1) {
                     tmp[which(MATCH)] <-
