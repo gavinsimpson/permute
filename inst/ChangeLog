@@ -14,6 +14,9 @@ Version 0.7-5
 	* numPerms: fixed a bug where `numPerms()` was ignoring Blocks when
 	computing the number of possible permutations.
 
+	* Within, Plots: as with `how()`, the matched call is now returned
+	as part of the list object, allowing desirable `update()` behaviour.
+
 Version 0.7-4
 
 	* Deprecated functions: Completed the deprecation of `permCheck()`

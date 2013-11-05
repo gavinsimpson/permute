@@ -7,8 +7,8 @@
     else
         type <- match.arg(type)
     out <- list(type = type, constant = constant, mirror = mirror,
-                ncol = ncol, nrow = nrow)
+                ncol = ncol, nrow = nrow, call = match.call())
     ## keep as default list for now
     ##class(out) <- "Within"
-    return(out)
+    out
 }
