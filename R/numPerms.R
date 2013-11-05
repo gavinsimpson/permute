@@ -91,21 +91,26 @@
   spl <- split(indv, BLOCKS)
 
   ## loop over the components of spl & apply doNumPerms
-  np <- lapply(spl, doNumPerms, mult.p, mult.wi, typeP, typeW, PSTRATA,
+  np <- sapply(spl, doNumPerms, mult.p, mult.wi, typeP, typeW, PSTRATA,
                mirrorP, mirrorW, constantW)
 
   ## multiply up n perms per block
-  do.call(prod, np)
+  prod(np)
 }
 
 `doNumPerms` <- function(obs, mult.p, mult.wi, typeP, typeW, PSTRATA,
                          mirrorP, mirrorW, constantW) {
     n <- nobs(obs) ## obs is index vector for object, split by blocks
 
-    ## need only those strata for the current block. As obs is the index
-    ## vector, split by block, this now gives nobs per plot strata
-    tab <- table(PSTRATA)#[obs] # table(PSTRATA[obs])
-    same.n <- length(unitab <- unique(tab))
+    if(!is.null(PSTRATA)) {
+        ## take only the PSTRATA needed for this block, drop unused levels
+        PSTRATA <- droplevels(PSTRATA[obs])
+
+        ## need only those strata for the current block. As obs is the index
+        ## vector, split by block, this now gives nobs per plot strata
+        tab <- table(PSTRATA)
+        same.n <- length(unitab <- unique(tab))
+    }
 
     ## plots
     num.p <- if(isTRUE(all.equal(typeP, "free"))) {

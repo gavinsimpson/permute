@@ -8,6 +8,9 @@ Version 0.7-5
 	`update()` to update elements of a stored permutation design object.
 	Suggested by Jari Oksanen.
 
+	* numPerms: fixed a bug where `numPerms()` was ignoring Blocks when
+	computing the number of possible permutations.
+
 Version 0.7-4
 
 	* Deprecated functions: Completed the deprecation of `permCheck()`
