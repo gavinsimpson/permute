@@ -84,7 +84,8 @@ numPerms(seq_len(Nobs), control = ctrl) ## 6
 (tmp2 <- allPerms(Nobs, control = ctrl))
 
 ## turn on mirroring
-ctrl$within$mirror <- TRUE
+##ctrl$within$mirror <- TRUE
+ctrl <- update(ctrl, within = update(getWithin(ctrl), mirror = TRUE))
 numPerms(seq_len(Nobs), control = ctrl)
 (tmp3 <- allPerms(Nobs, control = ctrl, observed = TRUE))
 (tmp4 <- allPerms(Nobs, control = ctrl))

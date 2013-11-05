@@ -168,7 +168,8 @@ numPerms(1:12, control = ctrl)
 (tmp2 <- allPerms(12, control = ctrl))
 
 ## turn on mirroring %%FIXME needs a proper method to do this
-ctrl$within$mirror <- TRUE
+##ctrl$within$mirror <- TRUE
+ctrl <- update(ctrl, within = update(getWithin(ctrl), mirror = TRUE))
 numPerms(1:12, control = ctrl)
 (tmp3 <- allPerms(12, control = ctrl, observed = TRUE))
 (tmp4 <- allPerms(12, control = ctrl))
