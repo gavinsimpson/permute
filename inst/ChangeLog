@@ -11,6 +11,10 @@ Version 0.7-5
 	The `print` method for class "how" wasn't printing details of
 	mirroring or constant settings for within-plot components.
 
+	* shuffleSet: was incorrectly recombining individual block-level
+	permutations.
+	Reported by Jari Oksanen.
+
 	* numPerms: fixed a bug where `numPerms()` was ignoring Blocks when
 	computing the number of possible permutations.
 
