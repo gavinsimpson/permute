@@ -41,6 +41,14 @@ Version 0.7-5
 
 	* Documentation fixes in examples of `allPerms` and `check`.
 
+	* permuplot: This is horribly broken and I'm not sure if it will ever
+	return. In the meantime, this function now prints a warning message if
+	used and returns nothing, invisibly.
+
+	I'm not convinced that the plot can adequately convery the breadth of
+	designs now possible. Hence I am minded to deprecate this in 0.8-0
+	when released to CRAN and to make it defunct some thereafter.
+
 Version 0.7-4
 
 	* Deprecated functions: Completed the deprecation of `permCheck()`
