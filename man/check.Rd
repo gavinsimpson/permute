@@ -95,8 +95,9 @@ permuplot(n, control = how(), col = par("col"),
   permutations possible and an object of class \code{"\link{how}"}.
 }
 \author{Gavin L. Simpson}
-\seealso{\code{\link{shuffle}} and \code{\link{how}}.}\examples{
+\seealso{\code{\link{shuffle}} and \code{\link{how}}.}
 
+\examples{
 ## use example data from ?pyrifos in package vegan
 require(vegan)
 example(pyrifos)
