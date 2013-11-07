@@ -33,8 +33,10 @@
         for(i in seq_len(nb)) {
             out[[i]] <- doShuffleSet(spln[[i]], nset = nset, control)
         }
-        ##out <- do.call(cbind, out) ## undo the original splitting
-        out <- unsplit(out, Block) ## undo the original splitting
+        ## undo the original splitting. Can't use unsplit() here as the
+        ## elements of out are matrices
+        out <- do.call(cbind, out)
+        out[, unlist(spln)] <- out ## reorders according to spln
     } else {
         ## if we have all.perms now then we must have generated it
         ## during checking or user passed it with control
