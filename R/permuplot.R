@@ -10,6 +10,10 @@
                         ann = par("ann"),
                         cex = par("cex"),
                         ...) {
+    ## This should just bail with an message
+    message("permuplot does not work with the new permutation designs.\nNo plot will be generated!")
+    invisible()
+
     xy.series <- function(n) {
         angle <- seq(0, 2*pi, length = n+1)[-(n+1)]
         x <- rev(cos(angle))
