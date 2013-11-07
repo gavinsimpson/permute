@@ -2,7 +2,8 @@
 
 A TODO list for **permute** - or things I know are broken or needed.
 
- * `summary.allPerms` - is not printing the permutation scheme
+ * `summary.allPerms` - is not printing the permutation scheme.
+   *Done in 0.7-5*
 
  * `print.permControl` - this needs to be updated to new API, and I don't
    like the `*** Foo ***` headings I used before. *Done in 0.7-3*
@@ -37,6 +38,14 @@ A TODO list for **permute** - or things I know are broken or needed.
         
     Where in the second `update()` the entire `Plots()` call needs to
     repeated to change just one part, the `type`.
+
+    This has been tweaked a bit. The second example can now be done via:
+    
+        update(h1, plots = update(getPlots(h1), type = "none"))
+    
+    Here `getPlots(h1)` returns the `plots` component, which too has 
+    a `call` component and hence can be `update()`ed, hence the nested 
+    calls to `update()`.
          
  * `permControl` - deprecate this in favour of `how` as in "how to
    permute"? *DONE Completed in 0.7-4*
