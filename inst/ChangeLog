@@ -32,6 +32,13 @@ Version 0.7-5
 	* allPerms, doAllPerms: now correctly work in presence of blocks,
 	and where there are no plots.
 
+	`allPerms` now includes the permutation design (its `control`
+	argument) as an attribute, `"control"`, on the returned matrix of
+	permutations.
+
+	`summary.allPerms` (its `print` method, more correctly) now prints
+	the permutation design alongside the set of permutations.
+
 	* Documentation fixes in examples of `allPerms` and `check`.
 
 Version 0.7-4
