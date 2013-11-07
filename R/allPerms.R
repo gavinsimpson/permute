@@ -64,6 +64,7 @@
         control$nperm <- control$nperm - 1
     }
     class(out) <- "allPerms"
+    attr(out, "control") <- control
     attr(out, "observed") <- observed
     out
 }
