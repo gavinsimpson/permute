@@ -112,6 +112,6 @@ h1 <- how(within = Within(type = "series", mirror = TRUE),
 ## ... remove the blocking:
 update(h1, blocks = NULL)
 ## ... or switch the type of shuffling at a level:
-update(h1, plots = Plots(strata = plts, type = "none"))
+update(h1, plots = update(getPlots(h1), type = "none"))
 }
 \keyword{ utils  }
