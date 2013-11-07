@@ -15,6 +15,14 @@ Version 0.7-5
 	permutations.
 	Reported by Jari Oksanen.
 
+	Gains an argument, `check`, which allows the user to control whether
+	the permutation design should be checked. In small data sets or where
+	there are very few permutations, `shuffleSet` could generate more
+	permutations (i.e. all possible ones) than requested. Turning off this
+	checking with `check = FALSE` will result in exactly `nset`
+	permutations being returned, but without a gaurantee that they will
+	be unique.
+
 	* numPerms: fixed a bug where `numPerms()` was ignoring Blocks when
 	computing the number of possible permutations.
 

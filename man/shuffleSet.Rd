@@ -11,7 +11,7 @@
   set of permutations.
 }
 \usage{
-shuffleSet(n, nset, control = how())
+shuffleSet(n, nset, control = how(), check = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,12 +24,43 @@ shuffleSet(n, nset, control = how())
     \code{control}.
   }
   \item{control}{
-    an object of class \code{"how"} describing a valid
-    permutation design.
+    an object of class \code{"how"} describing a valid permutation
+    design.
+  }
+  \item{check}{
+    logical; should the design be checked for various problems via
+    function \code{\link{check}}? The default is to check the design for
+    the stated number of observations and update \code{control}
+    accordingly. See Details.
   }
 }
 \details{
-  TODO
+  \code{shuffleSet} is designed to generate a set of \code{nset}
+  permutation indices over which a function can iterate as part of a
+  permutation test. It is only slightly more efficient than calling
+  \code{\link{shuffle}} \code{nset} times, but it is far more practical
+  than the simpler function because a set of permutations can be worked
+  on by applying a function to the rows of the returned object. This
+  simplifies the function applied, and facilitates the use of parallel
+  processing functions, thus enabling a larger number of permutations to
+  be evaluated in reasonable time.
+
+  By default, \code{shuffleSet} will check the permutations design
+  following a few simple heuristics. See \code{\link{check}} for details
+  of these. Whether some of the heuristics are activiated or not can be
+  controlled via \code{\link{how}}, essentialy via its argument
+  \code{minperm}. In particular, if there are fewer than \code{minperm}
+  permutations, \code{shuffleSet} will generate and return \strong{all
+    possible permutations}, which may differ from the number requested via
+  argument \code{nset}.
+
+  The \code{check} argument to \code{shuffleSet} controls whether
+  checking is performed in the permutation design. If you set
+  \code{check = FALSE} then exactly \code{nset} permutations will be
+  returned. However, do be aware that there is no guarantee that the set
+  of permutations returned will be unique, especially so for designs and
+  data sets where there are few possible permutations relative to the
+  number requested.
 }
 \value{
   Returns a matrix of permutations, where each row is a separate
@@ -46,7 +77,7 @@ shuffleSet(n, nset, control = how())
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 \references{
-  \code{shuffle()} is modelled after the permutation schemes of Canoco
+  \code{shuffleSet()} is modelled after the permutation schemes of Canoco
   3.1 (ter Braak, 1990); see also Besag & Clifford (1989).
 
   Besag, J. and Clifford, P. (1989) Generalized Monte Carlo significance
@@ -61,10 +92,11 @@ shuffleSet(n, nset, control = how())
 }
 \examples{
 ## simple random permutations, 5 permutations in set
-shuffleSet(n = 10, nset = 10)
+shuffleSet(n = 10, nset = 5)
 
-## series random permutations, 10 permutations in set
-shuffleSet(10, 10, how(within = Within(type = "series")))
+## series random permutations, 5 permutations in set
+shuffleSet(10, 5, how(within = Within(type = "series")),
+           check = FALSE)
 
 ## series random permutations, 10 permutations in set,
 ## with possible mirroring
@@ -94,7 +126,7 @@ shuffleSet(20, 10, CTRL)
 ## as above, but  with same permutation for each Plot-level stratum
 CTRL <- how(plots = plotStrata,
             within = Within(type = "series", constant = TRUE))
-shuffleSet(20, 10, CTRL)
+shuffleSet(20, 10, CTRL, check = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

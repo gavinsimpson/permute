@@ -242,9 +242,10 @@ As an illustration, consider again the simple time series example from earlier. 
 <<shuffleSet_1, keep.source=true>>=
 set.seed(4)
 CTRL <- how(within = Within(type = "series"))
-pset <- shuffleSet(10, nset = 5, control = CTRL)
+pset <- shuffleSet(10, nset = 5, control = CTRL, check = FALSE)
 pset
 @
+Note that we set \code{check = FALSE} in the call. As there are only 10 permutations of these data (including the observed one), by default \code{shuffleSet()} will check the permutation design and, following a few heuristics\footnote{Values used in these heuristics can be set when you create the permutation design with \code{how()}. See \code{?how} for further details and \code{?check} for the function that does the checking.}, will in this case generate all ten permutations. Setting \code{check = FALSE} turns this checking off, enabling exactly \code{nset} permutations to be returned. The downside of this is that you need to be aware of the implications of not checking the design; with a limited number of possible permutations, there is no guarantee that \code{shuffleSet()} will generate a set of \code{nset} unique permutations.
 
 \section{Defining permutation designs}
 In this section examples are given of how various permutation designs can be specified using \code{how()}. It is not the intention to provide exhaustive coverage of all possible designs that can be produced; such a list would be tedious to both write \emph{and} read. Instead, the main features and options will be described through a series of examples. The reader should then be able to put together the various options to create the exact structure required.
