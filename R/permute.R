@@ -6,5 +6,5 @@ permute <- function(i, n, control) {
             warning("'$all.perms' is NULL, yet '$complete = TRUE'.\nReturning a random permutation.")
         perm <- shuffle(n, control)
     }
-    return(perm)
+    perm
 }
