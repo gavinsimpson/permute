@@ -27,7 +27,7 @@ numPerms(object, control = how())
   not just the object containing the observations. 
 }
 \value{
-  The (numeric) number of possible permutaytions of observations in
+  The (numeric) number of possible permutations of observations in
   \code{object}.
 }
 \note{
@@ -67,12 +67,12 @@ numPerms(object, control = how())
 ## permutation design --- see ?how
 ctrl <- how() ## defaults to freely exchangeable
 
-## vector
+## vector input
 v <- 1:10
 (obs <- nobs(v))
 numPerms(v, control = ctrl)
 
-## integer
+## integer input
 len <- length(v)
 (obs <- nobs(len))
 numPerms(len, control = ctrl)
@@ -85,7 +85,7 @@ numPerms(v, control = ctrl)
 ctrl <- how(within = Within(type = "series", mirror = TRUE))
 numPerms(v, control = ctrl)
 
-## Try blocking - 2 groups of 5
+## Try blocking --- 2 groups of 5
 bl <- numPerms(v, control = how(blocks = gl(2,5)))
 bl
 

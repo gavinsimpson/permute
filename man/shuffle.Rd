@@ -37,8 +37,8 @@ permute(i, n, control)
   permutation of the observations 1, \ldots, n using the permutation
   scheme described by argument \code{control}.
   
-  For \code{how} a list with components for each of the possible
-  arguments.
+  For \code{permute} the \code{i}th permutation from the set of all
+  permutations, or a random permutation from the design.
 }
 %\note{
 %  \code{shuffle} is currently used in one Vegan function;

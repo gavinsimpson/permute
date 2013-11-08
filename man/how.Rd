@@ -34,16 +34,17 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
     \code{plots} each require a named list as produced by \code{Within}
     and \code{Plots} respectively. \code{blocks} takes a factor, the
     levels of which define the blocking structure.}
-  \item{nperm}{the number of permutations.}
+  \item{nperm}{numeric; the number of permutations.}
   \item{complete}{logical; should complete enumeration of all
     permutations be performed?}
-  \item{type}{the type of permutations required. One of \code{"free"},
-    \code{"series"}, \code{"grid"} or \code{"none"}. See Details.}
-  \item{maxperm}{the maximum number of permutations to
-    perform. Currently unused.}
-  \item{minperm}{the lower limit to the number of possible permutations
-    at which complete enumeration is performed. See argument
-    \code{complete} and Details, below.}
+  \item{type}{character; the type of permutations required. One of
+    \code{"free"}, \code{"series"}, \code{"grid"} or \code{"none"}. See
+    Details.} 
+  \item{maxperm}{numeric; the maximum number of permutations to
+    perform. Currently unused.} 
+  \item{minperm}{numeric; the lower limit to the number of possible
+    permutations at which complete enumeration is performed. See argument
+    \code{complete} and Details, below.} 
   \item{all.perms}{an object of class \code{allPerms}, the result of a
     call to \code{\link{allPerms}}.}
   \item{observed}{logical; should the observed permutation be returned
@@ -69,8 +70,7 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   experimental design, mirrored permutations can be considered
   part of the Null model, and as such increase the number of possible
   permutations. The default is to not use mirroring so you must
-  explicitly turn this on using \code{mirror = TRUE} in
-  \code{how}.
+  explicitly turn this on using \code{mirror = TRUE} in \code{how}.
 
   To permute plots rather than the observations within plots (the
   levels of \code{strata}), use \code{Within(type = "none")} and
@@ -98,12 +98,15 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
     3.1}. Wageningen: Agricultural Mathematics Group. (UR).
 }
 \author{Gavin Simpson}
-\seealso{\code{\link{shuffle}} for permuting from a design,
-  \code{\link{check}}, a utility function for checking permutation
-  design described by \code{how}.}
+\seealso{\code{\link{shuffle}} and \code{\link{shuffleSet}} for
+  permuting from a design, and \code{\link{check}}, a utility function
+  for checking permutation design described by \code{how}.}
 \examples{
-plts <- gl(4,10)
-blks <- gl(2,20)
+## Set up factors for the Plots and Blocks
+plts <- gl(4, 10) ## 4 Plots of 10 samples each
+blks <- gl(2, 20) ## 2 Blocks of 20 samples each
+
+## permutation design
 h1 <- how(within = Within(type = "series", mirror = TRUE),
           plots = Plots(strata = plts, type = "series"),
           blocks = blks)
@@ -111,6 +114,7 @@ h1 <- how(within = Within(type = "series", mirror = TRUE),
 ## The design can be updated...
 ## ... remove the blocking:
 update(h1, blocks = NULL)
+
 ## ... or switch the type of shuffling at a level:
 update(h1, plots = update(getPlots(h1), type = "none"))
 }

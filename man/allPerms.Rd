@@ -75,9 +75,8 @@ allPerms(vec) ## free permutation
 ## design
 fac <- gl(2,6)
 ctrl <- how(within = Within(type = "grid", mirror = FALSE,
-                                    constant = TRUE,
-                                    nrow = 3, ncol = 2),
-                    plots = Plots(strata = fac))
+                            constant = TRUE, nrow = 3, ncol = 2),
+            plots = Plots(strata = fac))
 Nobs <- length(fac)
 numPerms(seq_len(Nobs), control = ctrl) ## 6
 (tmp <- allPerms(Nobs, control = ctrl, observed = TRUE))

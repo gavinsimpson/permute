@@ -91,7 +91,7 @@ getComplete(object, ...)
 \method{getBlocks}{how}(object, ...)
 
 \method{getStrata}{how}(object, which = c("plots", "blocks"),
-         drop = TRUE, ...)
+          drop = TRUE, ...)
 
 \method{getType}{how}(object, which = c("plots", "within"), ...)
 
@@ -123,10 +123,14 @@ getComplete(object, ...)
   \item{\dots}{Arguments passed on to other methods.}
 }
 \details{
-  TODO
+  These are extractor functions for working with permutation design
+  objects created by \code{\link{how}}. They should be used in
+  preference to directly subsetting the permutation design in case the
+  internal structure of object changes as \pkg{permute} is developed.
 }
 \value{
-  TODO
+  These are simple extractor functions and return the contents of the
+  corresponding components of \code{object}.
 }
 \author{Gavin Simpson}
 \seealso{\code{\link{check}}, a utility function for checking
@@ -134,8 +138,10 @@ getComplete(object, ...)
 }
 
 \examples{
-set.seed(1234)
-
+## extract components from a "how" object
+hh <- how()
+getWithin(hh)
+getNperm(hh)
 }
 \keyword{ methods }
 \keyword{ utils }
