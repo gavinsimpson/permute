@@ -3,7 +3,6 @@
 \alias{print.check}
 \alias{print.summary.check}
 \alias{summary.check}
-\alias{permuplot}
 
 \title{Utility functions for permutation schemes}
 \description{
@@ -15,44 +14,24 @@
 check(object, control = how(), make.all = TRUE, observed = FALSE)
 
 \method{summary}{check}(object, \dots)
-
-permuplot(n, control = how(), col = par("col"),
-          hcol = "red", shade = "lightgrey", xlim = NULL, ylim = NULL,
-          inset = 0.1, main = NULL, sub = NULL, ann = par("ann"),
-          cex = par("cex"), \dots)
 }
 
 \arguments{
-  \item{object}{an R object. See Details for a
-    complete description, especially for \code{numPerms}. For
-    \code{\link{summary.check}} an object of class
-    \code{"check"}.} 
+  \item{object}{an R object. See Details for a complete description,
+    especially for \code{\link{numPerms}}. For
+    \code{\link{summary.check}} an object of class \code{"check"}.}
   \item{control}{a list of control values describing properties of the
-    permutation design, as returned by a call to
-    \code{\link{how}}.}
-  \item{make.all}{logical; should \code{permCheck} generate all
+    permutation design, as returned by a call to \code{\link{how}}.}
+  \item{make.all}{logical; should \code{check} generate all
     possible permutations? Useful if want to check permutation design
     but not produce the matrix of all permutations.}
   \item{observed}{logical; if making all possible permutations, should
     the set include the observed permutation too?}
-  \item{n}{the number of observations or an 'object' from which the
-    number of observations can be determined via \code{getNumObs}.}
-  \item{col, xlim, ylim, main, sub, ann, cex}{Graphical parameters.}
-  \item{hcol}{Colour to use for highlighting observations and the border
-    colour of the polygons drawn when \code{type = "strata"}.}
-  \item{shade}{The polygon shading colour (passed to argument \code{col}
-    of function \code{\link{polygon}}) when \code{type = "strata"}.}
-  \item{inset}{Proportion of range of x and y coordinates to add to the
-    plot x and y limits. Used to create a bit of extra space around the
-    margin of each plot.}
-  \item{\dots}{arguments to other methods. For \code{permuplot}
-    graphical parameters can be passed to plotting functions, though
-    note that not all parameters will be accepted gracefully at the
-    moment.}
+  \item{\dots}{arguments to other methods.}
 }
 \details{
-  \code{check} and \code{permuplot} are utility functions for working
-  with the new permutation schemes available in \code{\link{shuffle}}.
+  \code{check} is a utility functions for working with the new
+  permutation schemes available in \code{\link{shuffle}}.
 
   \code{check} is used to check the current permutation schemes
   against the object to which it will be applied. It calculates the
@@ -62,7 +41,7 @@ permuplot(n, control = how(), col = par("col"),
   an object of class \code{"how"} suitably modified if
   \code{check} identifies a problem.
 
-  The main problem is requesting more permutations than possible with
+  The main problem is requesting more permutations than is possible with
   the number of observations and the permutation design. In such cases,
   \code{nperm} is reduced to equal the number of possible permutations,
   and complete enumeration of all permutations is turned on
@@ -72,23 +51,6 @@ permuplot(n, control = how(), col = par("col"),
   than \code{control$minperm}, it is better to enumerate all possible
   permutations, and as such complete enumeration of all permutations is
   turned  on (\code{control$complete} is set to \code{TRUE}).
-
-  \code{permuplot} is a graphical utility function, which produces a
-  graphical representation of a permutation design. It takes the number
-  of observations and an object returned by \code{\link{how}} as
-  arguments and produces a plot on the currently active device. If
-  strata are present in the design, the plotting region is split into
-  sufficient plotting regions (one for each stratum), and the design in
-  each stratum plotted.
-
-  Free permutation designs are represented by plotting the observation
-  number at random x and y coordinates. Series designs (time series or
-  line transects) are represented by plotting the observation numbers
-  comprising the series in a circle and the start of the permuted series
-  is highlighted using colour \code{hcol}. Grid designs are drawn on a
-  regular grid and the top left observation in the original grid is
-  highlighted using colour \code{hcol}. Note the ordering used is R's
-  standard ordering for matrices - columns are filled first.
 }
 \value{
   For \code{check} a list containing the maximum number of
@@ -168,15 +130,14 @@ numPerms(1:12, control = ctrl)
 (tmp <- allPerms(12, control = ctrl, observed = TRUE))
 (tmp2 <- allPerms(12, control = ctrl))
 
-## turn on mirroring %%FIXME needs a proper method to do this
-##ctrl$within$mirror <- TRUE
+## turn on mirroring
 ctrl <- update(ctrl, within = update(getWithin(ctrl), mirror = TRUE))
 numPerms(1:12, control = ctrl)
 (tmp3 <- allPerms(12, control = ctrl, observed = TRUE))
 (tmp4 <- allPerms(12, control = ctrl))
 ## prints out details of the permutation scheme as
 ## well as the matrix of permutations
-summary(tmp) %% FIXME these don't print the scheme
+summary(tmp)
 summary(tmp2)
 
 ## different numbers of observations per level of strata
@@ -190,11 +151,6 @@ allPerms(7, how(within = Within(type = "free"),
 ctrl <- how(within = Within(type = "series"), plots = Plots(strata = fac))
 numPerms(7, control = ctrl)
 allPerms(7, control = ctrl)
-
-%% FIXME - need all these updating to new API in how...
-%% moved permuplot examples out of package until I can fix it
-%% properly
-
 }
 \keyword{ utilities }
 \keyword{ design }
