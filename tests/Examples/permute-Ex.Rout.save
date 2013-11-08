@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2013-10-07 r64035) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2013-09-26 r64005) -- "Frisbee Sailing"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -50,9 +50,8 @@ Type 'q()' to quit R.
 > ## design
 > fac <- gl(2,6)
 > ctrl <- how(within = Within(type = "grid", mirror = FALSE,
-+                                     constant = TRUE,
-+                                     nrow = 3, ncol = 2),
-+                     plots = Plots(strata = fac))
++                             constant = TRUE, nrow = 3, ncol = 2),
++             plots = Plots(strata = fac))
 > Nobs <- length(fac)
 > numPerms(seq_len(Nobs), control = ctrl) ## 6
 [1] 6
@@ -203,7 +202,7 @@ Contains observed ordering?: No
 > 
 > ### Name: check
 > ### Title: Utility functions for permutation schemes
-> ### Aliases: check print.check print.summary.check summary.check permuplot
+> ### Aliases: check print.check print.summary.check summary.check
 > ### Keywords: utilities design methods
 > 
 > ### ** Examples
@@ -212,7 +211,7 @@ Contains observed ordering?: No
 > require(vegan)
 Loading required package: vegan
 Loading required package: lattice
-This is vegan 2.1-33
+This is vegan 2.1-37
 > example(pyrifos)
 
 pyrifs> data(pyrifos)
@@ -316,8 +315,7 @@ pyrifs> dose <- factor(rep(c(0.1, 0, 0, 0.9, 0, 44, 6, 0.1, 44, 0.9, 0, 6), 11))
 [4,]    5    6    1    2    3    4   11   12    7     8     9    10
 [5,]    6    1    2    3    4    5   12    7    8     9    10    11
 > 
-> ## turn on mirroring %%FIXME needs a proper method to do this
-> ##ctrl$within$mirror <- TRUE
+> ## turn on mirroring
 > ctrl <- update(ctrl, within = update(getWithin(ctrl), mirror = TRUE))
 > numPerms(1:12, control = ctrl)
 [1] 12
@@ -350,7 +348,7 @@ pyrifs> dose <- factor(rep(c(0.1, 0, 0, 0.9, 0, 44, 6, 0.1, 44, 0.9, 0, 6), 11))
 [11,]    6    5    4    3    2    1   12   11   10     9     8     7
 > ## prints out details of the permutation scheme as
 > ## well as the matrix of permutations
-> summary(tmp) 
+> summary(tmp)
 
 	Complete enumeration of permutations
 
@@ -476,8 +474,6 @@ Contains observed ordering?: No
 > 
 > 
 > 
-> 
-> 
 > cleanEx()
 
 detaching ‘package:vegan’, ‘package:lattice’
@@ -508,8 +504,29 @@ detaching ‘package:vegan’, ‘package:lattice’
 > 
 > ### ** Examples
 > 
-> set.seed(1234)
-> 
+> ## extract components from a "how" object
+> hh <- how()
+> getWithin(hh)
+$type
+[1] "free"
+
+$constant
+[1] FALSE
+
+$mirror
+[1] FALSE
+
+$ncol
+NULL
+
+$nrow
+NULL
+
+$call
+Within()
+
+> getNperm(hh)
+[1] 199
 > 
 > 
 > 
@@ -526,8 +543,11 @@ detaching ‘package:vegan’, ‘package:lattice’
 > 
 > ### ** Examples
 > 
-> plts <- gl(4,10)
-> blks <- gl(2,20)
+> ## Set up factors for the Plots and Blocks
+> plts <- gl(4, 10) ## 4 Plots of 10 samples each
+> blks <- gl(2, 20) ## 2 Blocks of 20 samples each
+> 
+> ## permutation design
 > h1 <- how(within = Within(type = "series", mirror = TRUE),
 +           plots = Plots(strata = plts, type = "series"),
 +           blocks = blks)
@@ -555,6 +575,7 @@ Permutation details:
   Number of permutations requested: 199
   Max. number of permutations allowed: 9999
   Evaluate all permutations?: No.  Activation limit: 99
+> 
 > ## ... or switch the type of shuffling at a level:
 > update(h1, plots = update(getPlots(h1), type = "none"))
 
@@ -650,14 +671,14 @@ Permutation details:
 > ## permutation design --- see ?how
 > ctrl <- how() ## defaults to freely exchangeable
 > 
-> ## vector
+> ## vector input
 > v <- 1:10
 > (obs <- nobs(v))
 [1] 10
 > numPerms(v, control = ctrl)
 [1] 3628800
 > 
-> ## integer
+> ## integer input
 > len <- length(v)
 > (obs <- nobs(len))
 [1] 1
@@ -674,7 +695,7 @@ Permutation details:
 > numPerms(v, control = ctrl)
 [1] 20
 > 
-> ## Try blocking - 2 groups of 5
+> ## Try blocking --- 2 groups of 5
 > bl <- numPerms(v, control = how(blocks = gl(2,5)))
 > bl
 [1] 14400
@@ -1145,7 +1166,7 @@ mean in group Group 1 mean in group Group 2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.564 0.032 1.604 0 0 
+Time elapsed:  2.065 0.041 2.124 0 0 
 > grDevices::dev.off()
 null device 
           1 
