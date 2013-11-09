@@ -57,3 +57,7 @@ A TODO list for **permute** - or things I know are broken or needed.
 
  * `check` insists on returning all permutations *without* the observed
    one.
+
+   *DONE Completed somewhere, probably when I made observed only work via
+   how()*
+
