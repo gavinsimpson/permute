@@ -343,11 +343,36 @@ getType.how <- function(object,
 }
 
 `getComplete.permControl` <- function(object, ...) {
-    list(complete = object$complete,
-         minperm = object$minperm)
+    object$complete
 }
 
 `getComplete.how` <- function(object, ...) {
-    list(complete = object$complete,
-         minperm = object$minperm)
+    object$complete
+}
+
+## Returns whether all permutation should/should not be made
+`getMake` <- function(object, ...) {
+    UseMethod("getMake")
+}
+
+`getMake.default` <- function(object, ...) {
+    stop("No default method for `getMake`")
+}
+
+`getMake.how` <- function(object, ...) {
+    object$make
+}
+
+## Returns whether the observed permutation should be in
+## the set of permutations
+`getObserved` <- function(object, ...) {
+    UseMethod("getObserved")
+}
+
+`getObserved.default` <- function(object, ...) {
+    stop("No default method for `getObserved`")
+}
+
+`getObserved.how` <- function(object, ...) {
+    object$observed
 }

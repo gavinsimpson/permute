@@ -39,6 +39,14 @@ Version 0.7-5
 	`summary.allPerms` (its `print` method, more correctly) now prints
 	the permutation design alongside the set of permutations.
 
+	* get-methods: new extractor functions `getObserved()` and
+	`getMake()` return the `observed` and `make` components of object
+	created by `how()`.
+
+	* getComplete: This now only returns the `complete` component of
+	the `"how"` object. Use `getMinperm()` to extract the component
+	no-longer returned by `getComplete()`.
+
 	* Documentation fixes in examples of `allPerms` and `check`.
 
 	* permuplot: This is horribly broken and I'm not sure if it will

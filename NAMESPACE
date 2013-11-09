@@ -4,8 +4,8 @@ export(`allPerms`, `Blocks`, `numPerms`, `check`, `permCheck`,
        `shuffleFree`, `shuffleSeries`, `shuffleGrid`, `shuffleStrata`,
        `getBlocks`, `getWithin`, `getStrata`, `getType`, `getMirror`,
        `getConstant`, `getPlots`, `getRow`, `getCol`, `getDim`,
-       `getNperm`,`getMaxperm`, `getMinperm`, `getComplete`, `shuffleSet`,
-       `how`)
+       `getNperm`,`getMaxperm`, `getMinperm`, `getComplete`, `getMake`,
+       `getObserved`, `shuffleSet`, `how`)
 
 ### Imports: nobs() only exists in R 2.13.0 for import. We define the
 ### same nobs() generic in permute for export in older R.
@@ -74,3 +74,7 @@ S3method(`getCol`, `permControl`)
 S3method(`getDim`, `default`)
 S3method(`getDim`, `how`)
 S3method(`getDim`, `permControl`)
+S3method(`getMake`, `default`)
+S3method(`getMake`, `how`)
+S3method(`getObserved`, `default`)
+S3method(`getObserved`, `how`)
