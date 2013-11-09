@@ -11,7 +11,7 @@
   selected permutation design.
 }
 \usage{
-check(object, control = how(), make.all = TRUE, observed = FALSE)
+check(object, control = how())
 
 \method{summary}{check}(object, \dots)
 }
@@ -22,11 +22,6 @@ check(object, control = how(), make.all = TRUE, observed = FALSE)
     \code{\link{summary.check}} an object of class \code{"check"}.}
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to \code{\link{how}}.}
-  \item{make.all}{logical; should \code{check} generate all
-    possible permutations? Useful if want to check permutation design
-    but not produce the matrix of all permutations.}
-  \item{observed}{logical; if making all possible permutations, should
-    the set include the observed permutation too?}
   \item{\dots}{arguments to other methods.}
 }
 \details{
@@ -127,13 +122,13 @@ ctrl <- how(plots = Plots(strata = fac),
 check(1:12, ctrl)
 
 numPerms(1:12, control = ctrl)
-(tmp <- allPerms(12, control = ctrl, observed = TRUE))
+(tmp <- allPerms(12, control = update(ctrl, observed = TRUE)))
 (tmp2 <- allPerms(12, control = ctrl))
 
 ## turn on mirroring
 ctrl <- update(ctrl, within = update(getWithin(ctrl), mirror = TRUE))
 numPerms(1:12, control = ctrl)
-(tmp3 <- allPerms(12, control = ctrl, observed = TRUE))
+(tmp3 <- allPerms(12, control = update(ctrl, observed = TRUE)))
 (tmp4 <- allPerms(12, control = ctrl))
 ## prints out details of the permutation scheme as
 ## well as the matrix of permutations

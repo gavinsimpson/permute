@@ -50,6 +50,11 @@ Version 0.7-5
 	the `"how"` object. Use `getMinperm()` to extract the component
 	no-longer returned by `getComplete()`.
 
+	* check: function looses arguments `make.all` and `observed` as
+	these are in the control object returned by `how()`.
+
+	The logic of some of the checks has been tweaked slightly.
+
 	* Documentation fixes in examples of `allPerms` and `check`.
 
 	* permuplot: This is horribly broken and I'm not sure if it will

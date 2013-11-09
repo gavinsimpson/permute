@@ -12,7 +12,7 @@
   selected permutation design.
 }
 \usage{
-permCheck(object, control = how(), make.all = TRUE)
+permCheck(object, control = how())
 
 \method{summary}{permCheck}(object, \dots)
 }
@@ -25,9 +25,6 @@ permCheck(object, control = how(), make.all = TRUE)
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
     \code{\link{how}}.}
-  \item{make.all}{logical; should \code{permCheck} generate all
-    possible permutations? Useful if want to check permutation design
-    but not produce the matrix of all permutations.}
   \item{\dots}{arguments to other methods. For \code{permuplot}
     graphical parameters can be passed to plotting functions, though
     note that not all parameters will be accepted gracefully at the

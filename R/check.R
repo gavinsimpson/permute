@@ -1,5 +1,4 @@
-`check` <- function(object, control = how(), make.all = TRUE,
-                    observed = FALSE)
+`check` <- function(object, control = how())
 {
     ## if object is numeric or integer and of length 1,
     ## extend the object
@@ -68,21 +67,25 @@
 
     ## check if number requested permutations exceeds max possible
     if(getNperm(control) > num.pos) {
-        control$nperm <- control$maxperm <- num.pos
-        control$complete <- TRUE
+        control <- update(control, nperm = num.pos, maxperm = num.pos,
+                               complete = TRUE)
+        control$call[["nperm"]] <- eval(control$call[["nperm"]])
+        control$call[["maxperm"]] <- eval(control$call[["maxperm"]])
     }
-    
+
     ## if number of possible perms < minperm turn on complete enumeration
-    if(num.pos < getMinperm(control)) {
-        control$nperm <- control$maxperm <- num.pos
-        control$complete <- TRUE
+    if((num.pos < getMinperm(control))) {
+        control <- update(control, nperm = num.pos, maxperm = num.pos,
+                               complete = TRUE)
+        control$call[["nperm"]] <- eval(control$call[["nperm"]])
+        control$call[["maxperm"]] <- eval(control$call[["maxperm"]])
     }
 
     ## if complete enumeration, generate all permutations
-    if(getComplete(control)$complete && make.all) {
-        control$all.perms <- allPerms(N, control = control,
-                                      max = getMaxperm(control),
-                                      observed = observed)
+    if(getComplete(control) && getMake(control)) {
+        ap <- allPerms(N, control = control)
+        control <- update(control, all.perms = ap)
+        control$call[["all.perms"]] <- eval(control$call[["all.perms"]])
     }
     retval <- list(n = num.pos, control = control)
     class(retval) <- "check"
