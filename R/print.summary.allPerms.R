@@ -7,7 +7,6 @@
     cat("\n")
     writeLines(strwrap("Complete enumeration of permutations\n",
         prefix = "\t"))
-    cat("\nPermutation Scheme:\n")
     print(control)
     cat("\nAll permutations:\n")
     writeLines(paste("Contains observed ordering?:", ifelse(observed, "Yes", "No"),
