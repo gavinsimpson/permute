@@ -36,6 +36,9 @@ Version 0.7-5
 	argument) as an attribute, `"control"`, on the returned matrix of
 	permutations.
 
+	`allPerms` looses arguments `max` and `observed` as these are
+	supposed to be in the control object created by `how()`.
+
 	`summary.allPerms` (its `print` method, more correctly) now prints
 	the permutation design alongside the set of permutations.
 
