@@ -10,8 +10,7 @@
   permutations for a given R object and a specified permutation design.
 }
 \usage{
-allPerms(n, control = how(), max = 9999,
-         observed = FALSE)
+allPerms(n, control = how())
 
 \method{summary}{allPerms}(object, \dots)
 }
@@ -21,11 +20,6 @@ allPerms(n, control = how(), max = 9999,
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
     \code{\link{how}}.}
-  \item{max}{the maximum number of permutations, below which complete
-    enumeration will be attempted. See Details.}
-  \item{observed}{logical, should the observed ordering of samples be
-    returned as part of the complete enumeration? Default is
-    \code{FALSE} to facilitate usage in higher level functions.}
   \item{object}{an object of class \code{"allPerms"}.}
   \item{\dots}{arguments to other methods.}
 }
@@ -45,7 +39,7 @@ allPerms(n, control = how(), max = 9999,
   possible permutations would also become problematic in such cases. To
   control this and guard against trying to evaluate too large a number
   of permutations, if the number of possible permutations is larger than
-  \code{max}, \code{allPerms} exits with an error.
+  \code{getMaxperm(control)}, \code{allPerms} exits with an error.
 }
 \value{
   For \code{allPerms}, and object of class \code{"allPerms"}, a matrix
@@ -79,14 +73,14 @@ ctrl <- how(within = Within(type = "grid", mirror = FALSE,
             plots = Plots(strata = fac))
 Nobs <- length(fac)
 numPerms(seq_len(Nobs), control = ctrl) ## 6
-(tmp <- allPerms(Nobs, control = ctrl, observed = TRUE))
+(tmp <- allPerms(Nobs, control = update(ctrl, observed = TRUE)))
 (tmp2 <- allPerms(Nobs, control = ctrl))
 
 ## turn on mirroring
 ##ctrl$within$mirror <- TRUE
 ctrl <- update(ctrl, within = update(getWithin(ctrl), mirror = TRUE))
 numPerms(seq_len(Nobs), control = ctrl)
-(tmp3 <- allPerms(Nobs, control = ctrl, observed = TRUE))
+(tmp3 <- allPerms(Nobs, control = update(ctrl, observed = TRUE)))
 (tmp4 <- allPerms(Nobs, control = ctrl))
 
 ## prints out details of the permutation scheme as

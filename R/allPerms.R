@@ -1,5 +1,4 @@
-`allPerms` <- function(n, control = how(), max = 9999,
-                       observed = FALSE) {
+`allPerms` <- function(n, control = how()) {
     ## start
     v <- n
     ## expand n if a numeric or integer vector of length 1
@@ -8,16 +7,20 @@
     ## number of observations in data
     n <- nobs(v)
     ## check permutation scheme and update control
-    pcheck <- check(v, control = control, make.all = FALSE)
+    make <- getMake(control)
+    pcheck <- check(v, control = update(control, make = FALSE))
     ## ctrl <- pcheck$control
+    ## if we do copy the new updated control, we need to update to
+    ## reset make
+    ## ctrl <- update(ctrl, make = make)
 
     ## get max number of permutations
     nperms <- numPerms(v, control = control)
 
     ## sanity check - don't let this run away to infinity
     ## esp with type = "free"
-    if(nperms > max)
-        stop("Number of possible permutations too large (> 'max')")
+    if(nperms > getMaxperm(control))
+        stop("Number of possible permutations too large (> 'maxperm')")
 
     WI <- getWithin(control)
     strataP <- getStrata(control, which = "plots")
@@ -55,13 +58,14 @@
     ## bind all the blocks together
     out <- do.call(rbind, out) ## hmm are any of these the same shape?
 
-    if(!observed) {
+    if(!(observed <- getObserved(control))) {
         obs.v <- seq_len(n)
         obs.row <- apply(out, 1, function(x, obs.v) all(x == obs.v), obs.v)
         out <- out[!obs.row, ]
         ## reduce the number of permutations to get rid of the
         ## observed ordering
-        control$nperm <- control$nperm - 1
+        ##control$nperm <- control$nperm - 1
+        control <- update(control, nperm = getNperm(control) - 1)
     }
     class(out) <- "allPerms"
     attr(out, "control") <- control
