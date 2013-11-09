@@ -56,6 +56,12 @@
 \alias{getComplete.default}
 \alias{getComplete.how}
 \alias{getComplete.permControl}
+\alias{getMake}
+\alias{getMake.default}
+\alias{getMake.how}
+\alias{getObserved}
+\alias{getObserved.default}
+\alias{getObserved.how}
 
 \title{Extractor functions to access components of a permutation design}
 \description{
@@ -83,6 +89,8 @@ getNperm(object, ...)
 getMaxperm(object, ...)
 getMinperm(object, ...)
 getComplete(object, ...)
+getMake(object, ...)
+getObserved(object, ...)
 
 \method{getWithin}{how}(object, ...)
 
@@ -112,6 +120,10 @@ getComplete(object, ...)
 \method{getMinperm}{how}(object, ...)
 
 \method{getComplete}{how}(object, ...)
+
+\method{getMake}{how}(object, ...)
+
+\method{getObserved}{how}(object, ...)
 
 }
 
