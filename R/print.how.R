@@ -81,10 +81,9 @@
                              getNperm(x)), prefix = pfix))
     writeLines(strwrap(paste("Max. number of permutations allowed:",
                              getMaxperm(x)), prefix = pfix))
-    complete <- getComplete(x)
     txt <- paste("Evaluate all permutations?:",
-                 if(complete$complete) "Yes." else "No.",
-                 "  Activation limit:", complete$minperm)
+                 if(getComplete(x)) "Yes." else "No.",
+                 "  Activation limit:", getMinperm(x))
     writeLines(strwrap(txt, prefix = pfix))
 
 }
