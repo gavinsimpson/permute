@@ -18,3 +18,25 @@ test_that("shuffleSet interleves block-level perms correctly", {
         expect_that(p[i, ], equals(y))
     }
 })
+
+## test that nset permutations are always returned if
+## make = FALSE in how()
+test_that( "shuffleSet returns exactly nset permutations when make == FALSE", {
+    ## simple random permutation
+    h <- how(make = FALSE)
+    ss <- shuffleSet(n = 4, nset = 10, control = h)
+    expect_that(nrow(ss), equals(10))
+
+    ## time series
+    h <- how(within = Within(type = "series"), make = FALSE)
+    ss <- shuffleSet(n = 20, nset = 15, control = h)
+    expect_that(nrow(ss), equals(15))
+
+})
+
+## test that shuffleSet always returns a matrix, even for nset == 1
+test_that("shuffleSet returns a matrix even for nset == 1", {
+    h <- how()
+    ss <- shuffleSet(25, nset = 1, control = h)
+    expect_that(ss, is_a("matrix"))
+})

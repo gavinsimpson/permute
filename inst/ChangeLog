@@ -2,6 +2,12 @@ $Date$
 
 permute ChangeLog
 
+Version 0.7-6
+
+	* summary.allPerms: Was printing two slightly different subtitles.
+
+	* More unit tests...
+
 Version 0.7-5
 
 	* how: the matched call is now returned permitting the use of
