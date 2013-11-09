@@ -110,8 +110,6 @@ Type 'q()' to quit R.
 
 	Complete enumeration of permutations
 
-Permutation Scheme:
-
 Permutation Design:
 
 Blocks:
@@ -152,8 +150,6 @@ Contains observed ordering?: Yes
 > summary(tmp4)
 
 	Complete enumeration of permutations
-
-Permutation Scheme:
 
 Permutation Design:
 
@@ -352,8 +348,6 @@ pyrifs> dose <- factor(rep(c(0.1, 0, 0, 0.9, 0, 44, 6, 0.1, 44, 0.9, 0, 6), 11))
 
 	Complete enumeration of permutations
 
-Permutation Scheme:
-
 Permutation Design:
 
 Blocks:
@@ -388,8 +382,6 @@ Contains observed ordering?: Yes
 > summary(tmp2)
 
 	Complete enumeration of permutations
-
-Permutation Scheme:
 
 Permutation Design:
 
@@ -1167,7 +1159,7 @@ mean in group Group 1 mean in group Group 2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.328 0.04 2.494 0 0 
+Time elapsed:  2.133 0.036 2.187 0 0 
 > grDevices::dev.off()
 null device 
           1 
