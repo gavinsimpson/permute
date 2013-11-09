@@ -15,10 +15,10 @@
     ## than requested in nset, depending upon what user specified
     ## in `control`. The `check` argument can turn this step off
     ## so you always get `nset` permutations and, yes, you can shoot
-    ## yourself in the foot with this, hence the dfeualt is to check!
+    ## yourself in the foot with this, hence the default is to check!
     if (isTRUE(check)) {
         ## need to check number of permutations won't blow up
-        pcheck <- check(sn, control = control, make.all = TRUE)
+        pcheck <- check(sn, control = control)
         ## control possibly now updated
         control <- pcheck$control
     }
