@@ -6,12 +6,13 @@
                   maxperm = 9999,
                   minperm = 99,
                   all.perms = NULL,
-                  observed = FALSE)
-{
+                  make = TRUE,
+                  observed = FALSE) {
     out <- list(within = within, plots = plots, blocks = blocks,
                 nperm = nperm, complete = complete,
                 maxperm = maxperm, minperm = minperm,
-                all.perms = all.perms, observed = observed,
+                all.perms = all.perms, make = make,
+                observed = observed,
                 blocks.name = deparse(substitute(blocks)),
                 call = match.call())
     class(out) <- "how"

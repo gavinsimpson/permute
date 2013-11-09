@@ -16,7 +16,8 @@
 \usage{
 how(within = Within(), plots = Plots(), blocks = NULL,
     nperm = 199, complete = FALSE, maxperm = 9999,
-    minperm = 99, all.perms = NULL, observed = FALSE)
+    minperm = 99, all.perms = NULL, make = TRUE,
+    observed = FALSE)
 
 Within(type = c("free","series","grid","none"),
        constant = FALSE, mirror = FALSE,
@@ -47,8 +48,13 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
     \code{complete} and Details, below.} 
   \item{all.perms}{an object of class \code{allPerms}, the result of a
     call to \code{\link{allPerms}}.}
+  \item{make}{logical; should \code{check} generate all possible
+    permutations? Useful if want to check permutation design but not
+    produce the matrix of all permutations, or to circumvent the
+    heuristics governing when complete enumeration is activated.}
   \item{observed}{logical; should the observed permutation be returned
-    as part of the set of all permutations?}
+    as part of the set of all permutations? Default is \code{FALSE} to
+    facilitate usage in higher level functions.}
   \item{constant}{logical; should the same permutation be used within
     each level of strata? If \code{FALSE} a separate, possibly restricted,
     permutation is produced for each level of \code{strata}.}

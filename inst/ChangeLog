@@ -8,6 +8,10 @@ Version 0.7-5
 	`update()` to update elements of a stored permutation design object.
 	Suggested by Jari Oksanen.
 
+	`how` also gains an argument `make` which is the user-level way
+	to control whether all possible permutations are actually
+	created should the heuristics in `check()` decide they should be.
+
 	The `print` method for class "how" wasn't printing details of
 	mirroring or constant settings for within-plot components.
 
