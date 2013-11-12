@@ -1,5 +1,12 @@
 ## new version of shuffleSet() that allows for blocking
 `shuffleSet` <- function(n, nset, control = how(), check = TRUE) {
+    ## Store the .Random.seed, if it exists, so we can attach this as
+    ## an attribute to the permutation matrix returned in out
+    SEED <- NULL
+    if (exists(".Random.seed", envir = globalenv())) {
+        SEED <- .Random.seed
+    }
+
     ## handle missing nset - take from control if can
     if(missing(nset)) {
         np <- getNperm(control)
@@ -62,6 +69,16 @@
         out <- out[sample.int(nr, nset), ]
     }
 
+    ## Attach random seed stored earlier to permutation matrix
+    attr(out, "seed") <- SEED
+    attr(out, "control") <- control
+    attr(out, "observed") <- NULL ## nullify this as allPerms may have added it?
+
+    ## class the matrix so we can have a print method etc, but inherit from
+    ## the matrix S3 class
+    class(out) <- c("permutationMatrix", "matrix")
+
+    ## return
     out
 }
 

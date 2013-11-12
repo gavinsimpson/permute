@@ -17,6 +17,9 @@ Version 0.7-7
 	`shuffleSet()`. The `check` argument is retained though, as a way for
 	function writers to skip that part of the permute workflow if desired.
 
+	The permutation matrix returned is now of class `"permutationMatrix"`.
+	This class has `as.matrix()` and `print()` S3 methods.
+
 	* allPerms: gains an argument `check`, which defaults to `TRUE`. This
 	is used to turn off checking within `allPerms` if desired. A use-case
 	for this is in `check()`, which might end up caling `allPerms()` to

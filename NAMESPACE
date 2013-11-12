@@ -16,11 +16,13 @@ if (getRversion() >= "2.13.0") {
 }
 
 ### S3 Methods
+S3method(`as.matrix`, `permutationMatrix`)
 ## print methods
 S3method(`print`, `allPerms`)
 S3method(`print`, `check`)
 S3method(`print`, `how`)
 S3method(`print`, `permControl`)
+S3method(`print`, `permutationMatrix`)
 S3method(`print`, `summary.allPerms`)
 S3method(`print`, `summary.check`)
 ## summary methods

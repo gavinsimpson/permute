@@ -74,3 +74,7 @@ A TODO list for **permute** - or things I know are broken or needed.
         CTRL <- how(plots = plotStrata,
                     within = Within(type = "free", constant = TRUE))
         shuffleSet(20, 10, CTRL)
+
+ * Write an Rd page for the `"permutationMatrix"` S3 class where I can 
+   describe the object returned by `shuffleSet()` and the methods 
+   available for it.
