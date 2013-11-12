@@ -1,4 +1,4 @@
-`allPerms` <- function(n, control = how()) {
+`allPerms` <- function(n, control = how(), check = TRUE) {
     ## start
     v <- n
     ## expand n if a numeric or integer vector of length 1
@@ -8,7 +8,8 @@
     n <- nobs(v)
     ## check permutation scheme and update control
     make <- getMake(control)
-    pcheck <- check(v, control = update(control, make = FALSE))
+    if (check)
+        pcheck <- check(v, control = update(control, make = FALSE))
     ## ctrl <- pcheck$control
     ## if we do copy the new updated control, we need to update to
     ## reset make

@@ -17,6 +17,18 @@ Version 0.7-7
 	`shuffleSet()`. The `check` argument is retained though, as a way for
 	function writers to skip that part of the permute workflow if desired.
 
+	* allPerms: gains an argument `check`, which defaults to `TRUE`. This
+	is used to turn off checking within `allPerms` if desired. A use-case
+	for this is in `check()`, which might end up caling `allPerms()` to
+	generate the set of all permutations. In that case `allPerms()` used
+	to recheck the design. Now this doesn't happen.
+
+	Turned on some `message()`s when the user asks for too many permutations
+	(more than the set of possible permutations) and when the set of
+	possible permutations is smaller than the `minperm` value stored in the
+	`"how"` object. The latter notifies the user that the entire set of
+	permutations is being generated.
+
 Version 0.7-6
 
 	* summary.allPerms: Was printing two slightly different subtitles.

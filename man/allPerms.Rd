@@ -10,7 +10,7 @@
   permutations for a given R object and a specified permutation design.
 }
 \usage{
-allPerms(n, control = how())
+allPerms(n, control = how(), check = TRUE)
 
 \method{summary}{allPerms}(object, \dots)
 }
@@ -20,6 +20,9 @@ allPerms(n, control = how())
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
     \code{\link{how}}.}
+  \item{check}{logical; should \code{allPerms} check the design? The
+    default is to check, but this can be skipped, for example if a
+    function checked the design earlier.}
   \item{object}{an object of class \code{"allPerms"}.}
   \item{\dots}{arguments to other methods.}
 }
