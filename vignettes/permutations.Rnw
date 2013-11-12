@@ -242,7 +242,7 @@ As an illustration, consider again the simple time series example from earlier. 
 <<shuffleSet_1, keep.source=true>>=
 set.seed(4)
 CTRL <- how(within = Within(type = "series"))
-pset <- shuffleSet(10, nset = 5, control = CTRL, check = FALSE)
+pset <- shuffleSet(10, nset = 5, control = CTRL)
 pset
 @
 Note that we set \code{check = FALSE} in the call. As there are only 10 permutations of these data (including the observed one), by default \code{shuffleSet()} will check the permutation design and, following a few heuristics\footnote{Values used in these heuristics can be set when you create the permutation design with \code{how()}. See \code{?how} for further details and \code{?check} for the function that does the checking.}, will in this case generate all ten permutations. Setting \code{check = FALSE} turns this checking off, enabling exactly \code{nset} permutations to be returned. The downside of this is that you need to be aware of the implications of not checking the design; with a limited number of possible permutations, there is no guarantee that \code{shuffleSet()} will generate a set of \code{nset} unique permutations.
@@ -259,8 +259,33 @@ would indicate 999 random permutations where the samples are all freely exchange
 
 One advantage of using \code{nperm} is that \code{shuffleSet()} will use this if the \code{nset} argument is not specified. Additionally, \code{shuffleSet()} will check to see if the desired number of permutations is possible given the data and the requested design. This is done via the function \code{check()}, which is discussed later.
 
-\subsection{Permuting samples at the lowest level}
-At the lowest level of a permutation design in \pkg{permute}
+\subsection{The levels of the permutation hierarchy}
+There are three levels at which permutations can be controlled in \pkg{permute}. The highest level of the hierarchy is the \emph{block} level. Blocks are defined by a factor vector. Blocks restrict permutation of samples to within the levels of this factor; samples are never swapped between blocks.
+
+The \emph{plot} level sits below blocks. Plots are defined by a factor and group samples in the same way as blocks. As such, some permutation designs can be initiated using a factor at the plot level or the same factor at the plot level. The major difference between blocks and plots is that plots can also be permuted, whereas blocks are never permuted.
+
+The lowest level of a permutation design in \pkg{permute} hierarchy is known as \emph{within}, and refers to samples nested \emph{within} plots. If there are no plots or blocks, how samples are permuted at the \emph{within} level applies to the entire data set.
+
+\subsubsection{Permuting samples at the lowest level}
+How samples at the \emph{within} level are permuted is configured using the \code{Within()} function. It takes the following arguments
+<<withinArgs, echo=false>>=
+args(Within)
+@
+
+\begin{description}
+  \item[\code{type}]
+    controls how the samples at the lowest level are permuted. The default is to form unrestricted permutations via option \code{"type"}. Options \code{"series"} and \code{"grid"} form restricted permutations via cyclic or toroidal shifts, respectively. The former is useful for samples that are a time series or line-transect, whilst the latter is used for samples on a regular spatial grid. The final option, \code{"none"}, will result in the samples at the lowest level not being permuted at all. This option is only of practical use when there are plots within the permutation/experimental design\footnote{As blocks are never permuted, using \code{type = "none"} at the \emph{within} level is also of no practical use.}.
+  \item[\code{constant}]
+    this argument only has an effect when there are plots in the design\footnote{Owing to the current implementation, whilst this option could also be useful when blocks to define groups of samples, it will not have any influence over how permutations are generated. As such, only use blocks for simple blocking structures and use plots if you require greater control of the permutations at the group (i.e. plot) level.}. \code{constant = FALSE}, stipulates that each plot should have the same \emph{within-plot} permutation. This is useful when you have time series of observations from several plots. If all plots were sampled at the same time points, it can be argued that the plot level, the samples experienced the same \emph{time} and hence the same permutation should be used within each plot.
+  \item[\code{mirror}]
+    when \code{type} is \code{"series"} or \code{"grid"}, argument \code{"mirror"} controls whether permutations are taken from the mirror image of the observed ordering in space or time. Consider the sequence \code{1, 2, 3, 4}. The relationship between observations is also preserved if we reverse the original ordering to \code{4, 3, 2, 1} and generate permutations from both these orderings. This is what happens when \code{mirror = TRUE}. For time series, the reversed ordering \code{4, 3, 2, 1} would imply an influence of observation 4 on observation 3, which is implausible. For spatial grids or line transects, however, this is a sensible option, and can significantly increase the number of possible permutations\footnote{Setting \code{mirror = TRUE} will double or quadruple the set of permutations for \code{"series"} or \code{"grid"} permutations, respectively, as long as there are more than two time points or columns in the grid.}.
+  \item[\code{ncol}, \code{nrow}]
+    define the dimensions of the spatial grid.
+\end{description}
+
+How \code{Within()} is used has already been encountered in earlier sections of this vignette; the function is used to supply a value to the \code{within} argument of \code{how()}. You may have noticed that all the arguments of \code{Within()} have default values? This means that the user need only supply a modified value for the arguments they wish to change. Also, arguments that are not relevant for the type of permutation stated are simply ignored; \code{nrow} and \code{ncol}, for example, could be set to any value without affecting the permutation design if \code{type != "grid"}\footnote{No warnings are currently given if incompatible arguments are specified; they are ignored, but may show up in the printed output. This infelicity will be removed prior to \pkg{permute} version 1.0-0 being released.}.
+
+\subsubsection{Permuting samples at the Plot level}
 
 \section*{Computational details}
 <<seesionInfo, results=tex>>=
