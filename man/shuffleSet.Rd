@@ -126,7 +126,7 @@ shuffleSet(20, 10, CTRL)
 ## as above, but  with same permutation for each Plot-level stratum
 CTRL <- how(plots = plotStrata,
             within = Within(type = "series", constant = TRUE))
-shuffleSet(20, 10, CTRL, check = FALSE)
+shuffleSet(20, 10, CTRL)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

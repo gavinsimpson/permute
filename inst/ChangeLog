@@ -2,6 +2,21 @@ $Date$
 
 permute ChangeLog
 
+Version 0.7-7
+
+	* shuffleSet: Implemented an idea of Jari's to allow `check()` and
+	`allPerms()` to do their thing and possibly generate the set of all
+	permutations, rather than turn off checking. If that now results in
+	more than `nset` permutations, `shuffleSet` randomly takes `nset` of
+	these. This is a nice suggestion as it avoids the problem that with
+	small numbers of possible permutations, you can randomly draw the
+	same permutation more than once.
+
+	As I have added this feature, I reverted some earlier changes to the
+	documentation that used the `check = FALSE` in their call to
+	`shuffleSet()`. The `check` argument is retained though, as a way for
+	function writers to skip that part of the permute workflow if desired.
+
 Version 0.7-6
 
 	* summary.allPerms: Was printing two slightly different subtitles.

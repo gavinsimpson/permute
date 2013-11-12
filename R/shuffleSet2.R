@@ -7,6 +7,8 @@
             nset <- 1
         else
             nset <- np
+    } else {
+        control <- update(control, nperm = nset)
     }
 
     sn <- seq_len(n) ## sequence of samples in order of input
@@ -50,6 +52,16 @@
         ## Use that instead of a ranodm set
         out <- control$all.perms
     }
+
+    ## Because all.perms might have been generated, we have the
+    ## possibility that nrow(out) != nset. In that case, also no random
+    ## numbers have been generated. Hence we can sample nset rows from
+    ## out and return that. This has the nice side-effect of not
+    ## generating any non-unique permutations. Suggested by Jari.
+    if ((nr <- nrow(out)) > nset) {
+        out <- out[sample.int(nr, nset), ]
+    }
+
     out
 }
 
