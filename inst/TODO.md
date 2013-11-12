@@ -61,3 +61,16 @@ A TODO list for **permute** - or things I know are broken or needed.
    *DONE Completed somewhere, probably when I made observed only work via
    how()*
 
+ * The following example from `shuffleSet()` gives same number of 
+   permutations via `numPerms()` for both designs; should be fewer if 
+   same permutation within each plot.
+   
+        ## 10 random permutations in presence of Plot-level strata
+        plotStrata <- Plots(strata = gl(4,5))
+        CTRL <- how(plots = plotStrata,
+                    within = Within(type = "free"))
+        shuffleSet(20, 10, control = CTRL)
+        ## as above but same random permutation within Plot-level strata
+        CTRL <- how(plots = plotStrata,
+                    within = Within(type = "free", constant = TRUE))
+        shuffleSet(20, 10, CTRL)
