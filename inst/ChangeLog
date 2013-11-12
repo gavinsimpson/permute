@@ -29,6 +29,11 @@ Version 0.7-7
 	`"how"` object. The latter notifies the user that the entire set of
 	permutations is being generated.
 
+	* check: following the change to `allPerms` (see above), `check()` no
+	longer results in it calling itself, via `allPerms()`, when generating
+	the set of possible permutations if the check heuristics indicate it
+	should be.
+
 Version 0.7-6
 
 	* summary.allPerms: Was printing two slightly different subtitles.
