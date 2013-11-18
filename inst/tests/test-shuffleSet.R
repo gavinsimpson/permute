@@ -12,7 +12,7 @@ test_that("shuffleSet interleves block-level perms correctly", {
     gr <- factor(rep(1:2, length=20))
     ctrl <- how(nperm=5, blocks=gr)
     p <- shuffleSet(20, control = ctrl) %% 2
-    y <- rep_len(c(1L, 0L), ncol(p))
+    y <- rep(c(1L, 0L), length.out = ncol(p))
     nc <- ncol(p)
     for (i in seq_len(nrow(p))) {
         expect_that(p[i, ], equals(y))
