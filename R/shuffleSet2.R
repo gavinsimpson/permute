@@ -15,7 +15,7 @@
         else
             nset <- np
     } else {
-        control <- update(control, nperm = nset)
+        setNperm(control) <- nset ## this fixes the control$call too!
     }
 
     sn <- seq_len(n) ## sequence of samples in order of input
