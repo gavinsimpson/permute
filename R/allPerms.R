@@ -8,8 +8,11 @@
     n <- nobs(v)
     ## check permutation scheme and update control
     make <- getMake(control)
-    if (check)
-        pcheck <- check(v, control = update(control, make = FALSE))
+    if (check) {
+        control2 <- control
+        setMake(control2) <- FALSE
+        pcheck <- check(v, control = control2)
+    }
     ## ctrl <- pcheck$control
     ## if we do copy the new updated control, we need to update to
     ## reset make
@@ -46,7 +49,8 @@
     out <- vector(mode = "list", length = nb)
 
     ## null-out Blocks in control
-    control2 <- update(control, blocks = NULL)
+    control2 <- control
+    setBlocks(control2) <- NULL
 
     ## loop over blocks and return allPerms on each block
     for (i in seq_along(spl)) {
@@ -65,8 +69,7 @@
         out <- out[!obs.row, ]
         ## reduce the number of permutations to get rid of the
         ## observed ordering
-        ##control$nperm <- control$nperm - 1
-        control <- update(control, nperm = getNperm(control) - 1)
+        setNperm(control) <- getNperm(control) - 1
     }
     class(out) <- "allPerms"
     attr(out, "control") <- control
