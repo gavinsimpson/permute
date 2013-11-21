@@ -67,27 +67,24 @@
 
     ## check if number requested permutations exceeds max possible
     if(getNperm(control) > num.pos) {
-        control <- update(control, nperm = num.pos, maxperm = num.pos,
-                          complete = TRUE)
-        control$call[["nperm"]] <- eval(control$call[["nperm"]])
-        control$call[["maxperm"]] <- eval(control$call[["maxperm"]])
-        message("Requested number of permutations larger than entire set of possible permutations.\nReseting 'nperm' to number of permutations in entire set.")
+        setComplete(control) <- TRUE
+        setNperm(control) <- num.pos
+        setMaxperm(control) <- num.pos
+        message("'nperm' > set of all permutations; Resetting 'nperm'.")
     }
 
     ## if number of possible perms < minperm turn on complete enumeration
     if((num.pos < getMinperm(control))) {
-        control <- update(control, nperm = num.pos, maxperm = num.pos,
-                               complete = TRUE)
-        control$call[["nperm"]] <- eval(control$call[["nperm"]])
-        control$call[["maxperm"]] <- eval(control$call[["maxperm"]])
-        message("Number of permutations possible is less than 'minperm'.\nTurning on complete enumeration via 'complete = TRUE'. See '?how' for details.")
+        setComplete(control) <- TRUE
+        setNperm(control) <- num.pos
+        setMaxperm(control) <- num.pos
+        message("Set of permutations < 'minperm'. Generating entire set.")
     }
 
     ## if complete enumeration, generate all permutations
     if(getComplete(control) && getMake(control)) {
         ap <- allPerms(N, control = control, check = FALSE)
-        control <- update(control, all.perms = ap)
-        control$call[["all.perms"]] <- eval(control$call[["all.perms"]])
+        setAllperms(control) <- ap
     }
     retval <- list(n = num.pos, control = control)
     class(retval) <- "check"
