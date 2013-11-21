@@ -2,6 +2,11 @@ $Date$
 
 permute ChangeLog
 
+Version 0.7-8
+
+	* how, Plots: enforces that `blocks` and `strata` are factors, or
+	can be coerced to a factor via `as.factor()`, if specified.
+
 Version 0.7-7
 
 	* shuffleSet: Implemented an idea of Jari's to allow `check()` and
@@ -117,15 +122,15 @@ Version 0.7-5
 	* allPerms, doAllPerms: now correctly work in presence of blocks,
 	and where there are no plots.
 
-	`allPerms` now includes the permutation design (its `control`
-	argument) as an attribute, `"control"`, on the returned matrix of
-	permutations.
+	  `allPerms` now includes the permutation design (its `control`
+	  argument) as an attribute, `"control"`, on the returned matrix of
+	  permutations.
 
-	`allPerms` looses arguments `max` and `observed` as these are
-	supposed to be in the control object created by `how()`.
+	  `allPerms` loses arguments `max` and `observed` as these are
+	  supposed to be in the control object created by `how()`.
 
-	`summary.allPerms` (its `print` method, more correctly) now prints
-	the permutation design alongside the set of permutations.
+	  `summary.allPerms` (its `print` method, more correctly) now prints
+	  the permutation design alongside the set of permutations.
 
 	* get-methods: new extractor functions `getObserved()` and
 	`getMake()` return the `observed` and `make` components of object
@@ -135,7 +140,7 @@ Version 0.7-5
 	the `"how"` object. Use `getMinperm()` to extract the component
 	no-longer returned by `getComplete()`.
 
-	* check: function looses arguments `make.all` and `observed` as
+	* check: function loses arguments `make.all` and `observed` as
 	these are in the control object returned by `how()`.
 
 	The logic of some of the checks has been tweaked slightly.
@@ -232,7 +237,7 @@ Version 0.7-2
 Version 0.7-1
 
 	* allPerms: implement Doug Bates version which simplifies and
-	speeds up the code. A faste RcppEigen-based version also exists
+	speeds up the code. A fast RcppEigen-based version also exists
 	but will need larger changes to the package to implement.
 
 Version 0.7-0

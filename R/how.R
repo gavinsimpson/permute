@@ -10,6 +10,9 @@
                   observed = FALSE) {
 
     blocks.name <- deparse(substitute(blocks))
+    ## blocks should also be a factor - coerce
+    if(!is.null(blocks))
+        blocks <- as.factor(blocks)
 
     ## process the call to make it standalone
     .call <- match.call()

@@ -33,8 +33,9 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
     themselves, or for the definition of blocking structures which
     further restrict permutations (\code{blocks}). \code{within} and
     \code{plots} each require a named list as produced by \code{Within}
-    and \code{Plots} respectively. \code{blocks} takes a factor, the
-    levels of which define the blocking structure.}
+    and \code{Plots} respectively. \code{blocks} takes a factor (or an
+    object coercible to a factor via \code{as.factor}), the levels of
+    which define the blocking structure.}
   \item{nperm}{numeric; the number of permutations.}
   \item{complete}{logical; should complete enumeration of all
     permutations be performed?}
@@ -61,8 +62,8 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   \item{mirror}{logical; should mirroring of sequences be allowed?}
   \item{ncol, nrow}{numeric; the number of columns and rows of samples
     in the spatial grid respectively.}
-  \item{strata}{An integer vector or factor specifying the strata for
-    permutation.}
+  \item{strata}{A factor, or an object that can be coerced to a factor
+    via \code{as.factor}, specifying the strata for permutation.} 
 }
 \details{
   \code{shuffle} can generate permutations for a wide range of

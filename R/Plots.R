@@ -2,6 +2,9 @@
                     mirror = FALSE, ncol = NULL, nrow = NULL) {
 
     plots.name <- deparse(substitute(strata))
+    ## strata should also be a factor - coerce
+    if(!is.null(strata))
+        strata <- as.factor(strata)
 
     type <- match.arg(type)
 
