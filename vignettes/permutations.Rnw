@@ -286,6 +286,14 @@ args(Within)
 How \code{Within()} is used has already been encountered in earlier sections of this vignette; the function is used to supply a value to the \code{within} argument of \code{how()}. You may have noticed that all the arguments of \code{Within()} have default values? This means that the user need only supply a modified value for the arguments they wish to change. Also, arguments that are not relevant for the type of permutation stated are simply ignored; \code{nrow} and \code{ncol}, for example, could be set to any value without affecting the permutation design if \code{type != "grid"}\footnote{No warnings are currently given if incompatible arguments are specified; they are ignored, but may show up in the printed output. This infelicity will be removed prior to \pkg{permute} version 1.0-0 being released.}.
 
 \subsubsection{Permuting samples at the Plot level}
+Permutation of samples at the \emph{plot} level is configured via the \code{Plots()} function. As with \code{Within()}, \code{Plots()} is supplied to the \code{plots} argument of \code{how()}. \code{Plots()} takes many of the same arguments as \code{Within()}, the two differences being \code{strata}, a factor variable that describes the grouping of samples at the \emph{plot} level, and the absence of a \code{constant} argument. As the majority of arguments are similar between \code{Within()} and \code{Plots()}, I will not repeat the details again, and only describe the \code{strata} argument
+
+\begin{description}
+  \item[\code{strata}]
+    a factor variable. \code{strata} describes the grouping of samples at the \emph{plot} level, where samples from the same \emph{plot} are take the same \emph{level} of the factor.
+\end{description}
+
+When a \emph{plot}-level design is specified, samples are never permuted between \emph{plots}, only within plots if they are permuted at all. Hence, the type of permutation \emph{within} the \emph{plots} is controlled by \code{Within()}. Note also that with \code{Plots()}, the way the individual \emph{plots} are permuted can be from any one of the four basic permutation types; \code{"none"}, \code{"free"}, \code{"series"}, and \code{"grid"}, as described above. To permute the \emph{plots} only (i.e. retain the ordering of the samples \emph{within} plots), you need to use \code{Within(type = "none", ...)} as the default in \code{Within()} is \code{type = "free"}. The ability to permute the plots whilst preserving the within-plot ordering is an impotant feature in testing explanatory factors at the whole-plot level in split-plot designs and in multifactorial analysis of variance \citep{canoco5manual}.
 
 \section*{Computational details}
 <<seesionInfo, results=tex>>=
