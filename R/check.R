@@ -1,4 +1,4 @@
-`check` <- function(object, control = how())
+`check` <- function(object, control = how(), quietly = FALSE)
 {
     ## if object is numeric or integer and of length 1,
     ## extend the object
@@ -70,7 +70,8 @@
         setComplete(control) <- TRUE
         setNperm(control) <- num.pos
         setMaxperm(control) <- num.pos
-        message("'nperm' > set of all permutations; Resetting 'nperm'.")
+        if(!quietly)
+            message("'nperm' > set of all permutations; Resetting 'nperm'.")
     }
 
     ## if number of possible perms < minperm turn on complete enumeration
@@ -78,7 +79,8 @@
         setComplete(control) <- TRUE
         setNperm(control) <- num.pos
         setMaxperm(control) <- num.pos
-        message("Set of permutations < 'minperm'. Generating entire set.")
+        if(!quietly)
+            message("Set of permutations < 'minperm'. Generating entire set.")
     }
 
     ## if complete enumeration, generate all permutations

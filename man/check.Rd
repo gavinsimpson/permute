@@ -11,7 +11,7 @@
   selected permutation design.
 }
 \usage{
-check(object, control = how())
+check(object, control = how(), quietly = FALSE)
 
 \method{summary}{check}(object, \dots)
 }
@@ -22,6 +22,7 @@ check(object, control = how())
     \code{\link{summary.check}} an object of class \code{"check"}.}
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to \code{\link{how}}.}
+  \item{quietly}{logical; should messages by suppressed?}
   \item{\dots}{arguments to other methods.}
 }
 \details{
