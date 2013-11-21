@@ -7,8 +7,8 @@
     lev <- length(levels(strata))
     ## compute nperms on number of levels - for this need Within()
     ## and type == typeP
-    newControl <-
-        how(within = Within(type = getType(control, which = "plots")))
+    type <- getType(control, which = "plots")
+    newControl <- how(within = Within(type = type))
     nperms <- numPerms(lev, newControl)
     ## result object
     X <- matrix(nrow = nperms, ncol = length(strata))
