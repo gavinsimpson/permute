@@ -12,18 +12,24 @@
 \alias{getStrata.default}
 \alias{getStrata.how}
 \alias{getStrata.permControl}
+\alias{getStrata.Plots}
 \alias{getType}
 \alias{getType.default}
 \alias{getType.how}
 \alias{getType.permControl}
+\alias{getType.Plots}
+\alias{getType.Within}
 \alias{getMirror}
 \alias{getMirror.default}
 \alias{getMirror.how}
 \alias{getMirror.permControl}
+\alias{getMirror.Plots}
+\alias{getMirror.Within}
 \alias{getConstant}
 \alias{getConstant.default}
 \alias{getConstant.how}
 \alias{getConstant.permControl}
+\alias{getConstant.Within}
 \alias{getPlots}
 \alias{getPlots.default}
 \alias{getPlots.how}
@@ -32,14 +38,20 @@
 \alias{getRow.default}
 \alias{getRow.how}
 \alias{getRow.permControl}
+\alias{getRow.Plots}
+\alias{getRow.Within}
 \alias{getCol}
 \alias{getCol.default}
 \alias{getCol.how}
 \alias{getCol.permControl}
+\alias{getCol.Plots}
+\alias{getCol.Within}
 \alias{getDim}
 \alias{getDim.default}
 \alias{getDim.how}
 \alias{getDim.permControl}
+\alias{getDim.Plots}
+\alias{getDim.Within}
 \alias{getNperm}
 \alias{getNperm.default}
 \alias{getNperm.how}
@@ -99,18 +111,30 @@ getObserved(object, ...)
 
 \method{getStrata}{how}(object, which = c("plots", "blocks"),
           drop = TRUE, ...)
+\method{getStrata}{Plots}(object, drop = TRUE, ...)
 
 \method{getType}{how}(object, which = c("plots", "within"), ...)
+\method{getType}{Plots}(object, ...)
+\method{getType}{Within}(object, ...)
 
 \method{getMirror}{how}(object, which = c("plots", "within"), ...)
+\method{getMirror}{Plots}(object, ...)
+\method{getMirror}{Within}(object, ...)
 
 \method{getConstant}{how}(object, ...)
+\method{getConstant}{Within}(object, ...)
 
 \method{getCol}{how}(object, which = c("plots", "within"), ...)
+\method{getCol}{Plots}(object, ...)
+\method{getCol}{Within}(object, ...)
 
 \method{getRow}{how}(object, which = c("plots", "within"), ...)
+\method{getRow}{Plots}(object, ...)
+\method{getRow}{Within}(object, ...)
 
 \method{getDim}{how}(object, which = c("plots", "within"), ...)
+\method{getDim}{Plots}(object, ...)
+\method{getDim}{Within}(object, ...)
 
 \method{getNperm}{how}(object, ...)
 
