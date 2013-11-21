@@ -11,7 +11,7 @@
     if (check) {
         control2 <- control
         setMake(control2) <- FALSE
-        pcheck <- check(v, control = control2)
+        pcheck <- check(v, control = control2, quietly = TRUE)
     }
     ## ctrl <- pcheck$control
     ## if we do copy the new updated control, we need to update to
