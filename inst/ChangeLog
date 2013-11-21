@@ -26,16 +26,56 @@ Version 0.7-7
 	generate the set of all permutations. In that case `allPerms()` used
 	to recheck the design. Now this doesn't happen.
 
-	Turned on some `message()`s when the user asks for too many permutations
-	(more than the set of possible permutations) and when the set of
-	possible permutations is smaller than the `minperm` value stored in the
-	`"how"` object. The latter notifies the user that the entire set of
-	permutations is being generated.
+	`allPerms` also uses the new `set<-` replacement functions rather than
+	`update()` as the latter causes problems when used within functions as
+	it often evaluates the stored call in the wrong environment.
 
 	* check: following the change to `allPerms` (see above), `check()` no
 	longer results in it calling itself, via `allPerms()`, when generating
 	the set of possible permutations if the check heuristics indicate it
 	should be.
+
+	Turned on some `message()`s when the user asks for too many permutations
+	(more than the set of possible permutations) and when the set of
+	possible permutations is smaller than the `minperm` value stored in the
+	`"how"` object. The latter notifies the user that the entire set of
+	permutations is being generated. These messages were updated to reduce
+	their length.
+
+	`check` also uses the new `set<-` replacement functions rather than
+	`update()` as the latter causes problems when used within functions as
+	it often evaluates the stored call in the wrong environment.
+
+	* Plots, Within: now return a object of class `"Plots"` or `"Within"`,
+	respectively.
+
+	* get-methods: added a number of a new methods for existing functions
+	to work with `"Within"` and `"Plots"` classes.
+
+	* set-methods: added a number of a new functions and methods with the
+	common name `setFoo<-.Bar` where `Foo` is the component to be updated,
+	and `Bar` is the class. These are replacement functions only. They are
+	intended to be used within functions, where the user-friendly `update()`
+	will have problems getting the call updated correctly ot evaluating it.
+
+	* how, Plots, Within: Now work much harder to preserve details of the
+	design (i.e. the names of objects passed for the blocks or plot strata),
+	and also process the matched call so that the user can `update()` it.
+
+	* fixupCall: a new, unexported function that allows the call objects
+	stored in a `"how"` object to be updated. This is not exported as it is
+	intended only for internal use. Function writers should use the
+	`setFoo<-` functions instead. Ordinary users should use `update()` as
+	long as it is not in a function.
+
+	* update: new methods for objects of classes `"how"` and `"Plots".
+	Thes are copies of the standard R function `update.default` with some
+	changes. The source files for these two functions preserver the R
+	copyright statement and document modifications made by Gavin L.
+	Simpson.
+
+	* Depends: permute requires a version of R no earlier than version
+	2.14.0.
 
 Version 0.7-6
 
