@@ -10,7 +10,7 @@ context("Testing shuffleSet()")
 ## a vector of 1,0,1,0,1,...
 test_that("shuffleSet interleves block-level perms correctly", {
     gr <- factor(rep(1:2, length=20))
-    ctrl <- how(nperm=5, blocks=gr)
+    ctrl <- how(nperm = 5, blocks = gr)
     p <- shuffleSet(20, control = ctrl) %% 2
     y <- rep(c(1L, 0L), length.out = ncol(p))
     nc <- ncol(p)
