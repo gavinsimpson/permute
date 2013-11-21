@@ -1,66 +1,66 @@
 ## Extractor functions for blocks, plots and within, plus strata
 
 ## Blocks
-getBlocks <- function(object, ...) {
+`getBlocks` <- function(object, ...) {
     UseMethod("getBlocks")
 }
 
-getBlocks.default <- function(object, ...) {
+`getBlocks.default` <- function(object, ...) {
     stop("No default method for 'getBlocks()'")
 }
 
-getBlocks.permControl <- function(object, ...) {
+`getBlocks.permControl` <- function(object, ...) {
     object$blocks
 }
 
-getBlocks.how <- function(object, ...) {
+`getBlocks.how` <- function(object, ...) {
     object$blocks
 }
 
 ## Plots
-getPlots <- function(object, ...) {
+`getPlots` <- function(object, ...) {
     UseMethod("getPlots")
 }
 
-getPlots.default <- function(object, ...) {
+`getPlots.default` <- function(object, ...) {
     stop("No default method for 'getPlots()'")
 }
 
-getPlots.permControl <- function(object, ...) {
+`getPlots.permControl` <- function(object, ...) {
     object$plots
 }
 
-getPlots.how <- function(object, ...) {
+`getPlots.how` <- function(object, ...) {
     object$plots
 }
 
 ## Within plots
-getWithin <- function(object, ...) {
+`getWithin` <- function(object, ...) {
     UseMethod("getWithin")
 }
 
-getWithin.default <- function(object, ...) {
+`getWithin.default` <- function(object, ...) {
     stop("No default method for 'getWithin()'")
 }
 
-getWithin.permControl <- function(object, ...) {
+`getWithin.permControl` <- function(object, ...) {
     object$within
 }
 
-getWithin.how <- function(object, ...) {
+`getWithin.how` <- function(object, ...) {
     object$within
 }
 
 ## Strata
-getStrata <- function(object, ...) {
+`getStrata` <- function(object, ...) {
     UseMethod("getStrata")
 }
 
-getStrata.default <- function(object, ...) {
+`getStrata.default` <- function(object, ...) {
     stop("No default method for 'getStrata()'")
 }
 
-getStrata.permControl <- function(object,
+`getStrata.permControl` <- function(object,
                                   which = c("plots", "blocks"),
                                   drop = TRUE, ...) {
     which <- match.arg(which)
@@ -74,7 +74,7 @@ getStrata.permControl <- function(object,
     strata
 }
 
-getStrata.how <- function(object,
+`getStrata.how` <- function(object,
                                   which = c("plots","blocks"),
                                   drop = TRUE, ...) {
     which <- match.arg(which)
@@ -89,17 +89,24 @@ getStrata.how <- function(object,
     strata
 }
 
+`getStrata.Plots` <- function(object, drop = TRUE, ... ) {
+    strata <- object$strata
+    if(isTRUE(drop) && !is.null(strata))
+        strata <- droplevels(strata)
+    strata
+}
+
 ## Get type of permutation
-getType <- function(object, ...) {
+`getType` <- function(object, ...) {
     UseMethod("getType")
 }
 
-getType.default <- function(object, ...) {
+`getType.default` <- function(object, ...) {
     stop("No default method for 'getType()'")
 }
 
-getType.permControl <- function(object,
-                                which = c("plots","within"), ...) {
+`getType.permControl` <- function(object,
+                                  which = c("plots","within"), ...) {
     which <- match.arg(which)
   if(isTRUE(all.equal(which, "plots")))
       type <- getPlots(object)$type
@@ -110,8 +117,8 @@ getType.permControl <- function(object,
   type
 }
 
-getType.how <- function(object,
-                                which = c("plots","within"), ...) {
+`getType.how` <- function(object,
+                          which = c("plots","within"), ...) {
     which <- match.arg(which)
   if(isTRUE(all.equal(which, "plots")))
       type <- getPlots(object)$type
@@ -120,6 +127,14 @@ getType.how <- function(object,
   else
       stop("Ambiguous `which`")
   type
+}
+
+`getType.Within` <- function(object, ...) {
+    object$within$type
+}
+
+`getType.Plots` <- function(object, ...) {
+    object$plots$type
 }
 
 ## suppose we can also have setBlocks() etc...
@@ -158,6 +173,14 @@ getType.how <- function(object,
     mirror
 }
 
+`getMirror.Within` <- function(object, ...) {
+    object$within$mirror
+}
+
+`getMirror.Plots` <- function(object, ...) {
+    object$plots$mirror
+}
+
 ## Get constant status - i.e. same permutation in each Plot
 `getConstant` <- function(object, ...) {
     UseMethod("getConstant")
@@ -173,6 +196,10 @@ getType.how <- function(object,
 
 `getConstant.how` <- function(object, ...) {
     getWithin(object)$constant
+}
+
+`getConstant.Within` <- function(object, ...) {
+    object$within$constant
 }
 
 ## Get the number of rows and colums from grid designs
@@ -208,6 +235,14 @@ getType.how <- function(object,
     nrow
 }
 
+`getRow.Within` <- function(object, ...) {
+    object$within$nrow
+}
+
+`getRow.Plots` <- function(object, ...) {
+    object$plots$nrow
+}
+
 `getCol` <- function(object, ...) {
     UseMethod("getCol")
 }
@@ -238,6 +273,14 @@ getType.how <- function(object,
     else
         stop("Ambiguous `which`")
     ncol
+}
+
+`getCol.Within` <- function(object, ...) {
+    object$within$ncol
+}
+
+`getCol.Plots` <- function(object, ...) {
+    object$plots$ncol
 }
 
 `getDim` <- function(object, ...) {
@@ -280,6 +323,14 @@ getType.how <- function(object,
         stop("Ambiguous `which`")
     }
     c(nr, nc)
+}
+
+`getDim.Within` <- function(object, ...) {
+    c(object$nrow, object$ncol)
+}
+
+`getDim.Plots` <- function(object, ...) {
+    c(object$nrow, object$ncol)
 }
 
 ## return the requested number of permutations
