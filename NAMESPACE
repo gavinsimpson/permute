@@ -5,7 +5,7 @@ export(`allPerms`, `Blocks`, `numPerms`, `check`, `permCheck`,
        `getBlocks`, `getWithin`, `getStrata`, `getType`, `getMirror`,
        `getConstant`, `getPlots`, `getRow`, `getCol`, `getDim`,
        `getNperm`,`getMaxperm`, `getMinperm`, `getComplete`, `getMake`,
-       `getObserved`, `shuffleSet`, `how`)
+       `getObserved`, "setBlocks<-", `shuffleSet`, `how`)
 
 ### Imports: nobs() only exists in R 2.13.0 for import. We define the
 ### same nobs() generic in permute for export in older R.
