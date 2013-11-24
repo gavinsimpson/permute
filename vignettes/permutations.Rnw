@@ -10,12 +10,12 @@
 
 %% almost as usual
 \author{Gavin L. Simpson\\University of Regina}
-\title{Restricted permutations; using the \pkg{permute} Package}
+\title{Restricted permutations; using the \pkg{permute} package}
 
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Gavin L. Simpson} %% comma-separated
-\Plaintitle{Restricted permutations; using the permute Package} %% without formatting
-\Shorttitle{Using the permute Package} %% a short title (if necessary)
+\Plaintitle{Restricted permutations; using the permute package} %% without formatting
+\Shorttitle{Using the permute package} %% a short title (if necessary)
 
 %% an abstract and keywords
 \Abstract{
@@ -51,18 +51,18 @@
 %% include your article here, just as usual
 %% Note that you should use the \pkg{}, \proglang{} and \code{} commands.
 <<preliminary,results=hide,echo=false>>=
-options("prompt" = "R> ", "continue" = "+ ")
+options("prompt" = "R> ", "continue" = "+  ")
 options(useFancyQuotes="UTF-8")
 @
 \section{Introduction}
 In classical frequentist statistics, the significance of a relationship or model is determined by reference to a null distribution for the test statistic. This distribution is derived mathematically and the probability of achieving a test statistic as large or larger if the null hypothesis were true is looked-up from this null distribution. In deriving this probability, some assumptions about the data or the errors are made. If these assumptions are violated, then the validity of the derived $p$-value may be questioned.
 
-An alternative to deriving the null distribution from theory is to generate a null distribution for the test statistic by randomly shuffling the data in some manner, refitting the model and deriving values for the test statistic for the permuted data. The level of significance of the test can be computed as the proportion of values of the test statistic from the null distribution that are equal to or larger than the observed value.
+An alternative to deriving the null distribution from theory is to generate a null distribution of the test statistic by randomly shuffling the data in some manner, refitting the model and deriving values for the test statistic for the permuted data. The level of significance of the test can be computed as the proportion of values of the test statistic from the null distribution that are equal to or larger than the observed value.
 
-In many data sets, simply shuffling the data at random is inappropriate; under the null hypothesis, that data are not freely exchangeable. If there is temporal or spatial correlation, or the samples are clustered in some way, such as multiple samples collected from each of a number of fields. The \pkg{permute} was designed to provide facilities for generating these restricted permutations for use in randomisation tests.
+In many data sets, simply shuffling the data at random is inappropriate; under the null hypothesis, that data are not freely exchangeable, for example if there is temporal or spatial correlation, or the samples are clustered in some way, such as multiple samples collected from each of a number of fields. The \pkg{permute} package was designed to provide facilities for generating these restricted permutations for use in randomisation tests.
 
-\section{Simple randomisation}
-As an illustration of both randomisation and the use of the \pkg{permute} package we consider a small data set of mandible length measurements on specimens of the golden jackal (\emph{Canis aureus}) from the British Museum of Natural History, London, UK. These data were collected as part of a study comparing prehistoric and modern canids \citep{higham80}, and were analysed by \citet{manly07}. There are ten measurements of mandible length on both male and female specimens. The data are available in the \code{jackal} data frame supplied with \pkg{permute}.
+\section{Simple randomisation}\label{sec:simple}
+As an illustration of both randomisation and simple usage of the \pkg{permute} package we consider a small data set of mandible length measurements on specimens of the golden jackal (\emph{Canis aureus}) from the British Museum of Natural History, London, UK. These data were collected as part of a study comparing prehistoric and modern canids \citep{higham80}, and were analysed by \citet{manly07}. There are ten measurements of mandible length on both male and female specimens. The data are available in the \code{jackal} data frame supplied with \pkg{permute}.
 
 <<load_jackal>>=
 require(permute)
@@ -70,7 +70,7 @@ data(jackal)
 jackal
 @
 
-The interest is whether there is a difference in the mean mandible length between male and female golden jackals. The null hypothesis is that there is zero difference in mandible length between the two sexes or that females have larger mandible. The alternative hypothesis is that males have larger mandibles. The usual statistical test of this hypothesis is a one-sided $t$ test, which can be applied using \code{t.test()}
+The interest is whether there is a difference in the mean mandible length between male and female golden jackals. The null hypothesis is that there is zero difference in mandible length between the two sexes or that females have larger mandibles. The alternative hypothesis is that males have larger mandibles. The usual statistical test of this hypothesis is a one-sided $t$ test, which can be applied using \code{t.test()}
 
 <<ttest_jackal, keep.source=true>>=
 jack.t <- t.test(Length ~ Sex, data = jackal, var.equal = TRUE,
@@ -91,7 +91,7 @@ Assumption 1 is unlikely to be valid for museum specimens such as these, that ha
 var.test(Length ~ Sex, data = jackal)
 fligner.test(Length ~ Sex, data = jackal)
 @
-This assumption may be relaxed using \code{var.equal = FALSE} (the default) in our call to \code{t.test()}, to employ Welch's modification for unequal variances. Assumption 3 may be valid, but with such a small sample we are able to reliably test this.
+This assumption may be relaxed using \code{var.equal = FALSE} (the default) in the call to \code{t.test()}, to employ Welch's modification for unequal variances. Assumption 3 may be valid, but with such a small sample we are unable to reliably test this.
 
 A randomisation test of the same hypothesis can be performed by randomly allocating ten of the mandible lengths to the male group and the remaining lengths to the female group. This randomisation is justified under the null hypothesis because the observed difference in mean mandible length between the two sexes is just a typical value for the difference in a sample if there were no difference in the population. An appropriate test statistic needs to be selected. We could use the $t$ statistic as derived in the $t$-test. Alternatively, we could base our randomisation test on the difference of means $D_i$ (male - female).
 
@@ -101,7 +101,7 @@ meanDif <- function(x, grp) {
  mean(x[grp == "Male"]) - mean(x[grp == "Female"])
 }
 @
-which can be used in a simple \code{for()} loop to generate the null distribution for the difference of means. First, we allocate some storage to hold the null difference of means; here we use 4999 random permutations so allocate a vector of length 5000. Then we iterate, randomly generating an ordering of the \code{Sex} vector and computing the difference means for that permutation.
+which can be used in a simple \code{for()} loop to generate the null distribution for the difference of means. First, we allocate some storage to hold the null difference of means; here we use 4999 random permutations so allocate a vector of length 5000. Then we iterate, randomly generating an ordering of the \code{Sex} vector and computing the difference of means for that permutation.
 <<randJackal>>=
 Djackal <- numeric(length = 5000)
 N <- nrow(jackal)
@@ -129,7 +129,7 @@ giving a permutational $p$-value of
 <<>>=
 Dbig / length(Djackal)
 @
-which is comparable with that determined from the frequentist $t$-test, and indicate strong evidence against the null hypothesis of no difference.
+which is comparable with that determined from the frequentist $t$-test, and indicates strong evidence against the null hypothesis of no difference.
 \begin{figure}[t]
   \centering
 <<draw_hist_jackal, fig=true, echo=false>>=
@@ -153,7 +153,7 @@ In the previous section I introduced the \code{shuffle()} function to generate p
 <<show_args>>=
 args(shuffle)
 @
-A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{how()}, which returns a list specifying all the options available for controlling the sorts of permutations returned by \code{shuffle()}
+A series of convenience functions are provided that allow the user to set-up even quite complex permutation designs with little effort. The user only needs to specify the aspects of the design they require and the convenience functions ensure all configuration choices are set and passed on to \code{shuffle()}. The main convenience function is \code{how()}, which returns a list specifying all the options available for controlling the sorts of permutations returned by \code{shuffle()}.
 <<show_str>>=
 str(how())
 @
@@ -179,7 +179,7 @@ Several types of permutation are available in \pkg{permute}:
 
 The first three of these can be nested within the levels of a factor or to the levels of that factor, or to both. Such flexibility allows the analysis of split-plot designs using permutation tests, especially when combined with blocks.
 
-\code{how()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{how()} has two main arguments that specify how samples are permuted \emph{within} plots of samples or at the plot level itself. These are \code{within} and \code{plots}. Two convenience functions, \code{Within()} and \code{Plots()} can be used to set the various options for permutation. Blocks operate at the uppermost level of this hierarchy; blocks define groups of plots, each of which contain groups of samples.
+\code{how()} is used to set up the design from which \code{shuffle()} will draw a permutation. \code{how()} has two main arguments that specify how samples are permuted \emph{within} plots of samples or at the plot level itself. These are \code{within} and \code{plots}. Two convenience functions, \code{Within()} and \code{Plots()} can be used to set the various options for permutation. Blocks operate at the uppermost level of this hierarchy; blocks define groups of plots, each of which may contain groups of samples.
 
 For example, to permute the observations \code{1:10} assuming a time series design for the entire set of observations, the following control object would be used
 
@@ -229,13 +229,13 @@ lapply(split(perm2, plt), matrix, ncol = 3)
 \subsection{Generating sets of permutations with shuffleSet()}
 There are several reasons why one might wish to generate a set of $n$ permutations instead of repeatedly generating permutations one at a time. Interpreting the permutation design happens each time \code{shuffle()} is called. This is an unnecessary computational burden, especially if you want to perform tests with large numbers of permutations. Furthermore, having the set of permutations available allows for expedited use with other functions, they can be iterated over using \code{for} loops or the \code{apply} family of functions, and the set of permutations can be exported for use outside of R.
 
-The \code{shuffleSet()} function allows the generation of sets of permutations from any of the designs available in \pkg{permute}. \code{shuffleSet()} takes an additional argument to that of \code{shuffle()}, \code{nset}, which is the number of permutations required for the set. \code{nset} can be missing, in which case the number of permutations in the set is looked for in the object passed to \code{control}; using this, the desired number of permutation can be set at the time the design is created via the \code{nperm} argument of \code{how()}. For example,
+The \code{shuffleSet()} function allows the generation of sets of permutations from any of the designs available in \pkg{permute}. \code{shuffleSet()} takes an additional argument to that of \code{shuffle()}, \code{nset}, which is the number of permutations required for the set. \code{nset} can be missing, in which case the number of permutations in the set is looked for in the object passed to \code{control}; using this, the desired number of permutations can be set at the time the design is created via the \code{nperm} argument of \code{how()}. For example,
 
 <<series_2, results=hide>>=
 how(nperm = 10, within = Within(type = "series"))
 @
 
-Internally, \code{shuffle()} and \code{shuffleSet()} are very similar, with the major difference being that \code{shuffleSet()} arranges repeated calls to the workhorse permutation-generating functions with only the overhead associated with interpreting the permutation design once. \code{shuffleSet()} returns a matrix where the rows represent different permutations in the set.
+Internally, \code{shuffle()} and \code{shuffleSet()} are very similar, with the major difference being that \code{shuffleSet()} arranges repeated calls to the workhorse permutation-generating functions, only incurring the overhead associated with interpreting the permutation design once. \code{shuffleSet()} returns a matrix where the rows represent different permutations in the set.
 
 As an illustration, consider again the simple time series example from earlier. Here I generate a set of 5 permutations from the design, with the results returned as a matrix
 
@@ -245,10 +245,11 @@ CTRL <- how(within = Within(type = "series"))
 pset <- shuffleSet(10, nset = 5, control = CTRL)
 pset
 @
-Note that we set \code{check = FALSE} in the call. As there are only 10 permutations of these data (including the observed one), by default \code{shuffleSet()} will check the permutation design and, following a few heuristics\footnote{Values used in these heuristics can be set when you create the permutation design with \code{how()}. See \code{?how} for further details and \code{?check} for the function that does the checking.}, will in this case generate all ten permutations. Setting \code{check = FALSE} turns this checking off, enabling exactly \code{nset} permutations to be returned. The downside of this is that you need to be aware of the implications of not checking the design; with a limited number of possible permutations, there is no guarantee that \code{shuffleSet()} will generate a set of \code{nset} unique permutations.
+
+It is worth taking a moment to explain what has happened here, behind the scenes. There are only \Sexpr{numPerms(10, CTRL)} unique orderings (including the observed) in the set of permutations for this design. Such a small set of permutations triggers\footnote{The trigger is via the utility function \code{check()}, which calls another utility function, \code{allPerms()}, to generate the set of permutations for the stated design. The trigger for complete enumeration is set via \code{how()} using argument \code{minperm}; below this value, by default \code{check()} will generate the entire set of permutations.} the generation of the entire set of permutations. From this set, \code{shuffleSet()} samples at random \code{nset} permutations. Hence the same number of random values has been generated via the pseudo-random number generator in \proglang{R} but we ensure a set of unique permutations is drawn, rather than randomly sample from a small set.
 
 \section{Defining permutation designs}
-In this section examples are given of how various permutation designs can be specified using \code{how()}. It is not the intention to provide exhaustive coverage of all possible designs that can be produced; such a list would be tedious to both write \emph{and} read. Instead, the main features and options will be described through a series of examples. The reader should then be able to put together the various options to create the exact structure required.
+In this section I give examples how various permutation designs can be specified using \code{how()}. It is not the intention to provide exhaustive coverage of all possible designs that can be produced; such a list would be tedious to both write \emph{and} read. Instead, the main features and options will be described through a series of examples. The reader should then be able to put together the various options to create the exact structure required.
 
 \subsection{Set the number of permutations}
 It may be useful to specify the number of permutations required in a permutation test alongside the permutation design. This is done via the \code{nperm} argument, as seen earlier. If nothing else is specified
@@ -260,11 +261,11 @@ would indicate 999 random permutations where the samples are all freely exchange
 One advantage of using \code{nperm} is that \code{shuffleSet()} will use this if the \code{nset} argument is not specified. Additionally, \code{shuffleSet()} will check to see if the desired number of permutations is possible given the data and the requested design. This is done via the function \code{check()}, which is discussed later.
 
 \subsection{The levels of the permutation hierarchy}
-There are three levels at which permutations can be controlled in \pkg{permute}. The highest level of the hierarchy is the \emph{block} level. Blocks are defined by a factor vector. Blocks restrict permutation of samples to within the levels of this factor; samples are never swapped between blocks.
+There are three levels at which permutations can be controlled in \pkg{permute}. The highest level of the hierarchy is the \emph{block} level. Blocks are defined by a factor variable. Blocks restrict permutation of samples to within the levels of this factor; samples are never swapped between blocks.
 
-The \emph{plot} level sits below blocks. Plots are defined by a factor and group samples in the same way as blocks. As such, some permutation designs can be initiated using a factor at the plot level or the same factor at the plot level. The major difference between blocks and plots is that plots can also be permuted, whereas blocks are never permuted.
+The \emph{plot} level sits below blocks. Plots are defined by a factor and group samples in the same way as blocks. As such, some permutation designs can be initiated using a factor at the plot level or the same factor at the block level. The major difference between blocks and plots is that plots can also be permuted, whereas blocks are never permuted.
 
-The lowest level of a permutation design in \pkg{permute} hierarchy is known as \emph{within}, and refers to samples nested \emph{within} plots. If there are no plots or blocks, how samples are permuted at the \emph{within} level applies to the entire data set.
+The lowest level of a permutation design in the \pkg{permute} hierarchy is known as \emph{within}, and refers to samples nested \emph{within} plots. If there are no plots or blocks, how samples are permuted at the \emph{within} level applies to the entire data set.
 
 \subsubsection{Permuting samples at the lowest level}
 How samples at the \emph{within} level are permuted is configured using the \code{Within()} function. It takes the following arguments
@@ -276,7 +277,7 @@ args(Within)
   \item[\code{type}]
     controls how the samples at the lowest level are permuted. The default is to form unrestricted permutations via option \code{"type"}. Options \code{"series"} and \code{"grid"} form restricted permutations via cyclic or toroidal shifts, respectively. The former is useful for samples that are a time series or line-transect, whilst the latter is used for samples on a regular spatial grid. The final option, \code{"none"}, will result in the samples at the lowest level not being permuted at all. This option is only of practical use when there are plots within the permutation/experimental design\footnote{As blocks are never permuted, using \code{type = "none"} at the \emph{within} level is also of no practical use.}.
   \item[\code{constant}]
-    this argument only has an effect when there are plots in the design\footnote{Owing to the current implementation, whilst this option could also be useful when blocks to define groups of samples, it will not have any influence over how permutations are generated. As such, only use blocks for simple blocking structures and use plots if you require greater control of the permutations at the group (i.e. plot) level.}. \code{constant = FALSE}, stipulates that each plot should have the same \emph{within-plot} permutation. This is useful when you have time series of observations from several plots. If all plots were sampled at the same time points, it can be argued that the plot level, the samples experienced the same \emph{time} and hence the same permutation should be used within each plot.
+    this argument only has an effect when there are plots in the design\footnote{Owing to the current implementation, whilst this option could also be useful when blocks to define groups of samples, it will not have any influence over how permutations are generated. As such, only use blocks for simple blocking structures and use plots if you require greater control of the permutations at the group (i.e. plot) level.}. \code{constant = FALSE}, stipulates that each plot should have the same \emph{within-plot} permutation. This is useful when you have time series of observations from several plots. If all plots were sampled at the same time points, it can be argued that at the plot level, the samples experienced the same \emph{time} and hence the same permutation should be used within each plot.
   \item[\code{mirror}]
     when \code{type} is \code{"series"} or \code{"grid"}, argument \code{"mirror"} controls whether permutations are taken from the mirror image of the observed ordering in space or time. Consider the sequence \code{1, 2, 3, 4}. The relationship between observations is also preserved if we reverse the original ordering to \code{4, 3, 2, 1} and generate permutations from both these orderings. This is what happens when \code{mirror = TRUE}. For time series, the reversed ordering \code{4, 3, 2, 1} would imply an influence of observation 4 on observation 3, which is implausible. For spatial grids or line transects, however, this is a sensible option, and can significantly increase the number of possible permutations\footnote{Setting \code{mirror = TRUE} will double or quadruple the set of permutations for \code{"series"} or \code{"grid"} permutations, respectively, as long as there are more than two time points or columns in the grid.}.
   \item[\code{ncol}, \code{nrow}]
@@ -293,7 +294,179 @@ Permutation of samples at the \emph{plot} level is configured via the \code{Plot
     a factor variable. \code{strata} describes the grouping of samples at the \emph{plot} level, where samples from the same \emph{plot} are take the same \emph{level} of the factor.
 \end{description}
 
-When a \emph{plot}-level design is specified, samples are never permuted between \emph{plots}, only within plots if they are permuted at all. Hence, the type of permutation \emph{within} the \emph{plots} is controlled by \code{Within()}. Note also that with \code{Plots()}, the way the individual \emph{plots} are permuted can be from any one of the four basic permutation types; \code{"none"}, \code{"free"}, \code{"series"}, and \code{"grid"}, as described above. To permute the \emph{plots} only (i.e. retain the ordering of the samples \emph{within} plots), you need to use \code{Within(type = "none", ...)} as the default in \code{Within()} is \code{type = "free"}. The ability to permute the plots whilst preserving the within-plot ordering is an impotant feature in testing explanatory factors at the whole-plot level in split-plot designs and in multifactorial analysis of variance \citep{canoco5manual}.
+When a \emph{plot}-level design is specified, samples are never permuted between \emph{plots}, only within plots if they are permuted at all. Hence, the type of permutation \emph{within} the \emph{plots} is controlled by \code{Within()}. Note also that with \code{Plots()}, the way the individual \emph{plots} are permuted can be from any one of the four basic permutation types; \code{"none"}, \code{"free"}, \code{"series"}, and \code{"grid"}, as described above. To permute the \emph{plots} only (i.e. retain the ordering of the samples \emph{within} plots), you also need to specify \code{Within(type = "none", ...)} as the default in \code{Within()} is \code{type = "free"}. The ability to permute the plots whilst preserving the within-plot ordering is an impotant feature in testing explanatory factors at the whole-plot level in split-plot designs and in multifactorial analysis of variance \citep{canoco5manual}.
+
+\subsubsection[Specifying blocks; the top of the permute hierarchy]{Specifying blocks; the top of the \pkg{permute} hierarchy}
+In constrast to the \emph{within} and \emph{plots} levels, the \emph{blocks} level is simple to specify; all that is required is an indicator variable the same length as the data. Usually this is a factor, but \code{how()} will take anything that can be coerced to a factor via \code{as.factor()}.
+
+It is worth repeating what the role of the block-level structure is; blocks simply restrict permutation to \emph{within}, and never between, blocks, and blocks are never permuted. This is reflected in the implementation; the \emph{split}-\emph{apply}-\code{combine} paradigm is used to split on the blocking factor, the plot- and within-level permutation design is applied separately to each block, and finally the sets of permutations for each block are recombined.
+
+\subsection{Examples}
+To do.
+
+\section[Using permute in R functions]{Using \pkg{permute} in \proglang{R} functions}
+\pkg{permute} originally started life as a set of functions contained within the \pkg{vegan} package \citep{vegan} designed to provide a replacement for the \code{permuted.index()} function. From these humble origins, I realised other users and package authors might want to make use of the code I was writing and so Jari oksanen, the maintainer of \pkg{vegan}, and I decided to spin off the code into the \pkg{permute} package. Hence from the very beginning, \pkg{permute} was intended for use both by users, to defining permutation designs, and by package authors, with which to implement permutation tests within their packages.
+
+In the previous sections, I described the various user-facing functions that are employed to set up permutation designs and generate permutations from these. Here I will outline how package authors can use functionality in the \pkg{permute} package to implement permutation tests.
+
+In Section~\ref{sec:simple} I showed how a permutation test function could be written using the \code{shuffle()} function and allowing the user to pass into the test function an object created with \code{how()}. As mentioned earlier, it is more efficient to generate a set of permutations via a call to \code{shuffleSet()} than to repeatedly call \code{shuffle()} and large number of times. Another advantage of using \code{shuffleSet()} is that once the set of permutations has been created, parallel processing can be used to break the set of permutations down into smaller chunks, each of which can be worked on simultaneously. As a result, package authors are encouraged to use \code{shuffleSet()} instead of the simpler \code{shuffle()}.
+
+To illustrate how to use \pkg{permute} in \proglang{R} functions, I'll rework the permutation test I used for the \code{jackal} data earlier in Section~\ref{sec:simple}.
+
+<<change-continuation,results=hide,echo=false>>=
+options("prompt" = " ", "continue" = " ")
+@
+<<ptest-fun, keep.source=true>>=
+pt.test <- function(x, group, nperm = 199) {
+    ## mean difference function
+    meanDif <- function(i, x, grp) {
+        grp <- grp[i]
+        mean(x[grp == "Male"]) - mean(x[grp == "Female"])
+    }
+    ## check x and group are of same length
+    stopifnot(all.equal(length(x), length(group)))
+    ## number of observations
+    N <- nobs(x)
+    ## generate the required set of permutations
+    pset <- shuffleSet(N, nset = nperm)
+    ## iterate over the set of permutations applying meanDif
+    D <- apply(pset, 1, meanDif, x = x, grp = group)
+    ## add on the observed mean difference
+    D <- c(meanDif(seq_len(N), x, group), D)
+    ## compute & return the p-value
+    Ds <- sum(D >= D[1]) # how many >= to the observed diff?
+    Ds / (nperm + 1)     # what proportion of perms is this (the pval)?
+}
+@
+<<reset-continuation,results=hide,echo=false>>=
+options("prompt" = "R> ", "continue" = "+  ")
+@
+
+The commented function should be reasonably self explanatory. I've altered the in-line version of the \code{meanDif()} function to take a vector of permutation indices \code{i} as the first argument, and internally the \code{grp} vector is permuted according to \code{i}. The other major change is that \code{shuffleSet()} is used to generate a set of permutations, which are then iterated over using \code{apply()}.
+
+In use we see
+<<run-ptest>>=
+set.seed(42) ## same seed as earlier
+pval <- with(jackal, pt.test(Length, Sex, nperm = 4999))
+pval
+@
+which nicely agrees with the test we did earlier by hand.
+
+Iterating over a set of permutation indices also means that adding parallel processing of the permutations requires only trivial changes to the main function code. As an illustration, below I show a parallel version of \code{pt.test()}
+
+<<change-continuation,results=hide,echo=false>>=
+options("prompt" = " ", "continue" = " ")
+@
+<<parallel-ptest-fun, keep.source=true>>=
+ppt.test <- function(x, group, nperm = 199, cores = 2) {
+    ## mean difference function
+    meanDif <- function(i, .x, .grp) {
+        .grp <- .grp[i]
+        mean(.x[.grp == "Male"]) - mean(.x[.grp == "Female"])
+    }
+    ## check x and group are of same length
+    stopifnot(all.equal(length(x), length(group)))
+    ## number of observations
+    N <- nobs(x)
+    ## generate the required set of permutations
+    pset <- shuffleSet(N, nset = nperm)
+    if (cores > 1) {
+        ## initiate a cluster
+        cl <- makeCluster(cores)
+        on.exit(stopCluster(cl = cl))
+        ## iterate over the set of permutations applying meanDif
+        D <- parRapply(cl, pset, meanDif, .x = x, .grp = group)
+    } else {
+        D <- apply(pset, 1, meanDif, .x = x, .grp = group)
+    }
+    ## add on the observed mean difference
+    D <- c(meanDif(seq_len(N), x, group), D)
+    ## compute & return the p-value
+    Ds <- sum(D >= D[1]) # how many >= to the observed diff?
+    Ds / (nperm + 1)     # what proportion of perms is this (the pval)?
+}
+@
+<<reset-continuation,results=hide,echo=false>>=
+options("prompt" = "R> ", "continue" = "+  ")
+@
+In use we observe
+<<run-pptest>>=
+require("parallel")
+set.seed(42)
+system.time(ppval <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
+                              cores = 2))
+ppval
+@
+In this case there is little to be gained by splitting the computations over two CPU cores
+<<run-pptest2>>=
+set.seed(42)
+system.time(ppval2 <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
+                               cores = 1))
+ppval2
+@
+The cost of setting up and managing the parallel processes, and recombining the separate sets of results almost negates the gain in running the permutations in parallel. Here, the computations involved in \code{meanDif()} are trivial and we would expect greater efficiencies from running the permutations in parallel for more complex analyses.
+
+\subsection{Accesing and changing permutation designs}
+Th object created by \code{how()} is a relatively simple list containing the settings for the specified permutation design. As such one could use the standard subsetting and replacement functions in base \proglang{R} to alter components of the list. This is not recommended, however, as the internal structure of the list returned by \code{how()} may change in a later version of \pkg{permute}. Furthermore, to facilitate the use of \code{update()} at the user-level to alter the permutation design in a user-friendly way, the matched \code{how()} call is stored within the list along with the matched calls for any \code{Within()} or \code{Plots()} components. These matched calls need to be updated too if the list describing the permutation design is altered. To allow function writers to access and alter permutation designs, \pkg{permute} provides a series of extractor and replacement functions that have the forms \code{getFoo()} and \code{setFoo<-()}, respectively,where \code{Foo} is replaced by a particular component to be extracted or replaced.
+
+The \code{getFoo()} functions provided by \pkg{permute} are
+
+\begin{description}
+  \item[\code{getWithin()}, \code{getPlots()}, \code{getBlocks()}]
+    these extract the details of the \emph{within}-, \emph{plots}-, and \emph{blocks}-level components of the design. Given the current design (as of \pkg{permute} version 0.8-0), the first two of these return lists with classes \code{"Within"} and \code{"Plots"}, respectively, whilst \code{getBlocks()} returns the block-level factor.
+\item[\code{getStrata()}]
+  returns the factor describing the grouping of samples at the \emph{plots} or \emph{blocks} levels, as determined by the value of argument \code{which}.
+  \item[\code{getType()}]
+    returns the type of permutation of samples at the \emph{within} or \emph{plots} levels, as determined by the value of argument \code{which}.
+  \item[\code{getMirror()}]
+    returns a logical, indicating whether permutations are drawn from the mirror image of the observed ordering at the \emph{within} or \emph{plots} levels, as determined by the value of argument \code{which}.
+  \item[\code{getConstant()}]
+    returns a logical, indicating whether the same permutation of samples, or a different permutation, is used within each of the plots.
+  \item[\code{getRow()}, \code{getCol()}, \code{getDim()}]
+    return dimensions of the spatial grid of samples at the \emph{plots} or \emph{blocks} levels, as determined by the value of argument \code{which}.
+  \item[\code{getNperm()}, \code{getMaxperm()}, \code{getMinperm()}]
+    return numerics for the stored number of permutations requested plus two triggers used when checking permutation designs via \code{check()}.
+  \item[\code{getComplete()}]
+    returns a logical, indicating whether complete enumeration of the set of permutations was requested.
+  \item[\code{getMake()}]
+    returns a logical, indicating whether the entire set of permutations should be produced or not.
+  \item[\code{getObserved()}]
+    returns a logical, which indicates whether the observed permutation (ordering of samples) is included in the entire set of permutation generated by \code{allPerms()}.
+\end{description}
+
+At the moment, the range of \code{setFoo()<-} functions is not as comprehensive as for the \code{getFoo()} functions. The available \code{setFoo()<-} functions are
+
+\begin{description}
+  \item[\code{setBlocks()<-};]
+    replaces the factor that partitions the observations into blocks. \code{value} can be any \proglang{R} object that can be coerced to a factor vector via \code{as.factor()}.
+  \item[\code{setNperm()<-}, \code{setMinperm<-()}, \code{setMaxperm<-()};]
+    update the stored values for the requested number of permutations and the minimum and maximum permutation thresholds that control whether the entire set of permutations is generated instead of the \code{nperm} permutations.
+  \item[\code{setAllperms()<-};]
+    assigns a matrix of permutation indices to the \code{all.perms} component of the design list object.
+  \item[\code{setComplete()<-};]
+    updates the status of the \code{complete} setting. Takes a logical vector of length 1 or any object coercible to such.
+  \item[\code{setMake()<-};]
+    sets the indicator controlling whether the entrie set of permutations is generated during checking of the design via \code{check()}. Takes a logical vector of length 1 or any object coercible to such.
+  \item[\code{setObserved()<-};]
+    updates the indicator of whether the observed ordering is included in the set of all permutations should they be generated. Takes a logical vector of length 1 or any object coercible to such.
+\end{description}
+
+\subsubsection{Examples}
+I illustrate the behaviour of the \code{getFoo()} and \code{setFoo<-()} functions through a couple of simple examples. Firstly, generate or design object
+<<get-set-eg0>>=
+hh <- how()
+@
+This design is one of complete randomization, so all of the settings in the object take their default values. The default number of permutations is currently \Sexpr{getNperm(hh)}, and can be extracted using \code{getNperm()}
+<<get-set-eg1>>=
+getNperm(hh)
+@
+The corresponding replacement function can be use to alter the number of permutations after the design has been generated. To illustrate a finer point of the behaviour of these replacement functions, compare the matched call stored in \code{hh} before and after the number of permutations is changed
+<<<get-set-eg2>>=
+getCall(hh)
+setNperm(hh) <- 999
+getNperm(hh)
+getCall(hh)
+@
 
 \section*{Computational details}
 <<seesionInfo, results=tex>>=
