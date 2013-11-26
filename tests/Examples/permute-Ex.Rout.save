@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2013-10-07 r64035) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2013-09-26 r64005) -- "Frisbee Sailing"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -207,7 +207,7 @@ Contains observed ordering?: No
 > require(vegan)
 Loading required package: vegan
 Loading required package: lattice
-This is vegan 2.1-33
+This is vegan 2.1-37
 > example(pyrifos)
 
 pyrifs> data(pyrifos)
@@ -717,6 +717,47 @@ Permutation details:
 > 
 > 
 > cleanEx()
+> nameEx("set-methods")
+> ### * set-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: set-methods
+> ### Title: Replacement functions to set components of a permutation design
+> ### Aliases: set-methods setBlocks<- setBlocks<-.default setBlocks<-.how
+> ###   setBlocks<-.permControl setWithin<- setWithin<-.default
+> ###   setWithin<-.how setStrata<- setStrata<-.default setStrata<-.how
+> ###   setStrata<-.Plots setType<- setType<-.default setType<-.how
+> ###   setType<-.Plots setType<-.Within setMirror<- setMirror<-.default
+> ###   setMirror<-.how setMirror<-.Plots setMirror<-.Within setConstant<-
+> ###   setConstant<-.default setConstant<-.how setConstant<-.Plots
+> ###   setConstant<-.Within setPlots<- setPlots<-.default setPlots<-.how
+> ###   setRow<- setRow<-.default setRow<-.how setRow<-.Plots setRow<-.Within
+> ###   setCol<- setCol<-.default setCol<-.how setCol<-.Plots setCol<-.Within
+> ###   setDim<- setDim<-.default setDim<-.how setDim<-.Plots setDim<-.Within
+> ###   setNperm<- setNperm<-.default setNperm<-.how setNperm<-.permControl
+> ###   setAllperms<- setAllperms<-.default setAllperms<-.how
+> ###   setAllperms<-.permControl setMaxperm<- setMaxperm<-.default
+> ###   setMaxperm<-.how setMaxperm<-.permControl setMinperm<-
+> ###   setMinperm<-.default setMinperm<-.how setMinperm<-.permControl
+> ###   setComplete<- setComplete<-.default setComplete<-.how
+> ###   setComplete<-.permControl setMake<- setMake<-.default setMake<-.how
+> ###   setObserved<- setObserved<-.default setObserved<-.how
+> ### Keywords: methods utils
+> 
+> ### ** Examples
+> 
+> ## extract components from a "how" object
+> hh <- how()
+> getNperm(hh)
+[1] 199
+> setNperm(hh) <- 999
+> getNperm(hh)
+[1] 999
+> 
+> 
+> 
+> cleanEx()
 > nameEx("shuffle-utils")
 > ### * shuffle-utils
 > 
@@ -1162,7 +1203,7 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.581 0.033 1.623 0 0 
+Time elapsed:  2.25 0.044 2.404 0 0 
 > grDevices::dev.off()
 null device 
           1 
