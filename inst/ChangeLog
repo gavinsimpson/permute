@@ -220,7 +220,10 @@ Version 0.7-3
 Version 0.7-2
 
 	* Major API change: Added capability to handle true blocking
-	constraints, as suggested by Cajo ter Braak. We now have
+	constraints.
+	Suggested by Cajo ter Braak.
+
+	We now have:
 
 	  o Blocks: samples are *never* permuted between blocks. Blocks
 	    can't be permuted either.
@@ -266,7 +269,8 @@ Version 0.7-0
 	if `mirror = FALSE` for the `constant = TRUE` case.
 
 	* shuffleStrata: assumed that the samples were in contiguous
-	blocks. Reported by Cajo ter Braak.
+	blocks.
+	Reported by Cajo ter Braak.
 
 	* .Internal: removed all instances of .Internal calls in the
 	code.
