@@ -1,4 +1,5 @@
-## Extractor functions for blocks, plots and within, plus strata
+## Extractor functions for blocks, plots and within, plus strata,
+## etc ...
 
 ## Blocks
 `getBlocks` <- function(object, ...) {
