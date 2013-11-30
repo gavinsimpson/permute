@@ -428,3 +428,16 @@
 `getObserved.how` <- function(object, ...) {
     object$observed
 }
+
+## Extractor for all.perms component
+`getAllperms` <- function(object, ...) {
+    UseMethod("getAllperms")
+}
+
+`getAllperms.how` <- function(object, ...) {
+    object$all.perms
+}
+
+`getAllperms.default` <- function(object, ...) {
+    stop("No default method for `getAllperms`")
+}

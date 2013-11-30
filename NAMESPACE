@@ -1,12 +1,40 @@
 ### Visible functions:
-export("allPerms", "Blocks", "numPerms", "check", "permCheck",
-       "permControl", "permute", "shuffle", "Within", "Plots",
-       "shuffleFree", "shuffleSeries", "shuffleGrid", "shuffleStrata",
-       "getBlocks", "getWithin", "getStrata", "getType", "getMirror",
-       "getConstant", "getPlots", "getRow", "getCol", "getDim",
-       "getNperm","getMaxperm", "getMinperm", "getComplete", "getMake",
-       "getObserved", "shuffleSet", "how",
+export("allPerms",
+       "Blocks",
+       "check",
+       "getBlocks",
+       "getWithin",
+       "getStrata",
+       "getType",
+       "getMirror",
+       "getConstant",
+       "getPlots",
+       "getRow",
+       "getCol",
+       "getDim",
+       "getNperm",
+       "getMaxperm",
+       "getMinperm",
+       "getComplete",
+       "getMake",
+       "getObserved",
+       "getAllperms",
+       "how",
+       "numPerms",
+       "permCheck",
+       "permControl",
+       "permute",
+       "Plots",
        "setBlocks<-",
+       "setWithin<-",
+       "setStrata<-",
+       "setType<-",
+       "setMirror<-",
+       "setConstant<-",
+       "setPlots<-",
+       "setRow<-",
+       "setCol<-",
+       "setDim<-",
        "setNperm<-",
        "setMaxperm<-",
        "setMinperm<-",
@@ -14,12 +42,13 @@ export("allPerms", "Blocks", "numPerms", "check", "permCheck",
        "setMake<-",
        "setObserved<-",
        "setAllperms<-",
-       "setPlots<-",
-       "setWithin<-",
-       "setStrata<-",
-       "setRow<-",
-       "setCol<-",
-       "setDim<-"
+       "shuffle",
+       "shuffleFree",
+       "shuffleGrid",
+       "shuffleSeries",
+       "shuffleSet",
+       "shuffleStrata",
+       "Within"
        )
 
 ### Imports: nobs() only exists in R 2.13.0 for import. We define the
@@ -109,6 +138,8 @@ S3method("getMake", "default")
 S3method("getMake", "how")
 S3method("getObserved", "default")
 S3method("getObserved", "how")
+S3method("getAllperms", "default")
+S3method("getAllperms", "how")
 
 ## setFoo methods
 S3method("setBlocks<-", "default")

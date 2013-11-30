@@ -74,6 +74,9 @@
 \alias{getObserved}
 \alias{getObserved.default}
 \alias{getObserved.how}
+\alias{getAllperms}
+\alias{getAllperms.default}
+\alias{getAllperms.how}
 
 \title{Extractor functions to access components of a permutation design}
 \description{
@@ -86,28 +89,60 @@
 }
 \usage{
 
-getWithin(object, ...)
-getPlots(object, ...)
+getAllperms(object, ...)
 getBlocks(object, ...)
-getStrata(object, ...)
-getType(object, ...)
-getMirror(object, ...)
+getComplete(object, ...)
 getConstant(object, ...)
 getCol(object, ...)
-getRow(object, ...)
 getDim(object, ...)
-getNperm(object, ...)
+getMake(object, ...)
 getMaxperm(object, ...)
 getMinperm(object, ...)
-getComplete(object, ...)
-getMake(object, ...)
+getMirror(object, ...)
+getNperm(object, ...)
 getObserved(object, ...)
+getPlots(object, ...)
+getRow(object, ...)
+getStrata(object, ...)
+getType(object, ...)
+getWithin(object, ...)
 
-\method{getWithin}{how}(object, ...)
+\method{getAllperms}{how}(object, ...)
+
+\method{getBlocks}{how}(object, ...)
+
+\method{getCol}{how}(object, which = c("plots", "within"), ...)
+\method{getCol}{Plots}(object, ...)
+\method{getCol}{Within}(object, ...)
+
+\method{getComplete}{how}(object, ...)
+
+\method{getConstant}{how}(object, ...)
+\method{getConstant}{Within}(object, ...)
+
+\method{getDim}{how}(object, which = c("plots", "within"), ...)
+\method{getDim}{Plots}(object, ...)
+\method{getDim}{Within}(object, ...)
+
+\method{getMake}{how}(object, ...)
+
+\method{getMaxperm}{how}(object, ...)
+
+\method{getMinperm}{how}(object, ...)
+
+\method{getMirror}{how}(object, which = c("plots", "within"), ...)
+\method{getMirror}{Plots}(object, ...)
+\method{getMirror}{Within}(object, ...)
+
+\method{getNperm}{how}(object, ...)
+
+\method{getObserved}{how}(object, ...)
 
 \method{getPlots}{how}(object, ...)
 
-\method{getBlocks}{how}(object, ...)
+\method{getRow}{how}(object, which = c("plots", "within"), ...)
+\method{getRow}{Plots}(object, ...)
+\method{getRow}{Within}(object, ...)
 
 \method{getStrata}{how}(object, which = c("plots", "blocks"),
           drop = TRUE, ...)
@@ -117,36 +152,7 @@ getObserved(object, ...)
 \method{getType}{Plots}(object, ...)
 \method{getType}{Within}(object, ...)
 
-\method{getMirror}{how}(object, which = c("plots", "within"), ...)
-\method{getMirror}{Plots}(object, ...)
-\method{getMirror}{Within}(object, ...)
-
-\method{getConstant}{how}(object, ...)
-\method{getConstant}{Within}(object, ...)
-
-\method{getCol}{how}(object, which = c("plots", "within"), ...)
-\method{getCol}{Plots}(object, ...)
-\method{getCol}{Within}(object, ...)
-
-\method{getRow}{how}(object, which = c("plots", "within"), ...)
-\method{getRow}{Plots}(object, ...)
-\method{getRow}{Within}(object, ...)
-
-\method{getDim}{how}(object, which = c("plots", "within"), ...)
-\method{getDim}{Plots}(object, ...)
-\method{getDim}{Within}(object, ...)
-
-\method{getNperm}{how}(object, ...)
-
-\method{getMaxperm}{how}(object, ...)
-
-\method{getMinperm}{how}(object, ...)
-
-\method{getComplete}{how}(object, ...)
-
-\method{getMake}{how}(object, ...)
-
-\method{getObserved}{how}(object, ...)
+\method{getWithin}{how}(object, ...)
 
 }
 
