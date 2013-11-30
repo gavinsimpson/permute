@@ -2,6 +2,14 @@ $Date$
 
 permute ChangeLog
 
+Version 0.8-0
+
+	* Released to CRAN
+
+	* DESCRIPTION: now uses `Authors@R` to populate `Author` and
+	`Maintainer` fields. Finer grained recognition of contributors and
+	R Core Team's copyright.
+
 Version 0.7-8
 
 	* how, Plots: enforces that `blocks` and `strata` are factors, or
