@@ -61,7 +61,8 @@
     }
 
     ## bind all the blocks together
-    out <- do.call(rbind, out) ## hmm are any of these the same shape?
+    out <- do.call(cbind, out) ## hmm are any of these the same shape?
+    out[, unlist(spl)] <- out
 
     if(!(observed <- getObserved(control))) {
         obs.v <- seq_len(n)
