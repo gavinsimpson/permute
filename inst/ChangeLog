@@ -10,6 +10,10 @@ Version 0.8-0
 	`Maintainer` fields. Finer grained recognition of contributors and
 	R Core Team's copyright.
 
+	* NEWS: added a `NEWS.Rd` file to document high-level changes to
+	permute. Detailed changes remain in `CHANGELOG`, whilst `NEWS.Rd`
+	will summarise the main user-level changes to the package.
+
 Version 0.7-8
 
 	* how, Plots: enforces that `blocks` and `strata` are factors, or
