@@ -505,12 +505,12 @@ Notice too how the call has been expanded from \code{gl(10, 5)} to an integer ve
 getCall(getPlots(hh))
 @
 
-At the top level, a user can update the design using \code{update()}. Hence the equivalent of the above update (this time resetting the original type; \code{type = "series"})
+At the top level, a user can update the design using \code{update()}. Hence the equivalent of the above update is (this time resetting the original type; \code{type = "series"})
 <<get-set-eg7>>=
 hh <- update(hh, plots = update(getPlots(hh), type = "series"))
 getType(hh, which = "plots")
 @
-This however is not guaranteed to work within a function, because we do not guarantee that components of the call used to create \code{hh} can be found from the execution frame where \code{update()} is called. To be safe, always use the \code{setFoo<-()} replacement functions to update design objects from within your functions.
+However, this approach is not assured of working within a function because we do not guarantee that components of the call used to create \code{hh} can be found from the execution frame where \code{update()} is called. To be safe, always use the \code{setFoo<-()} replacement functions to update design objects from within your functions.
 
 \section*{Computational details}
 This vignette was built within the following environment:
