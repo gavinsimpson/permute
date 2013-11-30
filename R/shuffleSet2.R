@@ -32,7 +32,7 @@
         control <- pcheck$control
     }
 
-    if(is.null(control$all.perms)) {
+    if(is.null(AP <- getAllperms(control))) {
         ## get blocking, if any
         Block <- getStrata(control, which = "blocks")
         if(is.null(Block))
@@ -57,7 +57,7 @@
         ## if we have all.perms now then we must have generated it
         ## during checking or user passed it with control
         ## Use that instead of a ranodm set
-        out <- control$all.perms
+        out <- AP
     }
 
     ## Because all.perms might have been generated, we have the
