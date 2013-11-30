@@ -1086,6 +1086,8 @@ Restricted by Plots: gl(4, 5) (4 plots; Randomised)
 > plotStrata <- Plots(strata = gl(4,5))
 > CTRL <- how(plots = plotStrata,
 +             within = Within(type = "free"))
+> numPerms(20, control = CTRL)
+[1] 207360000
 > shuffleSet(20, 10, control = CTRL)
 No. of Permutations: 10
 No. of Samples: 20 (Nested in: plots; Randomised)
@@ -1116,6 +1118,8 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > ## as above but same random permutation within Plot-level strata
 > CTRL <- how(plots = plotStrata,
 +             within = Within(type = "free", constant = TRUE))
+> numPerms(20, control = CTRL)
+[1] 120
 > shuffleSet(20, 10, CTRL) ## check this.
 No. of Permutations: 10
 No. of Samples: 20 (Nested in: plots; Randomised; same permutation in
@@ -1203,7 +1207,7 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.227 0.035 2.282 0 0 
+Time elapsed:  2.288 0.038 2.347 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -17,6 +17,9 @@ Version 0.8-0
 	* allPerms: fix a bug where the blocks of permutations were being
 	recombined in the wrong way, by rows instead of by columns.
 
+	* numPerms: was ignoring the `constant` setting if free permutations
+	within level of plots.
+
 Version 0.7-8
 
 	* how, Plots: enforces that `blocks` and `strata` are factors, or

@@ -47,7 +47,7 @@ A TODO list for **permute** - or things I know are broken or needed.
     a `call` component and hence can be `update()`ed, hence the nested 
     calls to `update()`.
          
- * `permControl` - deprecate this in favour of `how` as in "how to
+ * `permControl` - deprecate this in favour of `how` as in "how to 
    permute"? *DONE Completed in 0.7-4*
 
  * `permuplot` - this may be fundamentally bust - it only worked in the
@@ -75,6 +75,10 @@ A TODO list for **permute** - or things I know are broken or needed.
                     within = Within(type = "free", constant = TRUE))
         shuffleSet(20, 10, CTRL)
 
+    *DONE in 0.8-0*
+
  * Write an Rd page for the `"permutationMatrix"` S3 class where I can 
    describe the object returned by `shuffleSet()` and the methods 
    available for it.
+
+    *DONE in 0.7-8*

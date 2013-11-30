@@ -131,7 +131,11 @@
         1
     } else if(isTRUE(all.equal(typeW, "free"))) {
         if(!is.null(PSTRATA)) {
-            prod(factorial(tab))
+            if(constantW) {
+                factorial(tab[1])
+            } else {
+                prod(factorial(tab))
+            }
         } else {
             exp(lfactorial(n))
         }

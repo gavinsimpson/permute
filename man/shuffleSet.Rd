@@ -112,10 +112,12 @@ shuffleSet(20, 10, control = CTRL)
 plotStrata <- Plots(strata = gl(4,5))
 CTRL <- how(plots = plotStrata,
             within = Within(type = "free"))
+numPerms(20, control = CTRL)
 shuffleSet(20, 10, control = CTRL)
 ## as above but same random permutation within Plot-level strata
 CTRL <- how(plots = plotStrata,
             within = Within(type = "free", constant = TRUE))
+numPerms(20, control = CTRL)
 shuffleSet(20, 10, CTRL) ## check this.
 
 ## time series within each level of Plot strata
