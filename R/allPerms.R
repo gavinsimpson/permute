@@ -131,7 +131,7 @@
                                       function(x, ord) x[ord[i,]], ord = ord)
                 }
             } else {
-                ## different permutations within blocks
+                ## different permutations within plots
                 nperms <- numPerms(sum(tab), control)
 
                 ng <- length(tab)
