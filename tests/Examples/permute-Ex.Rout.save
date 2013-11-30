@@ -503,7 +503,7 @@ detaching ‘package:vegan’, ‘package:lattice’
 > ###   getMinperm.default getMinperm.how getMinperm.permControl getComplete
 > ###   getComplete.default getComplete.how getComplete.permControl getMake
 > ###   getMake.default getMake.how getObserved getObserved.default
-> ###   getObserved.how
+> ###   getObserved.how getAllperms getAllperms.default getAllperms.how
 > ### Keywords: methods utils
 > 
 > ### ** Examples
@@ -1203,7 +1203,7 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.25 0.044 2.404 0 0 
+Time elapsed:  2.227 0.035 2.282 0 0 
 > grDevices::dev.off()
 null device 
           1 
