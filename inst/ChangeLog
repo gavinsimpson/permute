@@ -2,6 +2,12 @@ $Date$
 
 permute ChangeLog
 
+Version 0.8-1
+
+	* setBlocks<-: the name of the block must be collected with
+	deparse(substitute()) before it is evaluated with list() or its
+	name will be lost. 
+
 Version 0.8-0
 
 	* Released to CRAN

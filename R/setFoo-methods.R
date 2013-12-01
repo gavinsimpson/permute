@@ -143,8 +143,8 @@
 `setBlocks<-.how` <- function(object, value) {
     if (!is.null(value))
         value <- as.factor(value)
-    object["blocks"] <- list(value)
     object[["blocks.name"]] <- deparse(substitute(value))
+    object["blocks"] <- list(value)
     object <- fixupCall(object, "blocks", value)
     object
 }
