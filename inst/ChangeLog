@@ -2,6 +2,11 @@ $Date$
 
 permute ChangeLog
 
+Version 0.8-1
+
+	* setBlocks: get block name before doing anything so that you
+	really get only name instead of its evaluated value.
+
 Version 0.8-0
 
 	* Released to CRAN
