@@ -7,6 +7,12 @@ Version 0.8-2
 	* allPerms: with free permutations *within* blocks, `allPerms()`
 	was not returning the indices in the original data but in the
 	permutation indices within block.
+
+	In addition, `allPerms()` was not replicating each row in a
+	within-block permutation matrix for all the rows in the other
+	block within-block permutation matrices. This is now achieved via
+	a new, non-exported utility function `cbindAllPerms()`.
+
 	Reported by: Joris Meys
 
 Version 0.8-1

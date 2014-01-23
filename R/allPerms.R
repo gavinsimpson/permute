@@ -60,9 +60,12 @@
                        nperms = nperms)
     }
 
+    ## bind all blocks together, repeating them as required
+    out <- cbindAllPerms(out)
+
     ## bind all the blocks together
-    out <- do.call(cbind, out) ## hmm are any of these the same shape?
-    out[, unlist(spl)] <- out
+    ## out <- do.call(cbind, out) ## hmm are any of these the same shape?
+    ##out[, unlist(spl)] <- out  ## is this being done at the doAllPerms level?
 
     if(!(observed <- getObserved(control))) {
         obs.v <- seq_len(n)
@@ -72,7 +75,7 @@
         ## observed ordering
         setNperm(control) <- getNperm(control) - 1
     }
-    class(out) <- "allPerms"
+    class(out) <- c("allPerms", "matrix")
     attr(out, "control") <- control
     attr(out, "observed") <- observed
     out
