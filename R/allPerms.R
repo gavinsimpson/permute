@@ -109,6 +109,9 @@
                           series = allSeries(n, nperms, mirrorW),
                           grid = allGrid(n, nperms, dimW[1],
                           dimW[2], mirrorW, constantW))
+            ## use res to index the original observation indices in
+            ## this group
+            res[] <- obs[res]
         } else {
             ## permuting within plots
             tab <- table(strataP)

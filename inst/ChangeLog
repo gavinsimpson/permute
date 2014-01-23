@@ -2,6 +2,13 @@ $Date$
 
 permute ChangeLog
 
+Version 0.8-2
+
+	* allPerms: with free permutations *within* blocks, `allPerms()`
+	was not returning the indices in the original data but in the
+	permutation indices within block.
+	Reported by: Joris Meys
+
 Version 0.8-1
 
 	* setBlocks: get block name before doing anything so that you
