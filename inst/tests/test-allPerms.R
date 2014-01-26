@@ -3,7 +3,6 @@ library_if_available(permute)
 
 context("Testing allPerms()")
 
-## test that allPerms returns
 test_that("allPerms - blocks - within block free", {
     ## example data from Joris Meys from
     ## http://stackoverflow.com/a/21313632/429846
@@ -20,6 +19,10 @@ test_that("allPerms - blocks - within block free", {
     p <- allPerms(nr, control = hh)
     expect_that(nrow(p), equals(np - 1)) ## default is to drop observed
 
+    ## check no duplicate indices within rows
+    dup <- any(apply(p, 1, function(x) any(duplicated(x))))
+    expect_false(dup, info = "Blocks: even; within: free; no observed")
+
     ## with the observed permutation included
     hh <- how(within = Within("free"),
               blocks = factor(thedata$judge),
@@ -27,6 +30,10 @@ test_that("allPerms - blocks - within block free", {
               observed = TRUE)
     p <- allPerms(nr, control = hh)
     expect_that(nrow(p), equals(np)) ## now includes observed
+
+    ## check no duplicate indices within rows
+    dup <- any(apply(p, 1, function(x) any(duplicated(x))))
+    expect_false(dup, info = "Blocks: even; within: free; observed")
 })
 
 test_that("allPerms - blocks - within block free - uneven block sizes", {
@@ -42,6 +49,10 @@ test_that("allPerms - blocks - within block free - uneven block sizes", {
     p <- allPerms(ll, control = hh)
     expect_that(nrow(p), equals(np - 1)) ## default is to drop observed
 
+    ## check no duplicate indices within rows
+    dup <- any(apply(p, 1, function(x) any(duplicated(x))))
+    expect_false(dup, info = "Blocks: uneven; within: free; no observed")
+
     ## with the observed permutation included
     hh <- how(within = Within("free"),
               blocks = fac,
@@ -49,4 +60,26 @@ test_that("allPerms - blocks - within block free - uneven block sizes", {
               observed = TRUE)
     p <- allPerms(ll, control = hh)
     expect_that(nrow(p), equals(np)) ## now includes observed
+
+    ## check no duplicate indices within rows
+    dup <- any(apply(p, 1, function(x) any(duplicated(x))))
+    expect_false(dup, info = "Blocks: uneven; within: free; observed")
+})
+
+## testing plot-level permutations ------------------------------------
+test_that("allPerms: plots; within: free; even: yes;", {
+    fac <- rep(1:3, each = 3)
+
+    hh <- how(plots = Plots(strata = fac),
+              complete = TRUE, maxperm = 1e9)
+    ll <- length(fac)
+    np <- numPerms(ll, hh)
+    p <- allPerms(ll, control = hh)
+    expect_that(nrow(p), equals(np - 1), ## default is to drop observed
+                info = "Check n all perms == numPerms output.")
+
+    ## check no duplicate indices within rows
+    dup <- any(apply(p, 1, function(x) any(duplicated(x))))
+    expect_false(dup,
+                 info = "Checking Unique: Blocks: even; within: free; no observed")
 })
