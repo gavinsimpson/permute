@@ -65,7 +65,7 @@
 
     ## bind all the blocks together
     ## out <- do.call(cbind, out) ## hmm are any of these the same shape?
-    ##out[, unlist(spl)] <- out  ## is this being done at the doAllPerms level?
+    out[, unlist(spl)] <- out  ## is this being done at the doAllPerms level?
 
     if(!(observed <- getObserved(control))) {
         obs.v <- seq_len(n)
