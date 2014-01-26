@@ -36,7 +36,7 @@ test_that("allPerms - blocks - within block free", {
     expect_false(dup, info = "Blocks: even; within: free; observed")
 })
 
-test_that("allPerms - blocks - within block free - uneven block sizes", {
+test_that("allPerms; blocks: within; block free - uneven block sizes", {
     fac <- factor(rep(1:3, times = c(2,2,4)))
 
     ## without the observed permutation included
@@ -81,5 +81,47 @@ test_that("allPerms: plots; within: free; even: yes;", {
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
     expect_false(dup,
-                 info = "Checking Unique: Blocks: even; within: free; no observed")
+                 info = "Unique? Plots: even; within: free; no observed")
+
+    ## with the observed permutation included
+    hh <- how(within = Within("free"),
+              plot = Plots(strata = fac),
+              complete = TRUE, maxperm = 1e9,
+              observed = TRUE)
+    p <- allPerms(ll, control = hh)
+    expect_that(nrow(p), equals(np)) ## now includes observed
+
+    ## check no duplicate indices within rows
+    dup <- any(apply(p, 1, function(x) any(duplicated(x))))
+    expect_false(dup, info = "Unique? Plots: even; within: free; inc observed")
+})
+
+test_that("allPerms; plots: within; plot free - uneven plot sizes", {
+    fac <- factor(rep(1:3, times = c(2,2,4)))
+
+    ## without the observed permutation included
+    hh <- how(within = Within("free"),
+              plots = Plots(strata = fac),
+              complete = TRUE, maxperm = 1e9)
+    ll <- length(fac)
+    np <- numPerms(ll, hh)
+    expect_that(np, equals(prod(factorial(2), factorial(2), factorial(4))))
+    p <- allPerms(ll, control = hh)
+    expect_that(nrow(p), equals(np - 1)) ## default is to drop observed
+
+    ## check no duplicate indices within rows
+    dup <- any(apply(p, 1, function(x) any(duplicated(x))))
+    expect_false(dup, info = "Plots: uneven; within: free; no observed")
+
+    ## with the observed permutation included
+    hh <- how(within = Within("free"),
+              plots = Plots(strata = fac),
+              complete = TRUE, maxperm = 1e9,
+              observed = TRUE)
+    p <- allPerms(ll, control = hh)
+    expect_that(nrow(p), equals(np)) ## now includes observed
+
+    ## check no duplicate indices within rows
+    dup <- any(apply(p, 1, function(x) any(duplicated(x))))
+    expect_false(dup, info = "Plots: uneven; within: free; observed")
 })
