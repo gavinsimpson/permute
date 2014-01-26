@@ -84,12 +84,6 @@
 
 `doAllPerms` <- function(obs, strataP, typeW, typeP, mirrorW, mirrorP,
                          constantW, dimW, dimP, control, nperms) {
-    ## replicate a matrix by going via a list and bind together
-    repMat <- function(mat, n) {
-        res <- rep(list(mat), n)
-        do.call(rbind, res)
-    }
-
     n <- length(obs)
 
     ## subset strataP to take only the obs indices and drop the unused
@@ -101,6 +95,9 @@
     ## also need to update the $strata component of control
     ## FIXME: this really should have a toplevel function to set/update
     ## sub-components of control
+    ## Pl <- getPlots(control)
+    ## setStrata(Pl) <- strataP
+    ## setPlots(control) <- Pl
     control$plots$strata <- strataP
 
     ## permuting within?
@@ -112,16 +109,15 @@
                           series = allSeries(n, nperms, mirrorW),
                           grid = allGrid(n, nperms, dimW[1],
                           dimW[2], mirrorW, constantW))
-            ## use res to index the original observation indices in
-            ## this group
+            ## use res to index original observation indices in this group
             res[] <- obs[res]
         } else {
             ## permuting within plots
             tab <- table(strataP)
             pg <- unique(tab)
+            ng <-  length(tab)
             if(constantW) {
                 ## same permutation in each plot
-                ##pg <- unique(tab)
                 controlW <- how(within = getWithin(control))
                 nperms <- numPerms(pg, controlW)
                 ord <- switch(typeW,
@@ -129,19 +125,19 @@
                               series = allSeries(pg, nperms, mirrorW),
                               grid = allGrid(pg, nperms, dimW[1],
                               dimW[2], mirrorW, constantW))
-                permW <- nrow(ord)
-                sp <- split(obs, strataP)
-                res <- matrix(nrow = nperms, ncol = n)
-                for(i in seq_len(permW)) {
-                    res[i,] <- sapply(sp,
-                                      function(x, ord) x[ord[i,]], ord = ord)
+                res <- vector(mode = "list", length = ng)
+                ss <- seq(0, to = prod(pg, ng-1), by = pg)
+                for (i in seq_len(ng)) {
+                    res[[i]] <- ord + ss[i]
                 }
+                ## same permutation within plots, so just cbind rather than
+                ## cbindAllPerms as we don't need all combns of rows
+                res <- do.call(cbind, res)
+                res[] <- obs[res] ## index into the observations in this block
             } else {
                 ## different permutations within plots
                 nperms <- numPerms(sum(tab), control)
 
-                ng <- length(tab)
-                ##pg <- unique(tab)
                 if(length(pg) > 1) {
                     ## different number of observations per level of strata
                     if(typeW == "grid")
@@ -149,7 +145,6 @@
                         ## in place in check()
                         stop("Unbalanced grid designs are not supported")
                     controlW <- how(within = getWithin(control))
-                    sp <- split(obs, strataP)
                     res <- vector(mode = "list", length = ng)
                     add <- c(0, cumsum(tab)[1:(ng-1)])
                     for(j in seq_along(tab)) {
@@ -157,25 +152,10 @@
                         ord <- switch(typeW,
                                       free = allFree(tab[j]),
                                       series = allSeries(tab[j], np, mirrorW))
-                        res[[j]] <- ord
-                        ## permW <- nrow(ord)
-                        ## if(j == 1) {
-                        ##     a <- 1
-                        ##     b <- nperms / np
-                        ## } else {
-                        ##     b <- b / np
-                        ##     a <- nperms / (b * np)
-                        ## }
-                        ## res[[j]] <- matrix(rep(repMat(ord+add[j], a),
-                        ##                        each = b),
-                        ##                    ncol = tab[j])
+                        res[[j]] <- ord + add[j]
                     }
-                    ##res <- do.call(cbind, res)
                     res <- cbindAllPerms(res)
-                    sp <- split(obs, strataP)
-                    res <- t(apply(res, 1,
-                                   function(x, inds, o) {o[inds] <- inds[x]; o},
-                                   unlist(sp), obs))
+                    res[] <- obs[res]
                 } else {
                     ## same number of observations per level of strata
                     controlW <- how(within = getWithin(control))
@@ -192,10 +172,7 @@
                         res[[i]] <- ord + ss[i]
                     }
                     res <- cbindAllPerms(res)
-                    sp <- split(obs, strataP)
-                    res2 <- t(apply(res, 1,
-                                   function(x, inds, o) {o[inds] <- inds[x]; o},
-                                   unlist(sp), obs))
+                    res[] <- obs[res]
                 }
             }
         }
