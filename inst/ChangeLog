@@ -2,6 +2,14 @@ $Date$
 
 permute ChangeLog
 
+Version 0.8-3
+
+	* allPerms: with free permutations *within* plots, `allPerms()`
+	was not returning the indices in the original data but in the
+	permutation indices within plots.
+
+	Reported by: Joris Meys
+
 Version 0.8-2
 
 	* allPerms: with free permutations *within* blocks, `allPerms()`

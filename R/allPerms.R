@@ -157,19 +157,21 @@
                         ord <- switch(typeW,
                                       free = allFree(tab[j]),
                                       series = allSeries(tab[j], np, mirrorW))
-                        permW <- nrow(ord)
-                        if(j == 1) {
-                            a <- 1
-                            b <- nperms / np
-                        } else {
-                            b <- b / np
-                            a <- nperms / (b * np)
-                        }
-                        res[[j]] <- matrix(rep(repMat(ord+add[j], a),
-                                               each = b),
-                                           ncol = tab[j])
+                        res[[j]] <- ord
+                        ## permW <- nrow(ord)
+                        ## if(j == 1) {
+                        ##     a <- 1
+                        ##     b <- nperms / np
+                        ## } else {
+                        ##     b <- b / np
+                        ##     a <- nperms / (b * np)
+                        ## }
+                        ## res[[j]] <- matrix(rep(repMat(ord+add[j], a),
+                        ##                        each = b),
+                        ##                    ncol = tab[j])
                     }
-                    res <- do.call(cbind, res)
+                    ##res <- do.call(cbind, res)
+                    res <- cbindAllPerms(res)
                     sp <- split(obs, strataP)
                     res <- t(apply(res, 1,
                                    function(x, inds, o) {o[inds] <- inds[x]; o},
@@ -184,21 +186,14 @@
                                series = allSeries(pg, np, mirrorW),
                                grid = allGrid(pg, np, dimW[1],
                                dimW[2], mirrorW, constantW))
-                    permW <- nrow(ord)
-                    add <- seq(from = 0, by = pg, length.out = ng)
                     res <- vector(mode = "list", length = ng)
-                    a <- 1
-                    b <- np / permW
+                    ss <- seq(0, to = prod(pg, ng-1), by = pg)
                     for(i in seq_len(ng)) {
-                        res[[i]] <- matrix(rep(repMat(ord+add[i], a),
-                                               each = b),
-                                           ncol = pg)
-                        a <- a*permW
-                        b <- b/permW
+                        res[[i]] <- ord + ss[i]
                     }
-                    res <- do.call(cbind, res)
+                    res <- cbindAllPerms(res)
                     sp <- split(obs, strataP)
-                    res <- t(apply(res, 1,
+                    res2 <- t(apply(res, 1,
                                    function(x, inds, o) {o[inds] <- inds[x]; o},
                                    unlist(sp), obs))
                 }

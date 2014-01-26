@@ -1,6 +1,6 @@
 Package: permute
 Title: Functions for generating restricted permutations of data
-Version: 0.8-2
+Version: 0.8-3
 Date: $Date$
 Authors@R: c(person(given = "Gavin L.", family = "Simpson",
                     email = "ucfagls@gmail.com",
