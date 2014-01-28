@@ -1,6 +1,6 @@
 
-R version 3.0.2 Patched (2013-09-26 r64005) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R version 3.0.2 Patched (2014-01-14 r64768) -- "Frisbee Sailing"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -207,7 +207,7 @@ Contains observed ordering?: No
 > require(vegan)
 Loading required package: vegan
 Loading required package: lattice
-This is vegan 2.1-37
+This is vegan 2.0-10
 > example(pyrifos)
 
 pyrifs> data(pyrifos)
@@ -1207,7 +1207,7 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.288 0.038 2.347 0 0 
+Time elapsed:  2.257 0.042 2.373 0 0 
 > grDevices::dev.off()
 null device 
           1 
