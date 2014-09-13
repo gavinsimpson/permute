@@ -1,7 +1,7 @@
 Package: permute
 Title: Functions for generating restricted permutations of data
-Version: 0.8-3
-Date: $Date$
+Version: 0.8-4
+Date: 2014-Sep-13
 Authors@R: c(person(given = "Gavin L.", family = "Simpson",
                     email = "ucfagls@gmail.com",
                     role = c("aut", "cph", "cre")),
@@ -13,5 +13,6 @@ Suggests: vegan (>= 2.0-0), testthat (>= 0.5), parallel
 Description: The 'permute' package implements a set of restricted permutation designs for freely exchangeable, line transects (time series), and spatial grid designs plus permutation of blocks (groups of samples). 'permute' also allows split-plot designs, in which the whole-plots or split-plots or both can be freely-exchangeable or one of the restricted designs. The 'permute' package is modelled after the permutation schemes of Canoco 3.1 (and later) by Cajo ter Braak.
 License: GPL-2
 ByteCompile: true 
-URL: http://vegan.r-forge.r-project.org/
+URL: https://github.com/gavinsimpson/permute
+BugReports: https://github.com/gavinsimpson/permute/issues
 Copyright: see file COPYRIGHTS
