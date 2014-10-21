@@ -2,16 +2,18 @@
 \alias{blocks}
 \alias{blocks.default}
 \alias{blocks.how}
+\alias{blocks<-}
 \alias{blocks<-.default}
 \alias{blocks<-.how}
 
 \title{Blocking factors}
 \description{
-  Extract or replace the blocking factor of an existing restrited
+  Extract or replace the blocking factor of an existing restricted
   permutation design created by \code{\link{how}}.
 }
 \usage{
-blocks(object, ...))
+blocks(object, ...)
+blocks(object) <- value
 
 \method{blocks}{how}(object, ...)
 
@@ -19,6 +21,7 @@ blocks(object, ...))
 
 \arguments{
   \item{object}{An R object to dispatch on.}
+  \item{value}{The replacement value/object.}
   \item{\dots}{Arguments passed on to other methods.}
 }
 \value{
