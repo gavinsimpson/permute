@@ -30,7 +30,7 @@
     strataP <- getStrata(control, which = "plots")
     typeW <- getType(control, which = "within")
     typeP <- getType(control, which = "plot")
-    BLOCKS <- getBlocks(control)
+    BLOCKS <- blocks(control)
     dimW <- getDim(control, which = "within")
     dimP <- getDim(control, which = "plots")
     mirrorW <- getMirror(control, which = "within")
