@@ -1,3 +1,35 @@
+### Extractor, replacement functions for plots
+
+### Extractor methods
+`plots` <- function(object, ...) {
+    UseMethod("plots")
+}
+
+`plots.default` <- function(object, ...) {
+    stop("No default method for 'plots()'")
+}
+
+`plots.how` <- function(object, ...) {
+    object$plots
+}
+
+### Replacement methods
+`plots<-` <- function(object, value) {
+    UseMethod("plots<-")
+}
+
+`plots<-.default` <- function(object, value) {
+    stop("No default method for `plots`")
+}
+
+`plots<-.how` <- function(object, value) {
+    stopifnot(inherits(value, "Plots"))
+    object[["plots"]] <- value
+    object <- fixupCall(object, "plots", getCall(value))
+    object
+}
+
+### Temporarily drop this here
 `Plots` <- function(strata = NULL, type = c("none","free","series","grid"),
                     mirror = FALSE, ncol = NULL, nrow = NULL) {
 
