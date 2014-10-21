@@ -84,10 +84,8 @@ S3method("nobs", "data.frame")
 ## blocks methods
 S3method("blocks", "default")
 S3method("blocks", "how")
-S3method("blocks", "permControl")
 S3method("blocks<-", "default")
 S3method("blocks<-", "how")
-S3method("blocks<-", "permControl")
 ## getFoo methods
 S3method("getBlocks", "default")
 S3method("getBlocks", "how")
