@@ -1,12 +1,8 @@
-\documentclass[article,shortnames]{Z}
-\usepackage{thumbpdf}
+\documentclass[article,shortnames,nojss]{jss}
 
 %\VignetteIndexEntry{Restricted permutations; using the permute package}
 %\VignettePackage{permute}
 %\VignetteDepends{vegan}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% almost as usual
 \author{Gavin L. Simpson\\University of Regina}
@@ -19,6 +15,7 @@
 
 %% an abstract and keywords
 \Abstract{
+  TODO
 }
 \Keywords{permutations, restricted permutations, time series, transects, spatial grids, split-plot designs, Monte Carlo resampling, \proglang{R}}
 \Plainkeywords{permutations, restricted permutations, time series, transects, spatial grids, split-plot designs, Monte Carlo resampling, R} %% without formatting
