@@ -9,6 +9,9 @@ all: check clean
 build: #docs
 	cd ..;\
 	R CMD build permute
+build-quick: #docs
+	cd ..;\
+	R CMD build --no-manual --no-build-vignettes permute
 
 check: build
 	cd ..;\
@@ -18,12 +21,16 @@ check-cran: build
 	cd ..;\
 	R CMD check --as-cran permute_$(PKGVERS).tar.gz
 
+check-quick: build-quick
+	cd ..;\
+	R CMD check --no-manual --no-vignettes --no-build-vignettes --no-tests  permute_$(PKGVERS).tar.gz
+
 install: build
 	cd ..;\
 	R CMD INSTALL permute_$(PKGVERS).tar.gz
 
-move: check
-	cp ../permute.Rcheck/permute-Ex.Rout ./tests/Examples/permute-Ex.Rout.save
+move: check-quick
+	cp ../permute.Rcheck/permute-Ex.Rout ../permute/tests/Examples/permute-Ex.Rout.save
 
 clean:
 	cd ..;\
