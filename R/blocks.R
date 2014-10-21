@@ -43,3 +43,11 @@
     object <- fixupCall(object, "blocks", value)
     object
 }
+
+### Temporarily drop this here
+`Blocks` <- function(strata = NULL) {
+    out <- list(strata = strata)
+    ## keep as list for now
+    ##class(out) <- "Blocks"
+    out
+}
