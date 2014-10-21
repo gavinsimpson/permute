@@ -9,10 +9,6 @@
     stop("No default method for 'blocks()'")
 }
 
-`blocks.permControl` <- function(object, ...) {
-    object$blocks
-}
-
 `blocks.how` <- function(object, ...) {
     object$blocks
 }
@@ -31,15 +27,6 @@
     if (!is.null(value))
         value <- as.factor(value)
     object["blocks"] <- list(value)
-    object <- fixupCall(object, "blocks", value)
-    object
-}
-
-`blocks<-.permControl` <- function(object, value) {
-    if (!is.null(value))
-        value <- as.factor(value)
-    object["blocks"] <- list(value)
-    object[["blocks.name"]] <- deparse(substitute(value))
     object <- fixupCall(object, "blocks", value)
     object
 }
