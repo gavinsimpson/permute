@@ -1,12 +1,9 @@
-\documentclass[article,shortnames]{Z}
+\documentclass[article,shortnames,nojss]{jss}
 \usepackage{thumbpdf}
 
 %\VignetteIndexEntry{Restricted permutations; using the permute package}
 %\VignettePackage{permute}
 %\VignetteDepends{vegan}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% almost as usual
 \author{Gavin L. Simpson\\University of Regina}
