@@ -12,7 +12,7 @@
 
     ## Blocks
     writeLines("Blocks:")
-    blocks <- getBlocks(x)
+    blocks <- blocks(x)
     if (is.null(blocks)) {
         writeLines(strwrap("Defined by: none", prefix = pfix))
     } else {
