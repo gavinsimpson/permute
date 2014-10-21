@@ -34,7 +34,7 @@ plots(object) <- value
 
 \examples{
 ## extract plots factor from a "how" object
-hh <- how(plots = gl(4,5))
+hh <- how(plots = Plots(strata = gl(4,5)))
 plots(hh)
 }
 \keyword{ methods }

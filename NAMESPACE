@@ -26,6 +26,8 @@ export("allPerms",
        "permCheck",
        "permControl",
        "permute",
+       "plots",
+       "plots<-",
        "Plots",
        "setBlocks<-",
        "setWithin<-",
@@ -86,6 +88,11 @@ S3method("blocks", "default")
 S3method("blocks", "how")
 S3method("blocks<-", "default")
 S3method("blocks<-", "how")
+## plots methods
+S3method("plots", "default")
+S3method("plots", "how")
+S3method("plots<-", "default")
+S3method("plots<-", "how")
 ## getFoo methods
 S3method("getBlocks", "default")
 S3method("getBlocks", "how")

@@ -32,7 +32,7 @@
 `doShuffle` <- function(ind, control) {
     ## collect strata at Plot level
     Pstrata <- getStrata(control, which = "plots", drop = TRUE)
-    plotCTRL <- getPlots(control)
+    plotCTRL <- plots(control)
     ## ...which need to be reduced to only those for `ind`
     Pstrata <- Pstrata[ind]
 

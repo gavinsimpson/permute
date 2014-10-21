@@ -123,8 +123,8 @@ h1 <- how(within = Within(type = "series", mirror = TRUE),
 update(h1, blocks = NULL)
 
 ## ... or switch the type of shuffling at a level:
-#update(h1, plots = update(getPlots(h1), type = "none"))
-plots2 <- update(getPlots(h1), type = "none")
+#update(h1, plots = update(plots(h1), type = "none"))
+plots2 <- update(plots(h1), type = "none")
 update(h1, plots = plots2)
 }
 \keyword{ utils  }

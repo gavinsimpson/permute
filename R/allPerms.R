@@ -95,7 +95,7 @@
     ## also need to update the $strata component of control
     ## FIXME: this really should have a toplevel function to set/update
     ## sub-components of control
-    ## Pl <- getPlots(control)
+    ## Pl <- plots(control)
     ## setStrata(Pl) <- strataP
     ## setPlots(control) <- Pl
     control$plots$strata <- strataP

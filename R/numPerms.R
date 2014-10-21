@@ -11,7 +11,7 @@
 
   ## get the permutation levels from control
   WI <- getWithin(control)
-  PL <- getPlots(control)
+  PL <- plots(control)
   BL <- blocks(control)
 
   ## any strata to permute within / blocking?

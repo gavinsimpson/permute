@@ -85,7 +85,7 @@
 `doShuffleSet` <- function(ind, nset = 1, control) {
     ## collect strata at Plot level
     Pstrata <- getStrata(control, which = "plots", drop = TRUE)
-    plotCTRL <- getPlots(control)
+    plotCTRL <- plots(control)
     typeP <- getType(control, which = "plots")
 
     ## collect the within control object
