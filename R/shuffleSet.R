@@ -22,7 +22,7 @@
         }
     } else {
         ## If strata present, either permute samples, strata or both
-        BL <- getBlocks(control)
+        BL <- blocks(control)
 
         ## permute strata?
         if(BL$type == "none") {
