@@ -3,7 +3,7 @@
 **permute** generates permutations from a range of restricted 
 permutation designs.
 
-## Build status
+### Build status
 
 Linux       | Windows
 ------------|------------
@@ -22,7 +22,7 @@ Several types of permutation are available in **permute**:
  * Permutation of plots or groups of samples.
  * Blocking factors which restrict permutations to within blocks. The preceding designs can be nested within blocks, allowing analysis of hierachical designs (e.g. split plot designs)
 
-## References
+### References
 
 Besag, J. and Clifford, P. (1989) Generalized Monte Carlo significance 
 tests. *Biometrika* **76**; 633&ndash;642.
