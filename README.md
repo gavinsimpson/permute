@@ -5,9 +5,9 @@ permutation designs.
 
 ### Build status
 
-Linux       | Windows
-------------|------------
-[![Build Status](https://travis-ci.org/gavinsimpson/permute.svg?branch=master)](https://travis-ci.org/gavinsimpson/cocorresp) | [![Build status](https://ci.appveyor.com/api/projects/status/ytql5bm7rphweeoh/branch/master)](https://ci.appveyor.com/project/gavinsimpson/permute/branch/master)
+Linux       | Windows    | CRAN Downloads
+------------|------------|----------------
+[![Build Status](https://travis-ci.org/gavinsimpson/permute.svg?branch=master)](https://travis-ci.org/gavinsimpson/permute) | [![Build status](https://ci.appveyor.com/api/projects/status/hc8dbxrim2nj3c1i/branch/master)](https://ci.appveyor.com/project/gavinsimpson/permute/branch/master) | [![](http://cranlogs.r-pkg.org/badges/grand-total/permute)](http://cran.rstudio.com/web/packages/permute/index.html)
 
 Permute provides an R implementation of the permutation schemes 
 developed by Cajo ter Braak and made available in the Canoco software, 
