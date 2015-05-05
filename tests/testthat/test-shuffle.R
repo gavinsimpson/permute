@@ -1,5 +1,5 @@
-library(testthat)
-library_if_available(permute)
+library("testthat")
+library("permute")
 
 context("Testing shuffle()")
 
