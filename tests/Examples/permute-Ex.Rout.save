@@ -1,6 +1,6 @@
 
-R version 3.0.2 Patched (2014-01-14 r64768) -- "Frisbee Sailing"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R version 3.2.0 Patched (2015-05-01 r68289) -- "Full of Ingredients"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -203,12 +203,60 @@ Contains observed ordering?: No
 > 
 > ### ** Examples
 > 
-> ## use example data from ?pyrifos in package vegan
-> require(vegan)
+> ## only run this example if vegan is available
+> if (require("vegan")) {
++     ## use example data from ?pyrifos in package vegan
++     example(pyrifos)
++ 
++     ## Demonstrate the maximum number of permutations for the pyrifos data
++     ## under a series of permutation schemes
++ 
++     ## no restrictions - lots of perms
++     CONTROL <- how(within = Within(type = "free"))
++     (check1 <- check(pyrifos, CONTROL))
++     ## summary(check1)
++     
++     ## no strata but data are series with no mirroring, so 132 permutations
++     CONTROL <- how(within = Within(type = "series", mirror = FALSE))
++     check(pyrifos, CONTROL)
++     
++     ## no strata but data are series with mirroring, so 264 permutations
++     CONTROL <- how(within = Within(type = "series", mirror = TRUE))
++     check(pyrifos, control = CONTROL)
++     
++     ## unrestricted within strata
++     check(pyrifos, control = how(plots = Plots(strata = ditch),
++                    within = Within(type = "free")))
++     
++     ## time series within strata, no mirroring
++     check(pyrifos,
++           control = how(plots = Plots(strata = ditch),
++           within = Within(type = "series", mirror = FALSE)))
++     
++     ## time series within strata, with mirroring
++     check(pyrifos,
++           control = how(plots = Plots(strata = ditch),
++           within = Within(type = "series", mirror = TRUE)))
++     
++     ## time series within strata, no mirroring, same permutation
++     ## within strata
++     check(pyrifos,
++           control = how(plots = Plots(strata = ditch),
++           within = Within(type = "series", constant = TRUE)))
++     
++     ## time series within strata, with mirroring, same permutation
++     ## within strata
++     check(pyrifos,
++           control = how(plots = Plots(strata = ditch),
++           within = Within(type = "series", mirror = TRUE,
++           constant = TRUE)))
++     ## permute strata
++     check(pyrifos, how(plots = Plots(strata = ditch, type = "free"),
++                        within = Within(type = "none")))
++ }
 Loading required package: vegan
 Loading required package: lattice
-This is vegan 2.0-10
-> example(pyrifos)
+This is vegan 2.3-0
 
 pyrifs> data(pyrifos)
 
@@ -217,67 +265,13 @@ pyrifs> ditch <- gl(12, 1, length=132)
 pyrifs> week <- gl(11, 12, labels=c(-4, -1, 0.1, 1, 2, 4, 8, 12, 15, 19, 24))
 
 pyrifs> dose <- factor(rep(c(0.1, 0, 0, 0.9, 0, 44, 6, 0.1, 44, 0.9, 0, 6), 11))
-> 
-> ## Demonstrate the maximum number of permutations for the pyrifos data
-> ## under a series of permutation schemes
-> 
-> ## no restrictions - lots of perms
-> CONTROL <- how(within = Within(type = "free"))
-> (check1 <- check(pyrifos, CONTROL))
-[1] 1.118249e+224
-> ##summary(check1)
-> 
-> ## no strata but data are series with no mirroring, so 132 permutations
-> CONTROL <- how(within = Within(type = "series", mirror = FALSE))
-> check(pyrifos, CONTROL)
 'nperm' > set of all permutations; Resetting 'nperm'.
-[1] 132
-> 
-> ## no strata but data are series with mirroring, so 264 permutations
-> CONTROL <- how(within = Within(type = "series", mirror = TRUE))
-> check(pyrifos, control = CONTROL)
-[1] 264
-> 
-> ## unrestricted within strata
-> check(pyrifos, control = how(plots = Plots(strata = ditch),
-+                              within = Within(type = "free")))
-[1] 1.636321e+91
-> 
-> ## time series within strata, no mirroring
-> check(pyrifos,
-+       control = how(plots = Plots(strata = ditch),
-+                     within = Within(type = "series", mirror = FALSE)))
-[1] 3.138428e+12
-> 
-> ## time series within strata, with mirroring
-> check(pyrifos,
-+       control = how(plots = Plots(strata = ditch),
-+                     within = Within(type = "series", mirror = TRUE)))
-[1] 1.2855e+16
-> 
-> ## time series within strata, no mirroring, same permutation
-> ## within strata
-> check(pyrifos,
-+       control = how(plots = Plots(strata = ditch),
-+                     within = Within(type = "series", constant = TRUE)))
 'nperm' > set of all permutations; Resetting 'nperm'.
 Set of permutations < 'minperm'. Generating entire set.
-[1] 11
-> 
-> ## time series within strata, with mirroring, same permutation
-> ## within strata
-> check(pyrifos,
-+       control = how(plots = Plots(strata = ditch),
-+                     within = Within(type = "series", mirror = TRUE,
-+                                     constant = TRUE)))
 'nperm' > set of all permutations; Resetting 'nperm'.
 Set of permutations < 'minperm'. Generating entire set.
-[1] 22
-> ## permute strata
-> check(pyrifos, how(plots = Plots(strata = ditch, type = "free"),
-+                    within = Within(type = "none")))
 [1] 479001600
-> 
+>     
 > ## this should also also for arbitrary vectors
 > vec1 <- check(1:100)
 > vec2 <- check(1:100, how())
@@ -1207,7 +1201,7 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.257 0.042 2.373 0 0 
+Time elapsed:  5.807 0.233 6.081 0 0 
 > grDevices::dev.off()
 null device 
           1 

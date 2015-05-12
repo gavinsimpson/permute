@@ -1,6 +1,19 @@
-$Date$
-
 permute ChangeLog
+
+Version 0.8-4
+
+	* Update testthat unit testing to recommended usage.
+
+	Reported by: Hadley Wickham
+
+	* Example using vegan data is now made conditional upon that
+	package being available.
+
+	Reported by: Jari Oksanen
+	Fix suggested by: Uwe Ligges
+
+	* blocks new in-devel extractor and replacement function `blocks`.
+	These are not currently exported so use at your own risk...
 
 Version 0.8-3
 
