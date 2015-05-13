@@ -55,17 +55,17 @@ rdepends_vegan ... NOTE
     Not an issue related to permute
 	 
  * **RAM**:
-         
-	* checking dependencies in R code ... NOTE
-        'library' or 'require' calls in package code:
-        ‘Heatplus’ ‘gtable’ ‘indicspecies’ ‘mapproj’
-        Please use :: or requireNamespace() instead.
-        See section 'Suggested packages' in the 'Writing R Extensions' manual.
+
+	 * checking dependencies in R code ... NOTE
+         'library' or 'require' calls in package code:
+         ‘Heatplus’ ‘gtable’ ‘indicspecies’ ‘mapproj’
+         Please use :: or requireNamespace() instead.
+         See section 'Suggested packages' in the 'Writing R Extensions' manual.
 
     Not an issue related to permute
  
  * **rich**:
-         
+
 	 * checking dependencies in R code ... NOTE
          Packages in Depends field not imported from:
           ‘boot’ ‘permute’ ‘vegan’
@@ -95,14 +95,14 @@ rdepends_vegan ... NOTE
     Not an issue related to permute
 
  * **Storm**:
- 
+
          * checking DESCRIPTION meta-information ... NOTE
          Malformed Title field: should not end in a period.
 
     Not an issue related to permute
 
  * **vegan**:
- 
+
          * checking Rd cross-references ... NOTE
          Packages unavailable to check Rd xrefs: ‘cclust’, ‘smacof’, ‘picante’
 
