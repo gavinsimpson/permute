@@ -56,11 +56,11 @@ rdepends_vegan ... NOTE
 	 
  * **RAM**:
          
-	  * checking dependencies in R code ... NOTE
-          'library' or 'require' calls in package code:
-          ‘Heatplus’ ‘gtable’ ‘indicspecies’ ‘mapproj’
-          Please use :: or requireNamespace() instead.
-          See section 'Suggested packages' in the 'Writing R Extensions' manual.
+	* checking dependencies in R code ... NOTE
+        'library' or 'require' calls in package code:
+        ‘Heatplus’ ‘gtable’ ‘indicspecies’ ‘mapproj’
+        Please use :: or requireNamespace() instead.
+        See section 'Suggested packages' in the 'Writing R Extensions' manual.
 
     Not an issue related to permute
  
