@@ -56,7 +56,7 @@ rdepends_vegan ... NOTE
 	 
  * **RAM**:
 
-	 * checking dependencies in R code ... NOTE
+	      * checking dependencies in R code ... NOTE
          'library' or 'require' calls in package code:
          ‘Heatplus’ ‘gtable’ ‘indicspecies’ ‘mapproj’
          Please use :: or requireNamespace() instead.
@@ -66,14 +66,14 @@ rdepends_vegan ... NOTE
  
  * **rich**:
 
-	 * checking dependencies in R code ... NOTE
+	      * checking dependencies in R code ... NOTE
          Packages in Depends field not imported from:
           ‘boot’ ‘permute’ ‘vegan’
           These packages need to be imported from (in the NAMESPACE file)
           for when this namespace is loaded but not attached.
 
-	 * checking R code for possible problems ... NOTE
-         File ‘rich/R/zzz.R’:
+	      * checking R code for possible problems ... NOTE
+          File ‘rich/R/zzz.R’:
            .onLoad calls:
              packageStartupMessage("This is rich ", utils::packageDescription("rich",     field = "Version"), appendLF = TRUE)
 
