@@ -3,3 +3,4 @@ LICENSE
 ^travis-tool\.sh
 ^appveyor\.yml$
 Makefile
+^cran-comments\.md$
