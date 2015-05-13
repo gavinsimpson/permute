@@ -71,12 +71,12 @@ rdepends_vegan ... NOTE
           ‘boot’ ‘permute’ ‘vegan’
           These packages need to be imported from (in the NAMESPACE file)
           for when this namespace is loaded but not attached.
-	 
+
 	 * checking R code for possible problems ... NOTE
          File ‘rich/R/zzz.R’:
            .onLoad calls:
              packageStartupMessage("This is rich ", utils::packageDescription("rich",     field = "Version"), appendLF = TRUE)
-         
+
          See section ‘Good practice’ in '?.onAttach'.
 
          c2cv : SRobs: no visible global function definition for ‘specpool’
