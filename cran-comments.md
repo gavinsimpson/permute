@@ -10,6 +10,19 @@ This is a minor maintenance release addressing two issues:
 
 Both issues are rectified in the 0.8-4 release.
 
+### `R CMD check` information
+
+`R CMD check` produces only the following point of interest if tested against the current CRAN version of **vegan**. I have included in **permute** reference materials for tests against the 2.3-0 version of **vegan** that Jari Oksanen, maintainer of that package, intends to release to CRAN this week too:
+
+```
+* checking differences from ‘permute-Ex.Rout’ to ‘permute-Ex.Rout.save’ ... OK
+
+235c235
+< This is vegan 2.2-1
+---
+> This is vegan 2.3-0
+```
+
 ### Reverse dependencies
 
 The output from `tools::check_packages_in_dir` for checks of reverse dependencies is reproduced below
