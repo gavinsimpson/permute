@@ -10,9 +10,15 @@ This is a minor maintenance release addressing two issues:
 
 Both issues are rectified in the 0.8-4 release.
 
+## Test Environments
+
+* Linux, Fedora 19 & 20 (r-release & r-devel)
+* Linux, Ubuntu 12.04, via Travis-CI (R 3.2.0)
+* win-builder (r-release & r-devel)
+
 ### `R CMD check` information
 
-`R CMD check` produces only the following point of interest if tested against the current CRAN version of **vegan**. I have included in **permute** reference materials for tests against the 2.3-0 version of **vegan** that Jari Oksanen, maintainer of that package, intends to release to CRAN this week too:
+`R CMD check` produces only the following point of interest if tested against the current CRAN version of **vegan**. I have included in **permute** 0.8-4 reference materials for tests against the 2.3-0 version of **vegan** that Jari Oksanen, maintainer of that package, intends to release to CRAN this week.
 
 ```
 * checking differences from ‘permute-Ex.Rout’ to ‘permute-Ex.Rout.save’ ... OK
@@ -105,7 +111,7 @@ rdepends_vegan ... NOTE
          rich : bspf: no visible global function definition for ‘boot’
          rich : bspf: no visible global function definition for ‘boot.ci’
 
-    Not an issue related to permute
+    Not issues related to permute
 
  * **Storm**:
 
