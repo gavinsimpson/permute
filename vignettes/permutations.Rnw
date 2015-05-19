@@ -2,7 +2,6 @@
 
 %\VignetteIndexEntry{Restricted permutations; using the permute package}
 %\VignettePackage{permute}
-%\VignetteDepends{vegan}
 
 %% almost as usual
 \author{Gavin L. Simpson\\University of Regina}
@@ -62,7 +61,7 @@ In many data sets, simply shuffling the data at random is inappropriate; under t
 As an illustration of both randomisation and simple usage of the \pkg{permute} package we consider a small data set of mandible length measurements on specimens of the golden jackal (\emph{Canis aureus}) from the British Museum of Natural History, London, UK. These data were collected as part of a study comparing prehistoric and modern canids \citep{higham80}, and were analysed by \citet{manly07}. There are ten measurements of mandible length on both male and female specimens. The data are available in the \code{jackal} data frame supplied with \pkg{permute}.
 
 <<load_jackal>>=
-require(permute)
+library("permute")
 data(jackal)
 jackal
 @
