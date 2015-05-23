@@ -94,12 +94,12 @@
                 MATCH <- Pstrata[perm] == lv
                 gr <- perm[MATCH]
                 if((n.gr <- length(gr)) > 1) {
-                    tmp[which(MATCH)] <-
+                    tmp[MATCH] <-
                         switch(typeW,
                                "free" = if(isTRUE(CONSTANT)) {
                                    gr[same.rand]
                                } else {
-                                   perm[gr][shuffleFree(n.gr, n.gr)]
+                                   gr[shuffleFree(n.gr, n.gr)]
                                },
                                "series" =
                                gr[shuffleSeries(seq_len(n.gr),

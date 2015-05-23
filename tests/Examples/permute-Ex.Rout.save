@@ -1,5 +1,5 @@
 
-R version 3.2.0 Patched (2015-05-01 r68289) -- "Full of Ingredients"
+R version 3.2.0 Patched (2015-05-04 r68320) -- "Full of Ingredients"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -902,7 +902,7 @@ Permutation details:
 > CTRL <- how(plots = Plots(gl(4, 5), type = "series"),
 +             within = Within(type = "free"))
 > shuffle(20, CTRL)
- [1]  2  1  3  4  5  6 10  9  7  8 11 12 13 14 15 16 18 20 17 19
+ [1] 12 11 13 14 15 16 20 19 17 18  1  2  3  4  5  6  8 10  7  9
 > 
 > ## permuting within blocks
 > grp <- gl(2, 10) # 2 groups of 10 samples each
@@ -1201,7 +1201,7 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.807 0.233 6.081 0 0 
+Time elapsed:  3.827 0.049 3.872 0 0 
 > grDevices::dev.off()
 null device 
           1 
