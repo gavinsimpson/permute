@@ -99,7 +99,7 @@
                                "free" = if(isTRUE(CONSTANT)) {
                                    gr[same.rand]
                                } else {
-                                   perm[gr][shuffleFree(n.gr, n.gr)]
+                                   perm[MATCH][shuffleFree(n.gr, n.gr)]
                                },
                                "series" =
                                gr[shuffleSeries(seq_len(n.gr),
