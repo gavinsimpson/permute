@@ -40,3 +40,15 @@ test_that("shuffleSet returns a matrix even for nset == 1", {
     ss <- shuffleSet(25, nset = 1, control = h)
     expect_that(ss, is_a("matrix"))
 })
+
+test_that("shuffle can permute both plots and within in presence of blocks", {
+    ## Example from @LindsayVass on github #9
+    control <- how(within = Within(type = "free"),
+                   plots = Plots(strata = rep(gl(2,7),2), type = "free"),
+                   blocks = gl(2, 14))
+    permSet <- shuffleSet(28, 100, control = control)
+    expect_that(nrow(permSet), is_identical_to(100L))
+    expect_that(ncol(permSet), is_identical_to(28L))
+    expect_that(permSet, is_a("permutationMatrix"))
+    expect_that(permSet, is_a("matrix"))
+})
