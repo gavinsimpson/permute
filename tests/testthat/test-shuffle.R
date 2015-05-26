@@ -41,3 +41,13 @@ test_that("shuffle() works for non-contigous blocks of samples", {
     out2 <- factor(as.integer(rep(c(3,2,1,4), 5)), levels = 1:4)
     expect_that(Plot[result], is_identical_to(out2))
 })
+
+test_that("shuffle can permute both plots and within in presence of blocks", {
+    ## Example from @LindsayVass on github #9
+    control <- how(within = Within(type = "free"),
+                   plots = Plots(strata = rep(gl(2,7),2), type = "free"),
+                   blocks = gl(2, 14))
+    permSet <- shuffle(28, control = control)
+    expect_that(length(permSet), is_identical_to(28L))
+    expect_that(permSet, is_a("integer"))
+})
