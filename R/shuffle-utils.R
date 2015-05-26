@@ -2,7 +2,10 @@
 `shuffleStrata` <- function(strata, type, mirror = FALSE, start = NULL,
                             flip = NULL, nrow, ncol, start.row = NULL,
                             start.col = NULL) {
-    lev <- length(LEVS <- levels(strata))
+    ## drop unused levels
+    strata <- droplevels(strata)
+    LEVS <- levels(strata)
+    lev <- nlevels(strata)
     ngr <- length(strata) / lev
     SEQ <- seq_len(lev)
     sp <- split(out <- seq_along(strata), strata)
