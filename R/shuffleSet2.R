@@ -128,7 +128,7 @@
         } else {
             for(i in seq_len(nset)) {
                 Set[i,] <- do.call(shuffleStrata,
-                                   list(strata = Pstrata,
+                                   list(strata = Pstrata[ind],
                                         type = typeP,
                                         mirror = plotCTRL$mirror,
                                         flip = NULL, ## runif(1L) < 0.5 ??
