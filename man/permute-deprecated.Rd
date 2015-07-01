@@ -1,4 +1,5 @@
 \name{permute-deprecated}
+\alias{permute-deprecated}
 
 \title{Deprecated functions in package permute}
 

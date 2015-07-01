@@ -15,6 +15,10 @@ Version 0.8-4
 	* blocks new in-devel extractor and replacement function `blocks`.
 	These are not currently exported so use at your own risk...
 
+	* permute-deprecate.Rd was missing an \alias{}
+
+	Reported by: Kurt Hornik (CRAN)
+
 Version 0.8-3
 
 	* allPerms: with free permutations *within* plots, `allPerms()`
