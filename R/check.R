@@ -71,9 +71,10 @@
     ## get number of possible permutations
     num.pos <- numPerms(object, control)
 
-    ## check if number requested permutations exceeds max possible
+    ## check if number requested permutations exceeds or equals max
+    ## possible
     nperm <- getNperm(control)
-    if(nperm + EPS > num.pos - 1) {
+    if(nperm + EPS > num.pos - !getObserved(control)) {
         setComplete(control) <- TRUE
         setMaxperm(control) <- num.pos
         if(!quietly)
