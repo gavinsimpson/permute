@@ -81,18 +81,13 @@
             message("'nperm' >= set of all permutations: complete enumeration.")
     }
 
-    ## if number of possible perms < minperm or <= 7! turn on complete
+    ## if number of possible perms < minperm turn on complete
     ## enumeration
-    if((num.pos - !getObserved(control) < getMinperm(control) + EPS)) {
+    if((num.pos - !getObserved(control)) < getMinperm(control) + EPS) {
         setComplete(control) <- TRUE
         setMaxperm(control) <- num.pos
         if(!quietly)
             message("Set of permutations < 'minperm'. Generating entire set.")
-    } else if (num.pos < 5040 + EPS) { # num.pos is not an integer!
-        ## sample from complete enumeration but quietly and do not
-        ## reset nperm
-        setComplete(control) <- TRUE
-        setMaxperm(control) <- num.pos
     }
 
     ## if complete enumeration, generate all permutations

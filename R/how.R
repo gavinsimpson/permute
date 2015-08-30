@@ -4,7 +4,7 @@
                   nperm = 199,
                   complete = FALSE,
                   maxperm = 9999,
-                  minperm = 99,
+                  minperm = 5040,
                   all.perms = NULL,
                   make = TRUE,
                   observed = FALSE) {
