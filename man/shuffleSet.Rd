@@ -11,7 +11,7 @@
   set of permutations.
 }
 \usage{
-shuffleSet(n, nset, control = how(), check = TRUE)
+shuffleSet(n, nset, control = how(), check = TRUE, quietly = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,6 +33,7 @@ shuffleSet(n, nset, control = how(), check = TRUE)
     the stated number of observations and update \code{control}
     accordingly. See Details.
   }
+  \item{quietly}{logical; should messages by suppressed?}
 }
 \details{
   \code{shuffleSet} is designed to generate a set of \code{nset}
