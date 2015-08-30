@@ -77,7 +77,7 @@
 
     ## Meta data
     writeLines("Permutation details:")
-    writeLines(strwrap(paste("Number of permutations requested:",
+    writeLines(strwrap(paste("Number of permutations:",
                              getNperm(x)), prefix = pfix))
     writeLines(strwrap(paste("Max. number of permutations allowed:",
                              getMaxperm(x)), prefix = pfix))
