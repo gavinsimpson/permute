@@ -1,7 +1,6 @@
 ## new version of shuffleSet() that allows for blocking
-`shuffleSet` <-
-    function(n, nset, control = how(), check = TRUE, quietly = FALSE)
-{
+`shuffleSet` <- function(n, nset, control = how(), check = TRUE,
+                         quietly = FALSE) {
     ## Store the .Random.seed, if it exists, so we can attach this as
     ## an attribute to the permutation matrix returned in out
     SEED <- NULL
