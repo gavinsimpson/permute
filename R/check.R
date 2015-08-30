@@ -74,9 +74,10 @@
     ## check if number requested permutations exceeds or equals max
     ## possible
     nperm <- getNperm(control)
-    if(nperm + EPS > num.pos - !getObserved(control)) {
+    if(nperm + EPS > (num.pos - !getObserved(control))) {
         setComplete(control) <- TRUE
         setMaxperm(control) <- num.pos
+        setNperm(control) <- num.pos - !getObserved(control)
         if(!quietly)
             message("'nperm' >= set of all permutations: complete enumeration.")
     }
