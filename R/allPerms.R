@@ -70,7 +70,7 @@
     if(!(observed <- getObserved(control))) {
         obs.v <- seq_len(n)
         obs.row <- apply(out, 1, function(x, obs.v) all(x == obs.v), obs.v)
-        out <- out[!obs.row, ]
+        out <- out[!obs.row, , drop = FALSE]
         ## reduce the number of permutations to get rid of the
         ## observed ordering
         setNperm(control) <- getNperm(control) - 1
