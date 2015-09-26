@@ -1,7 +1,7 @@
 
-R version 3.2.0 Patched (2015-05-04 r68320) -- "Full of Ingredients"
+R version 3.2.2 Patched (2015-09-13 r69379) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -127,9 +127,9 @@ Within Plots:
   Grid dimensions: 3 rows 2 cols
 
 Permutation details:
-  Number of permutations requested: 199
+  Number of permutations: 199
   Max. number of permutations allowed: 9999
-  Evaluate all permutations?: No.  Activation limit: 99
+  Evaluate all permutations?: No.  Activation limit: 5040
 
 All permutations:
 Contains observed ordering?: Yes 
@@ -168,9 +168,9 @@ Within Plots:
   Grid dimensions: 3 rows 2 cols
 
 Permutation details:
-  Number of permutations requested: 198
+  Number of permutations: 198
   Max. number of permutations allowed: 9999
-  Evaluate all permutations?: No.  Activation limit: 99
+  Evaluate all permutations?: No.  Activation limit: 5040
 
 All permutations:
 Contains observed ordering?: No 
@@ -265,10 +265,12 @@ pyrifs> ditch <- gl(12, 1, length=132)
 pyrifs> week <- gl(11, 12, labels=c(-4, -1, 0.1, 1, 2, 4, 8, 12, 15, 19, 24))
 
 pyrifs> dose <- factor(rep(c(0.1, 0, 0, 0.9, 0, 44, 6, 0.1, 44, 0.9, 0, 6), 11))
-'nperm' > set of all permutations; Resetting 'nperm'.
-'nperm' > set of all permutations; Resetting 'nperm'.
+'nperm' >= set of all permutations: complete enumeration.
 Set of permutations < 'minperm'. Generating entire set.
-'nperm' > set of all permutations; Resetting 'nperm'.
+Set of permutations < 'minperm'. Generating entire set.
+'nperm' >= set of all permutations: complete enumeration.
+Set of permutations < 'minperm'. Generating entire set.
+'nperm' >= set of all permutations: complete enumeration.
 Set of permutations < 'minperm'. Generating entire set.
 [1] 479001600
 >     
@@ -278,10 +280,13 @@ Set of permutations < 'minperm'. Generating entire set.
 > all.equal(vec1, vec2)
 [1] TRUE
 > vec3 <- check(1:100, how(within = Within(type = "series")))
-'nperm' > set of all permutations; Resetting 'nperm'.
+'nperm' >= set of all permutations: complete enumeration.
+Set of permutations < 'minperm'. Generating entire set.
 > all.equal(100, vec3$n)
 [1] TRUE
 > vec4 <- check(1:100, how(within = Within(type= "series", mirror = TRUE)))
+'nperm' >= set of all permutations: complete enumeration.
+Set of permutations < 'minperm'. Generating entire set.
 > all.equal(vec4$n, 200)
 [1] TRUE
 > 
@@ -291,7 +296,7 @@ Set of permutations < 'minperm'. Generating entire set.
 +             within = Within(type = "grid", mirror = FALSE,
 +                             constant = TRUE, nrow = 3, ncol = 2))
 > check(1:12, ctrl)
-'nperm' > set of all permutations; Resetting 'nperm'.
+'nperm' >= set of all permutations: complete enumeration.
 Set of permutations < 'minperm'. Generating entire set.
 [1] 6
 > 
@@ -367,9 +372,9 @@ Within Plots:
   Grid dimensions: 3 rows 2 cols
 
 Permutation details:
-  Number of permutations requested: 199
+  Number of permutations: 199
   Max. number of permutations allowed: 9999
-  Evaluate all permutations?: No.  Activation limit: 99
+  Evaluate all permutations?: No.  Activation limit: 5040
 
 All permutations:
 Contains observed ordering?: Yes 
@@ -402,9 +407,9 @@ Within Plots:
   Grid dimensions: 3 rows 2 cols
 
 Permutation details:
-  Number of permutations requested: 198
+  Number of permutations: 198
   Max. number of permutations allowed: 9999
-  Evaluate all permutations?: No.  Activation limit: 99
+  Evaluate all permutations?: No.  Activation limit: 5040
 
 All permutations:
 Contains observed ordering?: No 
@@ -572,9 +577,9 @@ Within Plots:
   Different permutation within each Plot?: Yes
 
 Permutation details:
-  Number of permutations requested: 199
+  Number of permutations: 199
   Max. number of permutations allowed: 9999
-  Evaluate all permutations?: No.  Activation limit: 99
+  Evaluate all permutations?: No.  Activation limit: 5040
 > 
 > ## ... or switch the type of shuffling at a level:
 > #update(h1, plots = update(getPlots(h1), type = "none"))
@@ -597,9 +602,9 @@ Within Plots:
   Different permutation within each Plot?: Yes
 
 Permutation details:
-  Number of permutations requested: 199
+  Number of permutations: 199
   Max. number of permutations allowed: 9999
-  Evaluate all permutations?: No.  Activation limit: 99
+  Evaluate all permutations?: No.  Activation limit: 5040
 > 
 > 
 > 
@@ -1115,69 +1120,71 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > numPerms(20, control = CTRL)
 [1] 120
 > shuffleSet(20, 10, CTRL) ## check this.
+Set of permutations < 'minperm'. Generating entire set.
 No. of Permutations: 10
 No. of Samples: 20 (Nested in: plots; Randomised; same permutation in
 each plot)
 Restricted by Plots: gl(4, 5) (4 plots)
 
       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
- [1,]    1    2    5    3    4    6    7   10    8     9    11    12    15
- [2,]    1    3    4    5    2    6    8    9   10     7    11    13    14
- [3,]    1    2    5    3    4    6    7   10    8     9    11    12    15
- [4,]    2    1    3    4    5    7    6    8    9    10    12    11    13
- [5,]    4    1    5    3    2    9    6   10    8     7    14    11    15
- [6,]    4    1    2    5    3    9    6    7   10     8    14    11    12
- [7,]    5    1    3    4    2   10    6    8    9     7    15    11    13
- [8,]    1    5    3    2    4    6   10    8    7     9    11    15    13
- [9,]    3    1    2    5    4    8    6    7   10     9    13    11    12
-[10,]    4    2    5    3    1    9    7   10    8     6    14    12    15
+ [1,]    1    5    4    3    2    6   10    9    8     7    11    15    14
+ [2,]    2    3    1    5    4    7    8    6   10     9    12    13    11
+ [3,]    1    5    4    2    3    6   10    9    7     8    11    15    14
+ [4,]    3    2    4    1    5    8    7    9    6    10    13    12    14
+ [5,]    4    3    5    2    1    9    8   10    7     6    14    13    15
+ [6,]    1    2    5    3    4    6    7   10    8     9    11    12    15
+ [7,]    3    4    1    2    5    8    9    6    7    10    13    14    11
+ [8,]    5    1    3    4    2   10    6    8    9     7    15    11    13
+ [9,]    2    5    1    3    4    7   10    6    8     9    12    15    11
+[10,]    1    3    2    4    5    6    8    7    9    10    11    13    12
       [,14] [,15] [,16] [,17] [,18] [,19] [,20]
- [1,]    13    14    16    17    20    18    19
- [2,]    15    12    16    18    19    20    17
- [3,]    13    14    16    17    20    18    19
- [4,]    14    15    17    16    18    19    20
- [5,]    13    12    19    16    20    18    17
- [6,]    15    13    19    16    17    20    18
- [7,]    14    12    20    16    18    19    17
- [8,]    12    14    16    20    18    17    19
- [9,]    15    14    18    16    17    20    19
-[10,]    13    11    19    17    20    18    16
+ [1,]    13    12    16    20    19    18    17
+ [2,]    15    14    17    18    16    20    19
+ [3,]    12    13    16    20    19    17    18
+ [4,]    11    15    18    17    19    16    20
+ [5,]    12    11    19    18    20    17    16
+ [6,]    13    14    16    17    20    18    19
+ [7,]    12    15    18    19    16    17    20
+ [8,]    14    12    20    16    18    19    17
+ [9,]    13    14    17    20    16    18    19
+[10,]    14    15    16    18    17    19    20
 > 
 > ## time series within each level of Plot strata
 > CTRL <- how(plots = plotStrata,
 +             within = Within(type = "series"))
 > shuffleSet(20, 10, CTRL)
+Set of permutations < 'minperm'. Generating entire set.
 No. of Permutations: 10
 No. of Samples: 20 (Nested in: plots; Sequence)
 Restricted by Plots: gl(4, 5) (4 plots)
 
       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
- [1,]    1    2    3    4    5    6    7    8    9    10    15    11    12
- [2,]    5    1    2    3    4    6    7    8    9    10    13    14    15
- [3,]    1    2    3    4    5    7    8    9   10     6    13    14    15
- [4,]    2    3    4    5    1    9   10    6    7     8    11    12    13
- [5,]    2    3    4    5    1    9   10    6    7     8    13    14    15
- [6,]    3    4    5    1    2    9   10    6    7     8    12    13    14
- [7,]    5    1    2    3    4    9   10    6    7     8    12    13    14
- [8,]    4    5    1    2    3    6    7    8    9    10    13    14    15
- [9,]    2    3    4    5    1    6    7    8    9    10    14    15    11
-[10,]    3    4    5    1    2    6    7    8    9    10    13    14    15
+ [1,]    2    3    4    5    1   10    6    7    8     9    14    15    11
+ [2,]    3    4    5    1    2   10    6    7    8     9    12    13    14
+ [3,]    2    3    4    5    1   10    6    7    8     9    11    12    13
+ [4,]    2    3    4    5    1   10    6    7    8     9    13    14    15
+ [5,]    3    4    5    1    2    7    8    9   10     6    14    15    11
+ [6,]    3    4    5    1    2    7    8    9   10     6    15    11    12
+ [7,]    2    3    4    5    1   10    6    7    8     9    13    14    15
+ [8,]    1    2    3    4    5    6    7    8    9    10    13    14    15
+ [9,]    3    4    5    1    2   10    6    7    8     9    12    13    14
+[10,]    4    5    1    2    3    9   10    6    7     8    14    15    11
       [,14] [,15] [,16] [,17] [,18] [,19] [,20]
- [1,]    13    14    18    19    20    16    17
- [2,]    11    12    18    19    20    16    17
- [3,]    11    12    19    20    16    17    18
- [4,]    14    15    16    17    18    19    20
- [5,]    11    12    20    16    17    18    19
- [6,]    15    11    18    19    20    16    17
- [7,]    15    11    20    16    17    18    19
- [8,]    11    12    16    17    18    19    20
- [9,]    12    13    17    18    19    20    16
-[10,]    11    12    19    20    16    17    18
+ [1,]    12    13    18    19    20    16    17
+ [2,]    15    11    17    18    19    20    16
+ [3,]    14    15    18    19    20    16    17
+ [4,]    11    12    19    20    16    17    18
+ [5,]    12    13    19    20    16    17    18
+ [6,]    13    14    17    18    19    20    16
+ [7,]    11    12    18    19    20    16    17
+ [8,]    11    12    17    18    19    20    16
+ [9,]    15    11    18    19    20    16    17
+[10,]    12    13    18    19    20    16    17
 > ## as above, but  with same permutation for each Plot-level stratum
 > CTRL <- how(plots = plotStrata,
 +             within = Within(type = "series", constant = TRUE))
 > shuffleSet(20, 10, CTRL)
-'nperm' > set of all permutations; Resetting 'nperm'.
+'nperm' >= set of all permutations: complete enumeration.
 Set of permutations < 'minperm'. Generating entire set.
 No. of Permutations: 4
 No. of Samples: 20 (Nested in: plots; Sequence; same permutation in
@@ -1201,7 +1208,7 @@ Restricted by Plots: gl(4, 5) (4 plots)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.827 0.049 3.872 0 0 
+Time elapsed:  3.829 0.044 3.871 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -16,7 +16,7 @@
 \usage{
 how(within = Within(), plots = Plots(), blocks = NULL,
     nperm = 199, complete = FALSE, maxperm = 9999,
-    minperm = 99, all.perms = NULL, make = TRUE,
+    minperm = 5040, all.perms = NULL, make = TRUE,
     observed = FALSE)
 
 Within(type = c("free","series","grid","none"),
@@ -43,10 +43,12 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
     \code{"free"}, \code{"series"}, \code{"grid"} or \code{"none"}. See
     Details.} 
   \item{maxperm}{numeric; the maximum number of permutations to
-    perform. Currently unused.} 
+    perform. Currently unused.}
   \item{minperm}{numeric; the lower limit to the number of possible
-    permutations at which complete enumeration is performed. See argument
-    \code{complete} and Details, below.} 
+    permutations at which complete enumeration is performed. When
+    \code{nperm} is lower than \code{minperm}, sampling is performed
+    from the set of complete permutations to avoid duplicate
+    permutations. See argument \code{complete} and Details, below.}
   \item{all.perms}{an object of class \code{allPerms}, the result of a
     call to \code{\link{allPerms}}.}
   \item{make}{logical; should \code{check} generate all possible

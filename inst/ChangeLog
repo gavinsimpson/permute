@@ -1,5 +1,24 @@
 permute ChangeLog
 
+Version 0.8-5
+
+	* shuffleSet gains new argument `quietly = FALSE`, which is
+	passed on to `check()` to allow control over printing of
+	statements during checking.
+
+	Reported by: (and fixed by) Jari Oksanen
+
+	* allPerms would return a vector instead of a matrix when a
+	single permutation was generated.
+
+	Reported by: (and fixed by) Jari Oksanen
+
+	* Better defaults for `check()` heuristics allow for more
+	reliable (i.e. fewer duplicate permutations) permutations when
+	the set of permutations is small.
+
+	Provided by: Jari Oksanen
+
 Version 0.8-4
 
 	* Update testthat unit testing to recommended usage.

@@ -43,10 +43,12 @@ check(object, control = how(), quietly = FALSE)
   and complete enumeration of all permutations is turned on
   (\code{control$complete} is set to \code{TRUE}). 
 
-  Alternatively, if the number of possible permutations is low, and less
-  than \code{control$minperm}, it is better to enumerate all possible
-  permutations, and as such complete enumeration of all permutations is
-  turned  on (\code{control$complete} is set to \code{TRUE}).
+  Alternatively, if the number of possible permutations is low, and
+  less than \code{control$minperm}, it is better to enumerate all
+  possible permutations, and as such complete enumeration of all
+  permutations is turned on (\code{control$complete} is set to
+  \code{TRUE}). This guarantees that permutations are all unique and
+  there are no duplicates.
 }
 \value{
   For \code{check} a list containing the maximum number of
