@@ -32,9 +32,11 @@
         return(v)
     }
     sp <- split(v, strata)
-    ## build permutations by concatenating components of sp
-    ## for each row of level permutations
-    for(i in seq_len(nrow(perms)))
-        X[i,] <- unname(do.call(c, sp[perms[i,]]))
+    ## build permutations by permuting the split indices (as list)
+    ## then undo the original splitting. This respects original indices
+    ## of the samples, even where strata ar not contiguous
+    for(i in seq_len(nrow(perms))) {
+        X[i, ] <- unsplit(sp[perms[i, ]], strata)
+    }
     X
 }
