@@ -1,5 +1,11 @@
 `check` <- function(object, control = how(), quietly = FALSE)
 {
+    ## In pricinple we are mainly dealing with integers, but many
+    ## functions do not return integers but double, and the numbers
+    ## can be so large that they overflow integer and they really must be
+    ## double. Therefore we define EPS as a nice value between two
+    ## successive integers
+    EPS <- 0.5
     ## if object is numeric or integer and of length 1,
     ## extend the object
     if(length(object) == 1 &&
@@ -65,19 +71,21 @@
     ## get number of possible permutations
     num.pos <- numPerms(object, control)
 
-    ## check if number requested permutations exceeds max possible
-    if(getNperm(control) > num.pos) {
+    ## check if number requested permutations exceeds or equals max
+    ## possible
+    nperm <- getNperm(control)
+    if(nperm + EPS > (num.pos - !getObserved(control))) {
         setComplete(control) <- TRUE
-        setNperm(control) <- num.pos
         setMaxperm(control) <- num.pos
+        setNperm(control) <- num.pos - !getObserved(control)
         if(!quietly)
-            message("'nperm' > set of all permutations; Resetting 'nperm'.")
+            message("'nperm' >= set of all permutations: complete enumeration.")
     }
 
-    ## if number of possible perms < minperm turn on complete enumeration
-    if((num.pos < getMinperm(control))) {
+    ## if number of possible perms < minperm turn on complete
+    ## enumeration
+    if((num.pos - !getObserved(control)) < getMinperm(control) + EPS) {
         setComplete(control) <- TRUE
-        setNperm(control) <- num.pos
         setMaxperm(control) <- num.pos
         if(!quietly)
             message("Set of permutations < 'minperm'. Generating entire set.")
