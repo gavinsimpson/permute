@@ -19,6 +19,12 @@ Version 0.8-5
 
 	Provided by: Jari Oksanen
 
+	* allStrata did not handle cases where strata were not in
+	contiguous blocks:
+	e.g. `c(1, 2, 3, 1, 2, 3)` vs `c(1, 1, 2, 2, 3, 3)`
+
+	Reported by: David Warton
+
 Version 0.8-4
 
 	* Update testthat unit testing to recommended usage.
