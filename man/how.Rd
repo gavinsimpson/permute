@@ -47,8 +47,8 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   \item{minperm}{numeric; the lower limit to the number of possible
     permutations at which complete enumeration is performed. When
     \code{nperm} is lower than \code{minperm}, sampling is performed
-    from complete permutations to avoid duplicated permutations. See
-    argument \code{complete} and Details, below.}
+    from the set of complete permutations to avoid duplicate
+    permutations. See argument \code{complete} and Details, below.}
   \item{all.perms}{an object of class \code{allPerms}, the result of a
     call to \code{\link{allPerms}}.}
   \item{make}{logical; should \code{check} generate all possible
