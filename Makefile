@@ -17,6 +17,10 @@ check: build
 	cd ..;\
 	R CMD check permute_$(PKGVERS).tar.gz
 
+check-devel: build
+	cd ..;\
+	R-devel CMD check permute_$(PKGVERS).tar.gz
+
 check-cran: build
 	cd ..;\
 	R CMD check --as-cran permute_$(PKGVERS).tar.gz
