@@ -125,3 +125,36 @@ test_that("allPerms; plots: within; plot free - uneven plot sizes", {
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
     expect_false(dup, info = "Plots: uneven; within: free; observed")
 })
+
+test_that("allPerms; permuting plots only -- non-contiguous plots", {
+    transect <- rep(gl(2,2), 2)
+    ll <- length(transect)
+    ctrl <- how(Within(type = "none"), Plots(type = "free", strata = transect))
+
+    ## without observed
+    ref <- matrix(c(3L,4L,1L,2L,7L,8L,5L,6L), nrow = 1, byrow = TRUE)
+    perm <- allPerms(ll, ctrl)
+    attr(perm, "control") <- NULL
+    attr(perm, "observed") <- NULL
+    class(perm) <- "matrix"
+    expect_that(numPerms(ll, control = ctrl), equals(2L),
+                info = "Number of permutations is wrong")
+    expect_that(nrow(perm), equals(1L),
+                info = "Number of rows in permutation matrix != 1")
+    expect_identical(perm, ref)
+
+    ## with observed
+    setObserved(ctrl) <- TRUE
+    ref <- matrix(c(1L,2L,3L,4L,5L,6L,7L,8L,
+                    3L,4L,1L,2L,7L,8L,5L,6L), nrow = 2, byrow = TRUE)
+    perm <- allPerms(ll, ctrl)
+    attr(perm, "control") <- NULL
+    attr(perm, "observed") <- NULL
+    class(perm) <- "matrix"
+    expect_that(numPerms(ll, control = ctrl), equals(2L),
+                info = "Number of permutations is wrong")
+    expect_that(nrow(perm), equals(2L),
+                info = "Number of rows in permutation matrix != 2")
+    expect_identical(perm, ref,
+                     info = "All permutations doesn't match reference")
+})
