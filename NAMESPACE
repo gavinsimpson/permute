@@ -60,6 +60,7 @@ if (getRversion() >= "2.13.0") {
 }
 
 ### S3 Methods
+S3method("as.matrix", "allPerms")
 S3method("as.matrix", "permutationMatrix")
 S3method("update", "how")
 S3method("update", "Plots")
