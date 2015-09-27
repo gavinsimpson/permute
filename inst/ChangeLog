@@ -28,6 +28,8 @@ Version 0.8-5
 	* Permutation matrices returned by `shuffleSet()` now print the
 	permutations more compactfully.
 
+	* as.matrix.allPerms: new S3 method for class `allPerms`
+
 Version 0.8-4
 
 	* Update testthat unit testing to recommended usage.
