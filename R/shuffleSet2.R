@@ -19,6 +19,13 @@
         setNperm(control) <- nset ## this fixes the control$call too!
     }
 
+    ## handle a vector, matrix, or data frame input; derive n from it
+    if (((is.numeric(n) || is.integer(n) || is.factor(n)) &&
+         length(n) > 1L) ||
+        is.matrix(n) ||
+        is.data.frame(n)) {
+        n <- nobs(n)
+    }
     sn <- seq_len(n) ## sequence of samples in order of input
 
     ## if checking permutation design, may end up with more perms
