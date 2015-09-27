@@ -25,6 +25,9 @@ Version 0.8-5
 
 	Reported by: David Warton
 
+	* Permutation matrices returned by `shuffleSet()` now print the
+	permutations more compactfully.
+
 Version 0.8-4
 
 	* Update testthat unit testing to recommended usage.
