@@ -3,6 +3,7 @@
 \alias{print.allPerms}
 \alias{summary.allPerms}
 \alias{print.summary.allPerms}
+\alias{as.matrix.allPerms}
 
 \title{Complete enumeration of all possible permutations}
 \description{
