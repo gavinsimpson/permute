@@ -14,7 +14,7 @@
 \usage{
 shuffleSet(n, nset, control = how(), check = TRUE, quietly = FALSE)
 
-\method(as.matrix}{permutationMatrix}(x, \dots)
+\method{as.matrix}{permutationMatrix}(x, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -42,6 +42,10 @@ shuffleSet(n, nset, control = how(), check = TRUE, quietly = FALSE)
   \item{x}{
     an object of class \code{"permutationMatrix"}, as returned by
     \code{shuffleSet}.
+  }
+  \item{\dots}{
+    arguments passed to other methods. For the \code{as.matrix} method
+    only.
   }
 }
 \details{
