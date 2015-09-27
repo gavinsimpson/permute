@@ -19,3 +19,6 @@ if (getRversion() < "2.13.0")
     NROW(object)
 }
 
+`nobs.factor` <- function(object, ...) {
+    length(object)
+}
