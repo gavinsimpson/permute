@@ -59,6 +59,10 @@ if (getRversion() >= "2.13.0") {
     export(nobs)
 }
 
+### After R 3.2.x, R-Devel required all non-Base functions to be
+### imported
+importFrom("stats", "getCall", "runif", "update")
+
 ### S3 Methods
 S3method("as.matrix", "allPerms")
 S3method("as.matrix", "permutationMatrix")
