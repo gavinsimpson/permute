@@ -156,3 +156,18 @@ test_that("allPerms; permuting plots only -- non-contiguous plots", {
     expect_identical(perm, ref,
                      info = "All permutations doesn't match reference")
 })
+
+## Grid permutations
+test_that("Can generate permutations from a grid design", {
+    ## spatial grids within each level of plot, 3 x (4r x 4c)
+    nr <- 4
+    nc <- 4
+    np <- 3 ## number of plots
+    plots <- Plots(gl(np, prod(nr, nc)))
+    CTRL <- how(plots = plots,
+                within = Within(type = "grid", ncol = nc, nrow = nr))
+    perms <- allPerms(prod(nr, nc, np), control = CTRL)
+
+    expect_is(perms, "allPerms")
+    expect_is(perms, "matrix")
+})
