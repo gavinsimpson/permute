@@ -12,7 +12,6 @@ r_binary_packages:
   - crayon
   - lazyeval
   - jsonlite
-  - rex
   - htmltools
 
 r_github_packages:
