@@ -167,7 +167,36 @@ test_that("Can generate permutations from a grid design", {
     CTRL <- how(plots = plots,
                 within = Within(type = "grid", ncol = nc, nrow = nr))
     perms <- allPerms(prod(nr, nc, np), control = CTRL)
+    nperms <- numPerms(prod(nr, nc, np), control = CTRL)
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
+    expect_equal(nperms, nrow(perms) + 1L)
+})
+
+test_that("grids with 2 columns only work correctly", {
+    ## spatial grids within each level of plot, (4r x 2c)
+    nr <- 4
+    nc <- 2
+    CTRL <- how(within = Within(type = "grid", ncol = nc, nrow = nr))
+    perms <- allPerms(prod(nr, nc), control = CTRL)
+    nperms <- numPerms(prod(nr, nc), control = CTRL)
+
+    expect_is(perms, "allPerms")
+    expect_is(perms, "matrix")
+    expect_equal(nperms, nrow(perms) + 1L)
+
+    ## spatial grids within each level of plot, 3 x (4r x 2c)
+    nr <- 4
+    nc <- 2
+    np <- 3 ## number of plots
+    plots <- Plots(gl(np, prod(nr, nc)))
+    CTRL <- how(plots = plots,
+                within = Within(type = "grid", ncol = nc, nrow = nr))
+    perms <- allPerms(prod(nr, nc, np), control = CTRL)
+    nperms <- numPerms(prod(nr, nc, np), control = CTRL)
+
+    expect_is(perms, "allPerms")
+    expect_is(perms, "matrix")
+    expect_equal(nperms, nrow(perms) + 1L)
 })
