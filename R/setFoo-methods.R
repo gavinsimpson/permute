@@ -14,12 +14,6 @@
     object
 }
 
-`setNperm<-.permControl` <- function(object, value) {
-    object[["nperm"]] <- value
-    object <- fixupCall(object, "nperm", value)
-    object
-}
-
 `setMaxperm<-` <- function(object, value) {
     UseMethod("setMaxperm<-")
 }
@@ -29,12 +23,6 @@
 }
 
 `setMaxperm<-.how` <- function(object, value) {
-    object[["maxperm"]] <- value
-    object <- fixupCall(object, "maxperm", value)
-    object
-}
-
-`setMaxperm<-.permControl` <- function(object, value) {
     object[["maxperm"]] <- value
     object <- fixupCall(object, "maxperm", value)
     object
@@ -54,12 +42,6 @@
     object
 }
 
-`setMinperm<-.permControl` <- function(object, value) {
-    object[["minperm"]] <- value
-    object <- fixupCall(object, "minperm", value)
-    object
-}
-
 `setComplete<-` <- function(object, value) {
     UseMethod("setComplete<-")
 }
@@ -69,14 +51,6 @@
 }
 
 `setComplete<-.how` <- function(object, value) {
-    if (!is.null(value))
-        value <- rep(as.logical(value), length.out = 1)
-    object[["complete"]] <- value
-    object <- fixupCall(object, "complete", value)
-    object
-}
-
-`setComplete<-.permControl` <- function(object, value) {
     if (!is.null(value))
         value <- rep(as.logical(value), length.out = 1)
     object[["complete"]] <- value
@@ -100,14 +74,6 @@
     object
 }
 
-`setAllperms<-.permControl` <- function(object, value) {
-    if (!is.null(value))
-        value <- as.matrix(value)
-    object[["all.perms"]] <- value
-    object <- fixupCall(object, "all.perms", value)
-    object
-}
-
 `setMake<-` <- function(object, value) {
     UseMethod("setMake<-")
 }
@@ -117,14 +83,6 @@
 }
 
 `setMake<-.how` <- function(object, value) {
-    if (!is.null(value))
-        value <- rep(as.logical(value), length.out = 1)
-    object[["make"]] <- value
-    object <- fixupCall(object, "make", value)
-    object
-}
-
-`setMake<-.permControl` <- function(object, value) {
     if (!is.null(value))
         value <- rep(as.logical(value), length.out = 1)
     object[["make"]] <- value
@@ -149,15 +107,6 @@
     object
 }
 
-`setBlocks<-.permControl` <- function(object, value) {
-    if (!is.null(value))
-        value <- as.factor(value)
-    object["blocks"] <- list(value)
-    object[["blocks.name"]] <- deparse(substitute(value))
-    object <- fixupCall(object, "blocks", value)
-    object
-}
-
 `setObserved<-` <- function(object, value) {
     UseMethod("setObserved<-")
 }
@@ -167,14 +116,6 @@
 }
 
 `setObserved<-.how` <- function(object, value) {
-    if (!is.null(value))
-        value <- rep(as.logical(value), length.out = 1)
-    object[["observed"]] <- value
-    object <- fixupCall(object, "observed", value)
-    object
-}
-
-`setObserved<-.permControl` <- function(object, value) {
     if (!is.null(value))
         value <- rep(as.logical(value), length.out = 1)
     object[["observed"]] <- value
