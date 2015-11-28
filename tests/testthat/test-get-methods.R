@@ -18,4 +18,5 @@ test_that("default methods for get functions", {
     expect_error(getMake(v), regexp = "No default method")
     expect_error(getObserved(v), regexp = "No default method")
     expect_error(getAllperms(v), regexp = "No default method")
+    expect_error(getComplete(v), regexp = "No default method")
 })
