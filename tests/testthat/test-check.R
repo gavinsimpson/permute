@@ -23,3 +23,14 @@ test_that("check returns observed ordering in set of all permutations *if* asked
     pp <- check(vec, control = h)
     expect_that(nrow(pp$control$all.perms), equals(n))
 })
+
+## test that check throws an error when within and plot permutation
+## type is "none"
+test_that("check detects if nothing to permute", {
+    pl <- gl(4, 3)
+    n <- 12
+    h <- how(within = Within(type = "none"),
+             plots = Plots(strata = pl, type = "none"))
+    expect_error(check(seq_len(n), control = h),
+                 regexp = "Permutation 'type' is \"none\" for both 'plots' & 'within'.\nNothing to permute.")
+})

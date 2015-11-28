@@ -19,6 +19,11 @@
     typeW <- getType(control, which = "within")
     typeP <- getType(control, which = "plots")
 
+    ## check we're actually permuting something
+    if (identical(typeW, typeP) && isTRUE(all.equal(typeW, "none"))) {
+        stop("Permutation 'type' is \"none\" for both 'plots' & 'within'.\nNothing to permute.")
+    }
+
     ## strata at plot & block levels
     plots <- getStrata(control, which = "plots")
     blocks <- getStrata(control, which = "blocks")
