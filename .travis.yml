@@ -8,6 +8,12 @@ apt_packages:
 r_binary_packages:
   - testthat
   - vegan
+  - Rcpp
+  - crayon
+  - lazyeval
+  - jsonlite
+  - rex
+  - htmltools
 
 r_github_packages:
   - jimhester/covr
