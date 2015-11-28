@@ -1,5 +1,5 @@
 
-R version 3.2.2 Patched (2015-09-13 r69379) -- "Fire Safety"
+R version 3.2.2 Patched (2015-11-26 r69705) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -256,7 +256,7 @@ Contains observed ordering?: No
 + }
 Loading required package: vegan
 Loading required package: lattice
-This is vegan 2.3-0
+This is vegan 2.3-2
 
 pyrifs> data(pyrifos)
 
@@ -1159,7 +1159,7 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.935 0.052 3.985 0 0 
+Time elapsed:  3.981 0.036 4.013 0 0 
 > grDevices::dev.off()
 null device 
           1 
