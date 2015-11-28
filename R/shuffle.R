@@ -1,78 +1,122 @@
-`shuffle2` <- function (n, control = how()) {
-    ## capture strata data
-    Pstrata <- getStrata(control, which = "plots")
-    Bstrata <- getStrata(control, which = "blocks")
-    ## if no strata at all permute all samples using stated scheme
-    if(is.null(Pstrata) && is.null(Bstrata)) {
-        out <- shuffleNoStrata(n, control)
+## new version of shuffle() that allows for blocking
+`shuffle` <- function(n, control = how()) {
+    ## get blocking, if any
+    Block <- getStrata(control, which = "blocks")
+    ## If no blocking, put all samples in same block
+    if(is.null(Block)) {
+        Block <- factor(rep(1, n))
     } else {
-        ## If strata present, either permute samples, strata or both
+        ## There was blocking so update control to remove it
+        ## as we don't need it in control at the within-block
+        ## permutations performed in the loop
+        control <- update(control, blocks = NULL)
+    }
 
-        ## permute strata?
-        if(control$blocks$type == "none") {
-            out <- seq_len(n)
-        } else {
-            flip <- runif(1L) < 0.5 ## why are we doing this? Null better?
-            out <- shuffleStrata(control$strata,
-                                 type = control$blocks$type,
-                                 mirror = control$blocks$mirror,
-                                 flip = flip,
-                                 nrow = control$blocks$nrow,
-                                 ncol = control$blocks$ncol)
+    sn <- seq_len(n) ## sequence of samples in order of input
+
+    ## split sn on basis of Block
+    spln <- split(sn, Block)
+    nb <- length(spln) ## number of blocks
+
+    ## result list
+    out <- vector(mode = "list", length = nb)
+
+    ## loop over spln and shuffle in each split
+    for(i in seq_len(nb)) {
+        out[[i]] <- doShuffle(spln[[i]], control)
+    }
+    out <- unsplit(out, Block) ## undo the original splitting
+    out
+}
+
+`doShuffle` <- function(ind, control) {
+    ## collect strata at Plot level
+    Pstrata <- getStrata(control, which = "plots", drop = TRUE)
+    plotCTRL <- getPlots(control)
+    ## ...which need to be reduced to only those for `ind`
+    Pstrata <- Pstrata[ind]
+
+    n <- length(ind)
+    sn <- seq_len(n)
+
+    ## if no strata at Plot level permute all samples using stated scheme
+    if(is.null(Pstrata)) {
+        perm <- shuffleNoStrata(n, control)
+    } else {
+        typeP <- getType(control, which = "plots")
+        typeW <- getType(control, which = "within")
+
+        ## permute Plot strata?
+        if(isTRUE(all.equal(typeP, "none"))) { ## NO
+            perm <- sn
+        } else {                               ## YES
+            flip <- runif(1L) < 0.5 ## logical, passed on & used only if mirroring
+            perm <- shuffleStrata(Pstrata,
+                                  type = typeP,
+                                  mirror = plotCTRL$mirror,
+                                  flip = flip,
+                                  nrow = plotCTRL$nrow,
+                                  ncol = plotCTRL$ncol)
         }
-        ## permute the samples within strata?
-        if(control$within$type != "none") {
-            tab <- table(control$strata[out])
-            ## the levels of the strata
-            inds <- names(tab)
-            ## same permutation within each level of strata?
-            if(control$within$constant) {
-                if(control$within$type == "free") {
-                    n <- unique(tab)[1L]
-                    same.rand <- shuffleFree(n, n)
-                } else if(control$within$type == "series") {
-                    start <- shuffleFree(n / length(inds), 1L)
+
+        ## permute the samples within Plot strata
+        if(!isTRUE(all.equal(typeW, "none"))) { ## NOTE the `!`
+            ## house keeping to track permuted strata - used later
+            tab <- table(Pstrata[perm])
+            levs <- names(tab) ## levels of Plot strata in this split
+
+            ## use same permutation within each level of strata?
+            withinCTRL <- getWithin(control)
+            CONSTANT <- withinCTRL$constant
+            if(isTRUE(CONSTANT)) {
+                if(isTRUE(all.equal(typeW, "free"))) {
+                    N <- unique(tab)[1L]
+                    same.rand <- shuffleFree(N, N)
+                } else if(isTRUE(all.equal(typeW, "series"))) {
+                    start <- shuffleFree(n / length(levs), 1L)
                     flip <- runif(1L) < 0.5
-                } else if(control$within$type == "grid") {
-                    start.row <- shuffleFree(control$within$nrow, 1L)
-                    start.col <- shuffleFree(control$within$ncol, 1L)
+                } else if(isTRUE(all.equal(typeW, "grid"))) {
+                    start.row <- shuffleFree(withinCTRL$nrow, 1L)
+                    start.col <- shuffleFree(withinCTRL$ncol, 1L)
                     flip <- runif(2L) < 0.5
                 }
             } else {
                 start <- start.row <- start.col <- flip <- NULL
             }
-            tmp <- out
-            ## for each level of strata, permute
-            for (is in inds) {
+
+            ## copy perm at this stage
+            tmp <- perm
+
+            ## for each level of strata in this split, shuffle
+            for(lv in levs) {
                 ## must re-order strata here on basis of out as they
                 ## may have been permuted above
-                MATCH <- control$strata[out] == is
-                gr <- out[MATCH]
-                if ((n.gr <- length(gr)) > 1) {
-                    tmp[which(MATCH)] <-
-                        switch(control$within$type,
-                               "free" =
-                               if(control$within$constant) {
+                MATCH <- Pstrata[perm] == lv
+                gr <- perm[MATCH]
+                if((n.gr <- length(gr)) > 1) {
+                    tmp[MATCH] <-
+                        switch(typeW,
+                               "free" = if(isTRUE(CONSTANT)) {
                                    gr[same.rand]
                                } else {
-                                   out[gr][shuffleFree(n.gr, n.gr)]
+                                   gr[shuffleFree(n.gr, n.gr)]
                                },
                                "series" =
                                gr[shuffleSeries(seq_len(n.gr),
-                                                mirror = control$within$mirror,
+                                                mirror = withinCTRL$mirror,
                                                 start = start, flip = flip)],
                                "grid" =
-                               gr[shuffleGrid(nrow = control$within$nrow,
-                                              ncol = control$within$ncol,
-                                              mirror = control$within$mirror,
+                               gr[shuffleGrid(nrow = withinCTRL$nrow,
+                                              ncol = withinCTRL$ncol,
+                                              mirror = withinCTRL$mirror,
                                               start.row = start.row,
                                               start.col = start.col,
                                               flip = flip)]
                                )
                 }
             }
-            out <- tmp
+            perm <- tmp
         }
     }
-    out
+    ind[perm]
 }
