@@ -5,6 +5,10 @@ sudo: required
 apt_packages:
   - qpdf
 
+r_binary_packages:
+  - testthat
+  - vegan
+
 r_github_packages:
   - jimhester/covr
 
