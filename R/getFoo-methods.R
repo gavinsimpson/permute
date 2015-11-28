@@ -287,10 +287,6 @@
     stop("No default method for `getComplete`")
 }
 
-`getComplete.permControl` <- function(object, ...) {
-    object$complete
-}
-
 `getComplete.how` <- function(object, ...) {
     object$complete
 }
