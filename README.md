@@ -4,7 +4,7 @@
 [![CRAN version](http://www.r-pkg.org/badges/version/permute)](http://cran.rstudio.com/web/packages/permute/index.html) [![](http://cranlogs.r-pkg.org/badges/grand-total/permute)](http://cran.rstudio.com/web/packages/permute/index.html)
 
 #### Build status
-[![Build Status](https://travis-ci.org/gavinsimpson/permute.svg?branch=master)](https://travis-ci.org/gavinsimpson/permute)  [![Build status](https://ci.appveyor.com/api/projects/status/hc8dbxrim2nj3c1i/branch/master)](https://ci.appveyor.com/project/gavinsimpson/permute/branch/master)
+[![Build Status](https://travis-ci.org/gavinsimpson/permute.svg?branch=master)](https://travis-ci.org/gavinsimpson/permute)  [![Build status](https://ci.appveyor.com/api/projects/status/ytql5bm7rphweeoh/branch/master?svg=true)](https://ci.appveyor.com/project/gavinsimpson/permute/branch/master)
 
 ## What is permute?
 
