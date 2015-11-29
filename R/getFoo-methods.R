@@ -171,11 +171,11 @@
 }
 
 `getRow.Within` <- function(object, ...) {
-    object$within$nrow
+    object$nrow
 }
 
 `getRow.Plots` <- function(object, ...) {
-    object$plots$nrow
+    object$nrow
 }
 
 `getCol` <- function(object, ...) {
@@ -199,11 +199,11 @@
 }
 
 `getCol.Within` <- function(object, ...) {
-    object$within$ncol
+    object$ncol
 }
 
 `getCol.Plots` <- function(object, ...) {
-    object$plots$ncol
+    object$ncol
 }
 
 `getDim` <- function(object, ...) {
