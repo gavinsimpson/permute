@@ -64,8 +64,30 @@ test_that("test setMaxperm work", {
 test_that("test setStrata works", {
     h <- how()
     f <- gl(5,5)
-    ## `setStrata<-.how`(h, f)
     setStrata(h) <- f
     expect_is(h, "how")
     expect_identical(getStrata(h), f)
+
+    plots <- getPlots(h)
+    f <- gl(4,5)
+    setStrata(plots) <- f
+    expect_identical(getStrata(plots), f)
+    setPlots(h) <- plots
+    expect_identical(getStrata(h), f)
+})
+
+test_that("test setRow<- works", {
+    f <- gl(9, 25)
+    h <- how(within = Within(type = "grid", nrow = 5, ncol = 5),
+             plots  =  Plots(type = "grid", nrow = 3, ncol = 3,
+                             strata = f))
+    w <- getWithin(h)
+    setRow(w) <- 2
+    expect_identical(getRow(w), 2L)
+    expect_is(w, "Within")
+
+    p <- getPlots(h)
+    setRow(p) <- 4
+    expect_identical(getRow(p), 4L)
+    expect_is(p, "Plots")
 })
