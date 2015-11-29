@@ -314,7 +314,7 @@
     if (!is.null(value))
         value <- rep(as.logical(value), length.out = 1)
     object[["mirror"]] <- value
-    object <- fixupCall(object, "Mirror", value)
+    object <- fixupCall(object, "mirror", value)
     object
 }
 
@@ -322,7 +322,7 @@
     if (!is.null(value))
         value <- rep(as.logical(value), length.out = 1)
     object[["mirror"]] <- value
-    object <- fixupCall(object, "Mirror", value)
+    object <- fixupCall(object, "mirror", value)
     object
 }
 
@@ -342,8 +342,8 @@
 `setConstant<-.Within` <- function(object, value) {
     if (!is.null(value))
         value <- rep(as.logical(value), length.out = 1)
-    object[["Constant"]] <- value
-    object <- fixupCall(object, "Constant", value)
+    object[["constant"]] <- value
+    object <- fixupCall(object, "constant", value)
     object
 }
 
