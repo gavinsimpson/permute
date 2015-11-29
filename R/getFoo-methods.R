@@ -93,11 +93,11 @@
 }
 
 `getType.Within` <- function(object, ...) {
-    object$within$type
+    object$type
 }
 
 `getType.Plots` <- function(object, ...) {
-    object$plots$type
+    object$type
 }
 
 ## suppose we can also have setBlocks() etc...
