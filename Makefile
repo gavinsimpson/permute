@@ -13,13 +13,17 @@ build-quick: #docs
 	cd ..;\
 	R CMD build --no-manual --no-build-vignettes permute
 
+tests: $(wildcard tests/testthat/*.R) 
+	cd ..;\
+	Rscript -e "library('testthat'); test_dir('permute/tests/testthat/')"
+
 check: build
 	cd ..;\
 	R CMD check permute_$(PKGVERS).tar.gz
 
 check-devel: build
 	cd ..;\
-	R-devel CMD check permute_$(PKGVERS).tar.gz
+	R-devel CMD check --as-cran permute_$(PKGVERS).tar.gz
 
 check-cran: build
 	cd ..;\
