@@ -20,6 +20,7 @@ test_that("default methods for get functions", {
     expect_error(setDim(v) <- c(2,3), regexp = "No default method")
     expect_error(setType(v) <- "series", regexp = "No default method")
     expect_error(setMirror(v) <- TRUE, regexp = "No default method")
+    expect_error(setMake(v) <- TRUE, regexp = "No default method")
     expect_error(setConstant(v) <- "series", regexp = "No default method")
 })
 
@@ -33,15 +34,38 @@ test_that("how() set methods throw errors where not appropriate for use", {
     expect_error(setCol(h) <- 3, regexp = "can not be used directly on '\"how\"' objects")
 })
 
-test_that("set methods for class Within works", {
+test_that("set within for class how works", {
     h <- how()
     setWithin(h) <- Within(type = "series")
     expect_identical(getType(h, which = "within"), "series")
 })
 
-test_that("setMinperm work", {
+test_that("set plots for class how works", {
+    h <- how()
+    setPlots(h) <- Plots(type = "series")
+    expect_identical(getType(h, which = "plots"), "series")
+})
+
+test_that("test setMinperm work", {
     h <- how()
     setMinperm(h) <- 999
     expect_is(h, "how")
     expect_equal(getMinperm(h), 999)
+})
+
+test_that("test setMaxperm work", {
+    h <- how()
+    nperm <- 99999
+    setMaxperm(h) <- nperm
+    expect_is(h, "how")
+    expect_equal(getMaxperm(h), nperm)
+})
+
+test_that("test setStrata works", {
+    h <- how()
+    f <- gl(5,5)
+    ## `setStrata<-.how`(h, f)
+    setStrata(h) <- f
+    expect_is(h, "how")
+    expect_identical(getStrata(h), f)
 })
