@@ -1,10 +1,13 @@
-permute <- function(i, n, control) {
-    if(control$complete && !is.null(control$all.perms))
-        perm <- control$all.perms[i,]
-    else {
-        if(control$complete)
+`permute` <- function(i, n, control) {
+    complete <- getComplete(control)
+    ap <- getAllperms(control)
+    perm <- if (complete && !is.null(ap)) {
+        ap[i, ]                 # select ith permutation
+    } else {
+        if (complete) {
             warning("'$all.perms' is NULL, yet '$complete = TRUE'.\nReturning a random permutation.")
-        perm <- shuffle(n, control)
+        }
+        shuffle(n, control)
     }
     perm
 }
