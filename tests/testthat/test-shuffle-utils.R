@@ -3,6 +3,24 @@ library("permute")
 
 context("Testing shuffle-util functions")
 
+test_that("shuffelStrata works for various 'type's", {
+    f <- gl(4,5)
+    perm <- shuffleStrata(f, type = "free")
+    expect_equal(length(perm), length(f))
+    expect_true(all(perm <= 20))
+    expect_true(all(perm >= 1))
+    perm <- shuffleStrata(f, type = "series")
+    expect_equal(length(perm), length(f))
+    expect_true(all(perm <= 20))
+    expect_true(all(perm >= 1))
+    perm <- shuffleStrata(f, type = "grid", ncol = 2, nrow = 2)
+    expect_equal(length(perm), length(f))
+    expect_true(all(perm <= 20))
+    expect_true(all(perm >= 1))
+    expect_error(shuffleStrata(f, type = "unknown"),
+                 regexp = "Invalid permutation type")
+})
+
 test_that("shuffleGrid works with only ncol and nrow args", {
     nr <- 5
     nc <- 5
