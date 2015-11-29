@@ -313,7 +313,7 @@
 `setMirror<-.Within` <- function(object, value) {
     if (!is.null(value))
         value <- rep(as.logical(value), length.out = 1)
-    object[["Mirror"]] <- value
+    object[["mirror"]] <- value
     object <- fixupCall(object, "Mirror", value)
     object
 }
@@ -321,7 +321,7 @@
 `setMirror<-.Plots` <- function(object, value) {
     if (!is.null(value))
         value <- rep(as.logical(value), length.out = 1)
-    object[["Mirror"]] <- value
+    object[["mirror"]] <- value
     object <- fixupCall(object, "Mirror", value)
     object
 }
