@@ -125,11 +125,11 @@
 }
 
 `getMirror.Within` <- function(object, ...) {
-    object$within$mirror
+    object$mirror
 }
 
 `getMirror.Plots` <- function(object, ...) {
-    object$plots$mirror
+    object$mirror
 }
 
 ## Get constant status - i.e. same permutation in each Plot
@@ -146,7 +146,7 @@
 }
 
 `getConstant.Within` <- function(object, ...) {
-    object$within$constant
+    object$constant
 }
 
 ## Get the number of rows and colums from grid designs
