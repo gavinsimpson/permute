@@ -123,3 +123,21 @@ test_that("test setDim<- works", {
     expect_identical(getDim(p), c(4L, 3L))
     expect_is(p, "Plots")
 })
+
+test_that("test setType<- works", {
+    f <- gl(9, 25)
+    h <- how(within = Within(type = "grid", nrow = 5, ncol = 5),
+             plots  =  Plots(type = "series", strata = f))
+    w <- getWithin(h)
+    setType(w) <- "free"
+    expect_is(w, "Within")
+    expect_identical(getType(w), "free")
+
+    p <- getPlots(h)
+    expect_error(setType(p) <- "strata",
+                 regexp = "Invalid permutation type")
+    setType(p) <- "none"
+    expect_is(p, "Plots")
+    expect_identical(getType(p), "none")
+})
+
