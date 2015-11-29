@@ -165,10 +165,13 @@
 }
 
 `setStrata<-.how` <- function(object, value) {
-    if (!is.null(value))
+    if (!is.null(value)) {
         value <- as.factor(value)
-    object[["blocks"]] <- value
-    object <- fixupCall(object, "blocks", getCall(value))
+    }
+    ## get Plots
+    plots <- getPlots(object)
+    setStrata(plots) <- value
+    setPlots(object) <- plots
     object
 }
 
@@ -176,7 +179,7 @@
     if (!is.null(value))
         value <- as.factor(value)
     object[["strata"]] <- value
-    object <- fixupCall(object, "strata", getCall(value))
+    object <- fixupCall(object, "strata", value) # value was getCall(value))
     object
 }
 
