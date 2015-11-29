@@ -1,7 +1,7 @@
 library("testthat")
 library("permute")
 
-context("Testing set methods")
+context("Testing set<- methods")
 
 test_that("default methods for get functions", {
     v <- 1:10
