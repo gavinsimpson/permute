@@ -141,3 +141,31 @@ test_that("test setType<- works", {
     expect_identical(getType(p), "none")
 })
 
+test_that("test setMirror<- works", {
+    f <- gl(9, 25)
+    h <- how(within = Within(type = "grid", nrow = 5, ncol = 5),
+             plots  =  Plots(type = "series", strata = f))
+    w <- getWithin(h)
+    setMirror(w) <- TRUE
+    expect_is(w, "Within")
+    expect_true(getMirror(w))
+
+    p <- getPlots(h)
+    setMirror(p) <- TRUE
+    expect_is(p, "Plots")
+    expect_true(getMirror(p))
+})
+
+test_that("test setConstant<- works", {
+    f <- gl(9, 25)
+    h <- how(within = Within(type = "grid", nrow = 5, ncol = 5),
+             plots  =  Plots(type = "series", strata = f))
+    w <- getWithin(h)
+    setConstant(w) <- TRUE
+    expect_is(w, "Within")
+    expect_true(getConstant(w))
+
+    p <- getPlots(h)
+    expect_error(setConstant(p) <- TRUE,
+                 regexp = "setConstant` does not apply to '\"Plots\"' objects.")
+})
