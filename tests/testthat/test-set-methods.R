@@ -21,7 +21,9 @@ test_that("default methods for get functions", {
     expect_error(setType(v) <- "series", regexp = "No default method")
     expect_error(setMirror(v) <- TRUE, regexp = "No default method")
     expect_error(setConstant(v) <- "series", regexp = "No default method")
+})
 
+test_that("how() set methods throw errors where not appropriate for use", {
     h <- how()
     expect_error(setDim(h) <- c(2,3), regexp = "can not be used directly on '\"how\"' objects")
     expect_error(setMirror(h) <- TRUE, regexp = "can not be used directly on '\"how\"' objects")
@@ -29,4 +31,17 @@ test_that("default methods for get functions", {
     expect_error(setType(h) <- "series", regexp = "can not be used directly on '\"how\"' objects")
     expect_error(setRow(h) <- 2, regexp = "can not be used directly on '\"how\"' objects")
     expect_error(setCol(h) <- 3, regexp = "can not be used directly on '\"how\"' objects")
+})
+
+test_that("set methods for class Within works", {
+    h <- how()
+    setWithin(h) <- Within(type = "series")
+    expect_identical(getType(h, which = "within"), "series")
+})
+
+test_that("setMinperm work", {
+    h <- how()
+    setMinperm(h) <- 999
+    expect_is(h, "how")
+    expect_equal(getMinperm(h), 999)
 })
