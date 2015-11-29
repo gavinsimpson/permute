@@ -107,3 +107,19 @@ test_that("test setCol<- works", {
     expect_identical(getCol(p), 4L)
     expect_is(p, "Plots")
 })
+
+test_that("test setDim<- works", {
+    f <- gl(9, 25)
+    h <- how(within = Within(type = "grid", nrow = 5, ncol = 5),
+             plots  =  Plots(type = "grid", nrow = 3, ncol = 3,
+                             strata = f))
+    w <- getWithin(h)
+    setDim(w) <- c(2, 4)
+    expect_identical(getDim(w), c(2L, 4L))
+    expect_is(w, "Within")
+
+    p <- getPlots(h)
+    setDim(p) <- c(4, 3)
+    expect_identical(getDim(p), c(4L, 3L))
+    expect_is(p, "Plots")
+})
