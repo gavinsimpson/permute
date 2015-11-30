@@ -69,7 +69,7 @@
     if(isTRUE(all.equal(typeP, "grid")) && !is.null(colP) && colP > 2) {
       mult.p <- 4
     } else {
-      if(isTRUE(all.equal(n, 2)))
+      if(isTRUE(all.equal(length(tab), 2))) # was all.equal(n, 2)
         mult.p <- 1
     }
   }
@@ -117,9 +117,9 @@
         exp(lfactorial(length(levels(PSTRATA))))
     } else if(typeP %in% c("series", "grid")) {
         if(isTRUE(mirrorP)) {
-            mult.p * n
+            mult.p * length(tab)
         } else {
-            n
+            length(tab)
         }
     } else {
         1
@@ -151,15 +151,17 @@
                 }
             } else {
                 if(mirrorW) {
-                    if(constantW)
-                        mult.wi * unitab
-                    else
+                    if(constantW) {
+                        mult.wi * unitab[1]
+                    } else {
                         prod(mult.wi * tab)
+                    }
                 } else {
-                    if(constantW)
-                        unitab ## FIXME: unitab[1]?? (unique(tab)[1])
-                    else
+                    if(constantW) {
+                        unitab[1] ## FIXME: unitab[1]?? (unique(tab)[1])
+                    } else {
                         prod(tab)
+                    }
                 }
             }
         } else {
