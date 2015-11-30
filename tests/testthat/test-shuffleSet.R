@@ -61,8 +61,10 @@ test_that("print method for permutationMatrix works", {
     h <- how(blocks = gl(5,10))
     perms <- shuffleSet(50, nset = 20, control = h)
     expect_output(print(perms), regexp = "Restricted by Blocks:")
+    expect_output(print(perms), regexp = "blocks;")
 
     h <- how(plots = Plots(strata = gl(5,10)))
     perms <- shuffleSet(50, nset = 20, control = h)
     expect_output(print(perms), regexp = "Restricted by Plots:")
+    expect_output(print(perms), regexp = "plots;")
 })
