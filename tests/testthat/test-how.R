@@ -8,3 +8,7 @@ test_that("how() works with explicit NULL blocks arg", {
     h <- how(blocks = NULL)
     expect_that(h, is_a("how"))
 })
+
+test_that("print method for how", {
+    expect_output(print(how()), regexp = "Permutation Design:")
+})
