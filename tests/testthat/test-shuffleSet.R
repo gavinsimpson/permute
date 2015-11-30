@@ -79,7 +79,7 @@ test_that("print method for permutationMatrix works", {
     expect_output(print(perms), regexp = "; mirrored")
 
     h <- how(within = Within(type = "series", constant = TRUE),
-             plots = Plots(strata = gl(2, 5)))
+             plots = Plots(strata = gl(2, 5), type = "series", mirror = TRUE))
     perms <- shuffleSet(10, nset = 20, control = h)
     expect_output(print(perms), regexp = "; same permutation")
 })
