@@ -67,4 +67,19 @@ test_that("print method for permutationMatrix works", {
     perms <- shuffleSet(50, nset = 20, control = h)
     expect_output(print(perms), regexp = "Restricted by Plots:")
     expect_output(print(perms), regexp = "plots;")
+
+    h <- how(plots = Plots(strata = gl(10,10)),
+             blocks = gl(2, 50))
+    perms <- shuffleSet(100, nset = 20, control = h)
+    expect_output(print(perms), regexp = "Restricted by Plots:")
+    expect_output(print(perms), regexp = "plots & blocks;")
+
+    h <- how(within = Within(type = "series", mirror = TRUE))
+    perms <- shuffleSet(10, nset = 20, control = h)
+    expect_output(print(perms), regexp = "; mirrored")
+
+    h <- how(within = Within(type = "series", constant = TRUE),
+             plots = Plots(strata = gl(2, 5)))
+    perms <- shuffleSet(10, nset = 20, control = h)
+    expect_output(print(perms), regexp = "; same permutation")
 })
