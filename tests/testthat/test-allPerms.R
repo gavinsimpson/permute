@@ -172,6 +172,21 @@ test_that("Can generate permutations from a grid design", {
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
     expect_equal(nperms, nrow(perms) + 1L)
+
+    ## mirroring
+    nr <- 3
+    nc <- 3
+    np <- 2 ## number of plots
+    plots <- Plots(gl(np, prod(nr, nc)))
+    CTRL <- how(plots = plots,
+                within = Within(type = "grid", ncol = nc, nrow = nr,
+                                mirror = TRUE))
+    perms <- allPerms(prod(nr, nc, np), control = CTRL)
+    nperms <- numPerms(prod(nr, nc, np), control = CTRL)
+
+    expect_is(perms, "allPerms")
+    expect_is(perms, "matrix")
+    expect_equal(nperms, nrow(perms) + 1L)
 })
 
 test_that("grids with 2 columns only work correctly", {
