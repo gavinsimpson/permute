@@ -1006,7 +1006,7 @@ mean in group Group 1 mean in group Group 2
 > ## simple random permutations, 5 permutations in set
 > shuffleSet(n = 10, nset = 5)
 No. of Permutations: 5
-No. of Samples: 10 (Nested in: plots; Randomised)
+No. of Samples: 10 (Randomised)
 
     1 2 3  4  5  6 7 8  9 10
 p1  3 4 5  7  2  8 9 6 10  1
@@ -1019,7 +1019,7 @@ p5  9 6 7  4  8 10 1 2  3  5
 > shuffleSet(10, 5, how(within = Within(type = "series")))
 Set of permutations < 'minperm'. Generating entire set.
 No. of Permutations: 5
-No. of Samples: 10 (Nested in: plots; Sequence)
+No. of Samples: 10 (Sequence)
 
    1 2  3 4  5  6 7  8  9 10
 p1 6 7  8 9 10  1 2  3  4  5
@@ -1034,7 +1034,7 @@ p5 2 3  4 5  6  7 8  9 10  1
 > shuffleSet(10, 10, CTRL)
 Set of permutations < 'minperm'. Generating entire set.
 No. of Permutations: 10
-No. of Samples: 10 (Nested in: plots; Sequence; mirrored)
+No. of Samples: 10 (Sequence; mirrored)
 
      1 2  3  4  5  6  7  8 9 10
 p1   3 4  5  6  7  8  9 10 1  2
@@ -1159,7 +1159,7 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.981 0.036 4.013 0 0 
+Time elapsed:  3.884 0.049 3.932 0 0 
 > grDevices::dev.off()
 null device 
           1 
