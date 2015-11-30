@@ -279,3 +279,11 @@ test_that("same grid permutation within plots & mirroring", {
     expect_is(perms, "matrix")
     expect_equal(nperms, nrow(perms) + 1L)
 })
+
+test_that("allPerms works with complex, but small, design", {
+    h <- how(within = Within(type = "series", constant = TRUE),
+             plots = Plots(strata = gl(2, 5), type = "series", mirror = TRUE))
+    ap <- allPerms(10, control = h)
+    expect_is(ap, "matrix")
+    expect_equal(nrow(ap), 10 - 1L)
+})
