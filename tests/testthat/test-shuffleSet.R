@@ -52,3 +52,9 @@ test_that("shuffle can permute both plots and within in presence of blocks", {
     expect_that(permSet, is_a("permutationMatrix"))
     expect_that(permSet, is_a("matrix"))
 })
+
+test_that("print method for permutationMatrix works", {
+    h <- how()
+    perms <- shuffleSet(10, nset = 10, control = how())
+    expect_output(print(perms), regexp = "No. of Permutations:")
+})
