@@ -55,6 +55,14 @@ test_that("shuffle can permute both plots and within in presence of blocks", {
 
 test_that("print method for permutationMatrix works", {
     h <- how()
-    perms <- shuffleSet(10, nset = 10, control = how())
+    perms <- shuffleSet(10, nset = 10, control = h)
     expect_output(print(perms), regexp = "No. of Permutations:")
+
+    h <- how(blocks = gl(5,10))
+    perms <- shuffleSet(50, nset = 20, control = h)
+    expect_output(print(perms), regexp = "Restricted by Blocks:")
+
+    h <- how(plots = Plots(strata = gl(5,10)))
+    perms <- shuffleSet(50, nset = 20, control = h)
+    expect_output(print(perms), regexp = "Restricted by Plots:")
 })
