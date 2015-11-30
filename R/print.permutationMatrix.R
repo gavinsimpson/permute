@@ -10,6 +10,7 @@
 
     blocks <- getBlocks(ctrl)
     plots <- getPlots(ctrl)
+    strata <- getStrata(ctrl)
 
     ## print out dimensions of permutation matrix
     msg <- paste("No. of Permutations: ", nrow(x), sep = "")
@@ -17,7 +18,7 @@
 
     ## print info on the within level
     msg <- paste("No. of Samples:", ncol(x), "(")
-    if (any(pl <- !is.null(plots), bl <- !is.null(blocks))) {
+    if (any(pl <- !is.null(strata), bl <- !is.null(blocks))) {
         msg <- paste(msg, "Nested in: ", sep = "")
         if (pl && !bl) {
             nmsg <- "plots; "
