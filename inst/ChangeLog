@@ -1,5 +1,9 @@
 permute ChangeLog
 
+Version 0.9-0
+
+	* Release to CRAN 23 Jan 2016
+
 Version 0.8-5
 
 	* shuffleSet gains new argument `quietly = FALSE`, which is
@@ -28,7 +32,10 @@ Version 0.8-5
 	* Permutation matrices returned by `shuffleSet()` now print the
 	permutations more compactfully.
 
-	* as.matrix.allPerms: new S3 method for class `allPerms`
+	* as.matrix.allPerms: new S3 method for class `allPerms`.
+
+	* Code coverage: permute now has a test suite that covers
+	~87% of the current code base.
 
 Version 0.8-4
 
