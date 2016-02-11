@@ -67,8 +67,9 @@
 }
 
 `setAllperms<-.how` <- function(object, value) {
-    if (!is.null(value))
-        value <- as.matrix(value)
+    if (!is.null(value)) {
+        value <- as.allPerms(value, control = object)
+    }
     object[["all.perms"]] <- value
     object <- fixupCall(object, "all.perms", value)
     object
