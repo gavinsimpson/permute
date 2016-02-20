@@ -16,5 +16,5 @@ test_that("print method for how", {
     expect_output(print(how()), regexp = "Plots:")
 
     ctrl <- how(plots = Plots(strata = gl(4,9), type = "grid", ncol = 3, nrow = 3))
-    expect_output(print(how()), regexp = "Grid dimensions:")
+    expect_output(print(ctrl), regexp = "Grid dimensions:")
 })
