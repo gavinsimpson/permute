@@ -85,6 +85,9 @@ test_that("print method for permutationMatrix works", {
 })
 
 test_that("constant within plots works", {
+    ## These need check = FALSE to stop allPerms doing the generation
+    ## which doesn't actually call doShuffleSet. Check using both FALSE
+    ## and the default, default first
     fac <- gl(4, 5)
     nset <- 10L
     ## series permutations
@@ -96,6 +99,9 @@ test_that("constant within plots works", {
     expect_identical(nrow(perm), 4L) ## only 4 permutations!
     expect_is(perm, "matrix")
     expect_is(perm, "permutationMatrix")
+    expect_output(print(perm), regexp = "; same permutation")
+    expect_output(print(perm), regexp = "Nested in: plots; Sequence;")
+
     ## free/randomisation
     ctrl <- how(within = Within(type = "free", constant = TRUE),
                 plots = Plots(strata = fac, type = "none"))
@@ -106,6 +112,9 @@ test_that("constant within plots works", {
     expect_identical(nrow(perm), 10L)
     expect_is(perm, "matrix")
     expect_is(perm, "permutationMatrix")
+    expect_output(print(perm), regexp = "; same permutation")
+    expect_output(print(perm), regexp = "Nested in: plots; Randomised;")
+
     ## spatial grid 3x3
     fac <- gl(4, 9)
     ctrl <- how(within = Within(type = "grid", nrow = 3, ncol = 3, constant = TRUE),
@@ -116,4 +125,49 @@ test_that("constant within plots works", {
     expect_identical(nrow(perm), 8L)
     expect_is(perm, "matrix")
     expect_is(perm, "permutationMatrix")
+    expect_output(print(perm), regexp = "; same\npermutation")
+    expect_output(print(perm), regexp = "; Spatial grid: 3r, 3c")
+
+    ## now with check = FALSE --- this is going to generate duplicate permutations
+    fac <- gl(4, 5)
+    nset <- 10L
+    ## series permutations
+    ctrl <- how(within = Within(type = "series", constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffleSet(length(fac), nset, control = ctrl, check = FALSE)
+    expect_identical(ncol(perm), length(fac))
+    expect_identical(ncol(perm), 20L)
+    expect_identical(nrow(perm), nset)
+    expect_identical(nrow(perm), 10L)
+    expect_is(perm, "matrix")
+    expect_is(perm, "permutationMatrix")
+    expect_output(print(perm), regexp = "; same permutation")
+    expect_output(print(perm), regexp = "Nested in: plots; Sequence;")
+
+    ## free/randomisation
+    ctrl <- how(within = Within(type = "free", constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffleSet(length(fac), nset, control = ctrl, check = FALSE)
+    expect_identical(ncol(perm), length(fac))
+    expect_identical(ncol(perm), 20L)
+    expect_identical(nrow(perm), nset)
+    expect_identical(nrow(perm), 10L)
+    expect_is(perm, "matrix")
+    expect_is(perm, "permutationMatrix")
+    expect_output(print(perm), regexp = "; same permutation")
+    expect_output(print(perm), regexp = "Nested in: plots; Randomised;")
+
+    ## spatial grid 3x3
+    fac <- gl(4, 9)
+    ctrl <- how(within = Within(type = "grid", nrow = 3, ncol = 3, constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffleSet(length(fac), nset, control = ctrl, check = FALSE)
+    expect_identical(ncol(perm), length(fac))
+    expect_identical(ncol(perm), 36L)
+    expect_identical(nrow(perm), 10L)
+    expect_identical(nrow(perm), nset)
+    expect_is(perm, "matrix")
+    expect_is(perm, "permutationMatrix")
+    expect_output(print(perm), regexp = "; same\npermutation")
+    expect_output(print(perm), regexp = "; Spatial grid: 3r, 3c")
 })
