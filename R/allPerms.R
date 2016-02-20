@@ -75,7 +75,9 @@
         ## observed ordering
         setNperm(control) <- getNperm(control) - 1
     }
-    class(out) <- c("allPerms", "matrix")
+
+    ## as a permutationMatrix we pick up nice print method
+    class(out) <- c("allPerms", "permutationMatrix", "matrix")
     attr(out, "control") <- control
     attr(out, "observed") <- observed
     out
