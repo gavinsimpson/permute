@@ -37,7 +37,7 @@
         ## need to check number of permutations won't blow up
         pcheck <- check(sn, control = control, quietly = quietly)
         ## control possibly now updated
-        control <- pcheck$control
+        control <- getControl(pcheck)
     }
 
     if(is.null(AP <- getAllperms(control))) {
