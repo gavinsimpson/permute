@@ -32,7 +32,7 @@ Type 'q()' to quit R.
 > ### Name: allPerms
 > ### Title: Complete enumeration of all possible permutations
 > ### Aliases: allPerms print.allPerms summary.allPerms
-> ###   print.summary.allPerms as.matrix.allPerms
+> ###   print.summary.allPerms as.matrix.allPerms as.allPerms
 > 
 > ### ** Examples
 > 
@@ -1159,7 +1159,7 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.867 0.043 3.906 0 0 
+Time elapsed:  3.934 0.055 3.985 0 0 
 > grDevices::dev.off()
 null device 
           1 
