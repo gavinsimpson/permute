@@ -83,3 +83,37 @@ test_that("print method for permutationMatrix works", {
     perms <- shuffleSet(10, nset = 20, control = h)
     expect_output(print(perms), regexp = "; same permutation")
 })
+
+test_that("constant within plots works", {
+    fac <- gl(4, 5)
+    nset <- 10L
+    ## series permutations
+    ctrl <- how(within = Within(type = "series", constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffleSet(length(fac), nset, control = ctrl)
+    expect_identical(ncol(perm), length(fac))
+    expect_identical(ncol(perm), 20L)
+    expect_identical(nrow(perm), 4L) ## only 4 permutations!
+    expect_is(perm, "matrix")
+    expect_is(perm, "permutationMatrix")
+    ## free/randomisation
+    ctrl <- how(within = Within(type = "free", constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffleSet(length(fac), nset, control = ctrl)
+    expect_identical(ncol(perm), length(fac))
+    expect_identical(ncol(perm), 20L)
+    expect_identical(nrow(perm), nset)
+    expect_identical(nrow(perm), 10L)
+    expect_is(perm, "matrix")
+    expect_is(perm, "permutationMatrix")
+    ## spatial grid 3x3
+    fac <- gl(4, 9)
+    ctrl <- how(within = Within(type = "grid", nrow = 3, ncol = 3, constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffleSet(length(fac), nset, control = ctrl)
+    expect_identical(ncol(perm), length(fac))
+    expect_identical(ncol(perm), 36L)
+    expect_identical(nrow(perm), 8L)
+    expect_is(perm, "matrix")
+    expect_is(perm, "permutationMatrix")
+})
