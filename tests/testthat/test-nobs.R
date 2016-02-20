@@ -32,3 +32,10 @@ test_that("factor nobs method", {
     n <- nobs(f)
     expect_identical(n, 10L)
 })
+
+test_that("character nobs method works", {
+    ch <- c("Ar","Ba","Bl","Bu","Ca")
+    n <- nobs(ch)
+    expect_identical(n, 5L)
+    expect_identical(n, length(ch))
+})
