@@ -6,11 +6,14 @@ Version 0.9-1
 
 	Reported by: @brendanf
 
-	* nobs: added a `nobs.character` method
+	* nobs: added a `nobs.character` method (#17)
 
 	* get-methods: added a `getControl()` extractor with a default
 	method and a method for class `"check"`. There is an alias in
-	the form of `getHow()`
+	the form of `getHow()` (#18)
+
+	* shuffle: now accepts objects from which we derive the number
+	of observations, bringing is into line with `shuffleSet()`
 
 Version 0.9-0
 
