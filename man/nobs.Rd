@@ -4,6 +4,8 @@
 \alias{nobs.integer}
 \alias{nobs.matrix}
 \alias{nobs.data.frame}
+\alias{nobs.factor}
+\alias{nobs.character}
 
 \title{Number of observations in a given object}
 \description{
@@ -20,9 +22,14 @@
 \method{nobs}{matrix}(object, \dots)
 
 \method{nobs}{data.frame}(object, \dots)
+
+\method{nobs}{character}(object, \dots)
+
+\method{nobs}{factor}(object, \dots)
 }
 \arguments{
-  \item{object}{a data frame or matrix, or a numeric or integer vector.}
+  \item{object}{a data frame or matrix, or a numeric, integer,
+    character, or factor vector.}
   \item{\dots}{arguments to other methods.}
 }
 \details{

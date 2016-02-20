@@ -503,6 +503,7 @@ detaching ‘package:vegan’, ‘package:lattice’
 > ###   getComplete.default getComplete.how getComplete.permControl getMake
 > ###   getMake.default getMake.how getObserved getObserved.default
 > ###   getObserved.how getAllperms getAllperms.default getAllperms.how
+> ###   getControl getHow getControl.default getControl.allPerms
 > ### Keywords: methods utils
 > 
 > ### ** Examples
@@ -641,7 +642,7 @@ Permutation details:
 > ### Name: nobs-methods
 > ### Title: Number of observations in a given object
 > ### Aliases: nobs-methods nobs.numeric nobs.integer nobs.matrix
-> ###   nobs.data.frame
+> ###   nobs.data.frame nobs.factor nobs.character
 > 
 > ### ** Examples
 > 
@@ -1159,7 +1160,7 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.934 0.055 3.985 0 0 
+Time elapsed:  3.879 0.047 3.922 0 0 
 > grDevices::dev.off()
 null device 
           1 

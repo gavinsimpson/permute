@@ -22,3 +22,7 @@ if (getRversion() < "2.13.0")
 `nobs.factor` <- function(object, ...) {
     length(object)
 }
+
+`nobs.character` <- function(object, ...) {
+    length(object)
+}

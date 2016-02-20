@@ -85,6 +85,7 @@ S3method("nobs", "integer")
 S3method("nobs", "matrix")
 S3method("nobs", "data.frame")
 S3method("nobs", "factor")
+S3method("nobs", "character")
 ## getFoo methods
 S3method("getBlocks", "default")
 S3method("getBlocks", "how")
