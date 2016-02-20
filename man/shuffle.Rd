@@ -15,7 +15,9 @@ permute(i, n, control)
 
 \arguments{
   \item{n}{numeric; the length of the returned vector of permuted
-    values. Usually the number of observations under consideration.}
+    values. Usually the number of observations under consideration. May
+    also be any object that \code{nobs} knows about; see
+    \code{\link{nobs-methods}}.}
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to \code{how}.}
   \item{i}{integer; row of \code{control$all.perms} to return.}

@@ -19,7 +19,9 @@ shuffleSet(n, nset, control = how(), check = TRUE, quietly = FALSE)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{n}{
-    numeric; the number of observations in the sample set.
+    numeric; the number of observations in the sample set. May also be
+    any object that \code{nobs} knows about; see
+    \code{\link{nobs-methods}}.
   }
   \item{nset}{
     numeric; the number of permutations to generate for the set. Can be
