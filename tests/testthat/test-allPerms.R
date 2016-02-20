@@ -287,3 +287,12 @@ test_that("allPerms works with complex, but small, design", {
     expect_is(ap, "matrix")
     expect_equal(nrow(ap), 10 - 1L)
 })
+
+test_that("summary.allPerms works & prints correctly", {
+    a <- c("Ar","Ba","Bl","Bu","Ca")
+    ap <- allPerms(a)
+    ## FIXME: this doesn't work yet in released testthat
+    ## expect_output(print(ap))
+    expect_output(print(summary(ap)),
+                  regexp = "Complete enumeration of permutations")
+})
