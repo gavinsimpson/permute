@@ -1,5 +1,14 @@
 ## new version of shuffle() that allows for blocking
 `shuffle` <- function(n, control = how()) {
+    ## handle a vector, matrix, or data frame input; derive n from it
+    if (((is.numeric(n) || is.integer(n) || is.factor(n) || is.character(n)) &&
+         length(n) > 1L) ||
+        is.matrix(n) ||
+        is.data.frame(n)) {
+        n <- nobs(n)
+    }
+    sn <- seq_len(n) ## sequence of samples in order of input
+
     ## get blocking, if any
     Block <- getStrata(control, which = "blocks")
     ## If no blocking, put all samples in same block
@@ -11,16 +20,6 @@
         ## permutations performed in the loop
         control <- update(control, blocks = NULL)
     }
-
-
-    ## handle a vector, matrix, or data frame input; derive n from it
-    if (((is.numeric(n) || is.integer(n) || is.factor(n) || is.character(n)) &&
-         length(n) > 1L) ||
-        is.matrix(n) ||
-        is.data.frame(n)) {
-        n <- nobs(n)
-    }
-    sn <- seq_len(n) ## sequence of samples in order of input
 
     ## split sn on basis of Block
     spln <- split(sn, Block)
