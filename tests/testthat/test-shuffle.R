@@ -48,6 +48,32 @@ test_that("shuffle can permute both plots and within in presence of blocks", {
                    plots = Plots(strata = rep(gl(2,7),2), type = "free"),
                    blocks = gl(2, 14))
     permSet <- shuffle(28, control = control)
-    expect_that(length(permSet), is_identical_to(28L))
-    expect_that(permSet, is_a("integer"))
+    expect_identical(length(permSet), 28L)
+    expect_is(permSet, "integer")
+})
+
+test_that("constant within plots works", {
+    fac <- gl(4, 5)
+    ## series permutations
+    ctrl <- how(within = Within(type = "series", constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffle(length(fac), control = ctrl)
+    expect_identical(length(perm), length(fac))
+    expect_identical(length(perm), 20L)
+    expect_is(perm, "integer")
+    ## free/randomisation
+    ctrl <- how(within = Within(type = "free", constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffle(length(fac), control = ctrl)
+    expect_identical(length(perm), length(fac))
+    expect_identical(length(perm), 20L)
+    expect_is(perm, "integer")
+    ## spatial grid 3x3
+    fac <- gl(4, 9)
+    ctrl <- how(within = Within(type = "grid", nrow = 3, ncol = 3, constant = TRUE),
+                plots = Plots(strata = fac, type = "none"))
+    perm <- shuffle(length(fac), control = ctrl)
+    expect_identical(length(perm), length(fac))
+    expect_identical(length(perm), 36L)
+    expect_is(perm, "integer")
 })
