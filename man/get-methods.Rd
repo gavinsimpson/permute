@@ -77,6 +77,10 @@
 \alias{getAllperms}
 \alias{getAllperms.default}
 \alias{getAllperms.how}
+\alias{getControl}
+\alias{getHow}
+\alias{getControl.default}
+\alias{getControl.allPerms}
 
 \title{Extractor functions to access components of a permutation design}
 \description{
@@ -106,6 +110,8 @@ getRow(object, ...)
 getStrata(object, ...)
 getType(object, ...)
 getWithin(object, ...)
+getControl(object, ...)
+getHow(object, ...)
 
 \method{getAllperms}{how}(object, ...)
 
@@ -154,6 +160,7 @@ getWithin(object, ...)
 
 \method{getWithin}{how}(object, ...)
 
+\method{getControl}{allPerms}(object, ...)
 }
 
 \arguments{
@@ -168,6 +175,9 @@ getWithin(object, ...)
   objects created by \code{\link{how}}. They should be used in
   preference to directly subsetting the permutation design in case the
   internal structure of object changes as \pkg{permute} is developed.
+
+  \code{getHow} is an alias for \code{getControl}; specific methods are
+  implemented for \code{getControl} if you are debugging.
 }
 \value{
   These are simple extractor functions and return the contents of the

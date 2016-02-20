@@ -330,3 +330,24 @@
 `getAllperms.default` <- function(object, ...) {
     stop("No default method for `getAllperms`")
 }
+
+## Extractor for control/how objects
+`getControl` <- function(object, ...) {
+    UseMethod("getControl")
+}
+
+`getControl.default` <- function(object, ...) {
+    nams <- names(object)
+    if (!"control" %in% nams) {
+        stop("Failed to find a 'control' component in 'object'.")
+    }
+    object[["control"]]
+}
+
+`getControl.allPerms` <- function(object, ...) {
+    attr(object, "control")
+}
+
+`getHow` <- function(object, ...) {
+    UseMethod("getControl")
+}

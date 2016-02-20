@@ -19,4 +19,24 @@ test_that("default methods for get functions", {
     expect_error(getObserved(v), regexp = "No default method")
     expect_error(getAllperms(v), regexp = "No default method")
     expect_error(getComplete(v), regexp = "No default method")
+    expect_error(getControl(v), regexp = "Failed to find a 'control' component in 'object'")
+    expect_error(getHow(v), regexp = "Failed to find a 'control' component in 'object'")
+})
+
+test_that("getControl works for allperms", {
+    ctrl <- how()
+    ap <- allPerms(1:6, control = ctrl)
+    CTRL <- getControl(ap)
+    expect_is(CTRL, "how")
+    CTRL <- getHow(ap)
+    expect_is(CTRL, "how")
+})
+
+test_that("getHow works for check()", {
+    ctrl <- how()
+    res <- check(1:4, ctrl)
+    CTRL <- getControl(res)
+    expect_is(CTRL, "how")
+    CTRL <- getHow(res)
+    expect_is(CTRL, "how")
 })
