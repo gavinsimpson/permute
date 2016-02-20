@@ -20,7 +20,7 @@
     }
 
     ## handle a vector, matrix, or data frame input; derive n from it
-    if (((is.numeric(n) || is.integer(n) || is.factor(n)) &&
+    if (((is.numeric(n) || is.integer(n) || is.factor(n) || is.character(n)) &&
          length(n) > 1L) ||
         is.matrix(n) ||
         is.data.frame(n)) {
