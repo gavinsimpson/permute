@@ -171,3 +171,18 @@ test_that("constant within plots works", {
     expect_output(print(perm), regexp = "; same\npermutation")
     expect_output(print(perm), regexp = "; Spatial grid: 3r, 3c")
 })
+
+test_that("shuffelSet works with objects passed to n", {
+    obj <- 1:4
+    expect_is(shuffleSet(obj, 10L), "permutationMatrix")
+    obj <- as.integer(1:4)
+    expect_is(shuffleSet(obj, 10L), "permutationMatrix")
+    obj <- as.factor(1:4)
+    expect_is(shuffleSet(obj, 10L), "permutationMatrix")
+    obj <- letters[1:4]
+    expect_is(shuffleSet(obj, 10L), "permutationMatrix")
+    obj <- matrix(1:16, ncol = 4, nrow = 4)
+    expect_is(shuffleSet(obj, 10L), "permutationMatrix")
+    obj <- data.frame(A = 1:4, B = letters[1:4])
+    expect_is(shuffleSet(obj, 10L), "permutationMatrix")
+})
