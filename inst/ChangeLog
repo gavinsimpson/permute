@@ -1,5 +1,17 @@
 permute ChangeLog
 
+Version 0.9-1
+
+	* setAllperms<-.how() was stripping the "allPerms" class. (#16)
+
+	Reported by: @brendanf
+
+	* nobs: added a `nobs.character` method
+
+	* get-methods: added a `getControl()` extractor with a default
+	method and a method for class `"check"`. There is an alias in
+	the form of `getHow()`
+
 Version 0.9-0
 
 	* Release to CRAN 23 Jan 2016
