@@ -4,6 +4,7 @@
 \alias{summary.allPerms}
 \alias{print.summary.allPerms}
 \alias{as.matrix.allPerms}
+\alias{as.allPerms}
 
 \title{Complete enumeration of all possible permutations}
 \description{
@@ -16,6 +17,8 @@ allPerms(n, control = how(), check = TRUE)
 \method{summary}{allPerms}(object, \dots)
 
 \method{as.matrix}{allPerms}(x, \dots)
+
+as.allPerms(object, control)
 }
 \arguments{
   \item{n}{the number of observations or an 'object' from which the
@@ -26,7 +29,9 @@ allPerms(n, control = how(), check = TRUE)
   \item{check}{logical; should \code{allPerms} check the design? The
     default is to check, but this can be skipped, for example if a
     function checked the design earlier.}
-  \item{object}{an object of class \code{"allPerms"}.}
+  \item{object}{for \code{summary.allPerms}, an object of class
+    \code{"allPerms"}. For \code{as.allPerms} a matrix or something that
+    can be coerced to a matrix by \code{\link{as.matrix}}.}
   \item{\dots}{arguments to other methods.}
   \item{x}{
     an object of class \code{"allPerms"}, as returned by \code{allPerms}.

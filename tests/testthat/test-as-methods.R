@@ -16,3 +16,10 @@ test_that("as.matrix permutationMatrix method", {
     expect_is(m, "matrix")
     expect_false(inherits(m, "permutationMatrix"))
 })
+
+test_that("as.allPerms fixes #16", {
+    res1 <- check(4, control = how())
+    ctrl <- getControl(res1)
+    res <- check(4, ctrl)
+    expect_is(res, "check")
+})
