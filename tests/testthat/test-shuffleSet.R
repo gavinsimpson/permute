@@ -198,3 +198,24 @@ test_that("shuffelSet works with objects passed to n", {
     expect_is(p, "permutationMatrix")
     expect_identical(nrow(p), 10L)
 })
+
+test_that("Issue 19: shuffleSet with nset=1 never regresses", {
+    TreatmentLevels <- 3
+    Animals <- 4
+    TimeSteps <- 5
+    AnimalID <- rep(letters[seq_len(Animals)], each = TreatmentLevels * TimeSteps)
+    Time <- rep(seq_len(TimeSteps), Animals = TreatmentLevels)
+    ## Treatments were given in different order per animal
+    Day <- rep(c(1,2,3,2,3,1,3,2,1,2,3,1), each = TimeSteps)
+    Treatment <- rep(rep(LETTERS[seq_len(TreatmentLevels)], each = TimeSteps), Animals)
+    dataset <- as.data.frame(cbind(AnimalID, Treatment, Day, Time))
+
+    ctrl <- with(dataset,
+                 how(blocks = AnimalID, plots = Plots(strata = Day, type = "free"),
+                     within = Within(type = "none"), nperm = 999))
+
+    ## This should return a matrix
+    p <- shuffleSet(60, nset = 1, control = ctrl)
+    expect_is(p, "matrix")
+    expect_identical(nrow(p), 1L)
+})

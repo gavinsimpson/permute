@@ -74,7 +74,7 @@
     ## out and return that. This has the nice side-effect of not
     ## generating any non-unique permutations. Suggested by Jari.
     if ((nr <- nrow(out)) > nset) {
-        out <- out[sample.int(nr, nset), ]
+        out <- out[sample.int(nr, nset), , drop = FALSE]
     }
 
     ## Attach random seed stored earlier to permutation matrix
