@@ -34,4 +34,5 @@ notifications:
     on_success: change
     on_failure: always
 
-r_check_revdep: false
+r_check_revdep: true
+
