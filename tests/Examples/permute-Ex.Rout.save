@@ -204,7 +204,7 @@ Contains observed ordering?: No
 > ### ** Examples
 > 
 > ## only run this example if vegan is available
-> if (require("vegan")) {
+> if (suppressPackageStartupMessages(require("vegan"))) {
 +     ## use example data from ?pyrifos in package vegan
 +     example(pyrifos)
 + 
@@ -254,9 +254,6 @@ Contains observed ordering?: No
 +     check(pyrifos, how(plots = Plots(strata = ditch, type = "free"),
 +                        within = Within(type = "none")))
 + }
-Loading required package: vegan
-Loading required package: lattice
-This is vegan 2.4-1
 
 pyrifs> data(pyrifos)
 
@@ -1160,7 +1157,7 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.671 0.147 4.826 0 0 
+Time elapsed:  4.459 0.081 4.542 0 0 
 > grDevices::dev.off()
 null device 
           1 
