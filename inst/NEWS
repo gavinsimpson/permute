@@ -1,5 +1,9 @@
 # permute News
 
+## Change in version 0.9-2
+
+This release was purely to avoid issues with CRAN as a new release of vegan had been released and the example reference material hadn't been updated to match.
+
 ## Changes in version 0.9-1
 
 ### General
