@@ -1,7 +1,7 @@
 Package: permute
 Title: Functions for Generating Restricted Permutations of Data
 Version: 0.9-1
-Date: 2016-08-07
+Date: 2016-08-08
 Authors@R: c(person(given = "Gavin L.", family = "Simpson",
                     email = "ucfagls@gmail.com",
                     role = c("aut", "cph", "cre")),
