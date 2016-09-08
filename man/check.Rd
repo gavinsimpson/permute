@@ -59,7 +59,7 @@ check(object, control = how(), quietly = FALSE)
 
 \examples{
 ## only run this example if vegan is available
-if (require("vegan")) {
+if (suppressPackageStartupMessages(require("vegan"))) {
     ## use example data from ?pyrifos in package vegan
     example(pyrifos)
 
