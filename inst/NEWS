@@ -1,5 +1,15 @@
 # permute News
 
+## Changes in version 0.9-1
+
+### General
+
+A minor bug fix release to address a single problem.
+
+### Bug Fixes
+
+ * `shuffleSet()` wasn't returning a matrix if `nset = 1` *and* `allPerms` was invoked because of a low set of possible permutations. [GitHub Issue #19](https://github.com/gavinsimpson/permute/issues/19)
+
 ## Changes in version 0.9-0
 
 ### General
