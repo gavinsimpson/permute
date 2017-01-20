@@ -98,7 +98,7 @@
     ## multiply up n perms per block
     np <- prod(np)
 
-    class(np) <- "numPerms"
+    class(np) <- c("numPerms", "numeric")
     np
 }
 
