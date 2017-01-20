@@ -115,9 +115,9 @@ vec1 <- check(1:100)
 vec2 <- check(1:100, how())
 all.equal(vec1, vec2)
 vec3 <- check(1:100, how(within = Within(type = "series")))
-all.equal(100, vec3$n)
+all.equal(100, as.numeric(vec3$n))
 vec4 <- check(1:100, how(within = Within(type= "series", mirror = TRUE)))
-all.equal(vec4$n, 200)
+all.equal(as.numeric(vec4$n), 200)
 
 ## enumerate all possible permutations
 fac <- gl(2,6)
