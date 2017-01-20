@@ -138,7 +138,7 @@
             if(constantW) {
                 exp(lfactorial(tab[1]))
             } else {
-                prod(exp(lfactorial(tab)))
+                exp(sum(lfactorial(tab)))
             }
         } else {
             exp(lfactorial(n))
