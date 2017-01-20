@@ -95,7 +95,10 @@
                mirrorP, mirrorW, constantW)
 
   ## multiply up n perms per block
-  prod(np)
+  np <- prod(np)
+
+  class(np) <- "numPerms"
+  np
 }
 
 `doNumPerms` <- function(obs, mult.p, mult.wi, typeP, typeW, PSTRATA,
