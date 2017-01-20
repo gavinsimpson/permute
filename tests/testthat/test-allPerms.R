@@ -15,9 +15,9 @@ test_that("allPerms - blocks - within block free", {
               blocks = factor(thedata$judge),
               complete = TRUE, maxperm = 1e9)
     nr <- nrow(thedata)
-    np <- numPerms(nr, hh)
+    np <- as.numeric(numPerms(nr, hh))
     p <- allPerms(nr, control = hh)
-    expect_that(nrow(p), equals(np - 1)) ## default is to drop observed
+    expect_equal(nrow(p), np - 1) ## default is to drop observed
 
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
@@ -29,7 +29,7 @@ test_that("allPerms - blocks - within block free", {
               complete = TRUE, maxperm = 1e9,
               observed = TRUE)
     p <- allPerms(nr, control = hh)
-    expect_that(nrow(p), equals(np)) ## now includes observed
+    expect_equal(nrow(p), as.numeric(np)) ## now includes observed
 
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
@@ -44,10 +44,11 @@ test_that("allPerms; blocks: within; block free - uneven block sizes", {
               blocks = fac,
               complete = TRUE, maxperm = 1e9)
     ll <- length(fac)
-    np <- numPerms(ll, hh)
-    expect_that(np, equals(prod(factorial(2), factorial(2), factorial(4))))
+    np <- as.numeric(numPerms(ll, hh))
+    expect_equal(as.numeric(np),
+                 prod(factorial(2), factorial(2), factorial(4)))
     p <- allPerms(ll, control = hh)
-    expect_that(nrow(p), equals(np - 1)) ## default is to drop observed
+    expect_equal(nrow(p), np - 1) ## default is to drop observed
 
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
@@ -59,7 +60,7 @@ test_that("allPerms; blocks: within; block free - uneven block sizes", {
               complete = TRUE, maxperm = 1e9,
               observed = TRUE)
     p <- allPerms(ll, control = hh)
-    expect_that(nrow(p), equals(np)) ## now includes observed
+    expect_equal(nrow(p), np) ## now includes observed
 
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
@@ -73,10 +74,10 @@ test_that("allPerms: plots; within: free; even: yes;", {
     hh <- how(plots = Plots(strata = fac),
               complete = TRUE, maxperm = 1e9)
     ll <- length(fac)
-    np <- numPerms(ll, hh)
+    np <- as.numeric(numPerms(ll, hh))
     p <- allPerms(ll, control = hh)
-    expect_that(nrow(p), equals(np - 1), ## default is to drop observed
-                info = "Check n all perms == numPerms output.")
+    expect_equal(nrow(p), np - 1, ## default is to drop observed
+                 info = "Check n all perms == numPerms output.")
 
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
@@ -89,7 +90,7 @@ test_that("allPerms: plots; within: free; even: yes;", {
               complete = TRUE, maxperm = 1e9,
               observed = TRUE)
     p <- allPerms(ll, control = hh)
-    expect_that(nrow(p), equals(np)) ## now includes observed
+    expect_equal(nrow(p), np) ## now includes observed
 
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
@@ -104,10 +105,10 @@ test_that("allPerms; plots: within; plot free - uneven plot sizes", {
               plots = Plots(strata = fac),
               complete = TRUE, maxperm = 1e9)
     ll <- length(fac)
-    np <- numPerms(ll, hh)
+    np <- as.numeric(numPerms(ll, hh))
     expect_that(np, equals(prod(factorial(2), factorial(2), factorial(4))))
     p <- allPerms(ll, control = hh)
-    expect_that(nrow(p), equals(np - 1)) ## default is to drop observed
+    expect_equal(nrow(p), np - 1) ## default is to drop observed
 
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
@@ -119,7 +120,7 @@ test_that("allPerms; plots: within; plot free - uneven plot sizes", {
               complete = TRUE, maxperm = 1e9,
               observed = TRUE)
     p <- allPerms(ll, control = hh)
-    expect_that(nrow(p), equals(np)) ## now includes observed
+    expect_equal(nrow(p), np) ## now includes observed
 
     ## check no duplicate indices within rows
     dup <- any(apply(p, 1, function(x) any(duplicated(x))))
@@ -137,10 +138,10 @@ test_that("allPerms; permuting plots only -- non-contiguous plots", {
     attr(perm, "control") <- NULL
     attr(perm, "observed") <- NULL
     class(perm) <- "matrix"
-    expect_that(numPerms(ll, control = ctrl), equals(2L),
-                info = "Number of permutations is wrong")
-    expect_that(nrow(perm), equals(1L),
-                info = "Number of rows in permutation matrix != 1")
+    expect_equal(as.numeric(numPerms(ll, control = ctrl)), 2L,
+                 info = "Number of permutations is wrong")
+    expect_equal(nrow(perm), 1L,
+                 info = "Number of rows in permutation matrix != 1")
     expect_identical(perm, ref)
 
     ## with observed
@@ -149,10 +150,10 @@ test_that("allPerms; permuting plots only -- non-contiguous plots", {
                     3L,4L,1L,2L,7L,8L,5L,6L), nrow = 2, byrow = TRUE)
     perm <- allPerms(ll, ctrl)
     perm <- as.matrix(perm)
-    expect_that(numPerms(ll, control = ctrl), equals(2L),
-                info = "Number of permutations is wrong")
-    expect_that(nrow(perm), equals(2L),
-                info = "Number of rows in permutation matrix != 2")
+    expect_equal(as.numeric(numPerms(ll, control = ctrl)), 2L,
+                 info = "Number of permutations is wrong")
+    expect_equal(nrow(perm), 2L,
+                 info = "Number of rows in permutation matrix != 2")
     expect_identical(perm, ref,
                      info = "All permutations doesn't match reference")
 })
@@ -171,7 +172,7 @@ test_that("Can generate permutations from a grid design", {
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
-    expect_equal(nperms, nrow(perms) + 1L)
+    expect_equal(as.numeric(nperms), nrow(perms) + 1L)
 
     ## mirroring
     nr <- 3
@@ -186,7 +187,7 @@ test_that("Can generate permutations from a grid design", {
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
-    expect_equal(nperms, nrow(perms) + 1L)
+    expect_equal(as.numeric(nperms), nrow(perms) + 1L)
 })
 
 test_that("grids with 2 columns only work correctly", {
@@ -199,7 +200,7 @@ test_that("grids with 2 columns only work correctly", {
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
-    expect_equal(nperms, nrow(perms) + 1L)
+    expect_equal(as.numeric(nperms), nrow(perms) + 1L)
 
     ## spatial grids within each level of plot, 3 x (4r x 2c)
     nr <- 4
@@ -213,7 +214,7 @@ test_that("grids with 2 columns only work correctly", {
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
-    expect_equal(nperms, nrow(perms) + 1L)
+    expect_equal(as.numeric(nperms), nrow(perms) + 1L)
 })
 
 
@@ -228,7 +229,7 @@ test_that("grids with mirroring & 2 columns only work correctly", {
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
-    expect_equal(nperms, nrow(perms) + 1L)
+    expect_equal(as.numeric(nperms), nrow(perms) + 1L)
 
     ## spatial grids within each level of plot, 3 x (4r x 2c)
     nr <- 4
@@ -243,7 +244,7 @@ test_that("grids with mirroring & 2 columns only work correctly", {
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
-    expect_equal(nperms, nrow(perms) + 1L)
+    expect_equal(as.numeric(nperms), nrow(perms) + 1L)
 })
 
 test_that("same grid permutation within plots", {
@@ -260,7 +261,7 @@ test_that("same grid permutation within plots", {
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
-    expect_equal(nperms, nrow(perms) + 1L)
+    expect_equal(as.numeric(nperms), nrow(perms) + 1L)
 })
 
 test_that("same grid permutation within plots & mirroring", {
@@ -277,7 +278,7 @@ test_that("same grid permutation within plots & mirroring", {
 
     expect_is(perms, "allPerms")
     expect_is(perms, "matrix")
-    expect_equal(nperms, nrow(perms) + 1L)
+    expect_equal(as.numeric(nperms), nrow(perms) + 1L)
 })
 
 test_that("allPerms works with complex, but small, design", {
