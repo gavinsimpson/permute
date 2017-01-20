@@ -1,5 +1,7 @@
 \name{numPerms}
 \alias{numPerms}
+\alias{as.numeric.numPerms}
+\alias{print.numPerms}
 
 \title{Number of possible permutations for a given object}
 \description{
@@ -8,12 +10,16 @@
 }
 \usage{
 numPerms(object, control = how())
+
+\method{as.numeric}{numPerms}(x, \ldots)
 }
 \arguments{
   \item{object}{any object handled by \code{\link{nobs}}.}
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
     \code{\link{how}}.}
+  \item{x}{an object of class \code{"numPerms"}.}
+  \item{\ldots}{arguments passed to other methods.}
 }
 \details{
   Function \code{numPerms} returns the number of permutations for the
@@ -28,7 +34,14 @@ numPerms(object, control = how())
 }
 \value{
   The (numeric) number of possible permutations of observations in
-  \code{object}.
+  \code{object}. The object returned has S3 class \code{c("numPerms",
+    "numeric")}.
+
+  Note that the number of permutations may be larger than the largest
+  numeric value that can be handled on your system. In which case, the
+  returned values will be \code{Inf}. The \code{print} method will
+  display a character vector indicating that the number of permutations
+  is greater than \code{.Machine$double.xmax}.
 }
 \note{
   In general, mirroring \code{"series"} or \code{"grid"} designs doubles
