@@ -72,6 +72,15 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   restricted permutation schemes. A small selection of the available
   combinations of options is provided in the Examples section below.
 
+  Argument type controls how samples are actually permuted;
+  \code{"free"} indicates randomization, \code{"series"} indicates
+  permutation via cyclic shifts (suitable for evenly-spaced line
+  transect or time series data), \code{"grid"} indicates permutation via
+  toroidal shifts (suitable for samples on a regular grid), and
+  \code{"none"} indicates no permutation of samples. See the package
+  vignette (\code{browseVignettes("permute")}) for additional
+  information on each of these types of permutation.
+
   Argument \code{mirror} determines whether grid or series permutations
   can be mirrored. Consider the sequence 1,2,3,4. The relationship
   between consecutive observations is preserved if we reverse the
