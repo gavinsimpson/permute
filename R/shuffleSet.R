@@ -38,6 +38,7 @@
         pcheck <- check(sn, control = control, quietly = quietly)
         ## control possibly now updated
         control <- getControl(pcheck)
+        nset <- getNperm(control)       # update nset as it might have changed
     }
 
     if(is.null(AP <- getAllperms(control))) {
