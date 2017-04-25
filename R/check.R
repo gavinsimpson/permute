@@ -100,6 +100,7 @@
     if(getComplete(control) && getMake(control)) {
         ap <- allPerms(N, control = control, check = FALSE)
         setAllperms(control) <- ap
+        setNperm(control) <- nrow(ap)
     }
     retval <- list(n = num.pos, control = control)
     class(retval) <- "check"
