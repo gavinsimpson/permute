@@ -219,3 +219,13 @@ test_that("Issue 19: shuffleSet with nset=1 never regresses", {
     expect_is(p, "matrix")
     expect_identical(nrow(p), 1L)
 })
+
+test_that("Issue 23: if complete = TRUE update nperm", {
+    ctrl <- how(complete = TRUE, minperm = 100)
+    vec <- 1:6
+    np <- numPerms(vec, control = ctrl)
+    ap <- allPerms(vec, control = ctrl)
+    p <- shuffleSet(length(vec), control = ctrl)
+    ##expect_identical(NROW(p), np - 1L)
+    expect_identical(NROW(p), NROW(ap))
+})

@@ -34,10 +34,18 @@
     ## so you always get `nset` permutations and, yes, you can shoot
     ## yourself in the foot with this, hence the default is to check!
     if (isTRUE(check)) {
+        ## store original complete
+        all.orig <- getComplete(control)
         ## need to check number of permutations won't blow up
         pcheck <- check(sn, control = control, quietly = quietly)
         ## control possibly now updated
         control <- getControl(pcheck)
+        ## if complete != TRUE originally, it must have been triggered by
+        ## small permutation size. If so, don't change nset. Only change if
+        ## user asked for complete = TRUE in the first place!
+        if (isTRUE(all.orig)) {
+            nset <- getNperm(control)       # update nset as it might have changed
+        }
     }
 
     if(is.null(AP <- getAllperms(control))) {
