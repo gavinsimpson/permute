@@ -63,6 +63,7 @@ permute(i, n, control)
   permutation scheme described by \code{\link{how}}.}
 
 \examples{
+\dontshow{suppressWarnings(RNGversion("3.5.0"))}
 set.seed(1234)
 
 ## unrestricted permutations
