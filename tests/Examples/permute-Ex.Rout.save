@@ -1,6 +1,6 @@
 
-R version 3.3.0 Patched (2016-05-12 r70603) -- "Supposedly Educational"
-Copyright (C) 2016 The R Foundation for Statistical Computing
+R version 3.5.3 beta (2019-02-28 r76174) -- "Great Truth"
+Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -23,6 +23,7 @@ Type 'q()' to quit R.
 > library('permute')
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("allPerms")
 > ### * allPerms
@@ -643,6 +644,10 @@ Permutation details:
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> suppressWarnings(RNGversion("3.5.0"))
+> ## End(Don't show)
+> set.seed(1)
 > ## numeric vector
 > len <- sample(1:10, 1)
 > v <- as.numeric(sample(1:100, len))
@@ -768,6 +773,9 @@ Permutation details:
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> suppressWarnings(RNGversion("3.5.0"))
+> ## End(Don't show)
 > set.seed(3)
 > 
 > ## draw 1 value at random from the set 1:10
@@ -809,6 +817,9 @@ Permutation details:
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> suppressWarnings(RNGversion("3.5.0"))
+> ## End(Don't show)
 > set.seed(1234)
 > 
 > ## unrestricted permutations
@@ -1001,6 +1012,10 @@ mean in group Group 1 mean in group Group 2
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> suppressWarnings(RNGversion("3.5.0"))
+> ## End(Don't show)
+> set.seed(1)
 > ## simple random permutations, 5 permutations in set
 > shuffleSet(n = 10, nset = 5)
 No. of Permutations: 5
@@ -1155,9 +1170,10 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > 
 > ### * <FOOTER>
 > ###
+> cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.459 0.081 4.542 0 0 
+Time elapsed:  3.78 0.067 3.873 0 0 
 > grDevices::dev.off()
 null device 
           1 

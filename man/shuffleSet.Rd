@@ -111,6 +111,8 @@ shuffleSet(n, nset, control = how(), check = TRUE, quietly = FALSE)
   \code{\link{how}} for setting up permutation designs.
 }
 \examples{
+\dontshow{suppressWarnings(RNGversion("3.5.0"))}
+set.seed(1)
 ## simple random permutations, 5 permutations in set
 shuffleSet(n = 10, nset = 5)
 

@@ -30,6 +30,8 @@ test_that("shuffle() works for non-contigous blocks of samples", {
     CTRL <- how(plots = Plots(strata = Plot, type = "free"),
                 within = Within(type = "none"))
     n <- 20
+    ## FIXME Temporary fix related to #25
+    suppressWarnings(RNGversion("3.5.0"))
     set.seed(2)
     result <- shuffle(n, CTRL)
     out1 <- as.integer(c( 3, 2, 1, 4,

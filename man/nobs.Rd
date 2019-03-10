@@ -42,6 +42,8 @@
 }
 \author{Gavin Simpson}
 \examples{
+\dontshow{suppressWarnings(RNGversion("3.5.0"))}
+set.seed(1)
 ## numeric vector
 len <- sample(1:10, 1)
 v <- as.numeric(sample(1:100, len))

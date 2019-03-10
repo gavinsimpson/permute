@@ -75,6 +75,7 @@ shuffleStrata(strata, type, mirror = FALSE, start = NULL, flip = NULL,
   wrapper to these functions.}
 
 \examples{
+\dontshow{suppressWarnings(RNGversion("3.5.0"))}
 set.seed(3)
 
 ## draw 1 value at random from the set 1:10
