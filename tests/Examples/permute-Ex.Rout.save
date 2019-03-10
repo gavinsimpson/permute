@@ -644,6 +644,10 @@ Permutation details:
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> suppressWarnings(RNGversion("3.5.0"))
+> ## End(Don't show)
+> set.seed(1)
 > ## numeric vector
 > len <- sample(1:10, 1)
 > v <- as.numeric(sample(1:100, len))
@@ -1169,7 +1173,7 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.724 0.051 3.796 0 0 
+Time elapsed:  3.78 0.067 3.873 0 0 
 > grDevices::dev.off()
 null device 
           1 
