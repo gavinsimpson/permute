@@ -49,6 +49,7 @@
 <<preliminary,results=hide,echo=false>>=
 options("prompt" = "R> ", "continue" = "+  ")
 options(useFancyQuotes="UTF-8")
+suppressWarnings(RNGversion("3.5.0"))
 @
 \section{Introduction}
 In classical frequentist statistics, the significance of a relationship or model is determined by reference to a null distribution for the test statistic. This distribution is derived mathematically and the probability of achieving a test statistic as large or larger if the null hypothesis were true is looked-up from this null distribution. In deriving this probability, some assumptions about the data or the errors are made. If these assumptions are violated, then the validity of the derived $p$-value may be questioned.
