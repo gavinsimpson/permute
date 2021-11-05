@@ -106,11 +106,13 @@
     if (typeW != "none") {
         if(is.null(strataP)) {
             ## no plot-level permutations
+            ## have to redo numPerms here because we could be within a block
             res <- switch(typeW,
                           free = allFree(n),
-                          series = allSeries(n, nperms, mirrorW),
-                          grid = allGrid(n, nperms, dimW[1],
-                          dimW[2], mirrorW, constantW))
+                          series = allSeries(n, numPerms(n, control), mirrorW),
+                          grid = allGrid(n, numPerms(n, control),
+                                         dimW[1], dimW[2],
+                                         mirrorW, constantW))
             ## use res to index original observation indices in this group
             res[] <- obs[res]
         } else {

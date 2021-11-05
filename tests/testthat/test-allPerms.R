@@ -296,3 +296,15 @@ test_that("summary.allPerms works & prints correctly", {
     expect_output(print(summary(ap)),
                   regexp = "Complete enumeration of permutations")
 })
+
+# issue #28
+test_that("allPerms works for series within blocks issue 28", {
+    ## Set up factors for the Plots and Blocks
+    plts <- gl(4, 10) ## 4 Plots of 10 samples each
+    blks <- gl(2, 20) ## 2 Blocks of 20 samples each
+    ## define permutation design
+    h1 <- how(Within(type = "series"), blocks = blks)
+    p <- allPerms(40, h1)
+    expect_equal(numPerms(40, control = h1), 400L)
+    expect_identical(nrow(p), 399L)
+})
