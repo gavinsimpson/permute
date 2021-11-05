@@ -6,3 +6,6 @@
 
 ## ignore backup files
 *~
+
+## ignore revdep folder
+revdep/

@@ -4,3 +4,4 @@ LICENSE
 ^appveyor\.yml$
 Makefile
 ^cran-comments\.md$
+^revdep
