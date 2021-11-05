@@ -1,11 +1,11 @@
 Package: permute
 Title: Functions for Generating Restricted Permutations of Data
-Version: 0.9-5
-Date: 2019-03-10
+Version: 0.9-6
+Date: 2021-11-05
 Authors@R: c(person(given = "Gavin L.", family = "Simpson",
                     email = "ucfagls@gmail.com",
                     role = c("aut", "cph", "cre"),
-		    comment = c(ORCID = "0000-0002-9084-8413")),
+		            comment = c(ORCID = "0000-0002-9084-8413")),
              person(given = "R Core Team", role = "cph"),
              person(given = "Douglas M.", family = "Bates", role = "ctb"),
              person(given = "Jari", family = "Oksanen", role = "ctb"))
