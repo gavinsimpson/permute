@@ -1,10 +1,9 @@
 ## Restricted permutations with R
 
-#### Released version
-[![CRAN version](http://www.r-pkg.org/badges/version/permute)](https://cran.r-project.org/package=permute) [![](http://cranlogs.r-pkg.org/badges/grand-total/permute)](https://cran.r-project.org/package=permute)
-
-#### Build status
-[![Build Status](https://travis-ci.org/gavinsimpson/permute.svg?branch=master)](https://travis-ci.org/gavinsimpson/permute)  [![Build status](https://ci.appveyor.com/api/projects/status/ytql5bm7rphweeoh/branch/master?svg=true)](https://ci.appveyor.com/project/gavinsimpson/permute/branch/master)  [![codecov.io](https://codecov.io/github/gavinsimpson/permute/coverage.svg?branch=master)](https://codecov.io/github/gavinsimpson/permute?branch=master)
+[![CRAN version](http://www.r-pkg.org/badges/version/permute)](https://cran.r-project.org/package=permute)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/permute)](https://cran.r-project.org/package=permute)
+[![R-CMD-check](https://github.com/gavinsimpson/permute/workflows/R-CMD-check/badge.svg)](https://github.com/gavinsimpson/cocorresp/actions)
+[![codecov.io](https://codecov.io/github/gavinsimpson/permute/coverage.svg?branch=master)](https://codecov.io/github/gavinsimpson/permute?branch=master)
 
 ## What is permute?
 
