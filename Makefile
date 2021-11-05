@@ -8,7 +8,7 @@ all: check clean
 
 build: #docs
 	cd ..;\
-	R CMD build permute
+	R CMD build --compact-vignettes permute
 build-quick: #docs
 	cd ..;\
 	R CMD build --no-manual --no-build-vignettes permute
