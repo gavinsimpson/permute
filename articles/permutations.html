@@ -403,7 +403,10 @@ Distribution of the difference of mean mandible length in random allocations, te
 <p>There are three levels at which permutations can be controlled in <em>permute</em>. The highest level of the hierarchy is the <em>block</em> level. Blocks are defined by a factor variable. Blocks restrict permutation of samples to within the levels of this factor; samples are never swapped between blocks.</p>
 <p>The <em>plot</em> level sits below blocks. Plots are defined by a factor and group samples in the same way as blocks. As such, some permutation designs can be initiated using a factor at the plot level or the same factor at the block level. The major difference between blocks and plots is that plots can also be permuted, whereas blocks are never permuted.</p>
 <p>The lowest level of a permutation design in the <em>permute</em> hierarchy is known as <em>within</em>, and refers to samples nested <em>within</em> plots. If there are no plots or blocks, how samples are permuted at the <em>within</em> level applies to the entire data set.</p>
-<p><em>Permuting samples at the lowest level</em> How samples at the <em>within</em> level are permuted is configured using the <code><a href="../reference/how.html">Within()</a></code> function. It takes the following arguments</p>
+<div id="permuting-samples-at-the-lowest-level" class="section level3">
+<h3 class="hasAnchor">
+<a href="#permuting-samples-at-the-lowest-level" class="anchor"></a>Permuting samples at the lowest level</h3>
+<p>How samples at the <em>within</em> level are permuted is configured using the <code><a href="../reference/how.html">Within()</a></code> function. It takes the following arguments</p>
 <pre><code>## function (type = c("free", "series", "grid", "none"), constant = FALSE, 
 ##     mirror = FALSE, ncol = NULL, nrow = NULL) 
 ## NULL</code></pre>
@@ -424,13 +427,18 @@ Distribution of the difference of mean mandible length in random allocations, te
 </dd>
 </dl>
 <p>How <code><a href="../reference/how.html">Within()</a></code> is used has already been encountered in earlier sections of this vignette; the function is used to supply a value to the <code>within</code> argument of <code><a href="../reference/how.html">how()</a></code>. You may have noticed that all the arguments of <code><a href="../reference/how.html">Within()</a></code> have default values? This means that the user need only supply a modified value for the arguments they wish to change. Also, arguments that are not relevant for the type of permutation stated are simply ignored; <code>nrow</code> and <code>ncol</code>, for example, could be set to any value without affecting the permutation design if <code>type != "grid"</code>[^No warnings are currently given if incompatible arguments are specified; they are ignored, but may show up in the printed output. This infelicity will be removed prior to <em>permute</em> version 1.0-0 being released.].</p>
-<p><em>Permuting samples at the Plot level</em> Permutation of samples at the <em>plot</em> level is configured via the <code><a href="../reference/how.html">Plots()</a></code> function. As with <code><a href="../reference/how.html">Within()</a></code>, <code><a href="../reference/how.html">Plots()</a></code> is supplied to the <code>plots</code> argument of <code><a href="../reference/how.html">how()</a></code>. <code><a href="../reference/how.html">Plots()</a></code> takes many of the same arguments as <code><a href="../reference/how.html">Within()</a></code>, the two differences being <code>strata</code>, a factor variable that describes the grouping of samples at the <em>plot</em> level, and the absence of a <code>constant</code> argument. As the majority of arguments are similar between <code><a href="../reference/how.html">Within()</a></code> and <code><a href="../reference/how.html">Plots()</a></code>, I will not repeat the details again, and only describe the <code>strata</code> argument</p>
+</div>
+<div id="permuting-samples-at-the-plot-level" class="section level3">
+<h3 class="hasAnchor">
+<a href="#permuting-samples-at-the-plot-level" class="anchor"></a>Permuting samples at the Plot level</h3>
+<p>Permutation of samples at the <em>plot</em> level is configured via the <code><a href="../reference/how.html">Plots()</a></code> function. As with <code><a href="../reference/how.html">Within()</a></code>, <code><a href="../reference/how.html">Plots()</a></code> is supplied to the <code>plots</code> argument of <code><a href="../reference/how.html">how()</a></code>. <code><a href="../reference/how.html">Plots()</a></code> takes many of the same arguments as <code><a href="../reference/how.html">Within()</a></code>, the two differences being <code>strata</code>, a factor variable that describes the grouping of samples at the <em>plot</em> level, and the absence of a <code>constant</code> argument. As the majority of arguments are similar between <code><a href="../reference/how.html">Within()</a></code> and <code><a href="../reference/how.html">Plots()</a></code>, I will not repeat the details again, and only describe the <code>strata</code> argument</p>
 <dl>
 <dt><code>strata</code></dt>
 <dd>a factor variable. <code>strata</code> describes the grouping of samples at the <em>plot</em> level, where samples from the same <em>plot</em> are take the same <em>level</em> of the factor.
 </dd>
 </dl>
 <p>When a <em>plot</em>-level design is specified, samples are never permuted between <em>plots</em>, only within plots if they are permuted at all. Hence, the type of permutation <em>within</em> the <em>plots</em> is controlled by <code><a href="../reference/how.html">Within()</a></code>. Note also that with <code><a href="../reference/how.html">Plots()</a></code>, the way the individual <em>plots</em> are permuted can be from any one of the four basic permutation types; <code>"none"</code>, <code>"free"</code>, <code>"series"</code>, and <code>"grid"</code>, as described above. To permute the <em>plots</em> only (i.e. retain the ordering of the samples <em>within</em> plots), you also need to specify <code>Within(type = "none", ...)</code> as the default in <code><a href="../reference/how.html">Within()</a></code> is <code>type = "free"</code>. The ability to permute the plots whilst preserving the within-plot ordering is an impotant feature in testing explanatory factors at the whole-plot level in split-plot designs and in multifactorial analysis of variance <span class="citation">(Braak and Šmilauer 2012)</span>.</p>
+</div>
 <div id="specifying-blocks-the-top-of-the-permute-hierarchy" class="section level3">
 <h3 class="hasAnchor">
 <a href="#specifying-blocks-the-top-of-the-permute-hierarchy" class="anchor"></a>Specifying blocks; the top of the <em>permute</em> hierarchy</h3>
@@ -516,7 +524,7 @@ Distribution of the difference of mean mandible length in random allocations, te
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="va">ppval</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,
                               cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.141   0.000   0.598</code></pre>
+##   0.106   0.007   0.456</code></pre>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ppval</span></code></pre></div>
 <pre><code>## [1] 0.0018</code></pre>
@@ -526,7 +534,7 @@ Distribution of the difference of mean mandible length in random allocations, te
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="va">ppval2</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,
                                cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.418   0.004   0.422</code></pre>
+##   0.347   0.001   0.347</code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ppval2</span></code></pre></div>
 <pre><code>## [1] 0.0018</code></pre>
