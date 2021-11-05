@@ -228,7 +228,8 @@ The *plot* level sits below blocks. Plots are defined by a factor and group samp
 
 The lowest level of a permutation design in the *permute* hierarchy is known as *within*, and refers to samples nested *within* plots. If there are no plots or blocks, how samples are permuted at the *within* level applies to the entire data set.
 
-*Permuting samples at the lowest level*
+### Permuting samples at the lowest level
+
 How samples at the *within* level are permuted is configured using the `Within()` function. It takes the following arguments
 ```{r, withinArgs, echo=FALSE}
 args(Within)
@@ -248,7 +249,8 @@ args(Within)
 
 How `Within()` is used has already been encountered in earlier sections of this vignette; the function is used to supply a value to the `within` argument of `how()`. You may have noticed that all the arguments of `Within()` have default values? This means that the user need only supply a modified value for the arguments they wish to change. Also, arguments that are not relevant for the type of permutation stated are simply ignored; `nrow` and `ncol`, for example, could be set to any value without affecting the permutation design if `type != "grid"`[^No warnings are currently given if incompatible arguments are specified; they are ignored, but may show up in the printed output. This infelicity will be removed prior to *permute* version 1.0-0 being released.].
 
-*Permuting samples at the Plot level*
+### Permuting samples at the Plot level
+
 Permutation of samples at the *plot* level is configured via the `Plots()` function. As with `Within()`, `Plots()` is supplied to the `plots` argument of `how()`. `Plots()` takes many of the same arguments as `Within()`, the two differences being `strata`, a factor variable that describes the grouping of samples at the *plot* level, and the absence of a `constant` argument. As the majority of arguments are similar between `Within()` and `Plots()`, I will not repeat the details again, and only describe the `strata` argument
 
 `strata`
