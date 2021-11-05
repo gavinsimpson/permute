@@ -1,6 +1,6 @@
 
-R version 3.5.3 beta (2019-02-28 r76174) -- "Great Truth"
-Copyright (C) 2019 The R Foundation for Statistical Computing
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -989,7 +989,7 @@ $pval
 
 data:  dat by grp
 t = -2.3421, df = 38, p-value = 0.02452
-alternative hypothesis: true difference in means is not equal to 0
+alternative hypothesis: true difference in means between group Group 1 and group Group 2 is not equal to 0
 95 percent confidence interval:
  -1.25582408 -0.09136416
 sample estimates:
@@ -1173,7 +1173,7 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.78 0.067 3.873 0 0 
+Time elapsed:  1.414 0.068 1.482 0 0 
 > grDevices::dev.off()
 null device 
           1 
