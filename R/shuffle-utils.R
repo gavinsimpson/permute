@@ -71,7 +71,17 @@
 }
 
 `shuffleFree` <- function(x, size) {
-    sample.int(x, size, replace = FALSE)
+    # need to ensure x is length 1 when passed to sample.int
+    # documented behaviour is to allow x = 10:20 say
+    # so we need to allow this now even though I never use it like this in
+    # the package code, except for a single example
+    if (length(x) > 1L) {
+        p <- sample.int(length(x), size, replace = FALSE)
+        out <- x[p]
+    } else {
+        out <- sample.int(x, size, replace = FALSE)
+    }
+    out
 }
 
 ## wrapper function when shuffling without any strata at all at any level
