@@ -780,7 +780,7 @@ Permutation details:
 > 
 > ## draw 1 value at random from the set 1:10
 > shuffleFree(1:10, 1)
-[1] 1
+[1] 2
 > 
 > ## permute the series 1:10
 > x <- 1:10
@@ -1173,7 +1173,7 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.414 0.068 1.482 0 0 
+Time elapsed:  0.899 0.037 0.94 0 0 
 > grDevices::dev.off()
 null device 
           1 
