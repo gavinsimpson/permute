@@ -3,6 +3,13 @@ library("permute")
 
 context("Testing shuffle-util functions")
 
+test_that("shuffleFree works with a vector", {
+    x <- 10:20
+    p <- shuffleFree(x, 1)
+    expect_identical(length(p), 1L)
+    expect_true(p %in% x)
+})
+
 test_that("shuffelStrata works for various 'type's", {
     f <- gl(4,5)
     perm <- shuffleStrata(f, type = "free")
