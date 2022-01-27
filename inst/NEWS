@@ -1,5 +1,14 @@
 # permute News
 
+## Changes in version 0.9-7
+
+### Bug fixes
+
+* The documented behaviour of `shuffleFree()` allowed `shuffleFree(x = 1:10)`,
+  with `x` passed immediately to `sample.int()`, which is incorrect and raises
+  an error in the development version of R (at the time of writing).
+  Reported by Brian Ripley.
+
 ## Changes in version 0.9-6
 
 ### Bug fixes
