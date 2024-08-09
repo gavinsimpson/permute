@@ -1,7 +1,7 @@
 ## Restricted permutations with R
 
-[![CRAN version](http://www.r-pkg.org/badges/version/permute)](https://cran.r-project.org/package=permute)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/permute)](https://cran.r-project.org/package=permute)
+[![CRAN version](https://www.r-pkg.org/badges/version/permute)](https://cran.r-project.org/package=permute)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/permute)](https://cran.r-project.org/package=permute)
 [![R-CMD-check](https://github.com/gavinsimpson/permute/workflows/R-CMD-check/badge.svg)](https://github.com/gavinsimpson/cocorresp/actions)
 [![codecov.io](https://codecov.io/github/gavinsimpson/permute/coverage.svg?branch=master)](https://codecov.io/github/gavinsimpson/permute?branch=master)
 
