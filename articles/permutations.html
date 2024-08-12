@@ -97,11 +97,11 @@ Simpson</h4>
 <p>In classical frequentist statistics, the significance of a
 relationship or model is determined by reference to a null distribution
 for the test statistic. This distribution is derived mathematically and
-the probability of achieving a test statistic as large or larger if the
-null hypothesis were true is looked-up from this null distribution. In
-deriving this probability, some assumptions about the data or the errors
-are made. If these assumptions are violated, then the validity of the
-derived
+the probability of achieving a test statistic as large or larger than
+the observed statistic <em>if</em> the null hypothesis were true is
+looked-up from this null distribution. In deriving this probability,
+some assumptions about the data or the errors are made. If these
+assumptions are violated, then the validity of the derived
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value
 may be questioned.</p>
 <p>An alternative to deriving the null distribution from theory is to
@@ -112,7 +112,7 @@ test can be computed as the proportion of values of the test statistic
 from the null distribution that are equal to or larger than the observed
 value.</p>
 <p>In many data sets, simply shuffling the data at random is
-inappropriate; under the null hypothesis, that data are not freely
+inappropriate; under the null hypothesis, the data may not ne freely
 exchangeable, for example if there is temporal or spatial correlation,
 or the samples are clustered in some way, such as multiple samples
 collected from each of a number of fields. The <em>permute</em> package
@@ -852,7 +852,7 @@ version of <code>pt.test()</code></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                              cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.092   0.008   0.508</span></span></code></pre>
+<span><span class="co">##   0.098   0.004   0.559</span></span></code></pre>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
@@ -863,7 +863,7 @@ computations over two CPU cores</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval2</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                               cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.329   0.000   0.328</span></span></code></pre>
+<span><span class="co">##   0.357   0.000   0.357</span></span></code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval2</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
