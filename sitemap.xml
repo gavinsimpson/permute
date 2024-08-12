@@ -1,60 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/permutations.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/allPerms.html</loc>
-  </url>
-  <url>
-    <loc>/reference/allUtils.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/how.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/jackal.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nobs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/numPerms.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/shuffle-utils.html</loc>
-  </url>
-  <url>
-    <loc>/reference/shuffle.html</loc>
-  </url>
-  <url>
-    <loc>/reference/shuffleSet.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/permutations.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/allPerms.html</loc></url>
+<url><loc>/reference/allUtils.html</loc></url>
+<url><loc>/reference/check.html</loc></url>
+<url><loc>/reference/get-methods.html</loc></url>
+<url><loc>/reference/how.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/jackal.html</loc></url>
+<url><loc>/reference/nobs.html</loc></url>
+<url><loc>/reference/numPerms.html</loc></url>
+<url><loc>/reference/set-methods.html</loc></url>
+<url><loc>/reference/shuffle-utils.html</loc></url>
+<url><loc>/reference/shuffle.html</loc></url>
+<url><loc>/reference/shuffleSet.html</loc></url>
 </urlset>
+
