@@ -17,7 +17,7 @@
 how(within = Within(), plots = Plots(), blocks = NULL,
     nperm = 199, complete = FALSE, maxperm = 9999,
     minperm = 5040, all.perms = NULL, make = TRUE,
-    observed = FALSE)
+    observed = FALSE, data = NULL)
 
 Within(type = c("free","series","grid","none"),
        constant = FALSE, mirror = FALSE,
@@ -58,6 +58,8 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   \item{observed}{logical; should the observed permutation be returned
     as part of the set of all permutations? Default is \code{FALSE} to
     facilitate usage in higher level functions.}
+  \item{data}{data frame; if \code{blocks} is a formula, \code{data} must be
+    supplied, and the blocks formula will be evaluated within \code{data}.}
   \item{constant}{logical; should the same permutation be used within
     each level of strata? If \code{FALSE} a separate, possibly restricted,
     permutation is produced for each level of \code{strata}.}
