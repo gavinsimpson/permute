@@ -4,17 +4,33 @@ library("permute")
 context("Testing how()")
 
 test_that("how() works with explicit NULL blocks arg", {
-    ## Example of failure from Jari github #8
-    h <- how(blocks = NULL)
-    expect_that(h, is_a("how"))
+  ## Example of failure from Jari github #8
+  h <- how(blocks = NULL)
+  expect_that(h, is_a("how"))
 })
 
 test_that("print method for how", {
-    expect_output(print(how()), regexp = "Permutation Design:")
+  expect_output(print(how()), regexp = "Permutation Design:")
 
-    ctrl <- how(plots = Plots(strata = gl(4,5)))
-    expect_output(print(how()), regexp = "Plots:")
+  ctrl <- how(plots = Plots(strata = gl(4, 5)))
+  expect_output(print(how()), regexp = "Plots:")
 
-    ctrl <- how(plots = Plots(strata = gl(4,9), type = "grid", ncol = 3, nrow = 3))
-    expect_output(print(ctrl), regexp = "Grid dimensions:")
+  ctrl <- how(plots =
+    Plots(strata = gl(4, 9), type = "grid", ncol = 3, nrow = 3)
+  )
+  expect_output(print(ctrl), regexp = "Grid dimensions:")
+})
+
+test_that("how() works with formula blocks", {
+  plts <- gl(4, 10)
+  blks <- gl(2, 20)
+  dat <- data.frame(blks = blks)
+  expect_silent(
+    h <- how(within = Within(type = "series", mirror = TRUE),
+      plots = Plots(strata = plts, type = "series"),
+      blocks = ~blks, data = dat)
+  )
+  expect_that(h, is_a("how"))
+  expect_identical(h$blocks, dat$blks)
+  expect_identical(h$blocks.name, "blks")
 })
