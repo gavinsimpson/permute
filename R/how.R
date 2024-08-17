@@ -1,15 +1,16 @@
-`how` <- function(within = Within(),
-    plots = Plots(),
-    blocks = NULL,
-    nperm = 199,
-    complete = FALSE,
-    maxperm = 9999,
-    minperm = 5040,
-    all.perms = NULL,
-    make = TRUE,
-    observed = FALSE,
-    data = NULL
-  ) {
+`how` <- function(
+  within = Within(),
+  plots = Plots(),
+  blocks = NULL,
+  nperm = 199,
+  complete = FALSE,
+  maxperm = 9999,
+  minperm = 5040,
+  all.perms = NULL,
+  make = TRUE,
+  observed = FALSE,
+  data = NULL
+) {
   # handle blocks - this can be a formula or something we can convert to a
   # character
   is_fml <- inherits(blocks, "formula")
