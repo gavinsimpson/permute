@@ -29,7 +29,7 @@
     Archaeological Science} \strong{7}:149-165.
   
   Manly, B.F.J. (2007) \emph{Randomization, bootstrap and Monte Carlo
-    methods in biology. Third Edition}. Chapman \& Hall/CRC, Boca
+    methods in biology. Third Edition}. Chapman & Hall/CRC, Boca
   Raton.
 }
 \examples{
