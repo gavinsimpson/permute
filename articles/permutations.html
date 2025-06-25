@@ -852,7 +852,7 @@ version of <code>pt.test()</code></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                              cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.096   0.004   0.571</span></span></code></pre>
+<span><span class="co">##   0.096   0.003   0.575</span></span></code></pre>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
@@ -863,7 +863,7 @@ computations over two CPU cores</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval2</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                               cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.346   0.000   0.346</span></span></code></pre>
+<span><span class="co">##   0.336   0.000   0.336</span></span></code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval2</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
