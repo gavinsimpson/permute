@@ -1,5 +1,9 @@
 # permute News
 
+## Changes in version 0.9-8
+
+* Updated reference output for examples following release of *vegan* 2.7.1.
+
 ## Changes in version 0.9-7
 
 ### Bug fixes
