@@ -21,7 +21,7 @@ Several types of permutation are available in **permute**:
  * Time series or line transect designs, where the temporal or spatial ordering is preserved.
  * Spatial grid designs, where the spatial ordering is preserved in both coordinate directions
  * Permutation of plots or groups of samples.
- * Blocking factors which restrict permutations to within blocks. The preceding designs can be nested within blocks, allowing analysis of hierachical designs (e.g. split plot designs)
+ * Blocking factors which restrict permutations to within blocks. The preceding designs can be nested within blocks, allowing analysis of hierarchical designs (e.g. split plot designs)
 
 ### References
 
