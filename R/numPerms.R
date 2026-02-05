@@ -95,7 +95,7 @@
                mirrorP, mirrorW, constantW)
 
   ## multiply up n perms per block
-  prod(np)
+  round(prod(np), 0)
 }
 
 `doNumPerms` <- function(obs, mult.p, mult.wi, typeP, typeW, PSTRATA,
@@ -172,6 +172,6 @@
         }
     }
 
-    ## return
-    num.p * num.wi
+    ## return, trying to avoid floating point issues
+    zapsmall(num.p) * zapsmall(num.wi)
 }
