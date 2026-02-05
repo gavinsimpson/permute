@@ -7,3 +7,4 @@ Makefile
 ^revdep
 ^\.github
 ^NEWS\.md
+^CRAN-SUBMISSION$
