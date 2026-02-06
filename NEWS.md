@@ -1,4 +1,4 @@
-# permute (development version)
+# permute 0.9-10
 
 ## User visible changes
 
