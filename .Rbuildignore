@@ -5,5 +5,5 @@ LICENSE
 Makefile
 ^cran-comments\.md$
 ^revdep
-^\.github\
+^\.github
 ^CRAN-SUBMISSION$
