@@ -63,8 +63,8 @@ shuffleSet(n, nset, control = how(), check = TRUE, quietly = FALSE)
 
   By default, \code{shuffleSet} will check the permutations design
   following a few simple heuristics. See \code{\link{check}} for details
-  of these. Whether some of the heuristics are activiated or not can be
-  controlled via \code{\link{how}}, essentialy via its argument
+  of these. Whether some of the heuristics are activated or not can be
+  controlled via \code{\link{how}}, essentially via its argument
   \code{minperm}. In particular, if there are fewer than \code{minperm}
   permutations, \code{shuffleSet} will generate and return \strong{all
     possible permutations}, which may differ from the number requested via

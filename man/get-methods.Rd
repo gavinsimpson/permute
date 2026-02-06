@@ -87,7 +87,7 @@
   Simple functions to allow abstracted access to components of a
   permutation design, for example as returned by
   \code{\link{how}}. Whilst many of these are very simple index
-  opertations on a list, using these rather than directly accessing that
+  operations on a list, using these rather than directly accessing that
   list allows the internal representation of the permutation design to
   change without breaking code.
 }

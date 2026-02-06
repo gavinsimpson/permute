@@ -21,7 +21,7 @@ In classical frequentist statistics, the significance of a relationship or model
 
 An alternative to deriving the null distribution from theory is to generate a null distribution of the test statistic by randomly shuffling the data in some manner, refitting the model and deriving values for the test statistic for the permuted data. The level of significance of the test can be computed as the proportion of values of the test statistic from the null distribution that are equal to or larger than the observed value.
 
-In many data sets, simply shuffling the data at random is inappropriate; under the null hypothesis, the data may not ne freely exchangeable, for example if there is temporal or spatial correlation, or the samples are clustered in some way, such as multiple samples collected from each of a number of fields. The *permute* package was designed to provide facilities for generating these restricted permutations for use in randomisation tests. *permute* takes as its motivation the permutation schemes originally available in *Canoco* version 3.1 [@canoco31], which employed the cyclic- or toroidal-shifts suggested by @besagclifford.
+In many data sets, simply shuffling the data at random is inappropriate; under the null hypothesis, the data may not be freely exchangeable, for example if there is temporal or spatial correlation, or the samples are clustered in some way, such as multiple samples collected from each of a number of fields. The *permute* package was designed to provide facilities for generating these restricted permutations for use in randomisation tests. *permute* takes as its motivation the permutation schemes originally available in *Canoco* version 3.1 [@canoco31], which employed the cyclic- or toroidal-shifts suggested by @besagclifford.
 
 # Simple randomisation {#sec:simple}
 As an illustration of both randomisation and simple usage of the *permute* package we consider a small data set of mandible length measurements on specimens of the golden jackal (*Canis aureus*) from the British Museum of Natural History, London, UK. These data were collected as part of a study comparing prehistoric and modern canids [@higham80], and were analysed by @manly07. There are ten measurements of mandible length on both male and female specimens. The data are available in the `jackal` data frame supplied with *permute*.
@@ -58,7 +58,7 @@ A randomisation test of the same hypothesis can be performed by randomly allocat
 The main function in *permute* for providing random permutations is `shuffle()`. We can write our own randomisation test for the `jackal` data by first creating a function to compute the difference of means for two groups
 ```{r, meanFun}
 meanDif <- function(x, grp) {
- mean(x[grp == "Male"]) - mean(x[grp == "Female"])
+  mean(x[grp == "Male"]) - mean(x[grp == "Female"])
 }
 ```
 which can be used in a simple `for()` loop to generate the null distribution for the difference of means. First, we allocate some storage to hold the null difference of means; here we use 4999 random permutations so allocate a vector of length 5000. Then we iterate, randomly generating an ordering of the `Sex` vector and computing the difference of means for that permutation.
@@ -256,11 +256,11 @@ Permutation of samples at the *plot* level is configured via the `Plots()` funct
 `strata`
  ~ a factor variable. `strata` describes the grouping of samples at the *plot* level, where samples from the same *plot* are take the same *level* of the factor.
 
-When a *plot*-level design is specified, samples are never permuted between *plots*, only within plots if they are permuted at all. Hence, the type of permutation *within* the *plots* is controlled by `Within()`. Note also that with `Plots()`, the way the individual *plots* are permuted can be from any one of the four basic permutation types; `"none"`, `"free"`, `"series"`, and `"grid"`, as described above. To permute the *plots* only (i.e. retain the ordering of the samples *within* plots), you also need to specify `Within(type = "none", ...)` as the default in `Within()` is `type = "free"`. The ability to permute the plots whilst preserving the within-plot ordering is an impotant feature in testing explanatory factors at the whole-plot level in split-plot designs and in multifactorial analysis of variance [@canoco5manual].
+When a *plot*-level design is specified, samples are never permuted between *plots*, only within plots if they are permuted at all. Hence, the type of permutation *within* the *plots* is controlled by `Within()`. Note also that with `Plots()`, the way the individual *plots* are permuted can be from any one of the four basic permutation types; `"none"`, `"free"`, `"series"`, and `"grid"`, as described above. To permute the *plots* only (i.e. retain the ordering of the samples *within* plots), you also need to specify `Within(type = "none", ...)` as the default in `Within()` is `type = "free"`. The ability to permute the plots whilst preserving the within-plot ordering is an important feature in testing explanatory factors at the whole-plot level in split-plot designs and in multifactorial analysis of variance [@canoco5manual].
 
 ### Specifying blocks; the top of the *permute* hierarchy
 
-In constrast to the *within* and *plots* levels, the *blocks* level is simple to specify; all that is required is an indicator variable the same length as the data. Usually this is a factor, but `how()` will take anything that can be coerced to a factor via `as.factor()`.
+In contrast to the *within* and *plots* levels, the *blocks* level is simple to specify; all that is required is an indicator variable the same length as the data. Usually this is a factor, but `how()` will take anything that can be coerced to a factor via `as.factor()`.
 
 It is worth repeating what the role of the block-level structure is; blocks simply restrict permutation to *within*, and never between, blocks, and blocks are never permuted. This is reflected in the implementation; the *split*-*apply*-`combine` paradigm is used to split on the blocking factor, the plot- and within-level permutation design is applied separately to each block, and finally the sets of permutations for each block are recombined.
 
@@ -269,7 +269,7 @@ To do.
 
 # Using *permute* in *R* functions
 
-*permute* originally started life as a set of functions contained within the *vegan* package [@vegan] designed to provide a replacement for the `permuted.index()` function. From these humble origins, I realised other users and package authors might want to make use of the code I was writing and so Jari oksanen, the maintainer of *vegan*, and I decided to spin off the code into the *permute* package. Hence from the very beginning, *permute* was intended for use both by users, to defining permutation designs, and by package authors, with which to implement permutation tests within their packages.
+*permute* originally started life as a set of functions contained within the *vegan* package [@vegan] designed to provide a replacement for the `permuted.index()` function. From these humble origins, I realised other users and package authors might want to make use of the code I was writing and so Jari Oksanen, the maintainer of *vegan*, and I decided to spin off the code into the *permute* package. Hence from the very beginning, *permute* was intended for use both by users, to defining permutation designs, and by package authors, with which to implement permutation tests within their packages.
 
 In the previous sections, I described the various user-facing functions that are employed to set up permutation designs and generate permutations from these. Here I will outline how package authors can use functionality in the *permute* package to implement permutation tests.
 
@@ -359,7 +359,7 @@ ppval2
 ```
 The cost of setting up and managing the parallel processes, and recombining the separate sets of results almost negates the gain in running the permutations in parallel. Here, the computations involved in `meanDif()` are trivial and we would expect greater efficiencies from running the permutations in parallel for more complex analyses.
 
-## Accesing and changing permutation designs
+## Accessing and changing permutation designs
 
 The object created by `how()` is a relatively simple list containing the settings for the specified permutation design. As such one could use the standard subsetting and replacement functions in base *R* to alter components of the list. This is not recommended, however, as the internal structure of the list returned by `how()` may change in a later version of *permute*. Furthermore, to facilitate the use of `update()` at the user-level to alter the permutation design in a user-friendly way, the matched `how()` call is stored within the list along with the matched calls for any `Within()` or `Plots()` components. These matched calls need to be updated too if the list describing the permutation design is altered. To allow function writers to access and alter permutation designs, *permute* provides a series of extractor and replacement functions that have the forms `getFoo()` and `setFoo<-()`, respectively,where `Foo` is replaced by a particular component to be extracted or replaced.
 
@@ -431,7 +431,7 @@ The available `setFoo()<-` functions are
  ~ updates the status of the `complete` setting. Takes a logical vector of length 1 or any object coercible to such.
 
 `setMake<-()`
- ~ sets the indicator controlling whether the entrie set of permutations is generated during checking of the design via `check()`. Takes a logical vector of length 1 or any object coercible to such.
+ ~ sets the indicator controlling whether the entire set of permutations is generated during checking of the design via `check()`. Takes a logical vector of length 1 or any object coercible to such.
 
 `setObserved<-()`
  ~ updates the indicator of whether the observed ordering is included in the set of all permutations should they be generated. Takes a logical vector of length 1 or any object coercible to such.
