@@ -54,9 +54,9 @@
         ## if permuting Plots as a grid check dimensions match levels of
         ## Plot-level strata
         if(isTRUE(all.equal(typeP, "grid"))) {
-            levP <- levels(Plots)
+            levP <- length(levels(plots))
             dimP <- getDim(control, which = "plots")
-            if(!identical(levP, prod(dimP))) {
+            if(!isTRUE(all.equal(levP, prod(dimP)))) {
                 stop("Plot 'nrow' * 'ncol' not a multiple of number of Plots.")
             }
         }
