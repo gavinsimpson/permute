@@ -1,4 +1,4 @@
-`check` <- function(object, control = how(), quietly = FALSE)
+`check` <- function(object, control = how(), quietly = FALSE, num_perms = TRUE)
 {
     ## In principle we are mainly dealing with integers, but many
     ## functions do not return integers but double, and the numbers
@@ -28,6 +28,12 @@
     plots <- getStrata(control, which = "plots")
     blocks <- getStrata(control, which = "blocks")
 
+    ## check length of Blocks is equal to N
+    if(!is.null(blocks)) {
+        if(!isTRUE(all.equal(length(blocks), N)))
+            stop("Number of observations and length of Block 'strata' do not match.")
+    }
+
     ## if strata, check N == length of strata but beware empty levels
     if(!is.null(plots)) {
         tab <- table(plots)
@@ -47,9 +53,21 @@
         if(getConstant(control) && bal > 1)
             stop("Unbalanced designs not allowed with 'constant = TRUE'.")
 
-        ## if permuting strata, must be balanced
-        if(typeP != "none" && bal > 1)
-            stop("Design must be balanced if permuting 'strata'.")
+        ## if permuting strata, must be balanced, but only *within* levels of
+        ## blocks
+        if (!is.null(blocks)) {
+            plt_blk <- lapply(
+                split(plots, blocks),
+                FUN = function(x) length(unique(table(droplevels(x))))
+            )
+            if(typeP != "none" && any(unlist(plt_blk) > 1L)) {
+                stop("Design must be balanced within blocks if permuting 'strata'.")
+            }
+        } else {
+            if(typeP != "none" && bal > 1L) {
+                stop("Design must be balanced if permuting 'strata'.")
+            }
+        }
 
         ## if permuting Plots as a grid check dimensions match levels of
         ## Plot-level strata
@@ -60,40 +78,38 @@
                 stop("Plot 'nrow' * 'ncol' not a multiple of number of Plots.")
             }
         }
-    }
-
-    ## check length of Blocks is equal to N
-    if(!is.null(blocks)) {
-        if(!isTRUE(all.equal(length(blocks), N)))
-            stop("Number of observations and length of Block 'strata' do not match.")
-    }
+        }
 
     ## check allPerms is of correct form
     if(!is.null(control$all.perms) &&
        !inherits(control$all.perms, "allPerms"))
         stop("'control$all.perms' must be of class 'allPerms'.")
 
-    ## get number of possible permutations
-    num.pos <- numPerms(object, control)
+    ## get number of possible permutations if requested
+    if (isTRUE(num_perms)) {
+        num.pos <- numPerms(object, control)
 
-    ## check if number requested permutations exceeds or equals max
-    ## possible
-    nperm <- getNperm(control)
-    if(nperm + EPS > (num.pos - !getObserved(control))) {
-        setComplete(control) <- TRUE
-        setMaxperm(control) <- num.pos
-        setNperm(control) <- num.pos - !getObserved(control)
-        if(!quietly)
-            message("'nperm' >= set of all permutations: complete enumeration.")
-    }
+        ## check if number requested permutations exceeds or equals max
+        ## possible
+        nperm <- getNperm(control)
+        if(nperm + EPS > (num.pos - !getObserved(control))) {
+            setComplete(control) <- TRUE
+            setMaxperm(control) <- num.pos
+            setNperm(control) <- num.pos - !getObserved(control)
+            if(!quietly)
+                message("'nperm' >= set of all permutations: complete enumeration.")
+        }
 
-    ## if number of possible perms < minperm turn on complete
-    ## enumeration
-    if((num.pos - !getObserved(control)) < getMinperm(control) + EPS) {
-        setComplete(control) <- TRUE
-        setMaxperm(control) <- num.pos
-        if(!quietly)
-            message("Set of permutations < 'minperm'. Generating entire set.")
+        ## if number of possible perms < minperm turn on complete
+        ## enumeration
+        if((num.pos - !getObserved(control)) < getMinperm(control) + EPS) {
+            setComplete(control) <- TRUE
+            setMaxperm(control) <- num.pos
+            if(!quietly)
+                message("Set of permutations < 'minperm'. Generating entire set.")
+        }
+    } else {
+        num.pos <- NA
     }
 
     ## if complete enumeration, generate all permutations

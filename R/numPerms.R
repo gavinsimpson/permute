@@ -1,4 +1,4 @@
-`numPerms` <- function(object, control = how()) {
+`numPerms` <- function(object, control = how(), check = TRUE) {
   ## constant holding types where something is permuted
   TYPES <- c("free","grid","series","none")
 
@@ -8,6 +8,17 @@
     object <- seq_len(object)
   ## number of observations in data
   n <- nobs(object)
+
+  # run check here unless instructed not to
+  if (isTRUE(check)) {
+    chk <- check(
+      object = object,
+      control = control,
+      quietly = TRUE,
+      num_perms = FALSE
+    )
+    control <- chk$control
+  }
 
   ## get the permutation levels from control
   WI <- getWithin(control)
@@ -36,16 +47,16 @@
   ##             ii) In grid designs, grids must be of the same size for all
   ##                 strata
   ##
-  ## FIXME - this probably should be in check()!
+  ## FIXME - these checks are in check()!
   if(!is.null(PSTRATA)) {
     tab <- table(PSTRATA)
     same.n <- length(unique(tab))
-    if((typeP != "none" || isTRUE(constantW)) && same.n > 1) {
-      stop("All levels of strata must have same number of samples for chosen scheme")
-    }
-    if(typeP == "grid" && same.n > 1) {
-      stop("Unbalanced grid designs are not supported")
-    }
+    # if((typeP != "none" || isTRUE(constantW)) && same.n > 1) {
+    #   stop("All levels of strata must have same number of samples for chosen scheme")
+    # }
+    # if(typeP == "grid" && same.n > 1) {
+    #   stop("Unbalanced grid designs are not supported")
+    # }
   }
 
   ## the various designs allowed imply multipliers to number of samples
