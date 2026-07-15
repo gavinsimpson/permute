@@ -47,7 +47,7 @@ The observed $t$ is `r with(jack.t, round(statistic, 3))` with `r with(jack.t, p
 * that the mandible lengths are normally distributed within the sexes.
 
 Assumption 1 is unlikely to be valid for museum specimens such as these, that have been collected in some unknown manner. Assumption 2 may be valid, Fisher's $F$-test and a Fligner-Killeen test both suggest that the standard deviations of the two populations do not differ significantly
-```{rftest_jackal}
+```{r, ftest_jackal}
 var.test(Length ~ Sex, data = jackal)
 fligner.test(Length ~ Sex, data = jackal)
 ```
