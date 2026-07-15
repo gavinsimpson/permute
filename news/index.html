@@ -60,6 +60,12 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="permute-development-version">permute (development version)<a class="anchor" aria-label="anchor" href="#permute-development-version"></a></h2>
 <div class="section level3">
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li><p>When permuting plots, balance is now only required <em>within</em> blocks. Requested by <a href="https://github.com/dbaranger" class="external-link">@dbaranger</a> in <a href="https://github.com/gavinsimpson/permute/issues/27" class="external-link">#27</a></p></li>
+<li><p><code><a href="../reference/numPerms.html">numPerms()</a></code> gains argument <code>check</code> that works analogously to the same argument of <code><a href="../reference/allPerms.html">allPerms()</a></code> to request or suppress checking of the permutation design when computing the number of permutations. Users should not normally need to touch this default of <code>TRUE</code>.</p></li>
+<li><p><code><a href="../reference/check.html">check()</a></code> gains argument <code>num_perms</code> to request or suppress the computing of the number of possible permutations for the current design. The default is <code>TRUE</code>, meaning the number of permutations is computed.</p></li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li>
 <code><a href="../reference/check.html">check()</a></code> would fail all permutation designs where the (whole) plots were permuted with toroidal grid shifts. <a href="https://github.com/gavinsimpson/permute/issues/42" class="external-link">#42</a> Reported and fixed by <a href="https://github.com/sims1253" class="external-link">@sims1253</a></li>

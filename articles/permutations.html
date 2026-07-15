@@ -203,8 +203,26 @@ be valid, Fisher’s
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>-test
 and a Fligner-Killeen test both suggest that the standard deviations of
 the two populations do not differ significantly</p>
-<pre class="rftest_jackal"><code><span><span class="fu"><a href="https://rdrr.io/r/stats/var.test.html" class="external-link">var.test</a></span><span class="op">(</span><span class="va">Length</span> <span class="op">~</span> <span class="va">Sex</span>, data <span class="op">=</span> <span class="va">jackal</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/fligner.test.html" class="external-link">fligner.test</a></span><span class="op">(</span><span class="va">Length</span> <span class="op">~</span> <span class="va">Sex</span>, data <span class="op">=</span> <span class="va">jackal</span><span class="op">)</span></span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/var.test.html" class="external-link">var.test</a></span><span class="op">(</span><span class="va">Length</span> <span class="op">~</span> <span class="va">Sex</span>, data <span class="op">=</span> <span class="va">jackal</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">##  F test to compare two variances</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## data:  Length by Sex</span></span>
+<span><span class="co">## F = 2.681, num df = 9, denom df = 9, p-value = 0.1579</span></span>
+<span><span class="co">## alternative hypothesis: true ratio of variances is not equal to 1</span></span>
+<span><span class="co">## 95 percent confidence interval:</span></span>
+<span><span class="co">##   0.665931 10.793829</span></span>
+<span><span class="co">## sample estimates:</span></span>
+<span><span class="co">## ratio of variances </span></span>
+<span><span class="co">##           2.681034</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/fligner.test.html" class="external-link">fligner.test</a></span><span class="op">(</span><span class="va">Length</span> <span class="op">~</span> <span class="va">Sex</span>, data <span class="op">=</span> <span class="va">jackal</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">##  Fligner-Killeen test of homogeneity of variances</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## data:  Length by Sex</span></span>
+<span><span class="co">## Fligner-Killeen:med chi-squared = 0.78078, df = 1, p-value = 0.3769</span></span></code></pre>
 <p>This assumption may be relaxed using <code>var.equal = FALSE</code>
 (the default) in the call to <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test()</a></code>, to employ Welch’s
 modification for unequal variances. Assumption 3 may be valid, but with
@@ -228,7 +246,7 @@ means
 permutations is <code><a href="../reference/shuffle.html">shuffle()</a></code>. We can write our own
 randomisation test for the <code>jackal</code> data by first creating a
 function to compute the difference of means for two groups</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">meanDif</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">grp</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">grp</span> <span class="op">==</span> <span class="st">"Male"</span><span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">grp</span> <span class="op">==</span> <span class="st">"Female"</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
@@ -238,7 +256,7 @@ storage to hold the null difference of means; here we use 4999 random
 permutations so allocate a vector of length 5000. Then we iterate,
 randomly generating an ordering of the <code>Sex</code> vector and
 computing the difference of means for that permutation.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Djackal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span>
 <span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">jackal</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -256,19 +274,19 @@ allocations.</p>
 can be visualised using a histogram, as shown in
 Figure~@ref{draw_hist_jackal}. The observed difference of means (4.8) is
 indicated by the red tick mark.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">Djackal</span>, main <span class="op">=</span> <span class="st">""</span>,</span>
 <span>     xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="st">"Mean difference (Male - Female) in mm"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/rug.html" class="external-link">rug</a></span><span class="op">(</span><span class="va">Djackal</span><span class="op">[</span><span class="fl">5000</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>The number of values in the randomisation distribution equal to or
 larger than the observed difference is</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">Dbig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Djackal</span> <span class="op">&gt;=</span> <span class="va">Djackal</span><span class="op">[</span><span class="fl">5000</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 12</span></span></code></pre>
 <p>giving a permutational
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value
 of</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Dbig</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">Djackal</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0024</span></span></code></pre>
 <p>which is comparable with that determined from the frequentist
@@ -284,7 +302,7 @@ allocations, ten to each sex.
 <p>In total there
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi></mi><mn>20</mn></msup><msub><mi>C</mi><mn>10</mn></msub><mo>=</mo><mn>184</mn><mo>,</mo><mn>756</mn></mrow><annotation encoding="application/x-tex">^{20}C_{10} = 184,756</annotation></semantics></math>
 possible allocations of the 20 observations to two groups of ten</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Special.html" class="external-link">choose</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 184756</span></span></code></pre>
 <p>so we have only evaluated a small proportion of these in the
@@ -314,7 +332,7 @@ permuted, and</li>
 <code>control</code>, a list that defines the permutation design
 describing how the samples should be permuted.</li>
 </ol>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html" class="external-link">args</a></span><span class="op">(</span><span class="va">shuffle</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## function (n, control = how()) </span></span>
 <span><span class="co">## NULL</span></span></code></pre>
@@ -326,7 +344,7 @@ passed on to <code><a href="../reference/shuffle.html">shuffle()</a></code>. The
 <code><a href="../reference/how.html">how()</a></code>, which returns a list specifying all the options
 available for controlling the sorts of permutations returned by
 <code><a href="../reference/shuffle.html">shuffle()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 12</span></span>
 <span><span class="co">##  $ within     :List of 6</span></span>
@@ -360,15 +378,15 @@ available for controlling the sorts of permutations returned by
 <p>The defaults describe a random permutation design where all objects
 are freely exchangeable. Using these defaults, <code>shuffle(10)</code>
 amounts to <code>sample(1:10, 10, replace = FALSE)</code>:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shuffle.html">shuffle</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1]  5  6  9  1 10  7  4  8  3  2</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1]  5  6  9  1 10  7  4  8  3  2</span></span></code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">r1</span>, <span class="va">r2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 <div class="section level3">
@@ -401,14 +419,14 @@ contain groups of samples.</p>
 <p>For example, to permute the observations <code>1:10</code> assuming a
 time series design for the entire set of observations, the following
 control object would be used</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
 <span><span class="va">CTRL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span>within <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Within</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"series"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">perm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shuffle.html">shuffle</a></span><span class="op">(</span><span class="fl">10</span>, control <span class="op">=</span> <span class="va">CTRL</span><span class="op">)</span></span>
 <span><span class="va">perm</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1]  9 10  1  2  3  4  5  6  7  8</span></span></code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span><span class="op">[</span><span class="va">perm</span><span class="op">]</span> <span class="co">## equivalent</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1]  9 10  1  2  3  4  5  6  7  8</span></span></code></pre>
 <p>It is assumed that the observations are in temporal or transect
@@ -417,7 +435,7 @@ remaining options were set to their defaults via
 <code><a href="../reference/how.html">Within()</a></code>.</p>
 <p>A more complex design, with three plots, and a 3 by 3 spatial grid
 arrangement within each plot can be created as follows</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html" class="external-link">gl</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">9</span><span class="op">)</span></span>
 <span><span class="va">CTRL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span>within <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Within</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"grid"</span>, ncol <span class="op">=</span> <span class="fl">3</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
@@ -428,7 +446,7 @@ arrangement within each plot can be created as follows</p>
 <span><span class="co">## [26] 23 24</span></span></code></pre>
 <p>Visualising the permutation as the 3 matrices may help illustrate how
 the data have been shuffled</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Original</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">plt</span><span class="op">)</span>, <span class="va">plt</span><span class="op">)</span>, <span class="va">matrix</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $`1`</span></span>
@@ -448,7 +466,7 @@ the data have been shuffled</p>
 <span><span class="co">## [1,]   19   22   25</span></span>
 <span><span class="co">## [2,]   20   23   26</span></span>
 <span><span class="co">## [3,]   21   24   27</span></span></code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Shuffled</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">perm</span>, <span class="va">plt</span><span class="op">)</span>, <span class="va">matrix</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $`1`</span></span>
@@ -474,7 +492,7 @@ and to row 3 column 2 in the third grid.</p>
 <p>To have the same permutation within each level of <code>plt</code>,
 use the <code>constant</code> argument of the <code><a href="../reference/how.html">Within()</a></code>
 function, setting it to <code>TRUE</code></p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">CTRL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span>within <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Within</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"grid"</span>, ncol <span class="op">=</span> <span class="fl">3</span>, nrow <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                            constant <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -522,7 +540,7 @@ which case the number of permutations in the set is looked for in the
 object passed to <code>control</code>; using this, the desired number of
 permutations can be set at the time the design is created via the
 <code>nperm</code> argument of <code><a href="../reference/how.html">how()</a></code>. For example,</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span>nperm <span class="op">=</span> <span class="fl">10</span>, within <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Within</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"series"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Internally, <code><a href="../reference/shuffle.html">shuffle()</a></code> and <code><a href="../reference/shuffleSet.html">shuffleSet()</a></code> are
 very similar, with the major difference being that
@@ -534,7 +552,7 @@ set.</p>
 <p>As an illustration, consider again the simple time series example
 from earlier. Here I generate a set of 5 permutations from the design,
 with the results returned as a matrix</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">CTRL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span>within <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Within</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"series"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">pset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shuffleSet.html">shuffleSet</a></span><span class="op">(</span><span class="fl">10</span>, nset <span class="op">=</span> <span class="fl">5</span>, control <span class="op">=</span> <span class="va">CTRL</span><span class="op">)</span></span>
@@ -576,7 +594,7 @@ various options to create the exact structure required.</p>
 permutation test alongside the permutation design. This is done via the
 <code>nperm</code> argument, as seen earlier. If nothing else is
 specified</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span>nperm <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span></code></pre></div>
 <p>would indicate 999 random permutations where the samples are all
 freely exchangeable.</p>
@@ -778,7 +796,7 @@ encouraged to use <code><a href="../reference/shuffleSet.html">shuffleSet()</a><
 <p>To illustrate how to use <em>permute</em> in <em>R</em> functions,
 I’ll rework the permutation test I used for the <code>jackal</code> data
 earlier in Section~@ref{sec:simple}.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pt.test</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span>, <span class="va">nperm</span> <span class="op">=</span> <span class="fl">199</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="co">## mean difference function</span></span>
 <span>    <span class="va">meanDif</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span>, <span class="va">x</span>, <span class="va">grp</span><span class="op">)</span> <span class="op">{</span></span>
@@ -807,7 +825,7 @@ according to <code>i</code>. The other major change is that
 <code><a href="../reference/shuffleSet.html">shuffleSet()</a></code> is used to generate a set of permutations,
 which are then iterated over using <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code>.</p>
 <p>In use we see</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span> <span class="co">## same seed as earlier</span></span>
 <span><span class="va">pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">jackal</span>, <span class="fu">pt.test</span><span class="op">(</span><span class="va">Length</span>, <span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">4999</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">pval</span></span></code></pre></div>
@@ -817,7 +835,7 @@ which are then iterated over using <code><a href="https://rdrr.io/r/base/apply.h
 parallel processing of the permutations requires only trivial changes to
 the main function code. As an illustration, below I show a parallel
 version of <code>pt.test()</code></p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppt.test</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span>, <span class="va">nperm</span> <span class="op">=</span> <span class="fl">199</span>, <span class="va">cores</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="co">## mean difference function</span></span>
 <span>    <span class="va">meanDif</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span>, <span class="va">.x</span>, <span class="va">.grp</span><span class="op">)</span> <span class="op">{</span></span>
@@ -846,25 +864,25 @@ version of <code>pt.test()</code></p>
 <span>    <span class="va">Ds</span> <span class="op">/</span> <span class="op">(</span><span class="va">nperm</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>     <span class="co"># what proportion of perms is this (the pval)?</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>In use we observe</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"parallel"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                              cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.075   0.004   0.395</span></span></code></pre>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<span><span class="co">##   0.099   0.004   0.495</span></span></code></pre>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
 <p>In this case there is little to be gained by splitting the
 computations over two CPU cores</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval2</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                               cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.255   0.000   0.254</span></span></code></pre>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<span><span class="co">##   0.336   0.000   0.336</span></span></code></pre>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval2</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
 <p>The cost of setting up and managing the parallel processes, and
@@ -1066,13 +1084,13 @@ vector of length 1 or any object coercible to such.
 <p>I illustrate the behaviour of the <code>getFoo()</code> and
 <code>setFoo&lt;-()</code> functions through a couple of simple
 examples. Firstly, generate a design object</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This design is one of complete randomization, so all of the settings
 in the object take their default values. The default number of
 permutations is currently 199, and can be extracted using
 <code><a href="../reference/get-methods.html">getNperm()</a></code></p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get-methods.html">getNperm</a></span><span class="op">(</span><span class="va">hh</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 199</span></span></code></pre>
 <p>The corresponding replacement function can be use to alter the number
@@ -1080,14 +1098,14 @@ of permutations after the design has been generated. To illustrate a
 finer point of the behaviour of these replacement functions, compare the
 matched call stored in <code>hh</code> before and after the number of
 permutations is changed</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">getCall</a></span><span class="op">(</span><span class="va">hh</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## how()</span></span></code></pre>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">setNperm</span><span class="op">(</span><span class="va">hh</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">999</span></span>
 <span><span class="fu"><a href="../reference/get-methods.html">getNperm</a></span><span class="op">(</span><span class="va">hh</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 999</span></span></code></pre>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">getCall</a></span><span class="op">(</span><span class="va">hh</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## how(nperm = 999)</span></span></code></pre>
 <p>Note how the <code>call</code> component has been altered to include
@@ -1097,7 +1115,7 @@ evaluated, the resulting object would be a copy of <code>hh</code>.</p>
 of 5 blocks, each containing 2 plots of 5 samples each. Hence there are
 a total of 10 plots. Both the plots and within-plot sample are time
 series. This design can be created using</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span>within <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Within</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"series"</span><span class="op">)</span>,</span>
 <span>          plots <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Plots</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"series"</span>, strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html" class="external-link">gl</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>          blocks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html" class="external-link">gl</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -1107,20 +1125,20 @@ convenient to extract the relevant component using
 extracted object, and finally use the updated object to update
 <code>hh</code>. This process is illustrated below in order to change
 the plot-level permutation type to <code>"free"</code></p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get-methods.html">getPlots</a></span><span class="op">(</span><span class="va">hh</span><span class="op">)</span></span>
 <span><span class="fu">setType</span><span class="op">(</span><span class="va">pl</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"free"</span></span>
 <span><span class="fu">setPlots</span><span class="op">(</span><span class="va">hh</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">pl</span></span></code></pre></div>
 <p>We can confirm this has been changed by extracting the permutation
 type for the plot level</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get-methods.html">getType</a></span><span class="op">(</span><span class="va">hh</span>, which <span class="op">=</span> <span class="st">"plots"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "free"</span></span></code></pre>
 <p>Notice too how the call has been expanded from <code>gl(10, 5)</code>
 to an integer vector. This expansion is to avoid the obvious problem of
 locating the objects referred to in the call should the call be
 re-evaluated later.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">getCall</a></span><span class="op">(</span><span class="fu"><a href="../reference/get-methods.html">getPlots</a></span><span class="op">(</span><span class="va">hh</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Plots(strata = c(1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 3L, </span></span>
 <span><span class="co">## 3L, 3L, 3L, 3L, 4L, 4L, 4L, 4L, 4L, 5L, 5L, 5L, 5L, 5L, 6L, 6L, </span></span>
@@ -1129,7 +1147,7 @@ re-evaluated later.</p>
 <p>At the top level, a user can update the design using
 <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code>. Hence the equivalent of the above update is (this
 time resetting the original type; <code>type = "series"</code>)</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">hh</span>, plots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="fu"><a href="../reference/get-methods.html">getPlots</a></span><span class="op">(</span><span class="va">hh</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"series"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/get-methods.html">getType</a></span><span class="op">(</span><span class="va">hh</span>, which <span class="op">=</span> <span class="st">"plots"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "series"</span></span></code></pre>
