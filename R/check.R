@@ -1,6 +1,6 @@
 `check` <- function(object, control = how(), quietly = FALSE)
 {
-    ## In pricinple we are mainly dealing with integers, but many
+    ## In principle we are mainly dealing with integers, but many
     ## functions do not return integers but double, and the numbers
     ## can be so large that they overflow integer and they really must be
     ## double. Therefore we define EPS as a nice value between two
@@ -56,7 +56,7 @@
         if(isTRUE(all.equal(typeP, "grid"))) {
             levP <- nlevels(plots)
             dimP <- getDim(control, which = "plots")
-            if(!isTRUE(identical(levP, as.integer(prod(dimP))))) {
+            if(!isTRUE(all.equal(levP, prod(dimP)))) {
                 stop("Plot 'nrow' * 'ncol' not a multiple of number of Plots.")
             }
         }
