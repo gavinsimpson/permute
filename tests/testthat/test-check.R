@@ -56,3 +56,23 @@ test_that("check rejects a plot-level grid design with mismatched dimensions", {
     expect_error(check(seq_len(n), control = h),
                  regexp = "Plot 'nrow' \\* 'ncol' not a multiple of number of Plots.")
 })
+
+## Example slightly modified from issue 27 by @dbaranger
+test_that("balanced designs only required within blocks", {
+    df27 <- data.frame(
+        blocklevel = c(rep(1, 10), rep(2, 30)),
+        plotlevel  = c(rep(c(1, 2), 5), rep(3:5, 10))
+    )
+    df27 <- df27[order(df27$plotlevel, df27$blocklevel), ]
+
+    h <- with(df27,
+        how(
+            within = Within(type = "series"),
+            blocks = blocklevel, 
+            plots = Plots(strata = plotlevel, type = "series")
+        )
+    )
+
+    expect_no_error(chk <- check(df27, control = h))
+    expect_identical(chk$n, 150000)
+})
