@@ -1,5 +1,19 @@
 # permute (development version)
 
+## New features
+
+* When permuting plots, balance is now only required *within* blocks. Requested
+  by @dbaranger in #27
+
+* `numPerms()` gains argument `check` that works analogously to the same
+  argument of `allPerms()` to request or suppress checking of the permutation
+  design when computing the number of permutations. Users should not normally
+  need to touch this default of `TRUE`.
+
+* `check()` gains argument `num_perms` to request or suppress the computing of
+  the number of possible permutations for the current design. The default is
+  `TRUE`, meaning the number of permutations is computed.
+
 ## Bug fixes
 
 * `check()` would fail all permutation designs where the (whole) plots were
