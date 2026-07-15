@@ -7,11 +7,10 @@
 \title{Utility functions for permutation schemes}
 \description{
   \code{check} provides checking of permutation schemes for
-  validity. \code{permuplot} produces a graphical representation of the
-  selected permutation design.
+  validity.
 }
 \usage{
-check(object, control = how(), quietly = FALSE)
+check(object, control = how(), quietly = FALSE, num_perms = TRUE)
 
 \method{summary}{check}(object, \dots)
 }
@@ -23,6 +22,8 @@ check(object, control = how(), quietly = FALSE)
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to \code{\link{how}}.}
   \item{quietly}{logical; should messages by suppressed?}
+  \item{num_perms}{logical; should the number of permutations be computed during
+    checks?}
   \item{\dots}{arguments to other methods.}
 }
 \details{
@@ -30,11 +31,11 @@ check(object, control = how(), quietly = FALSE)
   permutation schemes available in \code{\link{shuffle}}.
 
   \code{check} is used to check the current permutation schemes
-  against the object to which it will be applied. It calculates the
-  maximum number of possible permutations for the number of observations
-  in \code{object} and the permutation scheme described by
-  \code{control}. The returned object contains component \code{control},
-  an object of class \code{"how"} suitably modified if
+  against the object to which it will be applied. If \code{num_perms} is
+  \code{TRUE}, \code{check} also calculates the maximum number of possible
+  permutations for the number of observations in \code{object} and the
+  permutation scheme described by \code{control}. The returned object contains
+  component \code{control}, an object of class \code{"how"} suitably modified if
   \code{check} identifies a problem.
 
   The main problem is requesting more permutations than is possible with
