@@ -1,3 +1,10 @@
+# permute (development version)
+
+## Bug fixes
+
+* `check()` would fail all permutation designs where the (whole) plots were
+  permuted with toroidal grid shifts. #42 Reported and fixed by @sims1253
+
 # permute 0.9-10
 
 ## User visible changes
@@ -15,7 +22,7 @@
 
 # permute 0.9-7
 
-### Bug fixes
+## Bug fixes
 
 * The documented behaviour of `shuffleFree()` allowed `shuffleFree(x = 1:10)`,
   with `x` passed immediately to `sample.int()`, which is incorrect and raises
@@ -24,7 +31,7 @@
 
 # permute 0.9-6
 
-### Bug fixes
+## Bug fixes
 
 * `allPerms()` was calling `allSeries()` with the incorrect number of
   permutations, leading to problems with `shuffleSet()` also.
