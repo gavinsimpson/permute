@@ -19,7 +19,7 @@
     ## ctrl <- update(ctrl, make = make)
 
     ## get max number of permutations
-    nperms <- numPerms(v, control = control)
+    nperms <- numPerms(v, control = control, check = check)
 
     ## sanity check - don't let this run away to infinity
     ## esp with type = "free"
@@ -107,12 +107,18 @@
         if(is.null(strataP)) {
             ## no plot-level permutations
             ## have to redo numPerms here because we could be within a block
-            res <- switch(typeW,
-                          free = allFree(n),
-                          series = allSeries(n, numPerms(n, control), mirrorW),
-                          grid = allGrid(n, numPerms(n, control),
-                                         dimW[1], dimW[2],
-                                         mirrorW, constantW))
+            res <- switch(
+                typeW,
+                free = allFree(n),
+                series = allSeries(
+                    n, numPerms(n, control, check = FALSE), mirrorW
+                ),
+                grid = allGrid(
+                    n, numPerms(n, control, check = FALSE),
+                    dimW[1], dimW[2],
+                    mirrorW, constantW
+                )
+            )
             ## use res to index original observation indices in this group
             res[] <- obs[res]
         } else {
@@ -124,11 +130,14 @@
                 ## same permutation in each plot
                 controlW <- how(within = getWithin(control))
                 nperms <- numPerms(pg, controlW)
-                ord <- switch(typeW,
-                              free = allFree(pg),
-                              series = allSeries(pg, nperms, mirrorW),
-                              grid = allGrid(pg, nperms, dimW[1],
-                              dimW[2], mirrorW, constantW))
+                ord <- switch(
+                    typeW,
+                    free = allFree(pg),
+                    series = allSeries(pg, nperms, mirrorW),
+                    grid = allGrid(
+                        pg, nperms, dimW[1],
+                        dimW[2], mirrorW, constantW)
+                    )
                 res <- vector(mode = "list", length = ng)
                 ss <- seq(0, to = prod(pg, ng-1), by = pg)
                 for (i in seq_len(ng)) {
@@ -140,7 +149,7 @@
                 res[] <- obs[res] ## index into the observations in this block
             } else {
                 ## different permutations within plots
-                nperms <- numPerms(sum(tab), control)
+                nperms <- numPerms(sum(tab), control, check = FALSE)
 
                 if(length(pg) > 1) {
                     ## different number of observations per level of strata
@@ -152,7 +161,7 @@
                     res <- vector(mode = "list", length = ng)
                     add <- c(0, cumsum(tab)[1:(ng-1)])
                     for(j in seq_along(tab)) {
-                        np <- numPerms(tab[j], controlW)
+                        np <- numPerms(tab[j], controlW, check = FALSE)
                         ord <- switch(typeW,
                                       free = allFree(tab[j]),
                                       series = allSeries(tab[j], np, mirrorW))
@@ -163,7 +172,7 @@
                 } else {
                     ## same number of observations per level of strata
                     controlW <- how(within = getWithin(control))
-                    np <- numPerms(pg, controlW)
+                    np <- numPerms(pg, controlW, check = FALSE)
                     ord <-
                         switch(typeW,
                                free = allFree(pg),
@@ -196,7 +205,7 @@
             ## within as shown, not fiddle with Plots
 
             ## number of permutations for just the block level
-            permP <- numPerms(n, control = controlP)
+            permP <- numPerms(n, control = controlP, check = FALSE)
             ## get all permutations for the block level
             shuffP <- allStrata(n, control = controlP)
             ## copy the set of permutations for within blocks

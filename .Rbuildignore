@@ -1,5 +1,4 @@
 ^\.travis\.yml$
-^LICENSE\.md$
 \.Rproj$
 ^\.Rproj\.user$
 ^Makefile
@@ -35,6 +34,7 @@
 ^vignettes/profilings
 ^vignettes/profiling.Rmd$
 ^LICENSE\.md$
+^LICENSE$
 ^vignettes/articles$
 ^CRAN-SUBMISSION$
 ^docs$

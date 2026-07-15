@@ -7,13 +7,14 @@
   under the current permutation scheme.
 }
 \usage{
-numPerms(object, control = how())
+numPerms(object, control = how(), check = TRUE)
 }
 \arguments{
   \item{object}{any object handled by \code{\link{nobs}}.}
   \item{control}{a list of control values describing properties of the
     permutation design, as returned by a call to
     \code{\link{how}}.}
+  \item{check}{logical; should \code{control} be checked for problems?}
 }
 \details{
   Function \code{numPerms} returns the number of permutations for the
