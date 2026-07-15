@@ -1,11 +1,31 @@
 # History files
 .Rhistory
+.Rapp.history
 
 # Example code in package build process
 *-Ex.R
 
-## ignore backup files
+# RStudio files
+.Rproj.user/
+
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+
+# no backup files
 *~
 
-## ignore revdep folder
+## skip revdep
 revdep/
+
+## skip the .vscode folder with local editor stuff
+.vscode/
+
+## ignore
+CRAN-SUBMISSION
+/doc/
+/Meta/
+docs
+
+# Apple stuff
+.DS_Store
