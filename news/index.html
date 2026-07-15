@@ -58,6 +58,14 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="development version" id="permute-development-version">permute (development version)<a class="anchor" aria-label="anchor" href="#permute-development-version"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li>
+<code><a href="../reference/check.html">check()</a></code> would fail all permutation designs where the (whole) plots were permuted with toroidal grid shifts. <a href="https://github.com/gavinsimpson/permute/issues/42" class="external-link">#42</a> Reported and fixed by <a href="https://github.com/sims1253" class="external-link">@sims1253</a></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9-10" id="permute-09-10">permute 0.9-10<small>2026-02-06</small><a class="anchor" aria-label="anchor" href="#permute-09-10"></a></h2>
 <div class="section level3">
 <h3 id="user-visible-changes-0-9-10">User visible changes<a class="anchor" aria-label="anchor" href="#user-visible-changes-0-9-10"></a></h3>
@@ -76,15 +84,15 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9-7" id="permute-09-7">permute 0.9-7<small>2022-01-27</small><a class="anchor" aria-label="anchor" href="#permute-09-7"></a></h2>
-<div class="section level4">
-<h4 id="bug-fixes-0-9-7">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-7"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-9-7">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-7"></a></h3>
 <ul><li>The documented behaviour of <code><a href="../reference/shuffle-utils.html">shuffleFree()</a></code> allowed <code>shuffleFree(x = 1:10)</code>, with <code>x</code> passed immediately to <code><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int()</a></code>, which is incorrect and raises an error in the development version of R (at the time of writing). Reported by Brian Ripley.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9-6" id="permute-09-6">permute 0.9-6<a class="anchor" aria-label="anchor" href="#permute-09-6"></a></h2>
-<div class="section level4">
-<h4 id="bug-fixes-0-9-6">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-6"></a></h4>
+<div class="section level3">
+<h3 id="bug-fixes-0-9-6">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-6"></a></h3>
 <ul><li>
 <code><a href="../reference/allPerms.html">allPerms()</a></code> was calling <code><a href="../reference/allUtils.html">allSeries()</a></code> with the incorrect number of permutations, leading to problems with <code><a href="../reference/shuffleSet.html">shuffleSet()</a></code> also. <a href="https://github.com/gavinsimpson/permute/issues/28" class="external-link">#28 reported by Cajo ter Braak</a>
 </li>
