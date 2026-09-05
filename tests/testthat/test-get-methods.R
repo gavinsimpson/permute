@@ -11,6 +11,7 @@ test_that("default methods for get functions", {
     expect_error(getStrata(v), regexp = "No default method")
     expect_error(getType(v), regexp = "No default method")
     expect_error(getMirror(v), regexp = "No default method")
+    expect_error(getSymmetric(v), regexp = "No default method")
     expect_error(getConstant(v), regexp = "No default method")
     expect_error(getNperm(v), regexp = "No default method")
     expect_error(getMaxperm(v), regexp = "No default method")
