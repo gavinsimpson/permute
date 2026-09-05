@@ -2,6 +2,11 @@
 
 ## New features
 
+* `Plots()` plot strata and `how()` blocks can now be specified using
+  one-sided formulas evaluated in a shared `data` frame. Multiple variables,
+  interactions, and nested terms are combined into a single grouping factor.
+  Resolves #38.
+
 * Grid permutation designs gain a `symmetric` option that prevents mirroring
   in both spatial directions at the same time. Resolves #1.
 
@@ -32,6 +37,17 @@
   manual files.
 
 ## Bug fixes
+
+* `Plots()` and `Within()` now preserve explicit `NULL` arguments when storing
+  their matched calls, allowing later positional arguments and `update()` to
+  work correctly.
+
+* Formula objects supplied to `how(blocks = ...)` through local variables are
+  now retained in the matched call, allowing the design to be updated after
+  the variable has left scope.
+
+* Replacing the plots in a `how` object with a formula-built `Plots` object no
+  longer leaves a nested `data` argument that prevents subsequent updates.
 
 * Complete enumeration of grid permutations no longer treats two-column grids
   as flattened series, which generated permutations that were not valid
