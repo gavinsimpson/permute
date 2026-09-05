@@ -1,0 +1,46 @@
+url: https://gavinsimpson.github.io/permute
+
+template:
+  bootstrap: 5
+
+reference:
+- title: Generate permutations
+  desc: >
+    High-level functions for drawing one or more restricted
+    permutations, or applying them directly to a vector.
+- contents:
+  - shuffle
+  - shuffleSet
+  - permutations
+
+- title: Define and inspect permutation designs
+  desc: >
+    Create permutation designs, count the possible permutations,
+    and check designs for problems.
+- contents:
+  - how
+  - numPerms
+  - check
+
+- title: Complete enumeration and fixed-size partitions
+  desc: >
+    Enumerate complete permutation sets or generate assignments
+    to groups of fixed size.
+- contents:
+  - allPerms
+  - partitions
+
+- title: Developer tools
+  desc: >
+    Supporting APIs for package authors and advanced users
+    working with permutation designs.
+- contents:
+  - '`get-methods`'
+  - '`set-methods`'
+  - '`shuffle-utils`'
+  - allUtils
+  - '`nobs-methods`'
+
+- title: Data
+- contents:
+  - jackal
