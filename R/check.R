@@ -19,6 +19,8 @@
     typeW <- getType(control, which = "within")
     typeP <- getType(control, which = "plots")
 
+    checkPartitionDesign(control, N)
+
     ## check we're actually permuting something
     if (identical(typeW, typeP) && isTRUE(all.equal(typeW, "none"))) {
         stop("Permutation 'type' is \"none\" for both 'plots' & 'within'.\nNothing to permute.")
@@ -60,11 +62,12 @@
                 split(plots, blocks),
                 FUN = function(x) length(unique(table(droplevels(x))))
             )
-            if(typeP != "none" && any(unlist(plt_blk) > 1L)) {
+            if(typeP %in% c("free", "series", "grid") &&
+               any(unlist(plt_blk) > 1L)) {
                 stop("Design must be balanced within blocks if permuting 'strata'.")
             }
         } else {
-            if(typeP != "none" && bal > 1L) {
+            if(typeP %in% c("free", "series", "grid") && bal > 1L) {
                 stop("Design must be balanced if permuting 'strata'.")
             }
         }

@@ -8,6 +8,7 @@
     object <- seq_len(object)
   ## number of observations in data
   n <- nobs(object)
+  checkPartitionDesign(control, n)
 
   # run check here unless instructed not to
   if (isTRUE(check)) {
@@ -124,7 +125,9 @@
     }
 
     ## plots
-    num.p <- if(isTRUE(all.equal(typeP, "free"))) {
+    num.p <- if(isTRUE(all.equal(typeP, "partition"))) {
+        numPartitions(PSTRATA)
+    } else if(isTRUE(all.equal(typeP, "free"))) {
         exp(lfactorial(length(levels(PSTRATA))))
     } else if(typeP %in% c("series", "grid")) {
         if(isTRUE(mirrorP)) {

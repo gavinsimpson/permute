@@ -9,10 +9,18 @@
                   make = TRUE,
                   observed = FALSE) {
 
+    ## A partition permutation already permutes the observations by
+    ## assigning them to groups. If within was not explicitly supplied,
+    ## do not apply a second permutation within those groups.
+    if (missing(within) && identical(getType(plots), "partition")) {
+        within <- Within(type = "none")
+    }
+
     blocks.name <- deparse(substitute(blocks))
     ## blocks should also be a factor - coerce
-    if(!is.null(blocks))
+    if(!is.null(blocks)) {
         blocks <- as.factor(blocks)
+    }
 
     ## process the call to make it standalone
     .call <- match.call()
@@ -21,19 +29,26 @@
         args <- names(.call)[-1]
         ## evaluate arguments other than within and plots
         ## those handled in their respective functions
-        for (i in args[!args %in% c("within","plots")]) {
+        for (i in args[!args %in% c("within", "plots")]) {
             if(!is.null(.ll[[i]])) {
                 .ll[[i]] <- eval(.ll[[i]], parent.frame())
             }
         }
     }
 
-    out <- list(within = within, plots = plots, blocks = blocks,
-                nperm = nperm, complete = complete,
-                maxperm = maxperm, minperm = minperm,
-                all.perms = all.perms, make = make,
-                observed = observed,
-                blocks.name = blocks.name)
+    out <- list(
+      within = within,
+      plots = plots,
+      blocks = blocks,
+      nperm = nperm,
+      complete = complete,
+      maxperm = maxperm,
+      minperm = minperm,
+      all.perms = all.perms,
+      make = make,
+      observed = observed,
+      blocks.name = blocks.name
+    )
 
     ## process within and plots separately
     if (length(.call) > 1L && "within" %in% args) {
