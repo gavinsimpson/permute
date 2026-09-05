@@ -16,25 +16,43 @@
 #' originally carrying the same group label are retained.
 #'
 #' `permute` is a higher level utility function for use in a loop within a
-#' function implementing a permutation test. The main purpose of `permute`
-#' is to return the correct permutation in each iteration of the loop, either a
-#' random permutation from the current design or the next permutation from
-#' `control$all.perms` if it is not `NULL` and
-#' `control$complete` is `TRUE`.
+#' function implementing a permutation test. It returns a requested row from
+#' `perms` when a permutation matrix is supplied. Otherwise, it returns either
+#' a random permutation from the current design or the requested permutation
+#' from `control$all.perms` when complete enumeration is enabled.
 #'
-#' @aliases shuffle permute
+#' `permutator` returns a function that iterates over a fixed set of
+#' permutations. The set can be supplied through `perms`, or generated when
+#' `permutator` is called by forwarding `n`, `nset`, `control`, `check`, and
+#' `quietly` to [shuffleSet()]. Supply either `perms` or the generation
+#' arguments, but not both. Each call to the returned function yields the next
+#' row, and returns `NULL` once the set is exhausted.
+#'
+#' @aliases shuffle permute permutator
 #' @param n numeric; the length of the returned vector of permuted values.
 #' Usually the number of observations under consideration. May also be any
 #' object that [stats::nobs()] knows about; see [nobs-methods].
 #' @param control a list of control values describing properties of the
 #' permutation design, as returned by a call to `how`.
 #' @param i integer; row of `control$all.perms` to return.
+#' @param perms a matrix of permutation indices, such as an object returned by
+#' [shuffleSet()] or [allPerms()]. Each row must contain the indices from 1 to
+#' the number of columns exactly once.
+#' @param nset numeric; the number of permutations to generate. If missing,
+#' the number is taken from `control`.
+#' @param check logical; should the permutation design be checked by [check()]?
+#' @param quietly logical; should messages from checking the design be
+#' suppressed?
 #' @returns For `shuffle` a vector of length `n` containing a
 #' permutation of the observations 1, \ldots, n using the permutation scheme
 #' described by argument `control`.
 #'
-#' For `permute` the `i`th permutation from the set of all
-#' permutations, or a random permutation from the design.
+#' For `permute`, the `i`th row of `perms`, the `i`th permutation from the set
+#' of all permutations, or a random permutation from the design.
+#'
+#' For `permutator`, a zero-argument function with `nperm` and `n` attributes
+#' giving the number of permutations and observations. The function returns
+#' successive permutation-index vectors, then `NULL` after exhaustion.
 #' @author Gavin Simpson
 #' @seealso [check()], a utility function for checking permutation
 #' scheme described by [how()].
@@ -126,6 +144,13 @@
 #' CTRL <- how(blocks = grp)
 #' shuffle(length(grp), control = CTRL)
 #'
+#' ## Reuse a generated permutation set
+#' perm_set <- shuffleSet(6, nset = 3, check = FALSE)
+#' permute(2, perms = perm_set)
+#' nextPerm <- permutator(perms = perm_set)
+#' nextPerm()
+#' nextPerm()
+#'
 #' ## Simple function using permute() to assess significance
 #' ## of a t.test
 #' pt.test <- function(x, group, control) {
@@ -141,26 +166,27 @@
 #'         pooled <- sqrt(((m-1)*xvar + (n-1)*yvar) / (m+n-2))
 #'         (xbar - ybar) / (pooled * sqrt(1/m + 1/n))
 #'     }
-#'     ## check the control object
-#'     #control <- check(x, control)$control ## FIXME
 #'     ## number of observations
 #'     Nobs <- nobs(x)
 #'     ## group names
 #'     lev <- names(table(group))
+#'     ## generate and retain the permutations once
+#'     nextPerm <- permutator(Nobs, control = control)
+#'     nperm <- attr(nextPerm, "nperm")
 #'     ## vector to hold results, +1 because of observed t
-#'     t.permu <- numeric(length = control$nperm) + 1
+#'     t.permu <- numeric(length = nperm + 1L)
 #'     ## calculate observed t
 #'     t.permu[1] <- t.statistic(x[group == lev[1]], x[group == lev[2]])
 #'     ## generate randomisation distribution of t
-#'     for(i in seq_along(t.permu)) {
+#'     for(i in seq_len(nperm)) {
 #'         ## return a permutation
-#'         want <- permute(i, Nobs, control)
+#'         want <- nextPerm()
 #'         ## calculate permuted t
 #'         t.permu[i+1] <- t.statistic(x[want][group == lev[1]],
 #'                                     x[want][group == lev[2]])
 #'     }
 #'     ## pval from permutation test
-#'     pval <- sum(abs(t.permu) >= abs(t.permu[1])) / (control$nperm + 1)
+#'     pval <- sum(abs(t.permu) >= abs(t.permu[1])) / (nperm + 1L)
 #'     ## return value
 #'     return(list(t.stat = t.permu[1], pval = pval))
 #' }
