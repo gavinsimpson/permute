@@ -36,12 +36,10 @@
         stop("need an object with call component")
     extras <- match.call(expand.dots = FALSE)$...
 
-    ## preserve or update the plots names
-    pname <- if ("strata" %in% names(extras)) {
-        deparse(substitute(extras[["strata"]]))
-    } else {
-        object$plots.name
-    }
+    ## Preserve the name when strata is not part of the update. Otherwise the
+    ## Plots constructor recovers the new vector expression or formula label.
+    update.strata <- "strata" %in% names(extras)
+    pname <- object$plots.name
 
     if (length(extras)) {
         existing <- !is.na(match(names(extras), names(call)))
@@ -55,7 +53,9 @@
     }
     if (evaluate) {
         out <- eval(call, parent.frame())
-        out$plots.name <- pname
+        if (!update.strata) {
+            out$plots.name <- pname
+        }
     } else {
         out <- call
     }
