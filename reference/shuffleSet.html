@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-1</span>
       </span>
     </div>
 
@@ -136,6 +136,10 @@
   of permutations returned will be unique, especially so for designs and
   data sets where there are few possible permutations relative to the
   number requested.</p>
+<p>For <code>Plots(type = "partition")</code>, rows represent distinct random
+  assignments to groups of fixed size. Independently sampled rows may repeat,
+  but permutations that differ only by reordering observations carrying the
+  same original group label have the same canonical representation.</p>
 <p>The <code>as.matrix</code> method sets the <code>control</code> and <code>seed</code>
   attributes to <code>NULL</code> and removes the <code>"permutationMatrix"</code>
   class, resulting in a standard matrix object.</p>

@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-1</span>
       </span>
     </div>
 
@@ -92,6 +92,10 @@
     <p><code>shuffle</code> can generate permutations for a wide range of
   restricted permutation schemes. A small selection of the available
   combinations of options is provided in the Examples section below.</p>
+<p>With <code>Plots(type = "partition")</code>, <code>shuffle</code> returns one
+  canonical index permutation for a random assignment to the groups in
+  <code>Plots$strata</code>. Group sizes and the relative order of observations
+  originally carrying the same group label are retained.</p>
 <p><code>permute</code> is a higher level utility function for use in a loop
   within a function implementing a permutation test. The main purpose of
   <code>permute</code> is to return the correct permutation in each iteration

@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-1</span>
       </span>
     </div>
 
@@ -76,7 +76,8 @@
 <span>       constant <span class="op">=</span> <span class="cn">FALSE</span>, mirror <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>       ncol <span class="op">=</span> <span class="cn">NULL</span>, nrow <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">Plots</span><span class="op">(</span>strata <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>,<span class="st">"free"</span>,<span class="st">"series"</span>,<span class="st">"grid"</span><span class="op">)</span>,</span>
+<span><span class="fu">Plots</span><span class="op">(</span>strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>      type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>,<span class="st">"free"</span>,<span class="st">"series"</span>,<span class="st">"grid"</span>,<span class="st">"partition"</span><span class="op">)</span>,</span>
 <span>      mirror <span class="op">=</span> <span class="cn">FALSE</span>, ncol <span class="op">=</span> <span class="cn">NULL</span>, nrow <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -102,8 +103,8 @@
 
   <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>character; the type of permutations required. One of
-    <code>"free"</code>, <code>"series"</code>, <code>"grid"</code> or <code>"none"</code>. See
-    Details.</p></dd>
+    <code>"free"</code>, <code>"series"</code>, <code>"grid"</code>, <code>"none"</code>, or,
+    for <code>Plots</code>, <code>"partition"</code>. See Details.</p></dd>
 
   <dt id="arg-maxperm">maxperm<a class="anchor" aria-label="anchor" href="#arg-maxperm"></a></dt>
 <dd><p>numeric; the maximum number of permutations to
@@ -161,6 +162,12 @@
   <code>"none"</code> indicates no permutation of samples. See the package
   vignette (<code>browseVignettes("permute")</code>) for additional
   information on each of these types of permutation.</p>
+<p><code>Plots(type = "partition")</code> randomly assigns observations to the
+  labelled groups supplied in <code>strata</code>, retaining the observed number
+  assigned to each group. Permutations that differ only by reordering
+  observations carrying the same group label are omitted. If <code>within</code>
+  is not supplied, <code>how</code> uses <code>Within(type = "none")</code> for this
+  design. Supplying any other within-plot type is an error.</p>
 <p>Argument <code>mirror</code> determines whether grid or series permutations
   can be mirrored. Consider the sequence 1,2,3,4. The relationship
   between consecutive observations is preserved if we reverse the
@@ -263,6 +270,31 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Number of permutations: 199</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Max. number of permutations allowed: 9999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Evaluate all permutations?: No.  Activation limit: 5040</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Random assignments to groups of fixed size</span></span></span>
+<span class="r-in"><span><span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">h2</span> <span class="op">&lt;-</span> <span class="fu">how</span><span class="op">(</span>plots <span class="op">=</span> <span class="fu">Plots</span><span class="op">(</span>strata <span class="op">=</span> <span class="va">groups</span>, type <span class="op">=</span> <span class="st">"partition"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Permutation Design:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Blocks:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Defined by: none</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Plots:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plots: groups</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Permutation type: partition</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Group sizes: 3, 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Within-group order retained</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Within Plots:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Permutation type: none</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Permutation details:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Number of permutations: 199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Max. number of permutations allowed: 9999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Evaluate all permutations?: No.  Activation limit: 5040</span>
+<span class="r-in"><span><span class="fu"><a href="shuffle.html">shuffle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">groups</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">h2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4 1 2 3 5</span>
 </code></pre></div>
     </div>
   </div>

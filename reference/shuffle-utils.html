@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-1</span>
       </span>
     </div>
 
@@ -112,8 +112,8 @@
 
   <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>character; the type of permutation used to shuffle the
-    <code>strata</code>. One of <code>"free"</code>, <code>"grid"</code> or
-    <code>"series"</code>.</p></dd>
+    <code>strata</code>. One of <code>"free"</code>, <code>"grid"</code>,
+    <code>"series"</code>, or <code>"partition"</code>.</p></dd>
 
 </dl></div>
     <div id="details">
@@ -130,6 +130,10 @@
   so that one can draw a single observation at random from the indices
   <code>x</code>. In general use, <code>size</code> would be set equal to
   <code>length{x}</code>.</p>
+<p>With <code>type = "partition"</code>, <code>shuffleStrata</code> returns one
+  canonical index permutation for a random arrangement of the labels in
+  <code>strata</code>; indices carrying the same original label retain their
+  relative order.</p>
     </div>
     <div id="value">
     <h2>Value</h2>

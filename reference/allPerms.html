@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-1</span>
       </span>
     </div>
 
@@ -125,6 +125,11 @@
 <p>The <code>as.matrix</code> method sets the <code>control</code> and <code>seed</code>
   attributes to <code>NULL</code> and removes the <code>"permutationMatrix"</code>
   class, resulting in a standard matrix object.</p>
+<p>With <code>Plots(type = "partition")</code>, the rows enumerate distinct
+  assignments to the labelled groups in <code>Plots$strata</code>. If the group
+  sizes are \(n_1, \ldots, n_K\), there are
+  \(n! / \prod_k n_k!\) such assignments before optionally removing the
+  observed assignment.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -139,8 +144,9 @@
     <div id="warning">
     <h2>Warning</h2>
     <p>If permuting the strata themselves, a balanced design is required (the
-  same number of observations in each level of <code>strata</code>. This is
-  common to all functions in the package.</p>
+  same number of observations in each level of <code>strata</code>). This does not
+  apply to <code>Plots(type = "partition")</code>, which supports unequal group
+  sizes.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
