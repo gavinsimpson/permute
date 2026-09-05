@@ -11,6 +11,8 @@
 #' @param v Numeric vector of indices. The default is `seq_len(n)`.
 #' @param nperms Numeric; number of possible permutations.
 #' @param mirror Logical; should mirroring of permutations be allowed?
+#' @param symmetric Logical; for grid permutations, should simultaneous
+#'   mirroring in both spatial directions be disallowed?
 #' @param nr,nc Integer; number of rows and columns of grid designs.
 #' @param constant Logical; should the same permutation be used within each
 #'   block?

@@ -23,14 +23,16 @@
 #' @param check logical; should `control` be checked for problems?
 #' @returns The (numeric) number of possible permutations of observations in
 #' `object`.
-#' @note In general, mirroring `"series"` or `"grid"` designs doubles
-#' or quadruples, respectively, the number of permutations without mirroring
-#' (within levels of strata if present). This is **not** true in two
-#' special cases:
+#' @note In general, mirroring `"series"` designs doubles the number of
+#' permutations and mirroring `"grid"` designs can quadruple it (within
+#' levels of strata if present). For grids with `symmetric = TRUE`, at most
+#' three orientations are included because simultaneous row and column
+#' mirroring is disallowed. Reflections of grid axes containing one or two
+#' cells are equivalent to toroidal shifts and do not add distinct
+#' permutations.
 #'
-#' 1. In `"grid"` designs where the number of columns is equal to 2, and
-#' 2. In `"series"` designs where the number of observations in a series is
-#'    equal to 2.
+#' Mirroring does not double the number of series permutations when the series
+#' contains only two observations.
 #'
 #' For example, with 2 observations there are 2 permutations for
 #' `"series"` designs:
@@ -43,11 +45,8 @@
 #' 1. 2-1, and
 #' 2. 1-2.
 #'
-#' It is immediately clear that this is the same set of
-#' permutations without mirroring (if one reorders the rows). A similar
-#' situation arises in `"grid"` designs where the number of
-#' **columns** per *grid* is equal to 2. Note that the number of rows
-#' per *grid* is not an issue here.
+#' It is immediately clear that this is the same set of permutations without
+#' mirroring (if one reorders the rows).
 #' @author Gavin Simpson
 #' @seealso [shuffle()] and [how()]. Additional
 #' [stats::nobs()] methods are provided; see [nobs-methods].
@@ -125,13 +124,15 @@
   ## mirroring?
   mirrorP <- getMirror(control, which = "plots")
   mirrorW <- getMirror(control, which = "within")
+  symmetricP <- getSymmetric(control, which = "plots")
+  symmetricW <- getSymmetric(control, which = "within")
 
   ## constant - i.e. same perm within each plot?
   constantW <- getConstant(control)
 
   ## grid dimensions
-  colW <- getCol(control, which = "within")
-  colP <- getRow(control, which = "plots")
+  dimW <- getDim(control, which = "within")
+  dimP <- getDim(control, which = "plots")
 
   ## Some checks; i) Plot strata must be of same size when permuting strata
   ##                 or having the same constant permutation within strata
@@ -156,24 +157,24 @@
   mult.p <- mult.wi <- 1
 
   ## within types
-  if(typeW %in% c("series","grid")) {
+  if(typeW == "series") {
     mult.wi <- 2
-    if(isTRUE(all.equal(typeW, "grid")) && !is.null(colW) && colW > 2) {
-      mult.wi <- 4
-    } else {
-      if(isTRUE(all.equal(n, 2)))
-        mult.wi <- 1
-    }
+    if(isTRUE(all.equal(n, 2)))
+      mult.wi <- 1
+  } else if(typeW == "grid") {
+    mult.wi <- gridOrientationMultiplier(dimW[1L], dimW[2L],
+                                         mirror = TRUE,
+                                         symmetric = symmetricW)
   }
   ## plot-level types
-  if(typeP %in% c("series","grid")) {
+  if(typeP == "series") {
     mult.p <- 2
-    if(isTRUE(all.equal(typeP, "grid")) && !is.null(colP) && colP > 2) {
-      mult.p <- 4
-    } else {
-      if(isTRUE(all.equal(length(tab), 2))) # was all.equal(n, 2)
-        mult.p <- 1
-    }
+    if(isTRUE(all.equal(length(tab), 2))) # was all.equal(n, 2)
+      mult.p <- 1
+  } else if(typeP == "grid") {
+    mult.p <- gridOrientationMultiplier(dimP[1L], dimP[2L],
+                                        mirror = TRUE,
+                                        symmetric = symmetricP)
   }
 
   ## within

@@ -2,7 +2,7 @@
 #' @order 2
 `Within` <- function(type = c("free","series","grid","none"),
                      constant = FALSE, mirror = FALSE,
-                     ncol = NULL, nrow = NULL)
+                     ncol = NULL, nrow = NULL, symmetric = FALSE)
 {
     type <- match.arg(type)
 
@@ -18,6 +18,7 @@
     }
 
     out <- list(type = type, constant = constant, mirror = mirror,
+                symmetric = symmetric,
                 ncol = ncol, nrow = nrow, call = .call)
     class(out) <- "Within"
     out

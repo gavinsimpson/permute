@@ -10,6 +10,7 @@
 #' @export getStrata
 #' @export getType
 #' @export getMirror
+#' @export getSymmetric
 #' @export getConstant
 #' @export getPlots
 #' @export getRow
@@ -34,6 +35,7 @@
 #' @export setStrata<-
 #' @export setType<-
 #' @export setMirror<-
+#' @export setSymmetric<-
 #' @export setConstant<-
 #' @export setPlots<-
 #' @export setRow<-

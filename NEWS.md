@@ -2,6 +2,9 @@
 
 ## New features
 
+* Grid permutation designs gain a `symmetric` option that prevents mirroring
+  in both spatial directions at the same time. Resolves #1.
+
 * `permute()` can now reuse a supplied matrix of permutation indices, and the
   new `permutator()` function provides sequential access to either a supplied
   or newly generated permutation set. Resolves #34.
@@ -29,6 +32,13 @@
   manual files.
 
 ## Bug fixes
+
+* Complete enumeration of grid permutations no longer treats two-column grids
+  as flattened series, which generated permutations that were not valid
+  two-dimensional toroidal shifts. Reflections of grid axes containing one or
+  two cells are also no longer counted as distinct when they duplicate an
+  ordinary toroidal shift. `allPerms()` and `numPerms()` now return consistent,
+  distinct grid permutations in these cases.
 
 * `check()` would fail all permutation designs where the (whole) plots were
   permuted with toroidal grid shifts. #42 Reported and fixed by @sims1253

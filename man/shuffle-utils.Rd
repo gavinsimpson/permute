@@ -18,7 +18,8 @@ shuffleGrid(
   mirror = FALSE,
   start.row = NULL,
   start.col = NULL,
-  flip = NULL
+  flip = NULL,
+  symmetric = FALSE
 )
 
 shuffleStrata(
@@ -30,7 +31,8 @@ shuffleStrata(
   nrow,
   ncol,
   start.row = NULL,
-  start.col = NULL
+  start.col = NULL,
+  symmetric = FALSE
 )
 }
 \arguments{
@@ -51,6 +53,9 @@ the first element flips rows and the second flips columns.}
 
 \item{start.row, start.col}{Numeric; the starting row and column for the
 shifted grid permutation. If not supplied, they are selected randomly.}
+
+\item{symmetric}{Logical; for grid permutations, should simultaneous
+mirroring in both spatial directions be disallowed?}
 
 \item{strata}{A factor containing the blocks to permute.}
 
@@ -97,6 +102,8 @@ shuffleGrid(3, 3)                      ## random starting row/col
 shuffleGrid(3, 3, start.row = 2,
             start.col = 3)             ## with known row/col
 shuffleGrid(3, 3, flip = rep(TRUE, 2)) ## random start, forced mirror
+shuffleGrid(3, 3, mirror = TRUE,
+            symmetric = TRUE)          ## never mirror both directions
 }
 \seealso{
 \code{\link[=check]{check()}} checks a permutation design, \code{\link[=how]{how()}} describes a design,

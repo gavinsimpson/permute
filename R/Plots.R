@@ -5,7 +5,8 @@
   type = c("none", "free", "series", "grid", "partition"),
   mirror = FALSE,
   ncol = NULL,
-  nrow = NULL
+  nrow = NULL,
+  symmetric = FALSE
 ) {
     plots.name <- deparse(substitute(strata))
     ## strata should also be a factor - coerce
@@ -27,6 +28,7 @@
     }
 
     out <- list(strata = strata, type = type, mirror = mirror,
+                symmetric = symmetric,
                 ncol = ncol, nrow = nrow,
                 plots.name = plots.name, call = .call)
     class(out) <- "Plots"

@@ -15,26 +15,33 @@
     }
 
     lev <- length(levels(strata))
-    ## compute nperms on number of levels - for this need Within()
-    ## and type == typeP
-    type <- getType(control, which = "plots")
-    newControl <- how(within = Within(type = type))
-    nperms <- numPerms(lev, newControl)
-    ## result object
-    X <- matrix(nrow = nperms, ncol = length(strata))
     ## store the type
     type <- getType(control, which = "plots")
     mirror <- getMirror(control, which = "plots")
+    symmetric <- getSymmetric(control, which = "plots")
+    nr <- getRow(control, which = "plots")
+    nc <- getCol(control, which = "plots")
+    ## compute nperms on number of levels - for this need Within()
+    ## and type == typeP
+    within <- if(type == "grid") {
+        Within(type = type, mirror = mirror, nrow = nr, ncol = nc,
+               symmetric = symmetric)
+    } else {
+        Within(type = type, mirror = mirror)
+    }
+    newControl <- how(within = within)
+    nperms <- numPerms(lev, newControl)
+    ## result object
+    X <- matrix(nrow = nperms, ncol = length(strata))
     perms <- if(type == "free") {
         allFree(lev)
     } else if(type == "series") {
         allSeries(lev, nperms = nperms, mirror = mirror)
     } else if(type == "grid") {
-        nr <- getRow(control, which = "plots")
-        nc <- getCol(control, which = "plots")
         constant <- getConstant(control)
         allGrid(lev, nperms = nperms, nr = nr, nc = nc,
-                mirror = mirror, constant = constant)
+                mirror = mirror, constant = constant,
+                symmetric = symmetric)
     } else {
         ## if in here, must have both types == "none"
         ## this is here just in case - need to check if this

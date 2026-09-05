@@ -18,6 +18,10 @@
 \alias{setMirror<-.how}
 \alias{setMirror<-.Plots}
 \alias{setMirror<-.Within}
+\alias{setSymmetric<-.default}
+\alias{setSymmetric<-.how}
+\alias{setSymmetric<-.Plots}
+\alias{setSymmetric<-.Within}
 \alias{setConstant<-.default}
 \alias{setConstant<-.how}
 \alias{setConstant<-.Plots}
@@ -71,6 +75,7 @@
 \alias{setDim<-}
 \alias{setType<-}
 \alias{setMirror<-}
+\alias{setSymmetric<-}
 \alias{setConstant<-}
 \title{Replacement functions to set components of a permutation design}
 \usage{
@@ -105,6 +110,8 @@ setDim(object) <- value
 setType(object) <- value
 
 setMirror(object) <- value
+
+setSymmetric(object) <- value
 
 setConstant(object) <- value
 }
