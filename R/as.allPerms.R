@@ -1,3 +1,5 @@
+#' @rdname allPerms
+#' @order 4
 `as.allPerms` <- function(object, control) {
     object <- as.matrix(object)
     class(object) <- c("allPerms", "matrix")

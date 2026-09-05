@@ -1,3 +1,5 @@
+#' @rdname how
+#' @order 2
 `Within` <- function(type = c("free","series","grid","none"),
                      constant = FALSE, mirror = FALSE,
                      ncol = NULL, nrow = NULL)

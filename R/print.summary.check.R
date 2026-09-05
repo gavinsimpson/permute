@@ -1,3 +1,5 @@
+#' @export
+#' @noRd
 `print.summary.check` <- function(x, ...)
 {
     cat(paste("Number of possible permutations:", x$n, "\n"))

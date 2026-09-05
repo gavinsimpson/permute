@@ -1,3 +1,5 @@
+#' @rdname how
+#' @order 3
 `Plots` <- function(
   strata = NULL,
   type = c("none", "free", "series", "grid", "partition"),

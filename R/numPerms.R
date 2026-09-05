@@ -1,3 +1,93 @@
+#' Number of possible permutations for a given object
+#'
+#' `numPerms` calculates the maximum number of permutations possible under
+#' the current permutation scheme.
+#'
+#' Function `numPerms` returns the number of permutations for the passed
+#' `object` and the selected permutation scheme. `object` can be one
+#' of a data frame, matrix, an object for which a scores method exists, or a
+#' numeric or integer vector. In the case of a numeric or integer vector, a
+#' vector of length 1 can be used and it will be expanded to a vector of length
+#' `object` (i.e., `1:object`) before computing the number of
+#' permutations. As such, `object` can be the number of observations not
+#' just the object containing the observations.
+#'
+#' For `Plots(type = "partition")`, if the group sizes are \eqn{n_1,
+#' \ldots, n_K}, the number of distinct assignments is \eqn{n! / \prod_k n_k!}.
+#' With blocks, this quantity is calculated within each block and the results
+#' are multiplied.
+#'
+#' @param object any object handled by [stats::nobs()].
+#' @param control a list of control values describing properties of the
+#' permutation design, as returned by a call to [how()].
+#' @param check logical; should `control` be checked for problems?
+#' @returns The (numeric) number of possible permutations of observations in
+#' `object`.
+#' @note In general, mirroring `"series"` or `"grid"` designs doubles
+#' or quadruples, respectively, the number of permutations without mirroring
+#' (within levels of strata if present). This is **not** true in two
+#' special cases:
+#'
+#' 1. In `"grid"` designs where the number of columns is equal to 2, and
+#' 2. In `"series"` designs where the number of observations in a series is
+#'    equal to 2.
+#'
+#' For example, with 2 observations there are 2 permutations for
+#' `"series"` designs:
+#'
+#' 1. 1-2, and
+#' 2. 2-1.
+#'
+#' If these two permutations were mirrored, we would have:
+#'
+#' 1. 2-1, and
+#' 2. 1-2.
+#'
+#' It is immediately clear that this is the same set of
+#' permutations without mirroring (if one reorders the rows). A similar
+#' situation arises in `"grid"` designs where the number of
+#' **columns** per *grid* is equal to 2. Note that the number of rows
+#' per *grid* is not an issue here.
+#' @author Gavin Simpson
+#' @seealso [shuffle()] and [how()]. Additional
+#' [stats::nobs()] methods are provided; see [nobs-methods].
+#' @examples
+#'
+#' ## permutation design --- see ?how
+#' ctrl <- how() ## defaults to freely exchangeable
+#'
+#' ## vector input
+#' v <- 1:10
+#' (obs <- nobs(v))
+#' numPerms(v, control = ctrl)
+#'
+#' ## integer input
+#' len <- length(v)
+#' (obs <- nobs(len))
+#' numPerms(len, control = ctrl)
+#'
+#' ## new design, objects are a time series
+#' ctrl <- how(within = Within(type = "series"))
+#' numPerms(v, control = ctrl)
+#' ## number of permutations possible drastically reduced...
+#' ## ...turn on mirroring
+#' ctrl <- how(within = Within(type = "series", mirror = TRUE))
+#' numPerms(v, control = ctrl)
+#'
+#' ## Try blocking --- 2 groups of 5
+#' bl <- numPerms(v, control = how(blocks = gl(2,5)))
+#' bl
+#'
+#' ## should be same as
+#' pl <- numPerms(v, control = how(plots = Plots(strata = gl(2,5))))
+#' pl
+#' stopifnot(all.equal(bl, pl))
+#'
+#' ## Distinct assignments to groups of sizes 3 and 2
+#' groups <- factor(c("a", "a", "a", "b", "b"))
+#' ctrl <- how(plots = Plots(groups, type = "partition"))
+#' numPerms(length(groups), control = ctrl) ## 10
+#'
 `numPerms` <- function(object, control = how(), check = TRUE) {
   ## constant holding types where something is permuted
   TYPES <- c("free","grid","series","none")

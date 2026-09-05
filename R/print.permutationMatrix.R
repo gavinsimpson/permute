@@ -1,6 +1,8 @@
 ## Simple print method for objects of class "permutationMatrix"
 ##  - at the moment, don't print the attributes
 
+#' @export
+#' @noRd
 `print.permutationMatrix` <- function(x, ...) {
     ## indicators of plot and block strata
     pl <- bl <- FALSE

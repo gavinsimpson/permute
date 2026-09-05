@@ -1,8 +1,6 @@
-##' @title Replicate and cbind all block-level permutations
-##' @param x a list whose compontents are the set of all permutations
-##' at the block level
-##' @return a matrix
-##' @author Gavin L. Simpson
+## Replicate and cbind all block-level permutations.
+##
+## x is a list whose components are the sets of permutations at block level.
 `cbindAllPerms` <- function(x) {
     nb <- length(x) ## number of blocks
 

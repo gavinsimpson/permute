@@ -3,13 +3,13 @@ PKGVERS := $(shell sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)
 
 all: check clean
 
-#docs:
-#	R -q -e 'library("roxygen2"); roxygenise(".")'
+docs:
+	R -q -e 'roxygen2::roxygenise(".")'
 
-build: #docs
+build: docs
 	cd ..;\
 	R CMD build --compact-vignettes permute
-build-quick: #docs
+build-quick: docs
 	cd ..;\
 	R CMD build --no-manual --no-build-vignettes permute
 

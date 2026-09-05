@@ -1,3 +1,5 @@
+#' @rdname shuffle
+#' @order 2
 `permute` <- function(i, n, control) {
     complete <- getComplete(control)
     ap <- getAllperms(control)

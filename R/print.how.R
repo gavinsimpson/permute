@@ -1,3 +1,5 @@
+#' @export
+#' @noRd
 `print.how` <- function(x, ...) {
 
     ## only for objects of correct class

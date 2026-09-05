@@ -1,3 +1,5 @@
+#' @rdname allUtils
+#' @order 2
 `allSeries` <- function(n, nperms, mirror = FALSE)
 {
     v <- seq_len(n)
