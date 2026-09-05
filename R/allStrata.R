@@ -15,8 +15,6 @@
     }
 
     lev <- length(levels(strata))
-    ## store the type
-    type <- getType(control, which = "plots")
     mirror <- getMirror(control, which = "plots")
     symmetric <- getSymmetric(control, which = "plots")
     nr <- getRow(control, which = "plots")
@@ -38,15 +36,8 @@
     } else if(type == "series") {
         allSeries(lev, nperms = nperms, mirror = mirror)
     } else if(type == "grid") {
-        constant <- getConstant(control)
         allGrid(lev, nperms = nperms, nr = nr, nc = nc,
-                mirror = mirror, constant = constant,
-                symmetric = symmetric)
-    } else {
-        ## if in here, must have both types == "none"
-        ## this is here just in case - need to check if this
-        ## is possible given calling function...
-        return(v)
+                mirror = mirror, symmetric = symmetric)
     }
     sp <- split(v, strata)
     ## build permutations by permuting the split indices (as list)

@@ -1,8 +1,8 @@
 ^\.travis\.yml$
-\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
 ^Makefile
-^\.gitattributes
+^/?\.gitattributes$
 ^\.gitignore
 ^docs$
 ^_pkgdown\.yml$
@@ -10,7 +10,7 @@
 ^cran-comments\.md$
 ^appveyor\.yml$
 ^\.github$
-^README.Rmd$
+^README\.Rmd$
 ^revdep$
 ^pkgdown$
 ^CITATION\.cff$
@@ -18,17 +18,12 @@
 ^\.vscode$
 ^.lintr$
 ^CRAN-RELEASE$
-^.*\.Rproj$
-^\.Rproj\.user$
-^/\.gitattributes$
 ^inst/web$
 ^notes$
 ^CONTRIBUTING\.md$
 ^GOVERNANCE\.md$
 ^ISSUE_TEMPLATE\.md$
 ^NEWS$
-^_pkgdown\.yml$
-^README\.Rmd$
 ^README-.*\.png$
 ^logo\.png$
 ^vignettes/profilings
@@ -37,7 +32,6 @@
 ^LICENSE$
 ^vignettes/articles$
 ^CRAN-SUBMISSION$
-^docs$
 ^doc$
 ^Meta$
 ^paper.log

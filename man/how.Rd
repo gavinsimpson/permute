@@ -3,7 +3,6 @@
 \name{how}
 \alias{how}
 \alias{print.how}
-\alias{Blocks}
 \alias{Within}
 \alias{Plots}
 \title{How to define a permutation design?}
@@ -56,8 +55,8 @@ blocking structure.}
 \item{complete}{logical; should complete enumeration of all permutations be
 performed?}
 
-\item{maxperm}{numeric; the maximum number of permutations to perform.
-Currently unused.}
+\item{maxperm}{numeric; the maximum number of permutations that \code{\link[=allPerms]{allPerms()}}
+may enumerate.}
 
 \item{minperm}{numeric; the lower limit to the number of possible
 permutations at which complete enumeration is performed. When \code{nperm}

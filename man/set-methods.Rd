@@ -4,7 +4,6 @@
 \alias{set-methods}
 \alias{setBlocks<-.default}
 \alias{setBlocks<-.how}
-\alias{setBlocks<-.permControl}
 \alias{setWithin<-.default}
 \alias{setWithin<-.how}
 \alias{setStrata<-.default}
@@ -42,19 +41,14 @@
 \alias{setDim<-.Within}
 \alias{setNperm<-.default}
 \alias{setNperm<-.how}
-\alias{setNperm<-.permControl}
 \alias{setAllperms<-.default}
 \alias{setAllperms<-.how}
-\alias{setAllperms<-.permControl}
 \alias{setMaxperm<-.default}
 \alias{setMaxperm<-.how}
-\alias{setMaxperm<-.permControl}
 \alias{setMinperm<-.default}
 \alias{setMinperm<-.how}
-\alias{setMinperm<-.permControl}
 \alias{setComplete<-.default}
 \alias{setComplete<-.how}
-\alias{setComplete<-.permControl}
 \alias{setMake<-.default}
 \alias{setMake<-.how}
 \alias{setObserved<-.default}

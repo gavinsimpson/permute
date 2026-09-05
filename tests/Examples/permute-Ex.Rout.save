@@ -130,7 +130,7 @@ Within Plots:
   Grid dimensions: 3 rows 2 cols
 
 Permutation details:
-  Number of permutations: 199
+  Number of permutations: 12
   Max. number of permutations allowed: 9999
   Evaluate all permutations?: No.  Activation limit: 5040
 
@@ -172,7 +172,7 @@ Within Plots:
   Grid dimensions: 3 rows 2 cols
 
 Permutation details:
-  Number of permutations: 198
+  Number of permutations: 11
   Max. number of permutations allowed: 9999
   Evaluate all permutations?: No.  Activation limit: 5040
 
@@ -376,7 +376,7 @@ Within Plots:
   Grid dimensions: 3 rows 2 cols
 
 Permutation details:
-  Number of permutations: 199
+  Number of permutations: 6
   Max. number of permutations allowed: 9999
   Evaluate all permutations?: No.  Activation limit: 5040
 
@@ -412,7 +412,7 @@ Within Plots:
   Grid dimensions: 3 rows 2 cols
 
 Permutation details:
-  Number of permutations: 198
+  Number of permutations: 5
   Max. number of permutations allowed: 9999
   Evaluate all permutations?: No.  Activation limit: 5040
 
@@ -490,16 +490,11 @@ detaching ‘package:vegan’
 > 
 > ### Name: get-methods
 > ### Title: Extractor functions to access components of a permutation design
-> ### Aliases: get-methods getBlocks.default getBlocks.permControl
-> ###   getWithin.default getWithin.permControl getStrata.default
-> ###   getStrata.permControl getType.default getType.permControl
-> ###   getMirror.default getMirror.permControl getSymmetric.default
-> ###   getSymmetric.permControl getConstant.default getConstant.permControl
-> ###   getPlots.default getPlots.permControl getRow.default
-> ###   getRow.permControl getCol.default getCol.permControl getDim.default
-> ###   getDim.permControl getNperm.default getNperm.permControl
-> ###   getMaxperm.default getMaxperm.permControl getMinperm.default
-> ###   getMinperm.permControl getComplete.default getComplete.permControl
+> ### Aliases: get-methods getBlocks.default getWithin.default
+> ###   getStrata.default getType.default getMirror.default
+> ###   getSymmetric.default getConstant.default getPlots.default
+> ###   getRow.default getCol.default getDim.default getNperm.default
+> ###   getMaxperm.default getMinperm.default getComplete.default
 > ###   getMake.default getObserved.default getAllperms.default
 > ###   getControl.default getAllperms getBlocks getComplete getConstant
 > ###   getCol getDim getMake getMaxperm getMinperm getMirror getSymmetric
@@ -554,7 +549,7 @@ attr(,"class")
 > 
 > ### Name: how
 > ### Title: How to define a permutation design?
-> ### Aliases: how print.how Blocks Within Plots
+> ### Aliases: how print.how Within Plots
 > ### Keywords: utils
 > 
 > ### ** Examples
@@ -892,22 +887,20 @@ p3 10 20 30 40 50
 > ### Name: set-methods
 > ### Title: Replacement functions to set components of a permutation design
 > ### Aliases: set-methods setBlocks<-.default setBlocks<-.how
-> ###   setBlocks<-.permControl setWithin<-.default setWithin<-.how
-> ###   setStrata<-.default setStrata<-.how setStrata<-.Plots
-> ###   setType<-.default setType<-.how setType<-.Plots setType<-.Within
-> ###   setMirror<-.default setMirror<-.how setMirror<-.Plots
-> ###   setMirror<-.Within setSymmetric<-.default setSymmetric<-.how
-> ###   setSymmetric<-.Plots setSymmetric<-.Within setConstant<-.default
-> ###   setConstant<-.how setConstant<-.Plots setConstant<-.Within
-> ###   setPlots<-.default setPlots<-.how setRow<-.default setRow<-.how
-> ###   setRow<-.Plots setRow<-.Within setCol<-.default setCol<-.how
-> ###   setCol<-.Plots setCol<-.Within setDim<-.default setDim<-.how
-> ###   setDim<-.Plots setDim<-.Within setNperm<-.default setNperm<-.how
-> ###   setNperm<-.permControl setAllperms<-.default setAllperms<-.how
-> ###   setAllperms<-.permControl setMaxperm<-.default setMaxperm<-.how
-> ###   setMaxperm<-.permControl setMinperm<-.default setMinperm<-.how
-> ###   setMinperm<-.permControl setComplete<-.default setComplete<-.how
-> ###   setComplete<-.permControl setMake<-.default setMake<-.how
+> ###   setWithin<-.default setWithin<-.how setStrata<-.default
+> ###   setStrata<-.how setStrata<-.Plots setType<-.default setType<-.how
+> ###   setType<-.Plots setType<-.Within setMirror<-.default setMirror<-.how
+> ###   setMirror<-.Plots setMirror<-.Within setSymmetric<-.default
+> ###   setSymmetric<-.how setSymmetric<-.Plots setSymmetric<-.Within
+> ###   setConstant<-.default setConstant<-.how setConstant<-.Plots
+> ###   setConstant<-.Within setPlots<-.default setPlots<-.how
+> ###   setRow<-.default setRow<-.how setRow<-.Plots setRow<-.Within
+> ###   setCol<-.default setCol<-.how setCol<-.Plots setCol<-.Within
+> ###   setDim<-.default setDim<-.how setDim<-.Plots setDim<-.Within
+> ###   setNperm<-.default setNperm<-.how setAllperms<-.default
+> ###   setAllperms<-.how setMaxperm<-.default setMaxperm<-.how
+> ###   setMinperm<-.default setMinperm<-.how setComplete<-.default
+> ###   setComplete<-.how setMake<-.default setMake<-.how
 > ###   setObserved<-.default setObserved<-.how setBlocks<- setPlots<-
 > ###   setWithin<- setStrata<- setNperm<- setAllperms<- setMaxperm<-
 > ###   setMinperm<- setComplete<- setMake<- setObserved<- setRow<- setCol<-

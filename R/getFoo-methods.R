@@ -20,16 +20,11 @@
 #' @keywords methods utils
 #' @name get-methods
 #' @order 0
-#' @aliases getBlocks.default getBlocks.permControl getWithin.default
-#' @aliases getWithin.permControl getStrata.default getStrata.permControl
-#' @aliases getType.default getType.permControl getMirror.default
-#' @aliases getMirror.permControl getSymmetric.default getSymmetric.permControl
-#' @aliases getConstant.default getConstant.permControl
-#' @aliases getPlots.default getPlots.permControl getRow.default getRow.permControl
-#' @aliases getCol.default getCol.permControl getDim.default getDim.permControl
-#' @aliases getNperm.default getNperm.permControl getMaxperm.default
-#' @aliases getMaxperm.permControl getMinperm.default getMinperm.permControl
-#' @aliases getComplete.default getComplete.permControl getMake.default
+#' @aliases getBlocks.default getWithin.default getStrata.default
+#' @aliases getType.default getMirror.default getSymmetric.default
+#' @aliases getConstant.default getPlots.default getRow.default
+#' @aliases getCol.default getDim.default getNperm.default
+#' @aliases getMaxperm.default getMinperm.default getComplete.default getMake.default
 #' @aliases getObserved.default getAllperms.default getControl.default
 #' @examples
 #' hh <- how()
@@ -100,6 +95,14 @@ NULL
     object$within
 }
 
+## Select one of the two permutable levels of a how object. Keeping this in a
+## single helper ensures all level-aware getters use the same partial matching
+## and error behaviour.
+`getDesign` <- function(object, which = c("plots", "within")) {
+    which <- match.arg(which)
+    if (which == "plots") getPlots(object) else getWithin(object)
+}
+
 ## Strata
 #' @rdname get-methods
 #' @order 15
@@ -120,12 +123,7 @@ NULL
                                   which = c("plots","blocks"),
                                   drop = TRUE, ...) {
     which <- match.arg(which)
-    if(isTRUE(all.equal(which, "plots")))
-        strata <- object$plots$strata
-    else if(isTRUE(all.equal(which, "blocks")))
-        strata <- object$blocks #object$blocks$strata
-    else
-        stop("Ambiguous `which`")
+    strata <- if (which == "plots") object$plots$strata else object$blocks
     if(isTRUE(drop) && !is.null(strata))
         strata <- droplevels(strata)
     strata
@@ -159,14 +157,7 @@ NULL
 #' @order 45
 `getType.how` <- function(object,
                           which = c("plots","within"), ...) {
-    which <- match.arg(which)
-  if(isTRUE(all.equal(which, "plots")))
-      type <- getPlots(object)$type
-  else if(isTRUE(all.equal(which, "within")))
-      type <- getWithin(object)$type
-  else
-      stop("Ambiguous `which`")
-  type
+    getType(getDesign(object, which))
 }
 
 #' @rdname get-methods
@@ -204,14 +195,7 @@ NULL
 #' @order 34
 `getMirror.how` <- function(object,
                                     which = c("plots","within"), ...) {
-    which <- match.arg(which)
-    if(isTRUE(all.equal(which, "plots")))
-        mirror <- getPlots(object)$mirror
-    else if(isTRUE(all.equal(which, "within")))
-        mirror <- getWithin(object)$mirror
-    else
-        stop("Ambiguous `which`")
-    mirror
+    getMirror(getDesign(object, which))
 }
 
 #' @rdname get-methods
@@ -246,8 +230,7 @@ NULL
 #' @order 37
 `getSymmetric.how` <- function(object,
                               which = c("plots", "within"), ...) {
-    which <- match.arg(which)
-    getSymmetric(if(which == "plots") getPlots(object) else getWithin(object))
+    getSymmetric(getDesign(object, which))
 }
 
 #' @rdname get-methods
@@ -309,14 +292,7 @@ NULL
 #' @order 40
 `getRow.how` <- function(object, which = c("plots","within"),
                                  ...) {
-    which <- match.arg(which)
-    if(isTRUE(all.equal(which, "plots")))
-        nrow <- getPlots(object)$nrow
-    else if(isTRUE(all.equal(which, "within")))
-        nrow <- getWithin(object)$nrow
-    else
-        stop("Ambiguous `which`")
-    nrow
+    getRow(getDesign(object, which))
 }
 
 #' @rdname get-methods
@@ -350,14 +326,7 @@ NULL
 #' @order 22
 `getCol.how` <- function(object, which = c("plots","within"),
                                  ...) {
-    which <- match.arg(which)
-    if(isTRUE(all.equal(which, "plots")))
-        ncol <- getPlots(object)$ncol
-    else if(isTRUE(all.equal(which, "within")))
-        ncol <- getWithin(object)$ncol
-    else
-        stop("Ambiguous `which`")
-    ncol
+    getCol(getDesign(object, which))
 }
 
 #' @rdname get-methods
@@ -391,19 +360,7 @@ NULL
 #' @order 28
 `getDim.how` <- function(object, which = c("plots","within"),
                                  ...) {
-    which <- match.arg(which)
-    if(isTRUE(all.equal(which, "plots"))) {
-        PL <- getPlots(object)
-        nc <- PL$ncol
-        nr <- PL$nrow
-    } else if(isTRUE(all.equal(which, "within"))) {
-        WI <- getWithin(object)
-        nc <- WI$ncol
-        nr <- WI$nrow
-    } else {
-        stop("Ambiguous `which`")
-    }
-    c(nr, nc)
+    getDim(getDesign(object, which))
 }
 
 #' @rdname get-methods

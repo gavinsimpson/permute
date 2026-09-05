@@ -110,11 +110,6 @@
     control <- chk$control
   }
 
-  ## get the permutation levels from control
-  WI <- getWithin(control)
-  PL <- getPlots(control)
-  BL <- getBlocks(control)
-
   ## any strata to permute within / blocking?
   BLOCKS <- getStrata(control, which = "blocks")
   PSTRATA <- getStrata(control, which = "plots")
@@ -134,22 +129,8 @@
   dimW <- getDim(control, which = "within")
   dimP <- getDim(control, which = "plots")
 
-  ## Some checks; i) Plot strata must be of same size when permuting strata
-  ##                 or having the same constant permutation within strata
-  ##             ii) In grid designs, grids must be of the same size for all
-  ##                 strata
-  ##
-  ## FIXME - these checks are in check()!
-  if(!is.null(PSTRATA)) {
+  if (!is.null(PSTRATA))
     tab <- table(PSTRATA)
-    same.n <- length(unique(tab))
-    # if((typeP != "none" || isTRUE(constantW)) && same.n > 1) {
-    #   stop("All levels of strata must have same number of samples for chosen scheme")
-    # }
-    # if(typeP == "grid" && same.n > 1) {
-    #   stop("Unbalanced grid designs are not supported")
-    # }
-  }
 
   ## the various designs allowed imply multipliers to number of samples
   ## for the restricted permutations
@@ -159,7 +140,7 @@
   ## within types
   if(typeW == "series") {
     mult.wi <- 2
-    if(isTRUE(all.equal(n, 2)))
+    if(n == 2L)
       mult.wi <- 1
   } else if(typeW == "grid") {
     mult.wi <- gridOrientationMultiplier(dimW[1L], dimW[2L],
@@ -169,7 +150,7 @@
   ## plot-level types
   if(typeP == "series") {
     mult.p <- 2
-    if(isTRUE(all.equal(length(tab), 2))) # was all.equal(n, 2)
+    if(length(tab) == 2L)
       mult.p <- 1
   } else if(typeP == "grid") {
     mult.p <- gridOrientationMultiplier(dimP[1L], dimP[2L],
@@ -216,9 +197,9 @@
     }
 
     ## plots
-    num.p <- if(isTRUE(all.equal(typeP, "partition"))) {
+    num.p <- if(typeP == "partition") {
         numPartitions(PSTRATA)
-    } else if(isTRUE(all.equal(typeP, "free"))) {
+    } else if(typeP == "free") {
         exp(lfactorial(length(levels(PSTRATA))))
     } else if(typeP %in% c("series", "grid")) {
         if(isTRUE(mirrorP)) {
@@ -230,11 +211,11 @@
         1
     }
 
-    num.wi <- if(isTRUE(all.equal(typeW, "none"))) {
+    num.wi <- if(typeW == "none") {
         ## no within permutations. note we multiply num.p by this
         ## values so it is 1 not 0!!
         1
-    } else if(isTRUE(all.equal(typeW, "free"))) {
+    } else if(typeW == "free") {
         if(!is.null(PSTRATA)) {
             if(constantW) {
                 factorial(tab[1])

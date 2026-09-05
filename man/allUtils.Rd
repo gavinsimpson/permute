@@ -12,7 +12,7 @@ allFree(n, v = seq_len(n))
 
 allSeries(n, nperms, mirror = FALSE)
 
-allGrid(n, nperms, nr, nc, mirror, constant, symmetric = FALSE)
+allGrid(n, nperms, nr, nc, mirror, symmetric = FALSE)
 
 allStrata(n, control)
 }
@@ -26,9 +26,6 @@ allStrata(n, control)
 \item{mirror}{Logical; should mirroring of permutations be allowed?}
 
 \item{nr, nc}{Integer; number of rows and columns of grid designs.}
-
-\item{constant}{Logical; should the same permutation be used within each
-block?}
 
 \item{symmetric}{Logical; for grid permutations, should simultaneous
 mirroring in both spatial directions be disallowed?}

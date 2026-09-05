@@ -41,6 +41,24 @@ test_that("shuffleSet returns a matrix even for nset == 1", {
     expect_that(ss, is_a("matrix"))
 })
 
+test_that("shuffleSet preserves seeded RNG compatibility", {
+    suppressWarnings(RNGversion("3.5.0"))
+    control <- how(
+        plots = Plots(factor(c(1, 1, 1, 2, 2, 2)), type = "free"),
+        within = Within(type = "free")
+    )
+
+    set.seed(42)
+    actual <- as.matrix(shuffleSet(6, 3, control, check = FALSE))
+    expected <- matrix(
+        c(6L, 4L, 5L, 3L, 1L, 2L,
+          3L, 1L, 2L, 6L, 5L, 4L,
+          4L, 5L, 6L, 2L, 3L, 1L),
+        ncol = 6L, byrow = TRUE
+    )
+    expect_identical(actual, expected)
+})
+
 test_that("shuffle can permute both plots and within in presence of blocks", {
     ## Example from @LindsayVass on github #9
     control <- how(within = Within(type = "free"),

@@ -259,7 +259,7 @@
         ## If strata at Plot level present, either permute samples, Plots or both
 
         ## permute strata at Plot level?
-        if(isTRUE(all.equal(typeP, "none"))) {
+        if(typeP == "none") {
             Set[] <- rep(sn, each = nset)
         } else {
             for(i in seq_len(nset)) {
@@ -278,7 +278,7 @@
         tmp <- Set
 
         ## permute the samples within Plot strata
-        if(!isTRUE(all.equal(typeW, "none"))) {
+        if(typeW != "none") {
             for(i in seq_len(nset)) {
                 tab <- table(Pstrata[ind][Set[i,]])
                 ## the levels of the Plot strata
@@ -286,13 +286,13 @@
 
                 ## same permutation within each level of the Plot strata?
                 if(withinCTRL$constant) {
-                    if(isTRUE(all.equal(typeW, "free"))) {
+                    if(typeW == "free") {
                         n <- unique(tab)[1L]
                         same.rand <- shuffleFree(n, n)
-                    } else if(isTRUE(all.equal(typeW, "series"))) {
+                    } else if(typeW == "series") {
                         start <- shuffleFree(n / length(levs), 1L)
                         flip <- runif(1L) < 0.5 ## FIXME this should be moved out of the loop
-                    } else if(isTRUE(all.equal(typeW, "grid"))) {
+                    } else if(typeW == "grid") {
                         start.row <- shuffleFree(withinCTRL$nrow, 1L)
                         start.col <- shuffleFree(withinCTRL$ncol, 1L)
                         flip <- gridFlip(mirror = withinCTRL$mirror,
@@ -310,7 +310,7 @@
                     MATCH <- Pstrata[ind][Set[i,]] == lv
                     gr <- Set[i,][MATCH]
                     if((n.gr <- length(gr)) > 1) {
-                        if(withinCTRL$constant && isTRUE(all.equal(typeW, "free"))) {
+                        if(withinCTRL$constant && typeW == "free") {
                             tmp[i,][which(MATCH)] <- gr[same.rand]
                         } else {
                             Args <-

@@ -263,7 +263,7 @@
         typeW <- getType(control, which = "within")
 
         ## permute Plot strata?
-        if(isTRUE(all.equal(typeP, "none"))) { ## NO
+        if(typeP == "none") { ## NO
             perm <- sn
         } else {                               ## YES
             flip <- if(typeP == "grid") {
@@ -282,7 +282,7 @@
         }
 
         ## permute the samples within Plot strata
-        if(!isTRUE(all.equal(typeW, "none"))) { ## NOTE the `!`
+        if(typeW != "none") {
             ## house keeping to track permuted strata - used later
             tab <- table(Pstrata[perm])
             levs <- names(tab) ## levels of Plot strata in this split
@@ -291,13 +291,13 @@
             withinCTRL <- getWithin(control)
             CONSTANT <- withinCTRL$constant
             if(isTRUE(CONSTANT)) {
-                if(isTRUE(all.equal(typeW, "free"))) {
+                if(typeW == "free") {
                     N <- unique(tab)[1L]
                     same.rand <- shuffleFree(N, N)
-                } else if(isTRUE(all.equal(typeW, "series"))) {
+                } else if(typeW == "series") {
                     start <- shuffleFree(n / length(levs), 1L)
                     flip <- runif(1L) < 0.5
-                } else if(isTRUE(all.equal(typeW, "grid"))) {
+                } else if(typeW == "grid") {
                     start.row <- shuffleFree(withinCTRL$nrow, 1L)
                     start.col <- shuffleFree(withinCTRL$ncol, 1L)
                     flip <- gridFlip(mirror = withinCTRL$mirror,

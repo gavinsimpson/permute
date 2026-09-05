@@ -31,9 +31,6 @@
 #' @export
 #' @noRd
 `update.Plots` <- function (object, ..., evaluate = TRUE) {
-    call <- getCall(object)
-    if (is.null(call))
-        stop("need an object with call component")
     extras <- match.call(expand.dots = FALSE)$...
 
     ## Preserve the name when strata is not part of the update. Otherwise the
@@ -41,23 +38,14 @@
     update.strata <- "strata" %in% names(extras)
     pname <- object$plots.name
 
-    if (length(extras)) {
-        existing <- !is.na(match(names(extras), names(call)))
-        ## do these individually to allow NULL to remove entries.
-        for (a in names(extras)[existing])
-            call[[a]] <- extras[[a]]
-        if (any(!existing)) {
-            call <- c(as.list(call), extras[!existing])
-            call <- as.call(call)
-        }
-    }
+    object.call <- amendCall(object, extras)
     if (evaluate) {
-        out <- eval(call, parent.frame())
+        out <- eval(object.call, parent.frame())
         if (!update.strata) {
             out$plots.name <- pname
         }
     } else {
-        out <- call
+        out <- object.call
     }
 
     out
