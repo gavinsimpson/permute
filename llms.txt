@@ -1,0 +1,162 @@
+## Restricted permutations with R
+
+[![CRAN
+version](https://www.r-pkg.org/badges/version/permute)](https://cran.r-project.org/package=permute)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/permute)](https://cran.r-project.org/package=permute)
+[![R-CMD-check](https://github.com/gavinsimpson/permute/workflows/R-CMD-check/badge.svg)](https://github.com/gavinsimpson/permute/actions)
+[![codecov](https://codecov.io/gh/gavinsimpson/permute/graph/badge.svg?token=2FYEfBBSJ7)](https://app.codecov.io/gh/gavinsimpson/permute)
+
+## What is permute?
+
+**permute** generates permutations from a range of restricted
+permutation designs.
+
+Permute provides an R implementation of the permutation schemes
+developed by Cajo ter Braak and made available in the Canoco software,
+version 3.1 (ter Braak, 1990). These permutation schemes draw upon ideas
+from an earlier paper by Besag & Clifford (1989).
+
+Several types of permutation are available in **permute**:
+
+- Free permutation of objects
+- Time series or line transect designs, where the temporal or spatial
+  ordering is preserved.
+- Spatial grid designs, where the spatial ordering is preserved in both
+  coordinate directions
+- Permutation of plots or groups of samples.
+- Blocking factors which restrict permutations to within blocks. The
+  preceding designs can be nested within blocks, allowing analysis of
+  hierarchical designs (e.g. split plot designs)
+
+### References
+
+Besag, J. and Clifford, P. (1989) Generalized Monte Carlo significance
+tests. *Biometrika* **76**; 633–642.
+
+ter Braak, C. J. F. (1990). *Update notes: CANOCO version 3.1*.
+Wageningen: Agricultural Mathematics Group. (UR).
+
+# Package index
+
+## Generate permutations
+
+High-level functions for drawing one or more restricted permutations, or
+applying them directly to a vector.
+
+- [`shuffle()`](https://gavinsimpson.github.io/permute/reference/shuffle.md)
+  [`permute()`](https://gavinsimpson.github.io/permute/reference/shuffle.md)
+  [`permutator()`](https://gavinsimpson.github.io/permute/reference/shuffle.md)
+  : Unrestricted and restricted permutations
+- [`shuffleSet()`](https://gavinsimpson.github.io/permute/reference/shuffleSet.md)
+  [`as.matrix(`*`<permutationMatrix>`*`)`](https://gavinsimpson.github.io/permute/reference/shuffleSet.md)
+  : Generate a set of permutations from the specified design
+- [`permutations()`](https://gavinsimpson.github.io/permute/reference/permutations.md)
+  [`print(`*`<permutations>`*`)`](https://gavinsimpson.github.io/permute/reference/permutations.md)
+  [`as.matrix(`*`<permutations>`*`)`](https://gavinsimpson.github.io/permute/reference/permutations.md)
+  : Permute a vector of data
+
+## Define and inspect permutation designs
+
+Create permutation designs, count the possible permutations, and check
+designs for problems.
+
+- [`how()`](https://gavinsimpson.github.io/permute/reference/how.md)
+  [`Within()`](https://gavinsimpson.github.io/permute/reference/how.md)
+  [`Plots()`](https://gavinsimpson.github.io/permute/reference/how.md) :
+  How to define a permutation design?
+- [`numPerms()`](https://gavinsimpson.github.io/permute/reference/numPerms.md)
+  : Number of possible permutations for a given object
+- [`check()`](https://gavinsimpson.github.io/permute/reference/check.md)
+  [`summary(`*`<check>`*`)`](https://gavinsimpson.github.io/permute/reference/check.md)
+  : Utility functions for permutation schemes
+
+## Complete enumeration and fixed-size partitions
+
+Enumerate complete permutation sets or generate assignments to groups of
+fixed size.
+
+- [`allPerms()`](https://gavinsimpson.github.io/permute/reference/allPerms.md)
+  [`summary(`*`<allPerms>`*`)`](https://gavinsimpson.github.io/permute/reference/allPerms.md)
+  [`as.matrix(`*`<allPerms>`*`)`](https://gavinsimpson.github.io/permute/reference/allPerms.md)
+  [`as.allPerms()`](https://gavinsimpson.github.io/permute/reference/allPerms.md)
+  : Complete enumeration of all possible permutations
+- [`allPartitions()`](https://gavinsimpson.github.io/permute/reference/partitions.md)
+  [`shufflePartition()`](https://gavinsimpson.github.io/permute/reference/partitions.md)
+  [`shufflePartitionSet()`](https://gavinsimpson.github.io/permute/reference/partitions.md)
+  : Generate random assignments to groups of fixed size
+
+## Developer tools
+
+Supporting APIs for package authors and advanced users working with
+permutation designs.
+
+- [`getAllperms()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getBlocks()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getComplete()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getConstant()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getCol()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getDim()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getMake()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getMaxperm()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getMinperm()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getMirror()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getSymmetric()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getNperm()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getObserved()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getPlots()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getRow()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getStrata()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getType()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getWithin()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getControl()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  [`getHow()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
+  : Extractor functions to access components of a permutation design
+- [`` `setBlocks<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setPlots<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setWithin<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setStrata<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setNperm<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setAllperms<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setMaxperm<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setMinperm<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setComplete<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setMake<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setObserved<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setRow<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setCol<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setDim<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setType<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setMirror<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setSymmetric<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  [`` `setConstant<-`() ``](https://gavinsimpson.github.io/permute/reference/set-methods.md)
+  : Replacement functions to set components of a permutation design
+- [`shuffleFree()`](https://gavinsimpson.github.io/permute/reference/shuffle-utils.md)
+  [`shuffleSeries()`](https://gavinsimpson.github.io/permute/reference/shuffle-utils.md)
+  [`shuffleGrid()`](https://gavinsimpson.github.io/permute/reference/shuffle-utils.md)
+  [`shuffleStrata()`](https://gavinsimpson.github.io/permute/reference/shuffle-utils.md)
+  : Utility functions for unrestricted and restricted permutations
+- [`allFree()`](https://gavinsimpson.github.io/permute/reference/allUtils.md)
+  [`allSeries()`](https://gavinsimpson.github.io/permute/reference/allUtils.md)
+  [`allGrid()`](https://gavinsimpson.github.io/permute/reference/allUtils.md)
+  [`allStrata()`](https://gavinsimpson.github.io/permute/reference/allUtils.md)
+  : Utility functions for complete enumeration of all possible
+  permutations
+- [`nobs(`*`<numeric>`*`)`](https://gavinsimpson.github.io/permute/reference/nobs.md)
+  [`nobs(`*`<integer>`*`)`](https://gavinsimpson.github.io/permute/reference/nobs.md)
+  [`nobs(`*`<matrix>`*`)`](https://gavinsimpson.github.io/permute/reference/nobs.md)
+  [`nobs(`*`<data.frame>`*`)`](https://gavinsimpson.github.io/permute/reference/nobs.md)
+  [`nobs(`*`<character>`*`)`](https://gavinsimpson.github.io/permute/reference/nobs.md)
+  [`nobs(`*`<factor>`*`)`](https://gavinsimpson.github.io/permute/reference/nobs.md)
+  : Number of observations in a given object
+
+## Data
+
+- [`jackal`](https://gavinsimpson.github.io/permute/reference/jackal.md)
+  : Mandible lengths of male and female golden jackals
+
+# Articles
+
+### All vignettes
+
+- [Restricted permutations; using the permute
+  package](https://gavinsimpson.github.io/permute/articles/permutations.md):
