@@ -18,7 +18,7 @@ transects, spatial grids and blocking factors."><!-- mathjax --><script src="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-4</span>
       </span>
     </div>
 
@@ -67,7 +67,16 @@ transects, spatial grids and blocking factors.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">shuffle</span><span class="op">(</span><span class="va">n</span>, control <span class="op">=</span> <span class="fu"><a href="how.html">how</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">permute</span><span class="op">(</span><span class="va">i</span>, <span class="va">n</span>, <span class="va">control</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">permute</span><span class="op">(</span><span class="va">i</span>, <span class="va">n</span>, <span class="va">control</span>, perms <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">permutator</span><span class="op">(</span></span>
+<span>  <span class="va">n</span>,</span>
+<span>  <span class="va">nset</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu"><a href="how.html">how</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  check <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  quietly <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  perms <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -88,14 +97,37 @@ permutation design, as returned by a call to <code>how</code>.</p></dd>
 <dt id="arg-i">i<a class="anchor" aria-label="anchor" href="#arg-i"></a></dt>
 <dd><p>integer; row of <code>control$all.perms</code> to return.</p></dd>
 
+
+<dt id="arg-perms">perms<a class="anchor" aria-label="anchor" href="#arg-perms"></a></dt>
+<dd><p>a matrix of permutation indices, such as an object returned by
+<code><a href="shuffleSet.html">shuffleSet()</a></code> or <code><a href="allPerms.html">allPerms()</a></code>. Each row must contain the indices from 1 to
+the number of columns exactly once.</p></dd>
+
+
+<dt id="arg-nset">nset<a class="anchor" aria-label="anchor" href="#arg-nset"></a></dt>
+<dd><p>numeric; the number of permutations to generate. If missing,
+the number is taken from <code>control</code>.</p></dd>
+
+
+<dt id="arg-check">check<a class="anchor" aria-label="anchor" href="#arg-check"></a></dt>
+<dd><p>logical; should the permutation design be checked by <code><a href="check.html">check()</a></code>?</p></dd>
+
+
+<dt id="arg-quietly">quietly<a class="anchor" aria-label="anchor" href="#arg-quietly"></a></dt>
+<dd><p>logical; should messages from checking the design be
+suppressed?</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>For <code>shuffle</code> a vector of length <code>n</code> containing a
 permutation of the observations 1, ..., n using the permutation scheme
 described by argument <code>control</code>.</p>
-<p>For <code>permute</code> the <code>i</code>th permutation from the set of all
-permutations, or a random permutation from the design.</p>
+<p>For <code>permute</code>, the <code>i</code>th row of <code>perms</code>, the <code>i</code>th permutation from the set
+of all permutations, or a random permutation from the design.</p>
+<p>For <code>permutator</code>, a zero-argument function with <code>nperm</code> and <code>n</code> attributes
+giving the number of permutations and observations. The function returns
+successive permutation-index vectors, then <code>NULL</code> after exhaustion.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -107,11 +139,16 @@ index permutation for a random assignment to the groups in
 <code>Plots$strata</code>. Group sizes and the relative order of observations
 originally carrying the same group label are retained.</p>
 <p><code>permute</code> is a higher level utility function for use in a loop within a
-function implementing a permutation test. The main purpose of <code>permute</code>
-is to return the correct permutation in each iteration of the loop, either a
-random permutation from the current design or the next permutation from
-<code>control$all.perms</code> if it is not <code>NULL</code> and
-<code>control$complete</code> is <code>TRUE</code>.</p>
+function implementing a permutation test. It returns a requested row from
+<code>perms</code> when a permutation matrix is supplied. Otherwise, it returns either
+a random permutation from the current design or the requested permutation
+from <code>control$all.perms</code> when complete enumeration is enabled.</p>
+<p><code>permutator</code> returns a function that iterates over a fixed set of
+permutations. The set can be supplied through <code>perms</code>, or generated when
+<code>permutator</code> is called by forwarding <code>n</code>, <code>nset</code>, <code>control</code>, <code>check</code>, and
+<code>quietly</code> to <code><a href="shuffleSet.html">shuffleSet()</a></code>. Supply either <code>perms</code> or the generation
+arguments, but not both. Each call to the returned function yields the next
+row, and returns <code>NULL</code> once the set is exhausted.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -239,6 +276,16 @@ scheme described by <code><a href="how.html">how()</a></code>.</p></div>
 <span class="r-in"><span><span class="fu">shuffle</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">grp</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">CTRL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  3  6 10  4  2  7  8  9  5 12 14 11 15 18 17 16 19 20 13</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Reuse a generated permutation set</span></span></span>
+<span class="r-in"><span><span class="va">perm_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="shuffleSet.html">shuffleSet</a></span><span class="op">(</span><span class="fl">6</span>, nset <span class="op">=</span> <span class="fl">3</span>, check <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">permute</span><span class="op">(</span><span class="fl">2</span>, perms <span class="op">=</span> <span class="va">perm_set</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6 3 2 1 4 5</span>
+<span class="r-in"><span><span class="va">nextPerm</span> <span class="op">&lt;-</span> <span class="fu">permutator</span><span class="op">(</span>perms <span class="op">=</span> <span class="va">perm_set</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">nextPerm</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 1 4 3 6 5</span>
+<span class="r-in"><span><span class="fu">nextPerm</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6 3 2 1 4 5</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Simple function using permute() to assess significance</span></span></span>
 <span class="r-in"><span><span class="co">## of a t.test</span></span></span>
 <span class="r-in"><span><span class="va">pt.test</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span>, <span class="va">control</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -254,26 +301,27 @@ scheme described by <code><a href="how.html">how()</a></code>.</p></div>
 <span class="r-in"><span>        <span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="va">m</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="va">xvar</span> <span class="op">+</span> <span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="va">yvar</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">m</span><span class="op">+</span><span class="va">n</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>        <span class="op">(</span><span class="va">xbar</span> <span class="op">-</span> <span class="va">ybar</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">pooled</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">m</span> <span class="op">+</span> <span class="fl">1</span><span class="op">/</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">}</span></span></span>
-<span class="r-in"><span>    <span class="co">## check the control object</span></span></span>
-<span class="r-in"><span>    <span class="co">#control &lt;- check(x, control)$control ## FIXME</span></span></span>
 <span class="r-in"><span>    <span class="co">## number of observations</span></span></span>
 <span class="r-in"><span>    <span class="va">Nobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="co">## group names</span></span></span>
 <span class="r-in"><span>    <span class="va">lev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">group</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="co">## generate and retain the permutations once</span></span></span>
+<span class="r-in"><span>    <span class="va">nextPerm</span> <span class="op">&lt;-</span> <span class="fu">permutator</span><span class="op">(</span><span class="va">Nobs</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">nperm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">nextPerm</span>, <span class="st">"nperm"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="co">## vector to hold results, +1 because of observed t</span></span></span>
-<span class="r-in"><span>    <span class="va">t.permu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span>length <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">nperm</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>    <span class="va">t.permu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span>length <span class="op">=</span> <span class="va">nperm</span> <span class="op">+</span> <span class="fl">1L</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="co">## calculate observed t</span></span></span>
 <span class="r-in"><span>    <span class="va">t.permu</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">t.statistic</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">group</span> <span class="op">==</span> <span class="va">lev</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">x</span><span class="op">[</span><span class="va">group</span> <span class="op">==</span> <span class="va">lev</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="co">## generate randomisation distribution of t</span></span></span>
-<span class="r-in"><span>    <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">t.permu</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">nperm</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>        <span class="co">## return a permutation</span></span></span>
-<span class="r-in"><span>        <span class="va">want</span> <span class="op">&lt;-</span> <span class="fu">permute</span><span class="op">(</span><span class="va">i</span>, <span class="va">Nobs</span>, <span class="va">control</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="va">want</span> <span class="op">&lt;-</span> <span class="fu">nextPerm</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>        <span class="co">## calculate permuted t</span></span></span>
 <span class="r-in"><span>        <span class="va">t.permu</span><span class="op">[</span><span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">t.statistic</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">want</span><span class="op">]</span><span class="op">[</span><span class="va">group</span> <span class="op">==</span> <span class="va">lev</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>                                    <span class="va">x</span><span class="op">[</span><span class="va">want</span><span class="op">]</span><span class="op">[</span><span class="va">group</span> <span class="op">==</span> <span class="va">lev</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">}</span></span></span>
 <span class="r-in"><span>    <span class="co">## pval from permutation test</span></span></span>
-<span class="r-in"><span>    <span class="va">pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">t.permu</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">t.permu</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">nperm</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">pval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">t.permu</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">t.permu</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">nperm</span> <span class="op">+</span> <span class="fl">1L</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="co">## return value</span></span></span>
 <span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>t.stat <span class="op">=</span> <span class="va">t.permu</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, pval <span class="op">=</span> <span class="va">pval</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
