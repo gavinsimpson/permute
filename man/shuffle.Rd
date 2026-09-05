@@ -3,11 +3,21 @@
 \name{shuffle}
 \alias{shuffle}
 \alias{permute}
+\alias{permutator}
 \title{Unrestricted and restricted permutations}
 \usage{
 shuffle(n, control = how())
 
-permute(i, n, control)
+permute(i, n, control, perms = NULL)
+
+permutator(
+  n,
+  nset,
+  control = how(),
+  check = TRUE,
+  quietly = FALSE,
+  perms = NULL
+)
 }
 \arguments{
 \item{n}{numeric; the length of the returned vector of permuted values.
@@ -18,14 +28,30 @@ object that \code{\link[stats:nobs]{stats::nobs()}} knows about; see \link{nobs-
 permutation design, as returned by a call to \code{how}.}
 
 \item{i}{integer; row of \code{control$all.perms} to return.}
+
+\item{perms}{a matrix of permutation indices, such as an object returned by
+\code{\link[=shuffleSet]{shuffleSet()}} or \code{\link[=allPerms]{allPerms()}}. Each row must contain the indices from 1 to
+the number of columns exactly once.}
+
+\item{nset}{numeric; the number of permutations to generate. If missing,
+the number is taken from \code{control}.}
+
+\item{check}{logical; should the permutation design be checked by \code{\link[=check]{check()}}?}
+
+\item{quietly}{logical; should messages from checking the design be
+suppressed?}
 }
 \value{
 For \code{shuffle} a vector of length \code{n} containing a
 permutation of the observations 1, \ldots, n using the permutation scheme
 described by argument \code{control}.
 
-For \code{permute} the \code{i}th permutation from the set of all
-permutations, or a random permutation from the design.
+For \code{permute}, the \code{i}th row of \code{perms}, the \code{i}th permutation from the set
+of all permutations, or a random permutation from the design.
+
+For \code{permutator}, a zero-argument function with \code{nperm} and \code{n} attributes
+giving the number of permutations and observations. The function returns
+successive permutation-index vectors, then \code{NULL} after exhaustion.
 }
 \description{
 Unrestricted and restricted permutation designs for time series, line
@@ -42,11 +68,17 @@ index permutation for a random assignment to the groups in
 originally carrying the same group label are retained.
 
 \code{permute} is a higher level utility function for use in a loop within a
-function implementing a permutation test. The main purpose of \code{permute}
-is to return the correct permutation in each iteration of the loop, either a
-random permutation from the current design or the next permutation from
-\code{control$all.perms} if it is not \code{NULL} and
-\code{control$complete} is \code{TRUE}.
+function implementing a permutation test. It returns a requested row from
+\code{perms} when a permutation matrix is supplied. Otherwise, it returns either
+a random permutation from the current design or the requested permutation
+from \code{control$all.perms} when complete enumeration is enabled.
+
+\code{permutator} returns a function that iterates over a fixed set of
+permutations. The set can be supplied through \code{perms}, or generated when
+\code{permutator} is called by forwarding \code{n}, \code{nset}, \code{control}, \code{check}, and
+\code{quietly} to \code{\link[=shuffleSet]{shuffleSet()}}. Supply either \code{perms} or the generation
+arguments, but not both. Each call to the returned function yields the next
+row, and returns \code{NULL} once the set is exhausted.
 }
 \examples{
 
@@ -126,6 +158,13 @@ grp <- gl(2, 10) # 2 groups of 10 samples each
 CTRL <- how(blocks = grp)
 shuffle(length(grp), control = CTRL)
 
+## Reuse a generated permutation set
+perm_set <- shuffleSet(6, nset = 3, check = FALSE)
+permute(2, perms = perm_set)
+nextPerm <- permutator(perms = perm_set)
+nextPerm()
+nextPerm()
+
 ## Simple function using permute() to assess significance
 ## of a t.test
 pt.test <- function(x, group, control) {
@@ -141,26 +180,27 @@ pt.test <- function(x, group, control) {
         pooled <- sqrt(((m-1)*xvar + (n-1)*yvar) / (m+n-2))
         (xbar - ybar) / (pooled * sqrt(1/m + 1/n))
     }
-    ## check the control object
-    #control <- check(x, control)$control ## FIXME
     ## number of observations
     Nobs <- nobs(x)
     ## group names
     lev <- names(table(group))
+    ## generate and retain the permutations once
+    nextPerm <- permutator(Nobs, control = control)
+    nperm <- attr(nextPerm, "nperm")
     ## vector to hold results, +1 because of observed t
-    t.permu <- numeric(length = control$nperm) + 1
+    t.permu <- numeric(length = nperm + 1L)
     ## calculate observed t
     t.permu[1] <- t.statistic(x[group == lev[1]], x[group == lev[2]])
     ## generate randomisation distribution of t
-    for(i in seq_along(t.permu)) {
+    for(i in seq_len(nperm)) {
         ## return a permutation
-        want <- permute(i, Nobs, control)
+        want <- nextPerm()
         ## calculate permuted t
         t.permu[i+1] <- t.statistic(x[want][group == lev[1]],
                                     x[want][group == lev[2]])
     }
     ## pval from permutation test
-    pval <- sum(abs(t.permu) >= abs(t.permu[1])) / (control$nperm + 1)
+    pval <- sum(abs(t.permu) >= abs(t.permu[1])) / (nperm + 1L)
     ## return value
     return(list(t.stat = t.permu[1], pval = pval))
 }
