@@ -157,6 +157,99 @@ test_that("allPerms; permuting plots only -- non-contiguous plots", {
                      info = "All permutations doesn't match reference")
 })
 
+test_that("complete enumeration preserves exact row ordering", {
+    free <- allPerms(3, how(observed = TRUE))
+    expect_identical(
+        as.matrix(free),
+        matrix(c(1L, 2L, 3L,
+                 1L, 3L, 2L,
+                 2L, 1L, 3L,
+                 2L, 3L, 1L,
+                 3L, 1L, 2L,
+                 3L, 2L, 1L), ncol = 3L, byrow = TRUE)
+    )
+
+    series <- allPerms(
+        4,
+        how(within = Within(type = "series", mirror = TRUE),
+            observed = TRUE)
+    )
+    expect_identical(
+        as.matrix(series),
+        matrix(c(2L, 3L, 4L, 1L,
+                 3L, 4L, 1L, 2L,
+                 4L, 1L, 2L, 3L,
+                 1L, 2L, 3L, 4L,
+                 1L, 4L, 3L, 2L,
+                 2L, 1L, 4L, 3L,
+                 3L, 2L, 1L, 4L,
+                 4L, 3L, 2L, 1L), ncol = 4L, byrow = TRUE)
+    )
+
+    grid <- allPerms(
+        4,
+        how(within = Within(type = "grid", nrow = 2, ncol = 2),
+            observed = TRUE)
+    )
+    expect_identical(
+        as.matrix(grid),
+        matrix(c(4L, 3L, 2L, 1L,
+                 2L, 1L, 4L, 3L,
+                 3L, 4L, 1L, 2L,
+                 1L, 2L, 3L, 4L), ncol = 4L, byrow = TRUE)
+    )
+})
+
+test_that("nested enumeration preserves exact row ordering", {
+    constant <- how(
+        plots = Plots(gl(2, 3), type = "none"),
+        within = Within(type = "series", constant = TRUE),
+        observed = TRUE
+    )
+    expect_identical(
+        as.matrix(allPerms(6, constant)),
+        matrix(c(2L, 3L, 1L, 5L, 6L, 4L,
+                 3L, 1L, 2L, 6L, 4L, 5L,
+                 1L, 2L, 3L, 4L, 5L, 6L), ncol = 6L, byrow = TRUE)
+    )
+
+    blocks <- factor(c("a", "a", "b", "b"))
+    expect_identical(
+        as.matrix(allPerms(4, how(blocks = blocks, observed = TRUE))),
+        matrix(c(1L, 2L, 3L, 4L,
+                 1L, 2L, 4L, 3L,
+                 2L, 1L, 3L, 4L,
+                 2L, 1L, 4L, 3L), ncol = 4L, byrow = TRUE)
+    )
+
+    groups <- factor(c("a", "a", "b"))
+    partition <- how(plots = Plots(groups, type = "partition"),
+                     observed = TRUE)
+    expect_identical(
+        as.matrix(allPerms(3, partition)),
+        matrix(c(1L, 2L, 3L,
+                 1L, 3L, 2L,
+                 3L, 1L, 2L), ncol = 3L, byrow = TRUE)
+    )
+})
+
+test_that("allPerms records the number of returned rows", {
+    for (observed in c(FALSE, TRUE)) {
+        for (nperm in c(199, 17)) {
+            control <- how(nperm = nperm, observed = observed,
+                           complete = FALSE, maxperm = 1234)
+            permutations <- allPerms(3, control)
+            returned <- attr(permutations, "control")
+
+            expect_identical(getNperm(returned), nrow(permutations))
+            expect_identical(nrow(permutations), if (observed) 6L else 5L)
+            expect_false(getComplete(returned))
+            expect_identical(getMaxperm(returned), 1234)
+            expect_true(getMake(returned))
+        }
+    }
+})
+
 ## Grid permutations
 test_that("Can generate permutations from a grid design", {
     ## spatial grids within each level of plot, 3 x (4r x 4c)

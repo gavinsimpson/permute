@@ -1,7 +1,6 @@
 #' @rdname allUtils
 #' @order 3
-`allGrid` <- function(n, nperms, nr, nc, mirror, constant,
-                      symmetric = FALSE)
+`allGrid` <- function(n, nperms, nr, nc, mirror, symmetric = FALSE)
 {
     stopifnot(n == nr * nc)
     orientations <- gridOrientations(nr, nc, mirror, symmetric)

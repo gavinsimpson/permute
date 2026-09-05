@@ -161,7 +161,7 @@
     checkPartitionDesign(control, N)
 
     ## check we're actually permuting something
-    if (identical(typeW, typeP) && isTRUE(all.equal(typeW, "none"))) {
+    if (typeW == "none" && typeP == "none") {
         stop("Permutation 'type' is \"none\" for both 'plots' & 'within'.\nNothing to permute.")
     }
 
@@ -213,7 +213,7 @@
 
         ## if permuting Plots as a grid check dimensions match levels of
         ## Plot-level strata
-        if(isTRUE(all.equal(typeP, "grid"))) {
+        if(typeP == "grid") {
             levP <- nlevels(plots)
             dimP <- getDim(control, which = "plots")
             if(!isTRUE(all.equal(levP, prod(dimP)))) {

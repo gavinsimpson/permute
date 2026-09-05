@@ -27,7 +27,7 @@
 #' @keywords methods utils
 #' @name set-methods
 #' @order 0
-#' @aliases setBlocks<-.default setBlocks<-.how setBlocks<-.permControl
+#' @aliases setBlocks<-.default setBlocks<-.how
 #' @aliases setWithin<-.default setWithin<-.how setStrata<-.default setStrata<-.how
 #' @aliases setStrata<-.Plots setType<-.default setType<-.how setType<-.Plots
 #' @aliases setType<-.Within setMirror<-.default setMirror<-.how setMirror<-.Plots
@@ -38,11 +38,11 @@
 #' @aliases setRow<-.default setRow<-.how setRow<-.Plots setRow<-.Within
 #' @aliases setCol<-.default setCol<-.how setCol<-.Plots setCol<-.Within
 #' @aliases setDim<-.default setDim<-.how setDim<-.Plots setDim<-.Within
-#' @aliases setNperm<-.default setNperm<-.how setNperm<-.permControl
-#' @aliases setAllperms<-.default setAllperms<-.how setAllperms<-.permControl
-#' @aliases setMaxperm<-.default setMaxperm<-.how setMaxperm<-.permControl
-#' @aliases setMinperm<-.default setMinperm<-.how setMinperm<-.permControl
-#' @aliases setComplete<-.default setComplete<-.how setComplete<-.permControl
+#' @aliases setNperm<-.default setNperm<-.how
+#' @aliases setAllperms<-.default setAllperms<-.how
+#' @aliases setMaxperm<-.default setMaxperm<-.how
+#' @aliases setMinperm<-.default setMinperm<-.how
+#' @aliases setComplete<-.default setComplete<-.how
 #' @aliases setMake<-.default setMake<-.how setObserved<-.default setObserved<-.how
 #' @examples
 #' hh <- how()

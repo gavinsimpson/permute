@@ -61,7 +61,7 @@
 #' unused factor levels and unobserved combinations are dropped. The formulas
 #' must be one-sided and contain at least one grouping term.
 #'
-#' @aliases how print.how Blocks Within Plots
+#' @aliases how print.how Within Plots
 #' @param within,plots,blocks Permutation designs for samples within the levels
 #' of `plots` (`within`), permutation of `plots` themselves, or
 #' for the definition of blocking structures which further restrict
@@ -80,8 +80,8 @@
 #' @param type character; the type of permutations required. One of
 #' `"free"`, `"series"`, `"grid"`, `"none"`, or, for
 #' `Plots`, `"partition"`. See Details.
-#' @param maxperm numeric; the maximum number of permutations to perform.
-#' Currently unused.
+#' @param maxperm numeric; the maximum number of permutations that [allPerms()]
+#' may enumerate.
 #' @param minperm numeric; the lower limit to the number of possible
 #' permutations at which complete enumeration is performed. When `nperm`
 #' is lower than `minperm`, sampling is performed from the set of complete

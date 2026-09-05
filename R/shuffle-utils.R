@@ -72,7 +72,6 @@ NULL
     strata <- droplevels(strata)
     LEVS <- levels(strata)
     lev <- nlevels(strata)
-    ngr <- length(strata) / lev
     SEQ <- seq_len(lev)
     sp <- split(out <- seq_along(strata), strata)
     perm <- if(type == "free") {

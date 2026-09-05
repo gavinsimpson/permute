@@ -156,6 +156,31 @@ test_that("grid enumeration is complete, valid, and distinct", {
     }
 })
 
+test_that("symmetric grid enumeration preserves exact row ordering", {
+    ctrl <- how(
+        within = Within(type = "grid", nrow = 2, ncol = 3,
+                        mirror = TRUE, symmetric = TRUE),
+        observed = TRUE
+    )
+    expected <- matrix(
+        c(4L, 3L, 6L, 5L, 2L, 1L,
+          6L, 5L, 2L, 1L, 4L, 3L,
+          2L, 1L, 4L, 3L, 6L, 5L,
+          3L, 4L, 5L, 6L, 1L, 2L,
+          5L, 6L, 1L, 2L, 3L, 4L,
+          1L, 2L, 3L, 4L, 5L, 6L,
+          2L, 1L, 6L, 5L, 4L, 3L,
+          4L, 3L, 2L, 1L, 6L, 5L,
+          6L, 5L, 4L, 3L, 2L, 1L,
+          1L, 2L, 5L, 6L, 3L, 4L,
+          3L, 4L, 1L, 2L, 5L, 6L,
+          5L, 6L, 3L, 4L, 1L, 2L),
+        ncol = 6L, byrow = TRUE
+    )
+
+    expect_identical(as.matrix(allPerms(6, ctrl)), expected)
+})
+
 test_that("symmetric grids propagate through sampling designs", {
     expected <- row_key(grid_permutations(3, 3, TRUE, TRUE))
     within <- Within(type = "grid", nrow = 3, ncol = 3,

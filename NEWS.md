@@ -38,6 +38,9 @@
 
 ## Bug fixes
 
+* `allPerms()` now records the number of returned permutations in the
+  attached control object after applying the `observed` setting.
+
 * `Plots()` and `Within()` now preserve explicit `NULL` arguments when storing
   their matched calls, allowing later positional arguments and `update()` to
   work correctly.
@@ -58,6 +61,15 @@
 
 * `check()` would fail all permutation designs where the (whole) plots were
   permuted with toroidal grid shifts. #42 Reported and fixed by @sims1253
+
+## Maintenance
+
+* Removed the obsolete `Blocks()` compatibility helper and its documentation.
+  This is the only public API removal in this release.
+
+* Simplified complete permutation enumeration and control accessors by
+  removing unreachable compatibility code, unused arguments, and duplicate
+  validation while preserving permutation order and seeded RNG behaviour.
 
 # permute 0.9-10
 

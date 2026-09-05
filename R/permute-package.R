@@ -3,7 +3,6 @@
 #' @export allPerms
 #' @export allPartitions
 #' @export as.allPerms
-#' @export Blocks
 #' @export check
 #' @export getBlocks
 #' @export getWithin

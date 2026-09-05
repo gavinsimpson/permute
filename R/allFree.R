@@ -14,8 +14,6 @@
 #' @param symmetric Logical; for grid permutations, should simultaneous
 #'   mirroring in both spatial directions be disallowed?
 #' @param nr,nc Integer; number of rows and columns of grid designs.
-#' @param constant Logical; should the same permutation be used within each
-#'   block?
 #' @param control A list describing the permutation design, as returned by
 #'   [how()].
 #'

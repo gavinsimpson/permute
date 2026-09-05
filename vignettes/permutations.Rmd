@@ -369,7 +369,7 @@ The object created by `how()` is a relatively simple list containing the setting
 The `getFoo()` functions provided by *permute* are
 
 `getWithin()`, `getPlots()`, `getBlocks()`
- ~ these extract the details of the *within*-, *plots*-, and *blocks*-level components of the design. Given the current design (as of *permute* version 0.8-0), the first two of these return lists with classes `"Within"` and `"Plots"`, respectively, whilst `getBlocks()` returns the block-level factor.
+ ~ these extract the details of the *within*-, *plots*-, and *blocks*-level components of the design. The first two return lists with classes `"Within"` and `"Plots"`, respectively, whilst `getBlocks()` returns the block-level factor.
 
 `getStrata()`
  ~ returns the factor describing the grouping of samples at the *plots* or *blocks* levels, as determined by the value of argument `which`.

@@ -21,6 +21,25 @@ test_that("permutations applies the generated indices to data", {
     expect_identical(attr(result, "control"), attr(indices, "control"))
 })
 
+test_that("permutations preserves seeded RNG compatibility", {
+    suppressWarnings(RNGversion("3.5.0"))
+    control <- how(
+        plots = Plots(factor(c(1, 1, 1, 2, 2, 2)), type = "free"),
+        within = Within(type = "free")
+    )
+
+    set.seed(42)
+    actual <- as.matrix(permutations(letters[1:6], 3, control,
+                                     check = FALSE))
+    expected <- matrix(
+        c("f", "d", "e", "c", "a", "b",
+          "c", "a", "b", "f", "e", "d",
+          "d", "e", "f", "b", "c", "a"),
+        ncol = 6L, byrow = TRUE
+    )
+    expect_identical(actual, expected)
+})
+
 test_that("permutations follows restricted designs", {
     x <- letters[1:6]
     block <- gl(2, 3)

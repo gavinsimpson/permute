@@ -134,3 +134,21 @@ test_that("shuffle generates valid plot-level grid permutations", {
 
     expect_true(paste(perm, collapse = ",") %in% expected)
 })
+
+test_that("shuffle preserves seeded RNG compatibility", {
+    suppressWarnings(RNGversion("3.5.0"))
+    control <- how(
+        plots = Plots(factor(c(1, 1, 1, 2, 2, 2)), type = "free"),
+        within = Within(type = "free")
+    )
+
+    set.seed(42)
+    expect_identical(shuffle(6, control), c(6L, 4L, 5L, 3L, 2L, 1L))
+
+    partition <- how(
+        plots = Plots(factor(c("a", "a", "a", "b", "b")),
+                      type = "partition")
+    )
+    set.seed(42)
+    expect_identical(shuffle(5, partition), c(4L, 1L, 2L, 5L, 3L))
+})
