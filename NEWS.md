@@ -2,6 +2,10 @@
 
 ## New features
 
+* `permute()` can now reuse a supplied matrix of permutation indices, and the
+  new `permutator()` function provides sequential access to either a supplied
+  or newly generated permutation set. Resolves #34.
+
 * New function `permutations()` applies a permutation design to the values in
   an atomic vector and returns a matrix-like object with one permutation per
   row. This addresses #35 and the original request in #33.

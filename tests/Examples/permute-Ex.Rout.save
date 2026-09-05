@@ -939,7 +939,7 @@ p3 10 20 30 40 50
 > 
 > ### Name: shuffle
 > ### Title: Unrestricted and restricted permutations
-> ### Aliases: shuffle permute
+> ### Aliases: shuffle permute permutator
 > ### Keywords: design htest
 > 
 > ### ** Examples
@@ -1052,6 +1052,16 @@ p3 10 20 30 40 50
 > shuffle(length(grp), control = CTRL)
  [1]  1  3  6 10  4  2  7  8  9  5 12 14 11 15 18 17 16 19 20 13
 > 
+> ## Reuse a generated permutation set
+> perm_set <- shuffleSet(6, nset = 3, check = FALSE)
+> permute(2, perms = perm_set)
+[1] 6 3 2 1 4 5
+> nextPerm <- permutator(perms = perm_set)
+> nextPerm()
+[1] 2 1 4 3 6 5
+> nextPerm()
+[1] 6 3 2 1 4 5
+> 
 > ## Simple function using permute() to assess significance
 > ## of a t.test
 > pt.test <- function(x, group, control) {
@@ -1067,26 +1077,27 @@ p3 10 20 30 40 50
 +         pooled <- sqrt(((m-1)*xvar + (n-1)*yvar) / (m+n-2))
 +         (xbar - ybar) / (pooled * sqrt(1/m + 1/n))
 +     }
-+     ## check the control object
-+     #control <- check(x, control)$control ## FIXME
 +     ## number of observations
 +     Nobs <- nobs(x)
 +     ## group names
 +     lev <- names(table(group))
++     ## generate and retain the permutations once
++     nextPerm <- permutator(Nobs, control = control)
++     nperm <- attr(nextPerm, "nperm")
 +     ## vector to hold results, +1 because of observed t
-+     t.permu <- numeric(length = control$nperm) + 1
++     t.permu <- numeric(length = nperm + 1L)
 +     ## calculate observed t
 +     t.permu[1] <- t.statistic(x[group == lev[1]], x[group == lev[2]])
 +     ## generate randomisation distribution of t
-+     for(i in seq_along(t.permu)) {
++     for(i in seq_len(nperm)) {
 +         ## return a permutation
-+         want <- permute(i, Nobs, control)
++         want <- nextPerm()
 +         ## calculate permuted t
 +         t.permu[i+1] <- t.statistic(x[want][group == lev[1]],
 +                                     x[want][group == lev[2]])
 +     }
 +     ## pval from permutation test
-+     pval <- sum(abs(t.permu) >= abs(t.permu[1])) / (control$nperm + 1)
++     pval <- sum(abs(t.permu) >= abs(t.permu[1])) / (nperm + 1L)
 +     ## return value
 +     return(list(t.stat = t.permu[1], pval = pval))
 + }

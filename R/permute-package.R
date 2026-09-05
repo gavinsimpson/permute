@@ -27,6 +27,7 @@
 #' @export how
 #' @export numPerms
 #' @export permute
+#' @export permutator
 #' @export Plots
 #' @export setBlocks<-
 #' @export setWithin<-
