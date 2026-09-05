@@ -23,7 +23,8 @@
 #' @aliases getBlocks.default getBlocks.permControl getWithin.default
 #' @aliases getWithin.permControl getStrata.default getStrata.permControl
 #' @aliases getType.default getType.permControl getMirror.default
-#' @aliases getMirror.permControl getConstant.default getConstant.permControl
+#' @aliases getMirror.permControl getSymmetric.default getSymmetric.permControl
+#' @aliases getConstant.default getConstant.permControl
 #' @aliases getPlots.default getPlots.permControl getRow.default getRow.permControl
 #' @aliases getCol.default getCol.permControl getDim.default getDim.permControl
 #' @aliases getNperm.default getNperm.permControl getMaxperm.default
@@ -225,6 +226,42 @@ NULL
 #' @order 35
 `getMirror.Plots` <- function(object, ...) {
     object$mirror
+}
+
+## Get symmetric spatial autocovariance status
+#' @rdname get-methods
+#' @order 11
+`getSymmetric` <- function(object, ...) {
+    UseMethod("getSymmetric")
+}
+
+#' @export
+#' @noRd
+`getSymmetric.default` <- function(object, ...) {
+    stop("No default method for 'getSymmetric()'")
+}
+
+#' @rdname get-methods
+#' @export
+#' @order 37
+`getSymmetric.how` <- function(object,
+                              which = c("plots", "within"), ...) {
+    which <- match.arg(which)
+    getSymmetric(if(which == "plots") getPlots(object) else getWithin(object))
+}
+
+#' @rdname get-methods
+#' @export
+#' @order 39
+`getSymmetric.Within` <- function(object, ...) {
+    isTRUE(object$symmetric)
+}
+
+#' @rdname get-methods
+#' @export
+#' @order 38
+`getSymmetric.Plots` <- function(object, ...) {
+    isTRUE(object$symmetric)
 }
 
 ## Get constant status - i.e. same permutation in each Plot

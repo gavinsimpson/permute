@@ -123,6 +123,8 @@
     dimP <- getDim(control, which = "plots")
     mirrorW <- getMirror(control, which = "within")
     mirrorP <- getMirror(control, which = "plots")
+    symmetricW <- getSymmetric(control, which = "within")
+    symmetricP <- getSymmetric(control, which = "plots")
     constantW <- getConstant(control)
 
     ## give a BLOCKS if non supplied - i.e. one block
@@ -144,7 +146,8 @@
     for (i in seq_along(spl)) {
         out[[i]] <-
             doAllPerms(spl[[i]], strataP, typeW, typeP, mirrorW,
-                       mirrorP, constantW, dimW, dimP, control2,
+                       mirrorP, symmetricW, symmetricP, constantW,
+                       dimW, dimP, control2,
                        nperms = nperms)
     }
 
@@ -173,7 +176,8 @@
 
 
 `doAllPerms` <- function(obs, strataP, typeW, typeP, mirrorW, mirrorP,
-                         constantW, dimW, dimP, control, nperms) {
+                         symmetricW, symmetricP, constantW, dimW, dimP,
+                         control, nperms) {
     n <- length(obs)
 
     ## subset strataP to take only the obs indices and drop the unused
@@ -204,7 +208,7 @@
                 grid = allGrid(
                     n, numPerms(n, control, check = FALSE),
                     dimW[1], dimW[2],
-                    mirrorW, constantW
+                    mirrorW, constantW, symmetricW
                 )
             )
             ## use res to index original observation indices in this group
@@ -224,7 +228,7 @@
                     series = allSeries(pg, nperms, mirrorW),
                     grid = allGrid(
                         pg, nperms, dimW[1],
-                        dimW[2], mirrorW, constantW)
+                        dimW[2], mirrorW, constantW, symmetricW)
                     )
                 res <- vector(mode = "list", length = ng)
                 ss <- seq(0, to = prod(pg, ng-1), by = pg)
@@ -266,7 +270,7 @@
                                free = allFree(pg),
                                series = allSeries(pg, np, mirrorW),
                                grid = allGrid(pg, np, dimW[1],
-                               dimW[2], mirrorW, constantW))
+                               dimW[2], mirrorW, constantW, symmetricW))
                     res <- vector(mode = "list", length = ng)
                     ss <- seq(0, to = prod(pg, ng-1), by = pg)
                     for(i in seq_len(ng)) {
@@ -290,7 +294,7 @@
             ## FIXME - this need updating to work with the new code
             ## permuting blocks AND within blocks
             ## need a local CONTROL that just permutes blocks
-            controlP <- how(plots = Plots(strata = strataP, type = typeP),
+            controlP <- how(plots = getPlots(control),
                             within = Within(type = "none", constant = constantW))
             ## FIXME - the above should really only need to update
             ## within as shown, not fiddle with Plots

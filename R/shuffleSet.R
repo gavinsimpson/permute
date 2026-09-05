@@ -242,7 +242,8 @@
                            mirror = withinCTRL$mirror),
                        "grid" = list(nrow = withinCTRL$nrow,
                            ncol = withinCTRL$ncol,
-                           mirror = withinCTRL$mirror))
+                           mirror = withinCTRL$mirror,
+                           symmetric = isTRUE(withinCTRL$symmetric)))
         FUN <- switch(typeW,
                       "free" = shuffleFree,
                       "series" = shuffleSeries,
@@ -268,7 +269,9 @@
                                         mirror = plotCTRL$mirror,
                                         flip = NULL, ## runif(1L) < 0.5 ??
                                         nrow = plotCTRL$nrow,
-                                        ncol = plotCTRL$ncol))
+                                        ncol = plotCTRL$ncol,
+                                        symmetric =
+                                            isTRUE(plotCTRL$symmetric)))
             }
         }
 
@@ -292,7 +295,9 @@
                     } else if(isTRUE(all.equal(typeW, "grid"))) {
                         start.row <- shuffleFree(withinCTRL$nrow, 1L)
                         start.col <- shuffleFree(withinCTRL$ncol, 1L)
-                        flip <- runif(2L) < 0.5 ## FIXME this should be moved out of the loop
+                        flip <- gridFlip(mirror = withinCTRL$mirror,
+                                         symmetric =
+                                             isTRUE(withinCTRL$symmetric))
                     }
                 } else {
                     start <- start.row <- start.col <- flip <- NULL
@@ -320,7 +325,9 @@
                                            mirror = withinCTRL$mirror,
                                            start.row = start.row,
                                            start.col = start.col,
-                                           flip = flip))
+                                           flip = flip,
+                                           symmetric =
+                                               isTRUE(withinCTRL$symmetric)))
                             FUN <-
                                 switch(typeW,
                                        "free" = shuffleFree,

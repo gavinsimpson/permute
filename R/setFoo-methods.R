@@ -31,7 +31,9 @@
 #' @aliases setWithin<-.default setWithin<-.how setStrata<-.default setStrata<-.how
 #' @aliases setStrata<-.Plots setType<-.default setType<-.how setType<-.Plots
 #' @aliases setType<-.Within setMirror<-.default setMirror<-.how setMirror<-.Plots
-#' @aliases setMirror<-.Within setConstant<-.default setConstant<-.how
+#' @aliases setMirror<-.Within setSymmetric<-.default setSymmetric<-.how
+#' @aliases setSymmetric<-.Plots setSymmetric<-.Within
+#' @aliases setConstant<-.default setConstant<-.how
 #' @aliases setConstant<-.Plots setConstant<-.Within setPlots<-.default setPlots<-.how
 #' @aliases setRow<-.default setRow<-.how setRow<-.Plots setRow<-.Within
 #' @aliases setCol<-.default setCol<-.how setCol<-.Plots setCol<-.Within
@@ -493,6 +495,45 @@ NULL
         value <- rep(as.logical(value), length.out = 1)
     object[["mirror"]] <- value
     object <- fixupCall(object, "mirror", value)
+    object
+}
+
+## setSymmetric ###########################################################
+#' @rdname set-methods
+#' @order 17
+`setSymmetric<-` <- function(object, value) {
+    UseMethod("setSymmetric<-")
+}
+
+#' @export
+#' @noRd
+`setSymmetric<-.default` <- function(object, value) {
+    stop("No default method for `setSymmetric`")
+}
+
+#' @export
+#' @noRd
+`setSymmetric<-.how` <- function(object, value) {
+    stop("`setSymmetric` can not be used directly on '\"how\"' objects.")
+}
+
+#' @export
+#' @noRd
+`setSymmetric<-.Within` <- function(object, value) {
+    if (!is.null(value))
+        value <- rep(as.logical(value), length.out = 1L)
+    object[["symmetric"]] <- value
+    object <- fixupCall(object, "symmetric", value)
+    object
+}
+
+#' @export
+#' @noRd
+`setSymmetric<-.Plots` <- function(object, value) {
+    if (!is.null(value))
+        value <- rep(as.logical(value), length.out = 1L)
+    object[["symmetric"]] <- value
+    object <- fixupCall(object, "symmetric", value)
     object
 }
 

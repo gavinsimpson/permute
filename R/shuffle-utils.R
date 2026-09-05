@@ -19,6 +19,8 @@
 #' @param x A vector of indices to permute.
 #' @param size The number of indices required.
 #' @param mirror Logical; should mirroring of sequences be allowed?
+#' @param symmetric Logical; for grid permutations, should simultaneous
+#'   mirroring in both spatial directions be disallowed?
 #' @param start Integer; the starting point for time-series permutations. If
 #'   missing, a random starting point is determined.
 #' @param flip Logical of length one for `shuffleSeries()` or length two for
@@ -57,13 +59,15 @@
 #' shuffleGrid(3, 3, start.row = 2,
 #'             start.col = 3)             ## with known row/col
 #' shuffleGrid(3, 3, flip = rep(TRUE, 2)) ## random start, forced mirror
+#' shuffleGrid(3, 3, mirror = TRUE,
+#'             symmetric = TRUE)          ## never mirror both directions
 NULL
 
 #' @rdname shuffle-utils
 #' @order 4
 `shuffleStrata` <- function(strata, type, mirror = FALSE, start = NULL,
                             flip = NULL, nrow, ncol, start.row = NULL,
-                            start.col = NULL) {
+                            start.col = NULL, symmetric = FALSE) {
     ## drop unused levels
     strata <- droplevels(strata)
     LEVS <- levels(strata)
@@ -79,7 +83,7 @@ NULL
     } else if (type == "grid") {
         shuffleGrid(nrow = nrow, ncol = ncol, mirror = mirror,
                     start.row = start.row, start.col = start.col,
-                    flip = flip)
+                    flip = flip, symmetric = symmetric)
     } else if (type == "partition") {
         return(doShufflePartition(strata))
     } else {
@@ -95,29 +99,54 @@ NULL
 #' @rdname shuffle-utils
 #' @order 3
 `shuffleGrid` <- function(nrow, ncol, mirror = FALSE, start.row = NULL,
-                          start.col = NULL, flip = NULL) {
+                          start.col = NULL, flip = NULL,
+                          symmetric = FALSE) {
     if(is.null(start.row))
         start.row <- shuffleFree(nrow, 1L)
     if(is.null(start.col))
         start.col <- shuffleFree(ncol, 1L)
     ir <- seq(start.row, length=nrow) %% nrow
     ic <- seq(start.col, length=ncol) %% ncol
-    if(!is.null(flip) && mirror) {
-        if(any(flip)) {
-            if(flip[1L])
-                ir <- rev(ir)
-            if(flip[2L])
-                ic <- rev(ic)
-        }
-    } else {
-        if (mirror) {
-            if (runif(1L) < 0.5)
-                ir <- rev(ir)
-            if (runif(1L) < 0.5)
-                ic <- rev(ic)
-        }
-    }
+    flip <- gridFlip(mirror = mirror, symmetric = symmetric, flip = flip)
+    if(flip[1L])
+        ir <- rev(ir)
+    if(flip[2L])
+        ic <- rev(ic)
     rep(ic, each=nrow) * nrow + rep(ir, len=nrow*ncol) + 1L
+}
+
+## Return the grid flip to apply. With symmetric spatial autocovariance,
+## simultaneous flips in both directions are reduced to one randomly chosen
+## direction, as requested in issue #1.
+`gridFlip` <- function(mirror = FALSE, symmetric = FALSE, flip = NULL) {
+    if(!mirror)
+        return(rep(FALSE, 2L))
+    if(is.null(flip))
+        flip <- runif(2L) < 0.5
+    flip <- rep(as.logical(flip), length.out = 2L)
+    if(isTRUE(symmetric) && all(flip))
+        flip[shuffleFree(2L, 1L)] <- FALSE
+    flip
+}
+
+## The distinct reflection states for a grid. Reflections of axes of length
+## one or two are already represented by toroidal shifts.
+`gridOrientations` <- function(nrow, ncol, mirror = FALSE,
+                               symmetric = FALSE) {
+    out <- matrix(c(FALSE, FALSE), nrow = 1L,
+                  dimnames = list(NULL, c("row", "col")))
+    if(mirror && nrow > 2L)
+        out <- rbind(out, c(TRUE, FALSE))
+    if(mirror && ncol > 2L)
+        out <- rbind(out, c(FALSE, TRUE))
+    if(mirror && !symmetric && nrow > 2L && ncol > 2L)
+        out <- rbind(out, c(TRUE, TRUE))
+    out
+}
+
+`gridOrientationMultiplier` <- function(nrow, ncol, mirror = FALSE,
+                                        symmetric = FALSE) {
+    nrow(gridOrientations(nrow, ncol, mirror, symmetric))
 }
 
 #' @rdname shuffle-utils
@@ -161,7 +190,8 @@ NULL
            "free" = shuffleFree(n, n),
            "series" = shuffleSeries(seq_len(n), mirror = control$within$mirror),
            "grid" = shuffleGrid(nrow = control$within$nrow,
-           ncol = control$within$ncol, mirror = control$within$mirror),
+           ncol = control$within$ncol, mirror = control$within$mirror,
+           symmetric = isTRUE(control$within$symmetric)),
            "none" = seq_len(n)
            )
 }

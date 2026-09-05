@@ -49,6 +49,10 @@
                                prefix = pfix))
         }
         if(isTRUE(all.equal(ptype, "grid"))) {
+            symmetricP <- getSymmetric(x, which = "plots")
+            writeLines(strwrap(paste("Symmetric?:",
+                                     if(symmetricP) "Yes" else "No"),
+                               prefix = pfix))
             nr <- getRow(x, which = "plots")
             nr.t <- if(nr > 1) "rows" else "row"
             nc <- getCol(x, which = "plots")
@@ -75,6 +79,10 @@
                            prefix = pfix))
     }
     if(isTRUE(all.equal(wtype, "grid"))) {
+        symmetricW <- getSymmetric(x, which = "within")
+        writeLines(strwrap(paste("Symmetric?:",
+                                 if(symmetricW) "Yes" else "No"),
+                           prefix = pfix))
         nr <- getRow(x, which = "within")
         nr.t <- if(nr > 1) "rows" else "row"
         nc <- getCol(x, which = "within")

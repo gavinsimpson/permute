@@ -30,6 +30,11 @@
 #' the number of possible permutations. The default is to not use mirroring so
 #' you must explicitly turn this on using `mirror = TRUE` in `how`.
 #'
+#' For spatial grids, `symmetric = TRUE` preserves symmetric spatial
+#' autocovariance by preventing a permutation from being mirrored in both the
+#' row and column directions at the same time. It has no effect unless
+#' `type = "grid"` and `mirror = TRUE`.
+#'
 #' To permute plots rather than the observations within plots (the levels of
 #' `strata`), use `Within(type = "none")` and `Plots(type = foo)`, where
 #' `foo` is how you want the plots to be permuted. However,
@@ -75,6 +80,8 @@
 #' level of strata? If `FALSE` a separate, possibly restricted,
 #' permutation is produced for each level of `strata`.
 #' @param mirror logical; should mirroring of sequences be allowed?
+#' @param symmetric logical; for grid permutations, should simultaneous
+#'   mirroring in both spatial directions be disallowed?
 #' @param ncol,nrow numeric; the number of columns and rows of samples in the
 #' spatial grid respectively.
 #' @param strata A factor, or an object that can be coerced to a factor via

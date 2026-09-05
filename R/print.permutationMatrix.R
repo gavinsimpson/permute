@@ -44,6 +44,8 @@
     ## add info on mirroring if series or grid
     if ((wt %in% c("series", "grid")) && getMirror(ctrl, which = "within")) {
         msg <- paste(msg, "; mirrored", sep = "")
+        if (wt == "grid" && getSymmetric(ctrl, which = "within"))
+            msg <- paste(msg, "; symmetric", sep = "")
     }
     ## add info on constant
     if (getConstant(ctrl, which = "within") && pl) {
@@ -75,6 +77,8 @@
         ## add info on mirroring if series or grid
         if ((pt %in% c("series","grid")) && getMirror(ctrl, which = "plots")) {
             pmsg <- paste(pmsg, " - mirrored")
+            if (pt == "grid" && getSymmetric(ctrl, which = "plots"))
+                pmsg <- paste(pmsg, "- symmetric")
         }
         ll <- length(levels(strata))
         msg <- paste("Restricted by Plots: ", plots$plots.name,

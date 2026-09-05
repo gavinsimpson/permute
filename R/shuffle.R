@@ -266,13 +266,19 @@
         if(isTRUE(all.equal(typeP, "none"))) { ## NO
             perm <- sn
         } else {                               ## YES
-            flip <- runif(1L) < 0.5 ## logical, passed on & used only if mirroring
+            flip <- if(typeP == "grid") {
+                gridFlip(mirror = plotCTRL$mirror,
+                         symmetric = isTRUE(plotCTRL$symmetric))
+            } else {
+                runif(1L) < 0.5
+            }
             perm <- shuffleStrata(Pstrata,
                                   type = typeP,
                                   mirror = plotCTRL$mirror,
                                   flip = flip,
                                   nrow = plotCTRL$nrow,
-                                  ncol = plotCTRL$ncol)
+                                  ncol = plotCTRL$ncol,
+                                  symmetric = isTRUE(plotCTRL$symmetric))
         }
 
         ## permute the samples within Plot strata
@@ -294,7 +300,8 @@
                 } else if(isTRUE(all.equal(typeW, "grid"))) {
                     start.row <- shuffleFree(withinCTRL$nrow, 1L)
                     start.col <- shuffleFree(withinCTRL$ncol, 1L)
-                    flip <- runif(2L) < 0.5
+                    flip <- gridFlip(mirror = withinCTRL$mirror,
+                                     symmetric = isTRUE(withinCTRL$symmetric))
                 }
             } else {
                 start <- start.row <- start.col <- flip <- NULL
@@ -327,7 +334,9 @@
                                               mirror = withinCTRL$mirror,
                                               start.row = start.row,
                                               start.col = start.col,
-                                              flip = flip)]
+                                              flip = flip,
+                                              symmetric =
+                                                  isTRUE(withinCTRL$symmetric))]
                                )
                 }
             }
