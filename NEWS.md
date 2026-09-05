@@ -17,6 +17,9 @@
   the number of possible permutations for the current design. The default is
   `TRUE`, meaning the number of permutations is computed.
 
+* *permute* now uses the *roxygen* system for documentation and building `.Rd`
+  manual files.
+
 ## Bug fixes
 
 * `check()` would fail all permutation designs where the (whole) plots were
