@@ -38,15 +38,16 @@ With blocks, this quantity is calculated within each block and the results
 are multiplied.
 }
 \note{
-In general, mirroring \code{"series"} or \code{"grid"} designs doubles
-or quadruples, respectively, the number of permutations without mirroring
-(within levels of strata if present). This is \strong{not} true in two
-special cases:
-\enumerate{
-\item In \code{"grid"} designs where the number of columns is equal to 2, and
-\item In \code{"series"} designs where the number of observations in a series is
-equal to 2.
-}
+In general, mirroring \code{"series"} designs doubles the number of
+permutations and mirroring \code{"grid"} designs can quadruple it (within
+levels of strata if present). For grids with \code{symmetric = TRUE}, at most
+three orientations are included because simultaneous row and column
+mirroring is disallowed. Reflections of grid axes containing one or two
+cells are equivalent to toroidal shifts and do not add distinct
+permutations.
+
+Mirroring does not double the number of series permutations when the series
+contains only two observations.
 
 For example, with 2 observations there are 2 permutations for
 \code{"series"} designs:
@@ -61,11 +62,8 @@ If these two permutations were mirrored, we would have:
 \item 1-2.
 }
 
-It is immediately clear that this is the same set of
-permutations without mirroring (if one reorders the rows). A similar
-situation arises in \code{"grid"} designs where the number of
-\strong{columns} per \emph{grid} is equal to 2. Note that the number of rows
-per \emph{grid} is not an issue here.
+It is immediately clear that this is the same set of permutations without
+mirroring (if one reorders the rows).
 }
 \examples{
 

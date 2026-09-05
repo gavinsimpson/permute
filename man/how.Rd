@@ -26,7 +26,8 @@ Within(
   constant = FALSE,
   mirror = FALSE,
   ncol = NULL,
-  nrow = NULL
+  nrow = NULL,
+  symmetric = FALSE
 )
 
 Plots(
@@ -34,7 +35,8 @@ Plots(
   type = c("none", "free", "series", "grid", "partition"),
   mirror = FALSE,
   ncol = NULL,
-  nrow = NULL
+  nrow = NULL,
+  symmetric = FALSE
 )
 }
 \arguments{
@@ -85,6 +87,9 @@ permutation is produced for each level of \code{strata}.}
 \item{ncol, nrow}{numeric; the number of columns and rows of samples in the
 spatial grid respectively.}
 
+\item{symmetric}{logical; for grid permutations, should simultaneous
+mirroring in both spatial directions be disallowed?}
+
 \item{strata}{A factor, or an object that can be coerced to a factor via
 \code{as.factor}, specifying the strata for permutation.}
 }
@@ -123,6 +128,11 @@ If there is no inherent direction in your experimental design, mirrored
 permutations can be considered part of the Null model, and as such increase
 the number of possible permutations. The default is to not use mirroring so
 you must explicitly turn this on using \code{mirror = TRUE} in \code{how}.
+
+For spatial grids, \code{symmetric = TRUE} preserves symmetric spatial
+autocovariance by preventing a permutation from being mirrored in both the
+row and column directions at the same time. It has no effect unless
+\code{type = "grid"} and \code{mirror = TRUE}.
 
 To permute plots rather than the observations within plots (the levels of
 \code{strata}), use \code{Within(type = "none")} and \code{Plots(type = foo)}, where

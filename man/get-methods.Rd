@@ -12,6 +12,8 @@
 \alias{getType.permControl}
 \alias{getMirror.default}
 \alias{getMirror.permControl}
+\alias{getSymmetric.default}
+\alias{getSymmetric.permControl}
 \alias{getConstant.default}
 \alias{getConstant.permControl}
 \alias{getPlots.default}
@@ -44,6 +46,7 @@
 \alias{getMaxperm}
 \alias{getMinperm}
 \alias{getMirror}
+\alias{getSymmetric}
 \alias{getNperm}
 \alias{getObserved}
 \alias{getPlots}
@@ -70,9 +73,12 @@
 \alias{getMirror.how}
 \alias{getMirror.Plots}
 \alias{getMirror.Within}
+\alias{getSymmetric.how}
 \alias{getNperm.how}
+\alias{getSymmetric.Plots}
 \alias{getObserved.how}
 \alias{getPlots.how}
+\alias{getSymmetric.Within}
 \alias{getRow.how}
 \alias{getRow.Plots}
 \alias{getRow.Within}
@@ -104,6 +110,8 @@ getMaxperm(object, ...)
 getMinperm(object, ...)
 
 getMirror(object, ...)
+
+getSymmetric(object, ...)
 
 getNperm(object, ...)
 
@@ -157,11 +165,17 @@ getHow(object, ...)
 
 \method{getMirror}{Within}(object, ...)
 
+\method{getSymmetric}{how}(object, which = c("plots", "within"), ...)
+
 \method{getNperm}{how}(object, ...)
+
+\method{getSymmetric}{Plots}(object, ...)
 
 \method{getObserved}{how}(object, ...)
 
 \method{getPlots}{how}(object, ...)
+
+\method{getSymmetric}{Within}(object, ...)
 
 \method{getRow}{how}(object, which = c("plots", "within"), ...)
 
