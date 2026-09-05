@@ -58,6 +58,12 @@ as.allPerms(object, control)
   The \code{as.matrix} method sets the \code{control} and \code{seed}
   attributes to \code{NULL} and removes the \code{"permutationMatrix"}
   class, resulting in a standard matrix object.
+
+  With \code{Plots(type = "partition")}, the rows enumerate distinct
+  assignments to the labelled groups in \code{Plots$strata}. If the group
+  sizes are \eqn{n_1, \ldots, n_K}, there are
+  \eqn{n! / \prod_k n_k!} such assignments before optionally removing the
+  observed assignment.
 }
 \value{
   For \code{allPerms}, and object of class \code{"allPerms"}, a matrix
@@ -70,8 +76,9 @@ as.allPerms(object, control)
 }
 \section{Warning}{
   If permuting the strata themselves, a balanced design is required (the
-  same number of observations in each level of \code{strata}. This is
-  common to all functions in the package.
+  same number of observations in each level of \code{strata}). This does not
+  apply to \code{Plots(type = "partition")}, which supports unequal group
+  sizes.
 }
 \author{Gavin Simpson}
 \examples{

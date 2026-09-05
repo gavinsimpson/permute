@@ -23,7 +23,8 @@ Within(type = c("free","series","grid","none"),
        constant = FALSE, mirror = FALSE,
        ncol = NULL, nrow = NULL)
 
-Plots(strata = NULL, type = c("none","free","series","grid"),
+Plots(strata = NULL,
+      type = c("none","free","series","grid","partition"),
       mirror = FALSE, ncol = NULL, nrow = NULL)
 }
 
@@ -40,8 +41,8 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   \item{complete}{logical; should complete enumeration of all
     permutations be performed?}
   \item{type}{character; the type of permutations required. One of
-    \code{"free"}, \code{"series"}, \code{"grid"} or \code{"none"}. See
-    Details.} 
+    \code{"free"}, \code{"series"}, \code{"grid"}, \code{"none"}, or,
+    for \code{Plots}, \code{"partition"}. See Details.}
   \item{maxperm}{numeric; the maximum number of permutations to
     perform. Currently unused.}
   \item{minperm}{numeric; the lower limit to the number of possible
@@ -80,6 +81,13 @@ Plots(strata = NULL, type = c("none","free","series","grid"),
   \code{"none"} indicates no permutation of samples. See the package
   vignette (\code{browseVignettes("permute")}) for additional
   information on each of these types of permutation.
+
+  \code{Plots(type = "partition")} randomly assigns observations to the
+  labelled groups supplied in \code{strata}, retaining the observed number
+  assigned to each group. Permutations that differ only by reordering
+  observations carrying the same group label are omitted. If \code{within}
+  is not supplied, \code{how} uses \code{Within(type = "none")} for this
+  design. Supplying any other within-plot type is an error.
 
   Argument \code{mirror} determines whether grid or series permutations
   can be mirrored. Consider the sequence 1,2,3,4. The relationship
@@ -137,5 +145,10 @@ update(h1, blocks = NULL)
 #update(h1, plots = update(getPlots(h1), type = "none"))
 plots2 <- update(getPlots(h1), type = "none")
 update(h1, plots = plots2)
+
+## Random assignments to groups of fixed size
+groups <- factor(c("a", "a", "a", "b", "b"))
+(h2 <- how(plots = Plots(strata = groups, type = "partition")))
+shuffle(length(groups), control = h2)
 }
 \keyword{ utils  }

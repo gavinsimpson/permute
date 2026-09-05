@@ -39,8 +39,8 @@ shuffleStrata(strata, type, mirror = FALSE, start = NULL, flip = NULL,
     and column will be selected.}
   \item{strata}{factor; the blocks to permute.}
   \item{type}{character; the type of permutation used to shuffle the
-    \code{strata}. One of \code{"free"}, \code{"grid"} or
-    \code{"series"}.}
+    \code{strata}. One of \code{"free"}, \code{"grid"},
+    \code{"series"}, or \code{"partition"}.}
 }
 \details{
   These are developer-level functions for generating permuted indexes
@@ -56,6 +56,11 @@ shuffleStrata(strata, type, mirror = FALSE, start = NULL, flip = NULL,
   so that one can draw a single observation at random from the indices
   \code{x}. In general use, \code{size} would be set equal to
   \code{length{x}}.
+
+  With \code{type = "partition"}, \code{shuffleStrata} returns one
+  canonical index permutation for a random arrangement of the labels in
+  \code{strata}; indices carrying the same original label retain their
+  relative order.
 }
 \value{
   A integer vector of permuted indices.

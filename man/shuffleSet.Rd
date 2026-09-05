@@ -78,6 +78,11 @@ shuffleSet(n, nset, control = how(), check = TRUE, quietly = FALSE)
   data sets where there are few possible permutations relative to the
   number requested.
 
+  For \code{Plots(type = "partition")}, rows represent distinct random
+  assignments to groups of fixed size. Independently sampled rows may repeat,
+  but permutations that differ only by reordering observations carrying the
+  same original group label have the same canonical representation.
+
   The \code{as.matrix} method sets the \code{control} and \code{seed}
   attributes to \code{NULL} and removes the \code{"permutationMatrix"}
   class, resulting in a standard matrix object.

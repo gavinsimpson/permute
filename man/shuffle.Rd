@@ -27,6 +27,11 @@ permute(i, n, control)
   restricted permutation schemes. A small selection of the available
   combinations of options is provided in the Examples section below.
 
+  With \code{Plots(type = "partition")}, \code{shuffle} returns one
+  canonical index permutation for a random assignment to the groups in
+  \code{Plots$strata}. Group sizes and the relative order of observations
+  originally carrying the same group label are retained.
+
   \code{permute} is a higher level utility function for use in a loop
   within a function implementing a permutation test. The main purpose of
   \code{permute} is to return the correct permutation in each iteration
