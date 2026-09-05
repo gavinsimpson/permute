@@ -37,6 +37,7 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
+> 
 > ## allPerms can work with a vector
 > vec <- c(3,4,5)
 > allPerms(vec) ## free permutation
@@ -191,6 +192,7 @@ Contains observed ordering?: No
 > 
 > 
 > 
+> 
 > cleanEx()
 > nameEx("check")
 > ### * check
@@ -200,9 +202,10 @@ Contains observed ordering?: No
 > ### Name: check
 > ### Title: Utility functions for permutation schemes
 > ### Aliases: check print.check print.summary.check summary.check
-> ### Keywords: utilities design methods
+> ### Keywords: design methods utilities
 > 
 > ### ** Examples
+> 
 > 
 > ## only run this example if vegan is available
 > if (suppressPackageStartupMessages(require("vegan"))) {
@@ -216,35 +219,35 @@ Contains observed ordering?: No
 +     CONTROL <- how(within = Within(type = "free"))
 +     (check1 <- check(pyrifos, CONTROL))
 +     ## summary(check1)
-+     
++ 
 +     ## no strata but data are series with no mirroring, so 132 permutations
 +     CONTROL <- how(within = Within(type = "series", mirror = FALSE))
 +     check(pyrifos, CONTROL)
-+     
++ 
 +     ## no strata but data are series with mirroring, so 264 permutations
 +     CONTROL <- how(within = Within(type = "series", mirror = TRUE))
 +     check(pyrifos, control = CONTROL)
-+     
++ 
 +     ## unrestricted within strata
 +     check(pyrifos, control = how(plots = Plots(strata = ditch),
 +                    within = Within(type = "free")))
-+     
++ 
 +     ## time series within strata, no mirroring
 +     check(pyrifos,
 +           control = how(plots = Plots(strata = ditch),
 +           within = Within(type = "series", mirror = FALSE)))
-+     
++ 
 +     ## time series within strata, with mirroring
 +     check(pyrifos,
 +           control = how(plots = Plots(strata = ditch),
 +           within = Within(type = "series", mirror = TRUE)))
-+     
++ 
 +     ## time series within strata, no mirroring, same permutation
 +     ## within strata
 +     check(pyrifos,
 +           control = how(plots = Plots(strata = ditch),
 +           within = Within(type = "series", constant = TRUE)))
-+     
++ 
 +     ## time series within strata, with mirroring, same permutation
 +     ## within strata
 +     check(pyrifos,
@@ -271,7 +274,7 @@ Set of permutations < 'minperm'. Generating entire set.
 'nperm' >= set of all permutations: complete enumeration.
 Set of permutations < 'minperm'. Generating entire set.
 [1] 479001600
->     
+> 
 > ## this should also also for arbitrary vectors
 > vec1 <- check(1:100)
 > vec2 <- check(1:100, how())
@@ -471,6 +474,7 @@ Contains observed ordering?: No
 > 
 > 
 > 
+> 
 > cleanEx()
 
 detaching ‘package:vegan’
@@ -482,31 +486,30 @@ detaching ‘package:vegan’
 > 
 > ### Name: get-methods
 > ### Title: Extractor functions to access components of a permutation design
-> ### Aliases: get-methods getBlocks getBlocks.default getBlocks.how
-> ###   getBlocks.permControl getWithin getWithin.default getWithin.how
-> ###   getWithin.permControl getStrata getStrata.default getStrata.how
-> ###   getStrata.permControl getStrata.Plots getType getType.default
-> ###   getType.how getType.permControl getType.Plots getType.Within
-> ###   getMirror getMirror.default getMirror.how getMirror.permControl
-> ###   getMirror.Plots getMirror.Within getConstant getConstant.default
-> ###   getConstant.how getConstant.permControl getConstant.Within getPlots
-> ###   getPlots.default getPlots.how getPlots.permControl getRow
-> ###   getRow.default getRow.how getRow.permControl getRow.Plots
-> ###   getRow.Within getCol getCol.default getCol.how getCol.permControl
-> ###   getCol.Plots getCol.Within getDim getDim.default getDim.how
-> ###   getDim.permControl getDim.Plots getDim.Within getNperm
-> ###   getNperm.default getNperm.how getNperm.permControl getMaxperm
-> ###   getMaxperm.default getMaxperm.how getMaxperm.permControl getMinperm
-> ###   getMinperm.default getMinperm.how getMinperm.permControl getComplete
-> ###   getComplete.default getComplete.how getComplete.permControl getMake
-> ###   getMake.default getMake.how getObserved getObserved.default
-> ###   getObserved.how getAllperms getAllperms.default getAllperms.how
-> ###   getControl getHow getControl.default getControl.allPerms
+> ### Aliases: get-methods getBlocks.default getBlocks.permControl
+> ###   getWithin.default getWithin.permControl getStrata.default
+> ###   getStrata.permControl getType.default getType.permControl
+> ###   getMirror.default getMirror.permControl getConstant.default
+> ###   getConstant.permControl getPlots.default getPlots.permControl
+> ###   getRow.default getRow.permControl getCol.default getCol.permControl
+> ###   getDim.default getDim.permControl getNperm.default
+> ###   getNperm.permControl getMaxperm.default getMaxperm.permControl
+> ###   getMinperm.default getMinperm.permControl getComplete.default
+> ###   getComplete.permControl getMake.default getObserved.default
+> ###   getAllperms.default getControl.default getAllperms getBlocks
+> ###   getComplete getConstant getCol getDim getMake getMaxperm getMinperm
+> ###   getMirror getNperm getObserved getPlots getRow getStrata getType
+> ###   getWithin getControl getHow getAllperms.how getBlocks.how getCol.how
+> ###   getCol.Plots getCol.Within getComplete.how getConstant.how
+> ###   getConstant.Within getDim.how getDim.Plots getDim.Within getMake.how
+> ###   getMaxperm.how getMinperm.how getMirror.how getMirror.Plots
+> ###   getMirror.Within getNperm.how getObserved.how getPlots.how getRow.how
+> ###   getRow.Plots getRow.Within getStrata.how getStrata.Plots getType.how
+> ###   getType.Plots getType.Within getWithin.how getControl.allPerms
 > ### Keywords: methods utils
 > 
 > ### ** Examples
 > 
-> ## extract components from a "how" object
 > hh <- how()
 > getWithin(hh)
 $type
@@ -546,6 +549,7 @@ attr(,"class")
 > ### Keywords: utils
 > 
 > ### ** Examples
+> 
 > 
 > ## Set up factors for the Plots and Blocks
 > plts <- gl(4, 10) ## 4 Plots of 10 samples each
@@ -632,6 +636,7 @@ Permutation details:
 > 
 > 
 > 
+> 
 > cleanEx()
 > nameEx("jackal")
 > ### * jackal
@@ -665,7 +670,7 @@ Permutation details:
 > ### Name: nobs-methods
 > ### Title: Number of observations in a given object
 > ### Aliases: nobs-methods nobs.numeric nobs.integer nobs.matrix
-> ###   nobs.data.frame nobs.factor nobs.character
+> ###   nobs.data.frame nobs.character nobs.factor
 > 
 > ### ** Examples
 > 
@@ -690,7 +695,6 @@ Permutation details:
 > 
 > 
 > 
-> 
 > cleanEx()
 > nameEx("numPerms")
 > ### * numPerms
@@ -702,6 +706,7 @@ Permutation details:
 > ### Aliases: numPerms
 > 
 > ### ** Examples
+> 
 > 
 > ## permutation design --- see ?how
 > ctrl <- how() ## defaults to freely exchangeable
@@ -746,6 +751,7 @@ Permutation details:
 > ctrl <- how(plots = Plots(groups, type = "partition"))
 > numPerms(length(groups), control = ctrl) ## 10
 [1] 10
+> 
 > 
 > 
 > 
@@ -808,30 +814,30 @@ p5 4 1 5 2 3
 > 
 > ### Name: set-methods
 > ### Title: Replacement functions to set components of a permutation design
-> ### Aliases: set-methods setBlocks<- setBlocks<-.default setBlocks<-.how
-> ###   setBlocks<-.permControl setWithin<- setWithin<-.default
-> ###   setWithin<-.how setStrata<- setStrata<-.default setStrata<-.how
-> ###   setStrata<-.Plots setType<- setType<-.default setType<-.how
-> ###   setType<-.Plots setType<-.Within setMirror<- setMirror<-.default
-> ###   setMirror<-.how setMirror<-.Plots setMirror<-.Within setConstant<-
-> ###   setConstant<-.default setConstant<-.how setConstant<-.Plots
-> ###   setConstant<-.Within setPlots<- setPlots<-.default setPlots<-.how
-> ###   setRow<- setRow<-.default setRow<-.how setRow<-.Plots setRow<-.Within
-> ###   setCol<- setCol<-.default setCol<-.how setCol<-.Plots setCol<-.Within
-> ###   setDim<- setDim<-.default setDim<-.how setDim<-.Plots setDim<-.Within
-> ###   setNperm<- setNperm<-.default setNperm<-.how setNperm<-.permControl
-> ###   setAllperms<- setAllperms<-.default setAllperms<-.how
-> ###   setAllperms<-.permControl setMaxperm<- setMaxperm<-.default
-> ###   setMaxperm<-.how setMaxperm<-.permControl setMinperm<-
-> ###   setMinperm<-.default setMinperm<-.how setMinperm<-.permControl
-> ###   setComplete<- setComplete<-.default setComplete<-.how
-> ###   setComplete<-.permControl setMake<- setMake<-.default setMake<-.how
-> ###   setObserved<- setObserved<-.default setObserved<-.how
+> ### Aliases: set-methods setBlocks<-.default setBlocks<-.how
+> ###   setBlocks<-.permControl setWithin<-.default setWithin<-.how
+> ###   setStrata<-.default setStrata<-.how setStrata<-.Plots
+> ###   setType<-.default setType<-.how setType<-.Plots setType<-.Within
+> ###   setMirror<-.default setMirror<-.how setMirror<-.Plots
+> ###   setMirror<-.Within setConstant<-.default setConstant<-.how
+> ###   setConstant<-.Plots setConstant<-.Within setPlots<-.default
+> ###   setPlots<-.how setRow<-.default setRow<-.how setRow<-.Plots
+> ###   setRow<-.Within setCol<-.default setCol<-.how setCol<-.Plots
+> ###   setCol<-.Within setDim<-.default setDim<-.how setDim<-.Plots
+> ###   setDim<-.Within setNperm<-.default setNperm<-.how
+> ###   setNperm<-.permControl setAllperms<-.default setAllperms<-.how
+> ###   setAllperms<-.permControl setMaxperm<-.default setMaxperm<-.how
+> ###   setMaxperm<-.permControl setMinperm<-.default setMinperm<-.how
+> ###   setMinperm<-.permControl setComplete<-.default setComplete<-.how
+> ###   setComplete<-.permControl setMake<-.default setMake<-.how
+> ###   setObserved<-.default setObserved<-.how setBlocks<- setPlots<-
+> ###   setWithin<- setStrata<- setNperm<- setAllperms<- setMaxperm<-
+> ###   setMinperm<- setComplete<- setMake<- setObserved<- setRow<- setCol<-
+> ###   setDim<- setType<- setMirror<- setConstant<-
 > ### Keywords: methods utils
 > 
 > ### ** Examples
 > 
-> ## extract components from a "how" object
 > hh <- how()
 > getNperm(hh)
 [1] 199
@@ -849,9 +855,9 @@ p5 4 1 5 2 3
 > 
 > ### Name: shuffle-utils
 > ### Title: Utility functions for unrestricted and restricted permutations
-> ### Aliases: shuffle-utils shuffleFree shuffleGrid shuffleSeries
+> ### Aliases: shuffle-utils shuffleFree shuffleSeries shuffleGrid
 > ###   shuffleStrata
-> ### Keywords: htest design
+> ### Keywords: design htest
 > 
 > ### ** Examples
 > 
@@ -895,9 +901,10 @@ p5 4 1 5 2 3
 > ### Name: shuffle
 > ### Title: Unrestricted and restricted permutations
 > ### Aliases: shuffle permute
-> ### Keywords: htest design
+> ### Keywords: design htest
 > 
 > ### ** Examples
+> 
 > 
 > ## Don't show: 
 > suppressWarnings(RNGversion("3.5.0"))
@@ -1007,7 +1014,7 @@ p5 4 1 5 2 3
  [1]  1  3  6 10  4  2  7  8  9  5 12 14 11 15 18 17 16 19 20 13
 > 
 > ## Simple function using permute() to assess significance
-> ## of a t.test  
+> ## of a t.test
 > pt.test <- function(x, group, control) {
 +     ## function to calculate t
 +     t.statistic <- function(x, y) {
@@ -1081,6 +1088,7 @@ mean in group Group 1 mean in group Group 2
 > 
 > 
 > 
+> 
 > cleanEx()
 > nameEx("shuffleSet")
 > ### * shuffleSet
@@ -1088,11 +1096,12 @@ mean in group Group 1 mean in group Group 2
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: shuffleSet
-> ### Title: Generate a set of permutations from the specified design.
+> ### Title: Generate a set of permutations from the specified design
 > ### Aliases: shuffleSet as.matrix.permutationMatrix
-> ### Keywords: htest design
+> ### Keywords: design htest
 > 
 > ### ** Examples
+> 
 > 
 > ## Don't show: 
 > suppressWarnings(RNGversion("3.5.0"))
@@ -1250,12 +1259,13 @@ p4 5 1 2 3 4 10  6  7  8  9 15 11 12 13 14 20 16 17 18 19
 > 
 > 
 > 
+> 
 > ### * <FOOTER>
 > ###
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.621 0.046 0.689 0 0 
+Time elapsed:  1.221 0.053 1.284 0 0 
 > grDevices::dev.off()
 null device 
           1 
