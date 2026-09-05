@@ -2,6 +2,9 @@
 
 ## New features
 
+* `Plots()` gains type `"partition"` for permuting group membership while
+  keeping the number of observations in each group fixed.
+
 * When permuting plots, balance is now only required *within* blocks. Requested
   by @dbaranger in #27
 
