@@ -36,18 +36,12 @@
         stop("need an object with call component")
     extras <- match.call(expand.dots = FALSE)$...
 
-    ## preserve or update block and/or plot  names
-    bname <- if ("blocks" %in% names(extras)) {
-        deparse(substitute(extras[["blocks"]]))
-    } else {
-        object$blocks.name
-    }
-    pname <- if ("plots" %in% names(extras)) {
-        dots <- list(...)
-        dots$plots$plots.name
-    } else {
-        object$plots$plots.name
-    }
+    ## Preserve names when blocks or plots are not part of the update. If
+    ## either is updated, their constructors recover the new expression name.
+    update.blocks <- "blocks" %in% names(extras)
+    update.plots <- "plots" %in% names(extras)
+    bname <- object$blocks.name
+    pname <- object$plots$plots.name
 
     ## process remaining ... args
     if (length(extras)) {
@@ -65,8 +59,12 @@
     if (evaluate) {
         out <- eval(call, parent.frame())
         ## add back in the chars we discovered earlier
-        out$blocks.name <- bname
-        out$plots$plots.name <- pname
+        if (!update.blocks) {
+            out$blocks.name <- bname
+        }
+        if (!update.plots) {
+            out$plots$plots.name <- pname
+        }
     } else {
         out <- call
     }

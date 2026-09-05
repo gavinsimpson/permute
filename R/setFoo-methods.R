@@ -195,6 +195,10 @@ NULL
 #' @export
 #' @noRd
 `setBlocks<-.how` <- function(object, value) {
+    if (inherits(value, "formula")) {
+        stop("formulas must be supplied through ",
+             "'how(blocks = ..., data = ...)'")
+    }
     object[["blocks.name"]] <- deparse(substitute(value))
     if (!is.null(value))
         value <- as.factor(value)
@@ -242,8 +246,16 @@ NULL
 #' @noRd
 `setPlots<-.how` <- function(object, value) {
     stopifnot(inherits(value, "Plots"))
+    call <- getCall(value)
+    if ("data" %in% names(call)) {
+        ## A Plots object supplied to a replacement method is already resolved.
+        ## Store its strata rather than a nested data argument, which how()
+        ## deliberately rejects when reconstructing the design via update().
+        call[["strata"]] <- getStrata(value, drop = FALSE)
+        call <- dropCallArgument(call, "data")
+    }
     object[["plots"]] <- value
-    object <- fixupCall(object, "plots", getCall(value))
+    object <- fixupCall(object, "plots", call)
     object
 }
 
@@ -285,6 +297,10 @@ NULL
 #' @export
 #' @noRd
 `setStrata<-.how` <- function(object, value) {
+    if (inherits(value, "formula")) {
+        stop("formulas must be supplied through ",
+             "'Plots(strata = ..., data = ...)'")
+    }
     if (!is.null(value)) {
         value <- as.factor(value)
     }
@@ -298,6 +314,10 @@ NULL
 #' @export
 #' @noRd
 `setStrata<-.Plots` <- function(object, value) {
+    if (inherits(value, "formula")) {
+        stop("formulas must be supplied through ",
+             "'Plots(strata = ..., data = ...)'")
+    }
     if (!is.null(value))
         value <- as.factor(value)
     object[["strata"]] <- value

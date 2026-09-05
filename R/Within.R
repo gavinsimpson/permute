@@ -11,7 +11,7 @@
     if (length(.call) > 1L) {
         .ll <- as.list(.call[-1])
         for (i in seq_along(.ll))
-            .ll[[i]] <- eval(.ll[[i]], parent.frame())
+            .ll[i] <- list(eval(.ll[[i]], parent.frame()))
         .ll <- c(as.list(.call[[1]]), .ll)
         names(.ll) <- names(.call)
         .call <- as.call(.ll)

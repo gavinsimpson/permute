@@ -6,11 +6,15 @@
   mirror = FALSE,
   ncol = NULL,
   nrow = NULL,
-  symmetric = FALSE
+  symmetric = FALSE,
+  data = NULL
 ) {
     plots.name <- deparse(substitute(strata))
     ## strata should also be a factor - coerce
-    if(!is.null(strata) && !is.factor(strata)) {
+    if (inherits(strata, "formula")) {
+        plots.name <- formulaRhsLabel(strata)
+        strata <- formulaToFactor(strata, data, "strata")
+    } else if(!is.null(strata) && !is.factor(strata)) {
         strata <- as.factor(strata)
     }
 
@@ -21,7 +25,7 @@
     if (length(.call) > 1L) {
         .ll <- as.list(.call[-1])
         for (i in seq_along(.ll))
-            .ll[[i]] <- eval(.ll[[i]], parent.frame())
+            .ll[i] <- list(eval(.ll[[i]], parent.frame()))
         .ll <- c(as.list(.call[[1]]), .ll)
         names(.ll) <- names(.call)
         .call <- as.call(.ll)

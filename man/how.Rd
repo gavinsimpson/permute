@@ -18,7 +18,8 @@ how(
   minperm = 5040,
   all.perms = NULL,
   make = TRUE,
-  observed = FALSE
+  observed = FALSE,
+  data = NULL
 )
 
 Within(
@@ -36,7 +37,8 @@ Plots(
   mirror = FALSE,
   ncol = NULL,
   nrow = NULL,
-  symmetric = FALSE
+  symmetric = FALSE,
+  data = NULL
 )
 }
 \arguments{
@@ -46,7 +48,8 @@ for the definition of blocking structures which further restrict
 permutations (\code{blocks}). \code{within} and \code{plots} each require a
 named list as produced by \code{Within} and \code{Plots} respectively.
 \code{blocks} takes a factor (or an object coercible to a factor via
-\code{as.factor}), the levels of which define the blocking structure.}
+\code{as.factor}), or a one-sided formula, the levels of which define the
+blocking structure.}
 
 \item{nperm}{numeric; the number of permutations.}
 
@@ -74,6 +77,11 @@ enumeration is activated.}
 of the set of all permutations? Default is \code{FALSE} to facilitate usage
 in higher level functions.}
 
+\item{data}{A data frame in which to evaluate formula values supplied to
+\code{blocks} or \code{strata}. When \code{Plots()} is called inside \code{how()}, supply \code{data}
+to \code{how()} rather than to \code{Plots()}. A standalone call to \code{Plots()} can take
+its own \code{data} argument.}
+
 \item{type}{character; the type of permutations required. One of
 \code{"free"}, \code{"series"}, \code{"grid"}, \code{"none"}, or, for
 \code{Plots}, \code{"partition"}. See Details.}
@@ -90,8 +98,10 @@ spatial grid respectively.}
 \item{symmetric}{logical; for grid permutations, should simultaneous
 mirroring in both spatial directions be disallowed?}
 
-\item{strata}{A factor, or an object that can be coerced to a factor via
-\code{as.factor}, specifying the strata for permutation.}
+\item{strata}{A factor, an object that can be coerced to a factor via
+\code{as.factor}, or a one-sided formula specifying the strata for permutation.
+Multiple variables and nested terms in a formula are combined into a single
+factor representing their interaction.}
 }
 \value{
 For \code{how} a list with components for each of the possible
@@ -144,6 +154,21 @@ For some experiments, such as BACI designs, one might wish to use the same
 permutation within each plot. This is controlled by argument
 \code{constant}. If \code{constant = TRUE} then the same permutation will be
 generated for each level of \code{strata}. The default is \code{constant = FALSE}.
+
+One-sided formulas can be used to define \code{blocks} and plot-level \code{strata}.
+A formula containing a single variable, such as \code{~ site}, produces a factor
+from that variable. Variables participating in multiple model terms are
+combined into a single interaction factor. Consequently, \code{~ site + plot},
+\code{~ site:plot}, and the nested forms \code{~ site / plot} and
+\code{~ plot \%in\% site} all describe groups formed from \code{site} and \code{plot}.
+Standard formula expansion and subtraction are honoured, so, for example,
+\code{~ . - unused} uses all variables in \code{data} except \code{unused}.
+
+Formulas are evaluated with standard model-frame semantics: variables are
+looked up first in \code{data} and then in the formula environment. Missing
+values are retained to preserve alignment with the observations, and
+unused factor levels and unobserved combinations are dropped. The formulas
+must be one-sided and contain at least one grouping term.
 }
 \examples{
 
@@ -169,6 +194,15 @@ update(h1, plots = plots2)
 groups <- factor(c("a", "a", "a", "b", "b"))
 (h2 <- how(plots = Plots(strata = groups, type = "partition")))
 shuffle(length(groups), control = h2)
+
+## Formula interfaces use a single data frame
+dat <- data.frame(
+    block = gl(2, 6),
+    site = gl(3, 2, 12),
+    plot = gl(2, 1, 12)
+)
+how(plots = Plots(strata = ~ site / plot), blocks = ~ block, data = dat)
+getStrata(Plots(strata = ~ site / plot, data = dat))
 
 }
 \references{

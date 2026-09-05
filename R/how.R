@@ -46,6 +46,21 @@
 #' `constant`. If `constant = TRUE` then the same permutation will be
 #' generated for each level of `strata`. The default is `constant = FALSE`.
 #'
+#' One-sided formulas can be used to define `blocks` and plot-level `strata`.
+#' A formula containing a single variable, such as `~ site`, produces a factor
+#' from that variable. Variables participating in multiple model terms are
+#' combined into a single interaction factor. Consequently, `~ site + plot`,
+#' `~ site:plot`, and the nested forms `~ site / plot` and
+#' `~ plot %in% site` all describe groups formed from `site` and `plot`.
+#' Standard formula expansion and subtraction are honoured, so, for example,
+#' `~ . - unused` uses all variables in `data` except `unused`.
+#'
+#' Formulas are evaluated with standard model-frame semantics: variables are
+#' looked up first in `data` and then in the formula environment. Missing
+#' values are retained to preserve alignment with the observations, and
+#' unused factor levels and unobserved combinations are dropped. The formulas
+#' must be one-sided and contain at least one grouping term.
+#'
 #' @aliases how print.how Blocks Within Plots
 #' @param within,plots,blocks Permutation designs for samples within the levels
 #' of `plots` (`within`), permutation of `plots` themselves, or
@@ -53,7 +68,12 @@
 #' permutations (`blocks`). `within` and `plots` each require a
 #' named list as produced by `Within` and `Plots` respectively.
 #' `blocks` takes a factor (or an object coercible to a factor via
-#' `as.factor`), the levels of which define the blocking structure.
+#' `as.factor`), or a one-sided formula, the levels of which define the
+#' blocking structure.
+#' @param data A data frame in which to evaluate formula values supplied to
+#' `blocks` or `strata`. When `Plots()` is called inside `how()`, supply `data`
+#' to `how()` rather than to `Plots()`. A standalone call to `Plots()` can take
+#' its own `data` argument.
 #' @param nperm numeric; the number of permutations.
 #' @param complete logical; should complete enumeration of all permutations be
 #' performed?
@@ -84,8 +104,10 @@
 #'   mirroring in both spatial directions be disallowed?
 #' @param ncol,nrow numeric; the number of columns and rows of samples in the
 #' spatial grid respectively.
-#' @param strata A factor, or an object that can be coerced to a factor via
-#' `as.factor`, specifying the strata for permutation.
+#' @param strata A factor, an object that can be coerced to a factor via
+#' `as.factor`, or a one-sided formula specifying the strata for permutation.
+#' Multiple variables and nested terms in a formula are combined into a single
+#' factor representing their interaction.
 #' @returns For `how` a list with components for each of the possible
 #' arguments.
 #' @author Gavin Simpson
@@ -128,6 +150,15 @@
 #' (h2 <- how(plots = Plots(strata = groups, type = "partition")))
 #' shuffle(length(groups), control = h2)
 #'
+#' ## Formula interfaces use a single data frame
+#' dat <- data.frame(
+#'     block = gl(2, 6),
+#'     site = gl(3, 2, 12),
+#'     plot = gl(2, 1, 12)
+#' )
+#' how(plots = Plots(strata = ~ site / plot), blocks = ~ block, data = dat)
+#' getStrata(Plots(strata = ~ site / plot, data = dat))
+#'
 `how` <- function(within = Within(),
                   plots = Plots(),
                   blocks = NULL,
@@ -137,7 +168,25 @@
                   minperm = 5040,
                   all.perms = NULL,
                   make = TRUE,
-                  observed = FALSE) {
+                  observed = FALSE,
+                  data = NULL) {
+
+    ## If Plots() is called directly within how(), pass how's data argument
+    ## into that call before it is evaluated. A separately constructed Plots
+    ## object is already resolved and is left alone.
+    plots.expr <- substitute(plots)
+    nested.plots <- !missing(plots) && isPlotsCall(plots.expr)
+    if (nested.plots) {
+        plots.call <- match.call(definition = Plots, call = plots.expr,
+                                 expand.dots = FALSE)
+        if ("data" %in% names(plots.call)) {
+            stop("supply 'data' to 'how()', not to a nested 'Plots()' call")
+        }
+        if (!missing(data)) {
+            plots.call[["data"]] <- substitute(data)
+        }
+        plots <- eval(plots.call, parent.frame())
+    }
 
     ## A partition permutation already permutes the observations by
     ## assigning them to groups. If within was not explicitly supplied,
@@ -148,7 +197,12 @@
 
     blocks.name <- deparse(substitute(blocks))
     ## blocks should also be a factor - coerce
-    if(!is.null(blocks)) {
+    formula.blocks <- inherits(blocks, "formula")
+    if (formula.blocks) {
+        blocks.formula <- blocks
+        blocks.name <- formulaRhsLabel(blocks)
+        blocks <- formulaToFactor(blocks, data, "blocks")
+    } else if(!is.null(blocks)) {
         blocks <- as.factor(blocks)
     }
 
@@ -159,10 +213,17 @@
         args <- names(.call)[-1]
         ## evaluate arguments other than within and plots
         ## those handled in their respective functions
-        for (i in args[!args %in% c("within", "plots")]) {
+        no.eval <- c("within", "plots")
+        if (formula.blocks) {
+            no.eval <- c(no.eval, "blocks")
+        }
+        for (i in args[!args %in% no.eval]) {
             if(!is.null(.ll[[i]])) {
                 .ll[[i]] <- eval(.ll[[i]], parent.frame())
             }
+        }
+        if (formula.blocks && "blocks" %in% args) {
+            .ll[["blocks"]] <- blocks.formula
         }
     }
 
@@ -185,7 +246,18 @@
         .ll[["within"]] <- getCall(within)
     }
     if (length(.call) > 1L && "plots" %in% args) {
-        .ll[["plots"]] <- getCall(plots)
+        pcall <- getCall(plots)
+        if ("data" %in% names(pcall)) {
+            ## how() stores the shared data in its own call. If the Plots
+            ## object was constructed separately without data supplied to
+            ## how(), store its resolved strata so the how call remains
+            ## standalone and updateable.
+            if (!nested.plots || missing(data)) {
+                pcall[["strata"]] <- getStrata(plots)
+            }
+            pcall <- dropCallArgument(pcall, "data")
+        }
+        .ll[["plots"]] <- pcall
     }
 
     ## finsh off
