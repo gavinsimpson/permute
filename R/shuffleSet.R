@@ -1,4 +1,122 @@
 ## new version of shuffleSet() that allows for blocking
+
+
+#' Generate a set of permutations from the specified design
+#'
+#' `shuffleSet` returns a set of `nset` permutations from the
+#' specified design. The main purpose of the function is to circumvent the
+#' overhead of repeatedly calling [shuffle()] to generate a set of
+#' permutations.
+#'
+#' `shuffleSet` is designed to generate a set of `nset` permutation
+#' indices over which a function can iterate as part of a permutation test. It
+#' is only slightly more efficient than calling [shuffle()]
+#' `nset` times, but it is far more practical than the simpler function
+#' because a set of permutations can be worked on by applying a function to the
+#' rows of the returned object. This simplifies the function applied, and
+#' facilitates the use of parallel processing functions, thus enabling a larger
+#' number of permutations to be evaluated in reasonable time.
+#'
+#' By default, `shuffleSet` will check the permutations design following a
+#' few simple heuristics. See [check()] for details of these. Whether
+#' some of the heuristics are activated or not can be controlled via
+#' [how()], essentially via its argument `minperm`. In
+#' particular, if there are fewer than `minperm` permutations,
+#' `shuffleSet` will generate and return **all possible permutations**, which
+#' may differ from the number requested via argument
+#' `nset`.
+#'
+#' The `check` argument to `shuffleSet` controls whether checking is
+#' performed in the permutation design. If you set `check = FALSE` then
+#' exactly `nset` permutations will be returned. However, do be aware that
+#' there is no guarantee that the set of permutations returned will be unique,
+#' especially so for designs and data sets where there are few possible
+#' permutations relative to the number requested.
+#'
+#' For `Plots(type = "partition")`, rows represent distinct random
+#' assignments to groups of fixed size. Independently sampled rows may repeat,
+#' but permutations that differ only by reordering observations carrying the
+#' same original group label have the same canonical representation.
+#'
+#' The `as.matrix` method sets the `control` and `seed`
+#' attributes to `NULL` and removes the `"permutationMatrix"` class,
+#' resulting in a standard matrix object.
+#'
+#' @aliases shuffleSet as.matrix.permutationMatrix
+#' @param n numeric; the number of observations in the sample set. May also be
+#' any object that [stats::nobs()] knows about; see [nobs-methods].
+#' @param nset numeric; the number of permutations to generate for the set. Can
+#' be missing, the default, in which case `nset` is determined from
+#' `control`.
+#' @param control an object of class `"how"` describing a valid
+#' permutation design.
+#' @param check logical; should the design be checked for various problems via
+#' function [check()]? The default is to check the design for the
+#' stated number of observations and update `control` accordingly. See
+#' Details.
+#' @param quietly logical; should messages by suppressed?
+#' @param x an object of class `"permutationMatrix"`, as returned by
+#' `shuffleSet`.
+#' @param ... arguments passed to other methods. For the `as.matrix`
+#' method only.
+#' @returns A matrix of permutations, where each row is a separate
+#' permutation. As such, the returned matrix has `nset` rows and `n`
+#' columns.
+#' @author Gavin L. Simpson
+#' @seealso See [shuffle()] for generating a single permutation, and
+#' [how()] for setting up permutation designs.
+#' @references `shuffleSet()` is modelled after the permutation schemes of
+#' Canoco 3.1 (ter Braak, 1990); see also Besag & Clifford (1989).
+#'
+#' Besag, J. and Clifford, P. (1989) Generalized Monte Carlo significance
+#' tests. *Biometrika* **76**; 633--642.
+#'
+#' ter Braak, C. J. F. (1990). *Update notes: CANOCO version 3.1*.
+#' Wageningen: Agricultural Mathematics Group. (UR).
+#' @keywords htest design
+#' @order 1
+#' @examples
+#'
+#' \dontshow{suppressWarnings(RNGversion("3.5.0"))}
+#' set.seed(1)
+#' ## simple random permutations, 5 permutations in set
+#' shuffleSet(n = 10, nset = 5)
+#'
+#' ## series random permutations, 5 permutations in set
+#' shuffleSet(10, 5, how(within = Within(type = "series")))
+#'
+#' ## series random permutations, 10 permutations in set,
+#' ## with possible mirroring
+#' CTRL <- how(within = Within(type = "series", mirror = TRUE))
+#' shuffleSet(10, 10, CTRL)
+#'
+#' ## Permuting strata
+#' ## 4 groups of 5 observations
+#' CTRL <- how(within = Within(type = "none"),
+#'             plots = Plots(strata = gl(4,5), type = "free"))
+#' shuffleSet(20, 10, control = CTRL)
+#'
+#' ## 10 random permutations in presence of Plot-level strata
+#' plotStrata <- Plots(strata = gl(4,5))
+#' CTRL <- how(plots = plotStrata,
+#'             within = Within(type = "free"))
+#' numPerms(20, control = CTRL)
+#' shuffleSet(20, 10, control = CTRL)
+#' ## as above but same random permutation within Plot-level strata
+#' CTRL <- how(plots = plotStrata,
+#'             within = Within(type = "free", constant = TRUE))
+#' numPerms(20, control = CTRL)
+#' shuffleSet(20, 10, CTRL) ## check this.
+#'
+#' ## time series within each level of Plot strata
+#' CTRL <- how(plots = plotStrata,
+#'             within = Within(type = "series"))
+#' shuffleSet(20, 10, CTRL)
+#' ## as above, but  with same permutation for each Plot-level stratum
+#' CTRL <- how(plots = plotStrata,
+#'             within = Within(type = "series", constant = TRUE))
+#' shuffleSet(20, 10, CTRL)
+#'
 `shuffleSet` <- function(n, nset, control = how(), check = TRUE,
                          quietly = FALSE) {
     ## Store the .Random.seed, if it exists, so we can attach this as

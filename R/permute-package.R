@@ -1,0 +1,59 @@
+# Namespace directives -----------------------------------------------------
+
+#' @export allPerms
+#' @export allPartitions
+#' @export as.allPerms
+#' @export Blocks
+#' @export check
+#' @export getBlocks
+#' @export getWithin
+#' @export getStrata
+#' @export getType
+#' @export getMirror
+#' @export getConstant
+#' @export getPlots
+#' @export getRow
+#' @export getCol
+#' @export getDim
+#' @export getNperm
+#' @export getMaxperm
+#' @export getMinperm
+#' @export getComplete
+#' @export getMake
+#' @export getObserved
+#' @export getAllperms
+#' @export getControl
+#' @export getHow
+#' @export how
+#' @export numPerms
+#' @export permute
+#' @export Plots
+#' @export setBlocks<-
+#' @export setWithin<-
+#' @export setStrata<-
+#' @export setType<-
+#' @export setMirror<-
+#' @export setConstant<-
+#' @export setPlots<-
+#' @export setRow<-
+#' @export setCol<-
+#' @export setDim<-
+#' @export setNperm<-
+#' @export setMaxperm<-
+#' @export setMinperm<-
+#' @export setComplete<-
+#' @export setMake<-
+#' @export setObserved<-
+#' @export setAllperms<-
+#' @export shuffle
+#' @export shufflePartition
+#' @export shufflePartitionSet
+#' @export shuffleFree
+#' @export shuffleGrid
+#' @export shuffleSeries
+#' @export shuffleSet
+#' @export shuffleStrata
+#' @export Within
+#'
+#' @noRd
+NULL

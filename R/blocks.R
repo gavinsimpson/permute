@@ -5,10 +5,14 @@
     UseMethod("blocks")
 }
 
+#' @exportS3Method NULL
+#' @noRd
 `blocks.default` <- function(object, ...) {
     stop("No default method for 'blocks()'")
 }
 
+#' @exportS3Method NULL
+#' @noRd
 `blocks.how` <- function(object, ...) {
     object$blocks
 }
@@ -18,10 +22,14 @@
     UseMethod("setBlocks<-")
 }
 
+#' @exportS3Method NULL
+#' @noRd
 `blocks<-.default` <- function(object, value) {
     stop("No default method for `setBlocks`")
 }
 
+#' @exportS3Method NULL
+#' @noRd
 `blocks<-.how` <- function(object, value) {
     object[["blocks.name"]] <- deparse(substitute(value))
     if (!is.null(value))

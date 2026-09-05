@@ -1,3 +1,5 @@
+#' @rdname allUtils
+#' @order 3
 `allGrid` <- function(n, nperms, nr, nc, mirror, constant)
 {
     v <- seq_len(n)

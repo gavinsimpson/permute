@@ -1,3 +1,5 @@
+#' @export
+#' @noRd
 `print.summary.allPerms` <- function(x, ...) {
     dims <- dim(x)
     control <- attr(x, "control")

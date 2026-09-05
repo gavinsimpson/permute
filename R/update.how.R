@@ -28,6 +28,8 @@
 #  4) Added this modification section to the copyright/licence header.
 #  5) Added code to preserve some components of the original object.
 
+#' @export
+#' @noRd
 `update.how` <- function (object, ..., evaluate = TRUE) {
     call <- getCall(object)
     if (is.null(call))

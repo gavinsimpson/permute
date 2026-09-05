@@ -1,3 +1,90 @@
+#' Complete enumeration of all possible permutations
+#'
+#' `allPerms` is a utility function to return the set of permutations for
+#' a given R object and a specified permutation design.
+#'
+#' Function `allPerms` enumerates all possible permutations for the number
+#' of observations and the selected permutation scheme. It has
+#' [base::print()] and [base::summary()] methods. `allPerms`
+#' returns a matrix containing all possible permutations, possibly containing
+#' the observed ordering (if argument `observed` is `TRUE`). The rows
+#' of this matrix are the various permutations and the columns reflect the
+#' number of samples.
+#'
+#' With free permutation designs, and restricted permutation schemes with large
+#' numbers of observations, there are a potentially huge number of possible
+#' permutations of the samples. It would be inefficient, not to mention
+#' incredibly time consuming, to enumerate them all. Storing all possible
+#' permutations would also become problematic in such cases. To control this
+#' and guard against trying to evaluate too large a number of permutations, if
+#' the number of possible permutations is larger than
+#' `getMaxperm(control)`, `allPerms` exits with an error.
+#'
+#' The `as.matrix` method sets the `control` and `seed`
+#' attributes to `NULL` and removes the `"permutationMatrix"` class,
+#' resulting in a standard matrix object.
+#'
+#' With `Plots(type = "partition")`, the rows enumerate distinct
+#' assignments to the labelled groups in `Plots$strata`. If the group
+#' sizes are \eqn{n_1, \ldots, n_K}, there are \eqn{n! / \prod_k n_k!} such
+#' assignments before optionally removing the observed assignment.
+#'
+#' @aliases allPerms print.allPerms summary.allPerms print.summary.allPerms
+#' @aliases as.matrix.allPerms as.allPerms
+#' @param n the number of observations or an 'object' from which the number of
+#' observations can be determined via `getNumObs`.
+#' @param control a list of control values describing properties of the
+#' permutation design, as returned by a call to [how()].
+#' @param check logical; should `allPerms` check the design? The default
+#' is to check, but this can be skipped, for example if a function checked the
+#' design earlier.
+#' @param object for `summary.allPerms`, an object of class
+#' `"allPerms"`. For `as.allPerms` a matrix or something that can be
+#' coerced to a matrix by [base::as.matrix()].
+#' @param ... arguments to other methods.
+#' @param x an object of class `"allPerms"`, as returned by
+#' `allPerms`.
+#' @returns For `allPerms`, an object of class `"allPerms"`: a matrix
+#' whose rows are the set of all possible permutations for the supplies number
+#' of observations and permutation scheme selected. The matrix has two
+#' additional attributes `control` and `observed`. Attribute
+#' `control` contains the argument `control` (possibly updated via
+#' `check`). Attribute `observed` contains argument `observed`.
+#' @section Warning: If permuting the strata themselves, a balanced design is
+#' required (the same number of observations in each level of `strata`).
+#' This does not apply to `Plots(type = "partition")`, which supports
+#' unequal group sizes.
+#' @author Gavin Simpson
+#' @order 1
+#' @examples
+#'
+#' ## allPerms can work with a vector
+#' vec <- c(3,4,5)
+#' allPerms(vec) ## free permutation
+#'
+#' ## enumerate all possible permutations for a more complicated
+#' ## design
+#' fac <- gl(2,6)
+#' ctrl <- how(within = Within(type = "grid", mirror = FALSE,
+#'                             constant = TRUE, nrow = 3, ncol = 2),
+#'             plots = Plots(strata = fac))
+#' Nobs <- length(fac)
+#' numPerms(seq_len(Nobs), control = ctrl) ## 6
+#' (tmp <- allPerms(Nobs, control = update(ctrl, observed = TRUE)))
+#' (tmp2 <- allPerms(Nobs, control = ctrl))
+#'
+#' ## turn on mirroring
+#' ##ctrl$within$mirror <- TRUE
+#' ctrl <- update(ctrl, within = update(getWithin(ctrl), mirror = TRUE))
+#' numPerms(seq_len(Nobs), control = ctrl)
+#' (tmp3 <- allPerms(Nobs, control = update(ctrl, observed = TRUE)))
+#' (tmp4 <- allPerms(Nobs, control = ctrl))
+#'
+#' ## prints out details of the permutation scheme as
+#' ## well as the matrix of permutations
+#' summary(tmp3)
+#' summary(tmp4)
+#'
 `allPerms` <- function(n, control = how(), check = TRUE) {
     ## start
     v <- n

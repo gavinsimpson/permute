@@ -1,3 +1,5 @@
+#' @rdname allUtils
+#' @order 4
 `allStrata` <- function(n, control)
 {
     ## seq vector of observation indices
@@ -11,7 +13,7 @@
     if (type == "partition") {
         return(doAllPartitions(strata))
     }
-  
+
     lev <- length(levels(strata))
     ## compute nperms on number of levels - for this need Within()
     ## and type == typeP
