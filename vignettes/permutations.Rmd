@@ -242,7 +242,10 @@ args(Within)
  ~ this argument only has an effect when there are plots in the design[^Owing to the current implementation, whilst this option could also be useful when blocks to define groups of samples, it will not have any influence over how permutations are generated. As such, only use blocks for simple blocking structures and use plots if you require greater control of the permutations at the group (i.e. plot) level.]. `constant = TRUE` stipulates that each plot should have the same *within-plot* permutation. This is useful for example when you have time series of observations from several plots. If all plots were sampled at the same time points, it can be argued that at the plot level, the samples experienced the same *time* and hence the same permutation should be used within each plot.
 
 `mirror`
- ~ when `type` is `"series"` or `"grid"`, argument `"mirror"` controls whether permutations are taken from the mirror image of the observed ordering in space or time. Consider the sequence `1, 2, 3, 4`. The relationship between observations is also preserved if we reverse the original ordering to `4, 3, 2, 1` and generate permutations from both these orderings. This is what happens when `mirror = TRUE`. For time series, the reversed ordering `4, 3, 2, 1` would imply an influence of observation 4 on observation 3, which is implausible. For spatial grids or line transects, however, this is a sensible option, and can significantly increase the number of possible permutations[^Setting `mirror = TRUE` will double or quadruple the set of permutations for `"series"` or `"grid"` permutations, respectively, as long as there are more than two time points or columns in the grid.].
+ ~ when `type` is `"series"` or `"grid"`, argument `"mirror"` controls whether permutations are taken from the mirror image of the observed ordering in space or time. Consider the sequence `1, 2, 3, 4`. The relationship between observations is also preserved if we reverse the original ordering to `4, 3, 2, 1` and generate permutations from both these orderings. This is what happens when `mirror = TRUE`. For time series, the reversed ordering `4, 3, 2, 1` would imply an influence of observation 4 on observation 3, which is implausible. For spatial grids or line transects, however, this is a sensible option, and can significantly increase the number of possible permutations.
+
+`symmetric`
+ ~ for grid designs with `mirror = TRUE`, `symmetric = TRUE` preserves symmetric spatial autocovariance by allowing either the rows or columns to be mirrored, but never both directions simultaneously. Reflections of axes containing only one or two cells are already represented by toroidal shifts and do not add distinct permutations.
 
 `ncol`, `nrow`
  ~ define the dimensions of the spatial grid.
@@ -377,6 +380,9 @@ The `getFoo()` functions provided by *permute* are
 `getMirror()`
  ~ returns a logical, indicating whether permutations are drawn from the mirror image of the observed ordering at the *within* or *plots* levels, as determined by the value of argument `which`.
 
+`getSymmetric()`
+ ~ returns a logical indicating whether simultaneous row and column mirroring is disallowed for a grid design at the *within* or *plots* level.
+
 `getConstant()`
  ~ returns a logical, indicating whether the same permutation of samples, or a different permutation, is used within each of the plots.
 
@@ -414,6 +420,9 @@ The available `setFoo()<-` functions are
 
 `setMirror<-()`
  ~ replaces the `mirror` component of an object of class `"Plots"` or `"Within"` with a logical vector of length one.
+
+`setSymmetric<-()`
+ ~ replaces the `symmetric` component of an object of class `"Plots"` or `"Within"` with a logical vector of length one.
 
 `setConstant<-()`
  ~ replaces the `constant` component of an object of class `"Within"` with a logical vector of length one.
