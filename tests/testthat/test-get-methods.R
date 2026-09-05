@@ -41,3 +41,11 @@ test_that("getHow works for check()", {
     CTRL <- getHow(res)
     expect_is(CTRL, "how")
 })
+
+test_that("dimension getters have useful default methods", {
+    x <- matrix(seq_len(6), nrow = 2, ncol = 3)
+
+    expect_identical(getRow(x), 2L)
+    expect_identical(getCol(x), 3L)
+    expect_identical(getDim(x), c(2L, 3L))
+})

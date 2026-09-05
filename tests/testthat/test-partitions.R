@@ -49,6 +49,9 @@ test_that("partition designs require valid strata", {
     groups <- factor(c("a", "a", "b", "b"))
     ctrl <- how(plots = Plots(groups, type = "partition"))
     expect_error(shuffle(5, ctrl), "do not match")
+
+    expect_error(allPartitions(factor(character())),
+                 "must contain at least one group")
 })
 
 test_that("numPerms counts distinct fixed-size assignments", {
@@ -148,6 +151,26 @@ test_that("partition convenience functions use the integrated API", {
     expect_is(set, "permutationMatrix")
     expect_identical(dim(all), c(9L, 5L))
     expect_identical(dim(set), c(4L, 5L))
+})
+
+test_that("shufflePartitionSet inherits nset from its control", {
+    groups <- factor(c("a", "a", "b"))
+    set <- shufflePartitionSet(
+        groups,
+        control = how(nperm = 2),
+        check = FALSE
+    )
+
+    expect_s3_class(set, "permutationMatrix")
+    expect_identical(dim(set), c(2L, 3L))
+})
+
+test_that("partition permutation matrices describe random assignment", {
+    groups <- factor(c("a", "a", "b"))
+    set <- shufflePartitionSet(groups, nset = 2, check = FALSE)
+
+    expect_output(print(set), "Random assignment")
+    expect_output(print(set), "Random assignment to groups")
 })
 
 test_that("partition permutation matrices can pass through vegan", {

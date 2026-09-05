@@ -81,6 +81,17 @@ test_that("permute() validates supplied permutations", {
     expect_error(permute(1, perms = values), "permutation indices")
 })
 
+test_that("permute() validates an explicitly supplied observation count", {
+    perms <- matrix(c(2L, 1L, 3L), nrow = 1)
+
+    for (n in list(0, NA_real_, Inf, 1.5, numeric())) {
+        expect_error(
+            permute(1, n = n, perms = perms),
+            "positive integer number of observations"
+        )
+    }
+})
+
 test_that("using supplied permutations does not advance the RNG", {
     perms <- rbind(c(2L, 1L, 3L), c(3L, 2L, 1L))
     set.seed(42)

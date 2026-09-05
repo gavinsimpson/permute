@@ -76,3 +76,88 @@ test_that("balanced designs only required within blocks", {
     expect_no_error(chk <- check(df27, control = h))
     expect_identical(chk$n, 150000)
 })
+
+test_that("check rejects strata that do not match the observations", {
+    expect_error(
+        check(5, how(blocks = gl(2, 2))),
+        "length of Block 'strata' do not match"
+    )
+    expect_error(
+        check(5, how(plots = Plots(gl(2, 2)))),
+        "length of Plot 'strata' do not match"
+    )
+})
+
+test_that("check rejects invalid within-plot restrictions", {
+    unbalanced <- factor(c(rep("a", 4), rep("b", 2)))
+    ctrl <- how(
+        plots = Plots(unbalanced),
+        within = Within(type = "grid", nrow = 2, ncol = 2)
+    )
+    expect_error(check(6, ctrl), "Unbalanced 'grid' designs")
+
+    ctrl <- how(
+        plots = Plots(gl(2, 3)),
+        within = Within(type = "grid", nrow = 2, ncol = 2)
+    )
+    expect_error(check(6, ctrl), "not a multiple of number of observations")
+
+    ctrl <- how(
+        plots = Plots(factor(c("a", "a", "b", "b", "b"))),
+        within = Within(type = "series", constant = TRUE)
+    )
+    expect_error(check(5, ctrl), "constant = TRUE")
+})
+
+test_that("check requires permuted plots to be balanced", {
+    plots <- factor(c("a", "a", "b", "b", "b"))
+    ctrl <- how(
+        plots = Plots(plots, type = "free"),
+        within = Within(type = "none")
+    )
+    expect_error(check(5, ctrl), "balanced if permuting 'strata'")
+
+    blocks <- factor(c("x", "x", "x", "y", "y", "y"))
+    plots <- factor(c("a", "a", "b", "a", "b", "b"))
+    ctrl <- how(
+        blocks = blocks,
+        plots = Plots(plots, type = "free"),
+        within = Within(type = "none")
+    )
+    expect_error(check(6, ctrl), "balanced within blocks")
+})
+
+test_that("check validates supplied complete permutation sets", {
+    ctrl <- how()
+    ctrl$all.perms <- matrix(1:4, nrow = 1)
+
+    expect_error(check(4, ctrl), "must be of class 'allPerms'")
+})
+
+test_that("check reports and records complete enumeration below minperm", {
+    ctrl <- how(nperm = 2, minperm = 30, make = FALSE)
+
+    expect_message(
+        checked <- check(4, ctrl),
+        "Set of permutations < 'minperm'"
+    )
+    expect_true(getComplete(checked$control))
+    expect_equal(getMaxperm(checked$control), factorial(4))
+    expect_equal(getNperm(checked$control), 2)
+    expect_null(getAllperms(checked$control))
+})
+
+test_that("check and its summary have stable print contracts", {
+    checked <- check(4, how(nperm = 2, minperm = 0, make = FALSE),
+                     quietly = TRUE)
+
+    expect_output(print(checked), "24")
+    checked_summary <- summary(checked)
+    expect_s3_class(checked_summary, "summary.check")
+    expect_output(print(checked_summary),
+                  "Number of possible permutations: 24")
+    expect_output(print(checked_summary), "Permutation Design:")
+    printed <- NULL
+    capture.output(printed <- withVisible(print(checked_summary)))
+    expect_false(printed$visible)
+})
