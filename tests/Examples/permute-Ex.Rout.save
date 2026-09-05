@@ -807,6 +807,45 @@ p5 4 1 5 2 3
 > 
 > 
 > cleanEx()
+> nameEx("permutations")
+> ### * permutations
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: permutations
+> ### Title: Permute a vector of data
+> ### Aliases: permutations print.permutations as.matrix.permutations
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> suppressWarnings(RNGversion("3.5.0"))
+> ## End(Don't show)
+> set.seed(1)
+> permutations(letters[1:5], nset = 3, check = FALSE)
+No. of Permutations: 3
+No. of Samples: 5 (Randomised)
+
+   1   2   3   4   5  
+p1 "b" "e" "d" "c" "a"
+p2 "e" "d" "b" "c" "a"
+p3 "b" "a" "c" "d" "e"
+> 
+> ## Restricted permutations of data from a time series
+> control <- how(within = Within(type = "series"))
+> permutations(c(10, 20, 30, 40, 50), nset = 3,
++              control = control, check = FALSE)
+No. of Permutations: 3
+No. of Samples: 5 (Sequence)
+
+    1  2  3  4  5
+p1 40 50 10 20 30
+p2 50 10 20 30 40
+p3 10 20 30 40 50
+> 
+> 
+> 
+> cleanEx()
 > nameEx("set-methods")
 > ### * set-methods
 > 

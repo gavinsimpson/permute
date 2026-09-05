@@ -2,6 +2,10 @@
 
 ## New features
 
+* New function `permutations()` applies a permutation design to the values in
+  an atomic vector and returns a matrix-like object with one permutation per
+  row. This addresses #35 and the original request in #33.
+
 * `Plots()` gains type `"partition"` for permuting group membership while
   keeping the number of observations in each group fixed.
 
