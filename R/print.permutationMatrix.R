@@ -36,6 +36,8 @@
                    grid = paste("Spatial grid: ",
                    getRow(ctrl, which = "within"), "r, ",
                    getCol(ctrl, which = "within"), "c", sep = ""))
+    if (wt == "none" && getType(ctrl, which = "plots") == "partition")
+        wmsg <- "Random assignment"
     msg <- paste(msg, wmsg, sep = "")
     ## add info on mirroring if series or grid
     if ((wt %in% c("series", "grid")) && getMirror(ctrl, which = "within")) {
@@ -64,6 +66,7 @@
                         none = "",
                         free = "; Randomised",
                         series = "; Sequence",
+                        partition = "; Random assignment to groups",
                         grid = paste("; Spatial grid: ",
                         getRow(ctrl, which = "plots"), "r, ",
                         getCol(ctrl, which = "plots"), "c", sep = ""))

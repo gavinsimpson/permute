@@ -7,6 +7,7 @@
         is.data.frame(n)) {
         n <- nobs(n)
     }
+    checkPartitionDesign(control, n)
     sn <- seq_len(n) ## sequence of samples in order of input
 
     ## get blocking, if any

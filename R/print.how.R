@@ -34,9 +34,18 @@
                            prefix = pfix))
         writeLines(strwrap(paste("Permutation type:", ptype),
                            prefix = pfix))
-        mirrorP <- getMirror(x, which = "plots")
-        writeLines(strwrap(paste("Mirrored?:", if(mirrorP) "Yes" else "No"),
-                           prefix = pfix))
+        if (isTRUE(all.equal(ptype, "partition"))) {
+            sizes <- as.integer(table(plotStr))
+            txt <- paste("Group sizes:", paste(sizes, collapse = ", "))
+            writeLines(strwrap(txt, prefix = pfix))
+            writeLines(strwrap("Within-group order retained", prefix = pfix))
+        }
+        if (!isTRUE(all.equal(ptype, "partition"))) {
+            mirrorP <- getMirror(x, which = "plots")
+            writeLines(strwrap(paste("Mirrored?:",
+                                     if(mirrorP) "Yes" else "No"),
+                               prefix = pfix))
+        }
         if(isTRUE(all.equal(ptype, "grid"))) {
             nr <- getRow(x, which = "plots")
             nr.t <- if(nr > 1) "rows" else "row"

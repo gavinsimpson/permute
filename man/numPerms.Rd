@@ -25,7 +25,12 @@ numPerms(object, control = how(), check = TRUE)
   used and it will be expanded to a vector of length \code{object}
   (i.e., \code{1:object}) before computing the number of
   permutations. As such, \code{object} can be the number of observations
-  not just the object containing the observations. 
+  not just the object containing the observations.
+
+  For \code{Plots(type = "partition")}, if the group sizes are
+  \eqn{n_1, \ldots, n_K}, the number of distinct assignments is
+  \eqn{n! / \prod_k n_k!}. With blocks, this quantity is calculated within
+  each block and the results are multiplied.
 }
 \value{
   The (numeric) number of possible permutations of observations in
@@ -94,4 +99,9 @@ bl
 pl <- numPerms(v, control = how(plots = Plots(strata = gl(2,5))))
 pl
 stopifnot(all.equal(bl, pl))
+
+## Distinct assignments to groups of sizes 3 and 2
+groups <- factor(c("a", "a", "a", "b", "b"))
+ctrl <- how(plots = Plots(groups, type = "partition"))
+numPerms(length(groups), control = ctrl) ## 10
 }

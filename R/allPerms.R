@@ -6,6 +6,7 @@
          v <- seq_len(n)
     ## number of observations in data
     n <- nobs(v)
+    checkPartitionDesign(control, n)
     ## check permutation scheme and update control
     make <- getMake(control)
     if (check) {
@@ -195,7 +196,10 @@
         ## permuting plots ONLY
         if(typeW == "none") {
             res <- allStrata(n, control = control)
-        } else {
+            if (typeP == "partition") {
+                res[] <- obs[res]
+            }
+            } else {
             ## FIXME - this need updating to work with the new code
             ## permuting blocks AND within blocks
             ## need a local CONTROL that just permutes blocks

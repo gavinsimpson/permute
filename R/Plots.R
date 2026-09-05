@@ -1,10 +1,15 @@
-`Plots` <- function(strata = NULL, type = c("none","free","series","grid"),
-                    mirror = FALSE, ncol = NULL, nrow = NULL) {
-
+`Plots` <- function(
+  strata = NULL,
+  type = c("none", "free", "series", "grid", "partition"),
+  mirror = FALSE,
+  ncol = NULL,
+  nrow = NULL
+) {
     plots.name <- deparse(substitute(strata))
     ## strata should also be a factor - coerce
-    if(!is.null(strata))
+    if(!is.null(strata) && !is.factor(strata)) {
         strata <- as.factor(strata)
+    }
 
     type <- match.arg(type)
 

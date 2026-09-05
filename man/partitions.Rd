@@ -1,0 +1,73 @@
+\name{partitions}
+\alias{allPartitions}
+\alias{shufflePartition}
+\alias{shufflePartitionSet}
+
+\title{Generate random assignments to groups of fixed size}
+\description{
+  Generate all assignments, one random assignment, or a set of random
+  assignments of observations to labelled groups whose sizes are fixed by a
+  grouping factor.
+}
+\usage{
+allPartitions(strata, control = how(), check = TRUE)
+
+shufflePartition(strata, control = how())
+
+shufflePartitionSet(strata, nset, control = how(), check = TRUE,
+                    quietly = FALSE)
+}
+\arguments{
+  \item{strata}{A factor, or an object coercible to a factor, containing
+    the group membership of every observation.}
+  \item{nset}{The number of random assignments to generate. If missing,
+    it is obtained from \code{control}.}
+  \item{control}{An object of class \code{"how"}. Any blocking factor and
+    the permutation-count controls are retained; its \code{plots} and
+    \code{within} components are replaced by the partition design.}
+  \item{check}{Logical; should the permutation design be checked?}
+  \item{quietly}{Logical; suppress messages about complete enumeration?}
+}
+\details{
+  The number assigned to each group is fixed by \code{table(strata)}. If the
+  group sizes are \eqn{n_1, \ldots, n_K}, the number of distinct assignments
+  is
+  \deqn{n! / \prod_{k=1}^K n_k!.}
+
+  Each assignment is returned as a permutation of observation indices so it
+  can be used anywhere that accepts output from \code{shuffle},
+  \code{shuffleSet}, or \code{allPerms}. The relative order of observations
+  originally belonging to the same group is retained. This selects one
+  canonical index permutation for each distinct arrangement of the group
+  labels and omits permutations that differ only by reordering observations
+  carrying the same label.
+
+  These functions are convenience wrappers for a design constructed with
+  \code{Plots(strata = strata, type = "partition")} and
+  \code{Within(type = "none")}.
+}
+\value{
+  \code{shufflePartition} returns an integer vector of length
+  \code{length(strata)}. \code{allPartitions} and
+  \code{shufflePartitionSet} return permutation matrices with one assignment
+  per row.
+}
+\examples{
+groups <- factor(c("a", "a", "a", "b", "b"))
+
+## One of 5! / (3! 2!) = 10 assignments
+set.seed(1)
+(p <- shufflePartition(groups))
+groups[p]
+
+## A set of random assignments
+shufflePartitionSet(groups, nset = 5, check = FALSE)
+
+## Complete enumeration, excluding the observed assignment by default
+allPartitions(groups)
+}
+\seealso{
+  \code{\link{allPerms}}, \code{\link{shuffle}},
+  \code{\link{shuffleSet}}, \code{\link{how}}
+}
+\keyword{design}

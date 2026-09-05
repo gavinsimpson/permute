@@ -18,6 +18,8 @@
         shuffleGrid(nrow = nrow, ncol = ncol, mirror = mirror,
                     start.row = start.row, start.col = start.col,
                     flip = flip)
+    } else if (type == "partition") {
+        return(doShufflePartition(strata))
     } else {
         stop("Invalid permutation type.")
     }

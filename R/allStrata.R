@@ -4,6 +4,14 @@
     v <- seq_len(n)
     ## number of groups
     strata <- getStrata(control, which = "plots")
+
+    ## Partition permutations rearrange the group labels rather than the
+    ## groups as whole units.
+    type <- getType(control, which = "plots")
+    if (type == "partition") {
+        return(doAllPartitions(strata))
+    }
+  
     lev <- length(levels(strata))
     ## compute nperms on number of levels - for this need Within()
     ## and type == typeP

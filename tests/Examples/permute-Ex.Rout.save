@@ -605,6 +605,31 @@ Permutation details:
   Max. number of permutations allowed: 9999
   Evaluate all permutations?: No.  Activation limit: 5040
 > 
+> ## Random assignments to groups of fixed size
+> groups <- factor(c("a", "a", "a", "b", "b"))
+> (h2 <- how(plots = Plots(strata = groups, type = "partition")))
+
+Permutation Design:
+
+Blocks:
+  Defined by: none
+
+Plots:
+  Plots: groups
+  Permutation type: partition
+  Group sizes: 3, 2
+  Within-group order retained
+
+Within Plots:
+  Permutation type: none
+
+Permutation details:
+  Number of permutations: 199
+  Max. number of permutations allowed: 9999
+  Evaluate all permutations?: No.  Activation limit: 5040
+> shuffle(length(groups), control = h2)
+[1] 4 1 2 3 5
+> 
 > 
 > 
 > cleanEx()
@@ -715,6 +740,63 @@ Permutation details:
 > pl
 [1] 14400
 > stopifnot(all.equal(bl, pl))
+> 
+> ## Distinct assignments to groups of sizes 3 and 2
+> groups <- factor(c("a", "a", "a", "b", "b"))
+> ctrl <- how(plots = Plots(groups, type = "partition"))
+> numPerms(length(groups), control = ctrl) ## 10
+[1] 10
+> 
+> 
+> 
+> cleanEx()
+> nameEx("partitions")
+> ### * partitions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: partitions
+> ### Title: Generate random assignments to groups of fixed size
+> ### Aliases: allPartitions shufflePartition shufflePartitionSet
+> ### Keywords: design
+> 
+> ### ** Examples
+> 
+> groups <- factor(c("a", "a", "a", "b", "b"))
+> 
+> ## One of 5! / (3! 2!) = 10 assignments
+> set.seed(1)
+> (p <- shufflePartition(groups))
+[1] 4 1 2 3 5
+> groups[p]
+[1] b a a a b
+Levels: a b
+> 
+> ## A set of random assignments
+> shufflePartitionSet(groups, nset = 5, check = FALSE)
+No. of Permutations: 5
+No. of Samples: 5 (Nested in: plots; Random assignment)
+Restricted by Plots: strata (2 plots; Random assignment to groups)
+
+   1 2 3 4 5
+p1 1 2 4 3 5
+p2 1 4 5 2 3
+p3 1 2 3 4 5
+p4 4 1 5 2 3
+p5 4 1 5 2 3
+> 
+> ## Complete enumeration, excluding the observed assignment by default
+> allPartitions(groups)
+      [,1] [,2] [,3] [,4] [,5]
+ [1,]    1    2    4    3    5
+ [2,]    1    2    4    5    3
+ [3,]    1    4    2    3    5
+ [4,]    1    4    2    5    3
+ [5,]    1    4    5    2    3
+ [6,]    4    1    2    3    5
+ [7,]    4    1    2    5    3
+ [8,]    4    1    5    2    3
+ [9,]    4    5    1    2    3
 > 
 > 
 > 

@@ -290,7 +290,7 @@
 
 `setType<-.Plots` <- function(object, value) {
     value <- as.character(value)
-    if (!value %in% c("free","series","grid","none"))
+    if (!value %in% c("free","series","grid","none","partition"))
         stop("Invalid permutation type")
     value <- rep(value, length.out = 1L)
     object[["type"]] <- value
