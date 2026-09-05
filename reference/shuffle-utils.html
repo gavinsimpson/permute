@@ -18,7 +18,7 @@ spatial grids, and blocking factors."><!-- mathjax --><script src="https://cdnjs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-5</span>
       </span>
     </div>
 
@@ -75,7 +75,8 @@ spatial grids, and blocking factors.</p>
 <span>  mirror <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  start.row <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  start.col <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  flip <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  flip <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  symmetric <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">shuffleStrata</span><span class="op">(</span></span>
@@ -87,7 +88,8 @@ spatial grids, and blocking factors.</p>
 <span>  <span class="va">nrow</span>,</span>
 <span>  <span class="va">ncol</span>,</span>
 <span>  start.row <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  start.col <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  start.col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  symmetric <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -125,6 +127,11 @@ the first element flips rows and the second flips columns.</p></dd>
 <dt id="arg-start-row-start-col">start.row, start.col<a class="anchor" aria-label="anchor" href="#arg-start-row-start-col"></a></dt>
 <dd><p>Numeric; the starting row and column for the
 shifted grid permutation. If not supplied, they are selected randomly.</p></dd>
+
+
+<dt id="arg-symmetric">symmetric<a class="anchor" aria-label="anchor" href="#arg-symmetric"></a></dt>
+<dd><p>Logical; for grid permutations, should simultaneous
+mirroring in both spatial directions be disallowed?</p></dd>
 
 
 <dt id="arg-strata">strata<a class="anchor" aria-label="anchor" href="#arg-strata"></a></dt>
@@ -190,6 +197,9 @@ and <code><a href="shuffle.html">shuffle()</a></code> is the user-oriented wrapp
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3 1 2 6 4 5 9 7 8</span>
 <span class="r-in"><span><span class="fu">shuffleGrid</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, flip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="co">## random start, forced mirror</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 8 9 7 2 3 1 5 6 4</span>
+<span class="r-in"><span><span class="fu">shuffleGrid</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, mirror <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>            symmetric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>          <span class="co">## never mirror both directions</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9 7 8 3 1 2 6 4 5</span>
 </code></pre></div>
     </div>
   </div>

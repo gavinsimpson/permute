@@ -19,7 +19,7 @@ permute blocks and/or observations within blocks, allPerms() is required."><!-- 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-5</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@ permute blocks and/or observations within blocks, <code><a href="allPerms.html">
 <span></span>
 <span><span class="fu">allSeries</span><span class="op">(</span><span class="va">n</span>, <span class="va">nperms</span>, mirror <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">allGrid</span><span class="op">(</span><span class="va">n</span>, <span class="va">nperms</span>, <span class="va">nr</span>, <span class="va">nc</span>, <span class="va">mirror</span>, <span class="va">constant</span><span class="op">)</span></span>
+<span><span class="fu">allGrid</span><span class="op">(</span><span class="va">n</span>, <span class="va">nperms</span>, <span class="va">nr</span>, <span class="va">nc</span>, <span class="va">mirror</span>, <span class="va">constant</span>, symmetric <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">allStrata</span><span class="op">(</span><span class="va">n</span>, <span class="va">control</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -103,6 +103,11 @@ permute blocks and/or observations within blocks, <code><a href="allPerms.html">
 <dt id="arg-constant">constant<a class="anchor" aria-label="anchor" href="#arg-constant"></a></dt>
 <dd><p>Logical; should the same permutation be used within each
 block?</p></dd>
+
+
+<dt id="arg-symmetric">symmetric<a class="anchor" aria-label="anchor" href="#arg-symmetric"></a></dt>
+<dd><p>Logical; for grid permutations, should simultaneous
+mirroring in both spatial directions be disallowed?</p></dd>
 
 
 <dt id="arg-control">control<a class="anchor" aria-label="anchor" href="#arg-control"></a></dt>

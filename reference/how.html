@@ -18,7 +18,7 @@ designs for time series, line transects, spatial grids and blocking factors."><!
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-5</span>
       </span>
     </div>
 
@@ -83,7 +83,8 @@ designs for time series, line transects, spatial grids and blocking factors.</p>
 <span>  constant <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  mirror <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  nrow <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  symmetric <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">Plots</span><span class="op">(</span></span>
@@ -91,7 +92,8 @@ designs for time series, line transects, spatial grids and blocking factors.</p>
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"free"</span>, <span class="st">"series"</span>, <span class="st">"grid"</span>, <span class="st">"partition"</span><span class="op">)</span>,</span>
 <span>  mirror <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  nrow <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  symmetric <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -170,6 +172,11 @@ permutation is produced for each level of <code>strata</code>.</p></dd>
 spatial grid respectively.</p></dd>
 
 
+<dt id="arg-symmetric">symmetric<a class="anchor" aria-label="anchor" href="#arg-symmetric"></a></dt>
+<dd><p>logical; for grid permutations, should simultaneous
+mirroring in both spatial directions be disallowed?</p></dd>
+
+
 <dt id="arg-strata">strata<a class="anchor" aria-label="anchor" href="#arg-strata"></a></dt>
 <dd><p>A factor, or an object that can be coerced to a factor via
 <code>as.factor</code>, specifying the strata for permutation.</p></dd>
@@ -205,6 +212,10 @@ If there is no inherent direction in your experimental design, mirrored
 permutations can be considered part of the Null model, and as such increase
 the number of possible permutations. The default is to not use mirroring so
 you must explicitly turn this on using <code>mirror = TRUE</code> in <code>how</code>.</p>
+<p>For spatial grids, <code>symmetric = TRUE</code> preserves symmetric spatial
+autocovariance by preventing a permutation from being mirrored in both the
+row and column directions at the same time. It has no effect unless
+<code>type = "grid"</code> and <code>mirror = TRUE</code>.</p>
 <p>To permute plots rather than the observations within plots (the levels of
 <code>strata</code>), use <code>Within(type = "none")</code> and <code>Plots(type = foo)</code>, where
 <code>foo</code> is how you want the plots to be permuted. However,

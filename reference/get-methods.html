@@ -20,7 +20,7 @@ breaking user code."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-5</span>
       </span>
     </div>
 
@@ -88,6 +88,8 @@ breaking user code.</p>
 <span><span class="fu">getMinperm</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">getMirror</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">getSymmetric</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">getNperm</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -159,13 +161,22 @@ breaking user code.</p>
 <span><span class="fu">getMirror</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'how'</span></span>
+<span><span class="fu">getSymmetric</span><span class="op">(</span><span class="va">object</span>, which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"within"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'how'</span></span>
 <span><span class="fu">getNperm</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'Plots'</span></span>
+<span><span class="fu">getSymmetric</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'how'</span></span>
 <span><span class="fu">getObserved</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'how'</span></span>
 <span><span class="fu">getPlots</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'Within'</span></span>
+<span><span class="fu">getSymmetric</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'how'</span></span>
 <span><span class="fu">getRow</span><span class="op">(</span><span class="va">object</span>, which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"within"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -248,6 +259,9 @@ are useful when debugging.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mirror</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $symmetric</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ncol</span>

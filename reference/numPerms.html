@@ -18,7 +18,7 @@ the current permutation scheme."><!-- mathjax --><script src="https://cdnjs.clou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-5</span>
       </span>
     </div>
 
@@ -107,22 +107,22 @@ are multiplied.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>In general, mirroring <code>"series"</code> or <code>"grid"</code> designs doubles
-or quadruples, respectively, the number of permutations without mirroring
-(within levels of strata if present). This is <strong>not</strong> true in two
-special cases:</p><ol><li><p>In <code>"grid"</code> designs where the number of columns is equal to 2, and</p></li>
-<li><p>In <code>"series"</code> designs where the number of observations in a series is
-equal to 2.</p></li>
-</ol><p>For example, with 2 observations there are 2 permutations for
+    <p>In general, mirroring <code>"series"</code> designs doubles the number of
+permutations and mirroring <code>"grid"</code> designs can quadruple it (within
+levels of strata if present). For grids with <code>symmetric = TRUE</code>, at most
+three orientations are included because simultaneous row and column
+mirroring is disallowed. Reflections of grid axes containing one or two
+cells are equivalent to toroidal shifts and do not add distinct
+permutations.</p>
+<p>Mirroring does not double the number of series permutations when the series
+contains only two observations.</p>
+<p>For example, with 2 observations there are 2 permutations for
 <code>"series"</code> designs:</p><ol><li><p>1-2, and</p></li>
 <li><p>2-1.</p></li>
 </ol><p>If these two permutations were mirrored, we would have:</p><ol><li><p>2-1, and</p></li>
 <li><p>1-2.</p></li>
-</ol><p>It is immediately clear that this is the same set of
-permutations without mirroring (if one reorders the rows). A similar
-situation arises in <code>"grid"</code> designs where the number of
-<strong>columns</strong> per <em>grid</em> is equal to 2. Note that the number of rows
-per <em>grid</em> is not an issue here.</p>
+</ol><p>It is immediately clear that this is the same set of permutations without
+mirroring (if one reorders the rows).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
