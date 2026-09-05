@@ -18,7 +18,7 @@ designs for time series, line transects, spatial grids and blocking factors."><!
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-6</span>
       </span>
     </div>
 
@@ -75,7 +75,8 @@ designs for time series, line transects, spatial grids and blocking factors.</p>
 <span>  minperm <span class="op">=</span> <span class="fl">5040</span>,</span>
 <span>  all.perms <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  make <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  observed <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  observed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">Within</span><span class="op">(</span></span>
@@ -93,7 +94,8 @@ designs for time series, line transects, spatial grids and blocking factors.</p>
 <span>  mirror <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  symmetric <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  symmetric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -108,7 +110,8 @@ for the definition of blocking structures which further restrict
 permutations (<code>blocks</code>). <code>within</code> and <code>plots</code> each require a
 named list as produced by <code>Within</code> and <code>Plots</code> respectively.
 <code>blocks</code> takes a factor (or an object coercible to a factor via
-<code>as.factor</code>), the levels of which define the blocking structure.</p></dd>
+<code>as.factor</code>), or a one-sided formula, the levels of which define the
+blocking structure.</p></dd>
 
 
 <dt id="arg-nperm">nperm<a class="anchor" aria-label="anchor" href="#arg-nperm"></a></dt>
@@ -151,6 +154,13 @@ of the set of all permutations? Default is <code>FALSE</code> to facilitate usag
 in higher level functions.</p></dd>
 
 
+<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
+<dd><p>A data frame in which to evaluate formula values supplied to
+<code>blocks</code> or <code>strata</code>. When <code>Plots()</code> is called inside <code>how()</code>, supply <code>data</code>
+to <code>how()</code> rather than to <code>Plots()</code>. A standalone call to <code>Plots()</code> can take
+its own <code>data</code> argument.</p></dd>
+
+
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>character; the type of permutations required. One of
 <code>"free"</code>, <code>"series"</code>, <code>"grid"</code>, <code>"none"</code>, or, for
@@ -178,8 +188,10 @@ mirroring in both spatial directions be disallowed?</p></dd>
 
 
 <dt id="arg-strata">strata<a class="anchor" aria-label="anchor" href="#arg-strata"></a></dt>
-<dd><p>A factor, or an object that can be coerced to a factor via
-<code>as.factor</code>, specifying the strata for permutation.</p></dd>
+<dd><p>A factor, an object that can be coerced to a factor via
+<code>as.factor</code>, or a one-sided formula specifying the strata for permutation.
+Multiple variables and nested terms in a formula are combined into a single
+factor representing their interaction.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -225,6 +237,19 @@ equal!</p>
 permutation within each plot. This is controlled by argument
 <code>constant</code>. If <code>constant = TRUE</code> then the same permutation will be
 generated for each level of <code>strata</code>. The default is <code>constant = FALSE</code>.</p>
+<p>One-sided formulas can be used to define <code>blocks</code> and plot-level <code>strata</code>.
+A formula containing a single variable, such as <code>~ site</code>, produces a factor
+from that variable. Variables participating in multiple model terms are
+combined into a single interaction factor. Consequently, <code>~ site + plot</code>,
+<code>~ site:plot</code>, and the nested forms <code>~ site / plot</code> and
+<code>~ plot %in% site</code> all describe groups formed from <code>site</code> and <code>plot</code>.
+Standard formula expansion and subtraction are honoured, so, for example,
+<code>~ . - unused</code> uses all variables in <code>data</code> except <code>unused</code>.</p>
+<p>Formulas are evaluated with standard model-frame semantics: variables are
+looked up first in <code>data</code> and then in the formula environment. Missing
+values are retained to preserve alignment with the observations, and
+unused factor levels and unobserved combinations are dropped. The formulas
+must be one-sided and contain at least one grouping term.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -331,6 +356,35 @@ permutation design described by <code>how</code>.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Evaluate all permutations?: No.  Activation limit: 5040</span>
 <span class="r-in"><span><span class="fu"><a href="shuffle.html">shuffle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">groups</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">h2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4 1 2 3 5</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Formula interfaces use a single data frame</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html" class="external-link">gl</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html" class="external-link">gl</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html" class="external-link">gl</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">12</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">how</span><span class="op">(</span>plots <span class="op">=</span> <span class="fu">Plots</span><span class="op">(</span>strata <span class="op">=</span> <span class="op">~</span> <span class="va">site</span> <span class="op">/</span> <span class="va">plot</span><span class="op">)</span>, blocks <span class="op">=</span> <span class="op">~</span> <span class="va">block</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Permutation Design:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Blocks:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Blocks: block</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Plots:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plots: site/plot</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Permutation type: none</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mirrored?: No</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Within Plots:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Permutation type: free</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Permutation details:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Number of permutations: 199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Max. number of permutations allowed: 9999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Evaluate all permutations?: No.  Activation limit: 5040</span>
+<span class="r-in"><span><span class="fu"><a href="get-methods.html">getStrata</a></span><span class="op">(</span><span class="fu">Plots</span><span class="op">(</span>strata <span class="op">=</span> <span class="op">~</span> <span class="va">site</span> <span class="op">/</span> <span class="va">plot</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.1 1.2 2.1 2.2 3.1 3.2 1.1 1.2 2.1 2.2 3.1 3.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 1.1 2.1 3.1 1.2 2.2 3.2</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

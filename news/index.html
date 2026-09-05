@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permute</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9-10-6</span>
       </span>
     </div>
 
@@ -61,7 +61,8 @@
 <h2 class="page-header" data-toc-text="development version" id="permute-development-version">permute (development version)<a class="anchor" aria-label="anchor" href="#permute-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Grid permutation designs gain a <code>symmetric</code> option that prevents mirroring in both spatial directions at the same time. Resolves <a href="https://github.com/gavinsimpson/permute/issues/1" class="external-link">#1</a>.</p></li>
+<ul><li><p><code><a href="../reference/how.html">Plots()</a></code> plot strata and <code><a href="../reference/how.html">how()</a></code> blocks can now be specified using one-sided formulas evaluated in a shared <code>data</code> frame. Multiple variables, interactions, and nested terms are combined into a single grouping factor. Resolves <a href="https://github.com/gavinsimpson/permute/issues/38" class="external-link">#38</a>.</p></li>
+<li><p>Grid permutation designs gain a <code>symmetric</code> option that prevents mirroring in both spatial directions at the same time. Resolves <a href="https://github.com/gavinsimpson/permute/issues/1" class="external-link">#1</a>.</p></li>
 <li><p><code><a href="../reference/shuffle.html">permute()</a></code> can now reuse a supplied matrix of permutation indices, and the new <code><a href="../reference/shuffle.html">permutator()</a></code> function provides sequential access to either a supplied or newly generated permutation set. Resolves <a href="https://github.com/gavinsimpson/permute/issues/34" class="external-link">#34</a>.</p></li>
 <li><p>New function <code><a href="../reference/permutations.html">permutations()</a></code> applies a permutation design to the values in an atomic vector and returns a matrix-like object with one permutation per row. This addresses <a href="https://github.com/gavinsimpson/permute/issues/35" class="external-link">#35</a> and the original request in <a href="https://github.com/gavinsimpson/permute/issues/33" class="external-link">#33</a>.</p></li>
 <li><p><code><a href="../reference/how.html">Plots()</a></code> gains type <code>"partition"</code> for permuting group membership while keeping the number of observations in each group fixed.</p></li>
@@ -72,7 +73,10 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p>Complete enumeration of grid permutations no longer treats two-column grids as flattened series, which generated permutations that were not valid two-dimensional toroidal shifts. Reflections of grid axes containing one or two cells are also no longer counted as distinct when they duplicate an ordinary toroidal shift. <code><a href="../reference/allPerms.html">allPerms()</a></code> and <code><a href="../reference/numPerms.html">numPerms()</a></code> now return consistent, distinct grid permutations in these cases.</p></li>
+<ul><li><p><code><a href="../reference/how.html">Plots()</a></code> and <code><a href="../reference/how.html">Within()</a></code> now preserve explicit <code>NULL</code> arguments when storing their matched calls, allowing later positional arguments and <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> to work correctly.</p></li>
+<li><p>Formula objects supplied to <code>how(blocks = ...)</code> through local variables are now retained in the matched call, allowing the design to be updated after the variable has left scope.</p></li>
+<li><p>Replacing the plots in a <code>how</code> object with a formula-built <code>Plots</code> object no longer leaves a nested <code>data</code> argument that prevents subsequent updates.</p></li>
+<li><p>Complete enumeration of grid permutations no longer treats two-column grids as flattened series, which generated permutations that were not valid two-dimensional toroidal shifts. Reflections of grid axes containing one or two cells are also no longer counted as distinct when they duplicate an ordinary toroidal shift. <code><a href="../reference/allPerms.html">allPerms()</a></code> and <code><a href="../reference/numPerms.html">numPerms()</a></code> now return consistent, distinct grid permutations in these cases.</p></li>
 <li><p><code><a href="../reference/check.html">check()</a></code> would fail all permutation designs where the (whole) plots were permuted with toroidal grid shifts. <a href="https://github.com/gavinsimpson/permute/issues/42" class="external-link">#42</a> Reported and fixed by <a href="https://github.com/sims1253" class="external-link">@sims1253</a></p></li>
 </ul></div>
 </div>
