@@ -73,11 +73,17 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/how.html">Plots()</a></code> and <code><a href="../reference/how.html">Within()</a></code> now preserve explicit <code>NULL</code> arguments when storing their matched calls, allowing later positional arguments and <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> to work correctly.</p></li>
+<ul><li><p><code><a href="../reference/allPerms.html">allPerms()</a></code> now records the number of returned permutations in the attached control object after applying the <code>observed</code> setting.</p></li>
+<li><p><code><a href="../reference/how.html">Plots()</a></code> and <code><a href="../reference/how.html">Within()</a></code> now preserve explicit <code>NULL</code> arguments when storing their matched calls, allowing later positional arguments and <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> to work correctly.</p></li>
 <li><p>Formula objects supplied to <code>how(blocks = ...)</code> through local variables are now retained in the matched call, allowing the design to be updated after the variable has left scope.</p></li>
 <li><p>Replacing the plots in a <code>how</code> object with a formula-built <code>Plots</code> object no longer leaves a nested <code>data</code> argument that prevents subsequent updates.</p></li>
 <li><p>Complete enumeration of grid permutations no longer treats two-column grids as flattened series, which generated permutations that were not valid two-dimensional toroidal shifts. Reflections of grid axes containing one or two cells are also no longer counted as distinct when they duplicate an ordinary toroidal shift. <code><a href="../reference/allPerms.html">allPerms()</a></code> and <code><a href="../reference/numPerms.html">numPerms()</a></code> now return consistent, distinct grid permutations in these cases.</p></li>
 <li><p><code><a href="../reference/check.html">check()</a></code> would fail all permutation designs where the (whole) plots were permuted with toroidal grid shifts. <a href="https://github.com/gavinsimpson/permute/issues/42" class="external-link">#42</a> Reported and fixed by <a href="https://github.com/sims1253" class="external-link">@sims1253</a></p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="maintenance-development-version">Maintenance<a class="anchor" aria-label="anchor" href="#maintenance-development-version"></a></h3>
+<ul><li><p>Removed the obsolete <code>Blocks()</code> compatibility helper and its documentation. This is the only public API removal in this release.</p></li>
+<li><p>Simplified complete permutation enumeration and control accessors by removing unreachable compatibility code, unused arguments, and duplicate validation while preserving permutation order and seeded RNG behaviour.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
