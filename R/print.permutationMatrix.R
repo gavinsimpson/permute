@@ -86,7 +86,7 @@
 
     cat("\n")
     x <- as.matrix(x)
-    rownames(x) <- paste0("p", seq_len(nrow(x)))
+    rownames(x) <- sprintf("p%d", seq_len(nrow(x)))
     colnames(x) <- seq_len(ncol(x))
     print(x, ...)
 }
