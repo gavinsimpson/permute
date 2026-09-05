@@ -308,3 +308,21 @@ test_that("allPerms works for series within blocks issue 28", {
     expect_equal(numPerms(40, control = h1), 400L)
     expect_identical(nrow(p), 399L)
 })
+
+test_that("allPerms enforces maxperm", {
+    expect_error(
+        allPerms(6, control = how(maxperm = 100)),
+        "Number of possible permutations too large"
+    )
+})
+
+test_that("allPerms has a stable print contract", {
+    perms <- allPerms(3)
+    printed <- NULL
+    output <- capture.output(printed <- withVisible(print(perms)))
+
+    expect_true(any(grepl("[1,]", output, fixed = TRUE)))
+    expect_false(printed$visible)
+    expect_false(inherits(printed$value, "allPerms"))
+    expect_identical(unname(printed$value), unname(as.matrix(perms)))
+})

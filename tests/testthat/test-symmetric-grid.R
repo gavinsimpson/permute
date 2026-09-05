@@ -86,6 +86,12 @@ test_that("how and permutation matrices print symmetric grid status", {
         within = Within(type = "grid", nrow = 3, ncol = 3,
                         mirror = TRUE, symmetric = TRUE), minperm = 0))
     expect_output(print(perms), regexp = "; symmetric")
+
+    plots <- Plots(strata = gl(9, 1), type = "grid", nrow = 3, ncol = 3,
+                   mirror = TRUE, symmetric = TRUE)
+    ctrl <- how(plots = plots, within = Within(type = "none"), minperm = 0)
+    perms <- shuffleSet(9, nset = 2, control = ctrl)
+    expect_output(print(perms), regexp = "- symmetric")
 })
 
 test_that("shuffleGrid excludes simultaneous flips when symmetric", {

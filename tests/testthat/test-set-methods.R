@@ -131,6 +131,8 @@ test_that("test setType<- works", {
     h <- how(within = Within(type = "grid", nrow = 5, ncol = 5),
              plots  =  Plots(type = "series", strata = f))
     w <- getWithin(h)
+    expect_error(setType(w) <- "partition",
+                 regexp = "Invalid permutation type")
     setType(w) <- "free"
     expect_is(w, "Within")
     expect_identical(getType(w), "free")

@@ -106,3 +106,31 @@ test_that("shuffel works with objects passed to n", {
     expect_is(p, "integer")
     expect_identical(length(p), 4L)
 })
+
+test_that("shuffle generates valid unstratified series permutations", {
+    ctrl <- how(
+        within = Within(type = "series", mirror = TRUE),
+        observed = TRUE
+    )
+    expected <- apply(as.matrix(allPerms(5, ctrl)), 1, paste, collapse = ",")
+
+    set.seed(42)
+    perm <- shuffle(5, ctrl)
+
+    expect_true(paste(perm, collapse = ",") %in% expected)
+})
+
+test_that("shuffle generates valid plot-level grid permutations", {
+    ctrl <- how(
+        plots = Plots(gl(4, 1), type = "grid", nrow = 2, ncol = 2,
+                      mirror = TRUE, symmetric = TRUE),
+        within = Within(type = "none"),
+        observed = TRUE
+    )
+    expected <- apply(as.matrix(allPerms(4, ctrl)), 1, paste, collapse = ",")
+
+    set.seed(43)
+    perm <- shuffle(4, ctrl)
+
+    expect_true(paste(perm, collapse = ",") %in% expected)
+})

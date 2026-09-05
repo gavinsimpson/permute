@@ -23,3 +23,11 @@ test_that("as.allPerms fixes #16", {
     res <- check(4, ctrl)
     expect_is(res, "check")
 })
+
+test_that("as.allPerms supports objects without a control", {
+    perms <- as.allPerms(matrix(c(2L, 1L), nrow = 1))
+
+    expect_s3_class(perms, "allPerms")
+    expect_identical(attr(perms, "control"), NA)
+    expect_identical(attr(perms, "observed"), NA)
+})

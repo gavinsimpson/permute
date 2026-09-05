@@ -69,3 +69,16 @@ test_that("shuffleGrid works with start.row & start.col", {
     expect_true(all(perm <= 25))
     expect_true(all(perm >=1))
 })
+
+test_that("shuffleSeries honours explicit flip choices", {
+    x <- seq_len(5)
+
+    expect_identical(
+        shuffleSeries(x, mirror = TRUE, start = 2, flip = FALSE),
+        c(3L, 4L, 5L, 1L, 2L)
+    )
+    expect_identical(
+        shuffleSeries(x, mirror = TRUE, start = 2, flip = TRUE),
+        c(2L, 1L, 5L, 4L, 3L)
+    )
+})

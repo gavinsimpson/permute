@@ -17,6 +17,15 @@ test_that("print method for how", {
 
     ctrl <- how(plots = Plots(strata = gl(4,9), type = "grid", ncol = 3, nrow = 3))
     expect_output(print(ctrl), regexp = "Grid dimensions:")
+
+    ctrl <- how(blocks = gl(2, 2))
+    expect_output(print(ctrl), regexp = "Blocks: gl")
+
+    groups <- factor(c("a", "a", "a", "b", "b"))
+    ctrl <- how(plots = Plots(groups, type = "partition"))
+    expect_output(print(ctrl), regexp = "Permutation type: partition")
+    expect_output(print(ctrl), regexp = "Group sizes: 3, 2")
+    expect_output(print(ctrl), regexp = "Within-group order retained")
 })
 
 test_that("Within preserves positional NULL arguments", {
@@ -31,4 +40,15 @@ test_that("Within preserves positional NULL arguments", {
     expect_identical(getType(updated), "series")
     expect_null(getRow(updated))
     expect_null(getCol(updated))
+})
+
+test_that("update methods reject objects without constructor calls", {
+    ctrl <- how()
+    ctrl$call <- NULL
+    expect_error(update(ctrl, nperm = 5), "need an object with call component")
+
+    plots <- Plots(gl(2, 2))
+    plots$call <- NULL
+    expect_error(update(plots, type = "free"),
+                 "need an object with call component")
 })

@@ -33,3 +33,18 @@ test_that("numPerms doesn't suffer floating point probs as issue 41", {
     expect_type(np$n, "double")
     expect_equal(np$n, 120L)
 })
+
+test_that("numPerms counts uneven series strata with optional mirroring", {
+    plots <- factor(c("a", "a", "b", "b", "b"))
+    plain <- how(
+        plots = Plots(plots, type = "none"),
+        within = Within(type = "series", mirror = FALSE)
+    )
+    mirrored <- update(
+        plain,
+        within = Within(type = "series", mirror = TRUE)
+    )
+
+    expect_equal(numPerms(length(plots), plain), 6)
+    expect_equal(numPerms(length(plots), mirrored), 12)
+})
