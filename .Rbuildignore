@@ -34,6 +34,7 @@
 ^CRAN-SUBMISSION$
 ^doc$
 ^Meta$
+^paper$
 ^paper.log
 ^paper_cache
 ^texput.log

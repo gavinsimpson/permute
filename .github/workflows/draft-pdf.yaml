@@ -1,0 +1,45 @@
+name: JOSS paper
+
+on:
+  push:
+    branches: [joss-paper]
+    paths:
+      - "paper/**"
+      - ".github/workflows/draft-pdf.yaml"
+  pull_request:
+    branches: [joss-paper]
+    paths:
+      - "paper/**"
+      - ".github/workflows/draft-pdf.yaml"
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  build-paper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.10.18
+
+      - name: Render JOSS Markdown from Quarto
+        run: quarto render paper/paper.qmd
+
+      - name: Check that paper.md is synchronized
+        run: git diff --exit-code -- paper/paper.md
+
+      - name: Build JOSS PDF
+        uses: openjournals/openjournals-draft-action@master
+        with:
+          journal: joss
+          paper-path: paper/paper.md
+
+      - name: Upload paper artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: joss-paper
+          path: paper/paper.pdf

@@ -1,0 +1,8 @@
+project:
+  type: default
+
+format:
+  markdown:
+    variant: +yaml_metadata_block
+    citeproc: false
+    wrap: preserve

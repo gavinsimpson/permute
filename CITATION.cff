@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use permute in published work, please cite the software using this metadata."
+type: software
+title: "permute: Functions for Generating Restricted Permutations of Data"
+abstract: >-
+  An R package for specifying exchangeability structures and generating
+  permutations for free, temporal, spatial, blocked, and hierarchical designs.
+authors:
+  - given-names: Gavin L.
+    family-names: Simpson
+    email: ucfagls@gmail.com
+    orcid: "https://orcid.org/0000-0002-9084-8413"
+version: "0.9-10"
+date-released: 2026-02-06
+license: GPL-2.0-only
+repository-code: "https://github.com/gavinsimpson/permute"
+url: "https://gavinsimpson.github.io/permute"
+keywords:
+  - R
+  - permutation tests
+  - restricted permutations
+  - exchangeability
+  - experimental design
