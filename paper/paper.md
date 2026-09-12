@@ -21,6 +21,9 @@ affiliations:
   - name: Finnish Museum of Natural History, University of Helsinki, Finland
     index: 2
 bibliography: paper.bib
+header-includes:
+  - \usepackage{colortbl}
+  - \definecolor{permuteStripe}{gray}{0.95}
 ---
 
 
@@ -42,19 +45,19 @@ CANOCO established a practical vocabulary for Monte Carlo permutation tests in e
 
 R software involving permutations falls into several overlapping groups. Test-oriented packages supply inferential procedures: `coin` implements conditional inference for independence problems [@hothorn2008coin], `exactRankTests` provides exact rank and permutation tests [@exactRankTests], `flip` supplies multivariate permutation and rotation tests [@flip], `lmPerm` targets linear models [@lmPerm], and `permuco` covers regression, repeated-measures ANOVA/ANCOVA, and signal comparisons [@frossardRenaud2021]. Combinatorics packages instead generate or manipulate mathematical arrangements: `arrangements`, `RcppAlgos`, and `gtools` enumerate permutations and combinations [@arrangements; @RcppAlgos; @gtools], while `partitions` and `permutations` address integer or set partitions and algebraic permutations [@hankin2006; @hankinWest2007; @hankin2020]. `randomizeR` generates and evaluates treatment-allocation procedures for clinical trials [@uschner2018]. Domain-facing packages such as `vegan` perform analyses and consume permutation designs [@vegan].
 
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------
-  Category                Examples                      Purpose                               Restrictions and statistics
-  ----------------------- ----------------------------- ------------------------------------- -------------------------------------------------------------
-  Statistical tests       `coin`, `permuco`, `flip`     Test-specific inference               Method-dependent restrictions; statistics supplied
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Category                                                 Examples                      Purpose                               Restrictions and statistics
+  -------------------------------------------------------- ----------------------------- ------------------------------------- -------------------------------------------------------------
+  `\rowcolor{permuteStripe}`{=tex} Statistical tests       `coin`, `permuco`, `flip`     Test-specific inference               Method-dependent restrictions; statistics supplied
 
-  Combinatorics           `arrangements`, `RcppAlgos`   Enumerate mathematical arrangements   No exchangeability design or statistic
+  Combinatorics                                            `arrangements`, `RcppAlgos`   Enumerate mathematical arrangements   No exchangeability design or statistic
 
-  Trial allocation        `randomizeR`                  Generate treatment sequences          Allocation rules; assessments supplied
+  `\rowcolor{permuteStripe}`{=tex} Trial allocation        `randomizeR`                  Generate treatment sequences          Allocation rules; assessments supplied
 
-  Analysis                `vegan`                       Ecological analyses                   Consumes `permute` designs; statistics supplied
+  Analysis                                                 `vegan`                       Ecological analyses                   Consumes `permute` designs; statistics supplied
 
-  Design infrastructure   `permute`                     Generate admissible rearrangements    Series, grids, blocks, plots, and hierarchies; no statistic
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------
+  `\rowcolor{permuteStripe}`{=tex} Design infrastructure   `permute`                     Generate admissible rearrangements    Series, grids, blocks, plots, and hierarchies; no statistic
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 The distinct role of `permute` is therefore to represent admissible rearrangements independently of the statistic evaluated on them. Its fixed-size `partition` design randomizes assignment to groups while preserving their sizes; it is not an implementation of additive integer partitions, general set partitions, or symmetric-group algebra.
 

@@ -1,0 +1,13 @@
+$if(titleblock)$
+$titleblock$
+
+$endif$
+$for(include-before)$
+$include-before$
+
+$endfor$
+$body$
+$for(include-after)$
+
+$include-after$
+$endfor$

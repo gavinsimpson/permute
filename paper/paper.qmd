@@ -21,6 +21,9 @@ affiliations:
   - name: Finnish Museum of Natural History, University of Helsinki, Finland
     index: 2
 bibliography: paper.bib
+header-includes:
+  - \usepackage{colortbl}
+  - \definecolor{permuteStripe}{gray}{0.95}
 ---
 
 # Summary
@@ -41,11 +44,11 @@ R software involving permutations falls into several overlapping groups. Test-or
 
 | Category | Examples | Purpose | Restrictions and statistics |
 |---|---|---|---|
-| Statistical tests | `coin`, `permuco`, `flip` | Test-specific inference | Method-dependent restrictions; statistics supplied |
+| \rowcolor{permuteStripe} Statistical tests | `coin`, `permuco`, `flip` | Test-specific inference | Method-dependent restrictions; statistics supplied |
 | Combinatorics | `arrangements`, `RcppAlgos` | Enumerate mathematical arrangements | No exchangeability design or statistic |
-| Trial allocation | `randomizeR` | Generate treatment sequences | Allocation rules; assessments supplied |
+| \rowcolor{permuteStripe} Trial allocation | `randomizeR` | Generate treatment sequences | Allocation rules; assessments supplied |
 | Analysis | `vegan` | Ecological analyses | Consumes `permute` designs; statistics supplied |
-| Design infrastructure | `permute` | Generate admissible rearrangements | Series, grids, blocks, plots, and hierarchies; no statistic |
+| \rowcolor{permuteStripe} Design infrastructure | `permute` | Generate admissible rearrangements | Series, grids, blocks, plots, and hierarchies; no statistic |
 
 The distinct role of `permute` is therefore to represent admissible rearrangements independently of the statistic evaluated on them. Its fixed-size `partition` design randomizes assignment to groups while preserving their sizes; it is not an implementation of additive integer partitions, general set partitions, or symmetric-group algebra.
 
