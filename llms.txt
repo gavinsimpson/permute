@@ -1,4 +1,4 @@
-## Restricted permutations with R
+## Restricted permutations with R ![permute logo: hands shuffling teal-backed cards](reference/figures/logo.png)
 
 [![CRAN
 version](https://www.r-pkg.org/badges/version/permute)](https://cran.r-project.org/package=permute)
