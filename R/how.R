@@ -262,7 +262,7 @@
 
     ## finsh off
     if (length(.call) > 1L) {
-        .ll <- c(as.list(.call[[1]]), .ll)
+        .ll <- c(list(.call[[1L]]), .ll)
         names(.ll) <- names(.call)
         .call <- as.call(.ll)
     }

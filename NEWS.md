@@ -38,6 +38,10 @@
 
 ## Bug fixes
 
+* Namespace-qualified calls to `how()`, `Within()`, and `Plots()` now retain
+  valid constructor calls, fixing failures in `update()` and `shuffle()`.
+  Resolves #43.
+
 * `allPerms()` now records the number of returned permutations in the
   attached control object after applying the `observed` setting.
 
