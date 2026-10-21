@@ -51,7 +51,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/allPerms.html">allPerms()</a></code> now records the number of returned permutations in the attached control object after applying the <code>observed</code> setting.</p></li>
+<ul><li><p>Namespace-qualified calls to <code><a href="../reference/how.html">how()</a></code>, <code><a href="../reference/how.html">Within()</a></code>, and <code><a href="../reference/how.html">Plots()</a></code> now retain valid constructor calls, fixing failures in <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> and <code><a href="../reference/shuffle.html">shuffle()</a></code>. Resolves <a href="https://github.com/gavinsimpson/permute/issues/43" class="external-link">#43</a>.</p></li>
+<li><p><code><a href="../reference/allPerms.html">allPerms()</a></code> now records the number of returned permutations in the attached control object after applying the <code>observed</code> setting.</p></li>
 <li><p><code><a href="../reference/how.html">Plots()</a></code> and <code><a href="../reference/how.html">Within()</a></code> now preserve explicit <code>NULL</code> arguments when storing their matched calls, allowing later positional arguments and <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> to work correctly.</p></li>
 <li><p>Formula objects supplied to <code>how(blocks = ...)</code> through local variables are now retained in the matched call, allowing the design to be updated after the variable has left scope.</p></li>
 <li><p>Replacing the plots in a <code>how</code> object with a formula-built <code>Plots</code> object no longer leaves a nested <code>data</code> argument that prevents subsequent updates.</p></li>

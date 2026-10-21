@@ -56,6 +56,16 @@
 
 ### Bug fixes
 
+- Namespace-qualified calls to
+  [`how()`](https://gavinsimpson.github.io/permute/reference/how.md),
+  [`Within()`](https://gavinsimpson.github.io/permute/reference/how.md),
+  and
+  [`Plots()`](https://gavinsimpson.github.io/permute/reference/how.md)
+  now retain valid constructor calls, fixing failures in
+  [`update()`](https://rdrr.io/r/stats/update.html) and
+  [`shuffle()`](https://gavinsimpson.github.io/permute/reference/shuffle.md).
+  Resolves [\#43](https://github.com/gavinsimpson/permute/issues/43).
+
 - [`allPerms()`](https://gavinsimpson.github.io/permute/reference/allPerms.md)
   now records the number of returned permutations in the attached
   control object after applying the `observed` setting.

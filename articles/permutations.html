@@ -64,7 +64,7 @@
                         <h4 data-toc-skip class="author">Gavin L.
 Simpson</h4>
             
-            <h4 data-toc-skip class="date">2026-10-18</h4>
+            <h4 data-toc-skip class="date">2026-10-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gavinsimpson/permute/blob/main/vignettes/permutations.Rmd" class="external-link"><code>vignettes/permutations.Rmd</code></a></small>
       <div class="d-none name"><code>permutations.Rmd</code></div>
@@ -864,7 +864,7 @@ version of <code>pt.test()</code></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                              cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.071   0.008   0.398</span></span></code></pre>
+<span><span class="co">##   0.069   0.003   0.410</span></span></code></pre>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
@@ -875,7 +875,7 @@ computations over two CPU cores</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval2</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                               cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.256   0.000   0.256</span></span></code></pre>
+<span><span class="co">##   0.218   0.000   0.218</span></span></code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval2</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
@@ -1178,7 +1178,7 @@ objects from within your functions.</p>
 <span><span class="co">##  collate  C.UTF-8</span></span>
 <span><span class="co">##  ctype    C.UTF-8</span></span>
 <span><span class="co">##  tz       UTC</span></span>
-<span><span class="co">##  date     2026-10-18</span></span>
+<span><span class="co">##  date     2026-10-21</span></span>
 <span><span class="co">##  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)</span></span>
 <span><span class="co">##  quarto   NA</span></span>
 <span><span class="co">## </span></span>
@@ -1199,7 +1199,7 @@ objects from within your functions.</p>
 <span><span class="co">##  knitr         1.52     <span style="color: #555555;">2026-09-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  lifecycle     1.0.5    <span style="color: #555555;">2026-01-08</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  otel          0.2.0    <span style="color: #555555;">2025-08-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  permute     * 0.9-10-7 <span style="color: #555555;">2026-10-18</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
+<span><span class="co">##  permute     * 0.9-10-7 <span style="color: #555555;">2026-10-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
 <span><span class="co">##  pkgdown       2.2.1    <span style="color: #555555;">2026-07-07</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">any (@2.2.1)</span></span></span>
 <span><span class="co">##  R6            2.6.1    <span style="color: #555555;">2025-02-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  ragg          1.5.2    <span style="color: #555555;">2026-03-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
