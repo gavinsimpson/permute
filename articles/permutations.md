@@ -928,7 +928,7 @@ system.time(ppval <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.069   0.003   0.410
+    ##   0.076   0.002   0.391
 
 ``` r
 
@@ -948,7 +948,7 @@ system.time(ppval2 <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.218   0.000   0.218
+    ##   0.255   0.000   0.255
 
 ``` r
 
@@ -1311,7 +1311,7 @@ This vignette was built within the following environment:
     ##  knitr         1.52     2026-09-06 [1] RSPM
     ##  lifecycle     1.0.5    2026-01-08 [1] RSPM
     ##  otel          0.2.0    2025-08-29 [1] RSPM
-    ##  permute     * 0.9-10-7 2026-10-21 [1] local
+    ##  permute     * 0.9-10-8 2026-10-21 [1] local
     ##  pkgdown       2.2.1    2026-07-07 [1] any (@2.2.1)
     ##  R6            2.6.1    2025-02-15 [1] RSPM
     ##  ragg          1.5.2    2026-03-23 [1] RSPM
