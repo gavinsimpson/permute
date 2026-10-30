@@ -928,7 +928,7 @@ system.time(ppval <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.076   0.002   0.391
+    ##   0.093   0.007   0.543
 
 ``` r
 
@@ -948,7 +948,7 @@ system.time(ppval2 <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.255   0.000   0.255
+    ##   0.336   0.000   0.336
 
 ``` r
 
@@ -1282,15 +1282,15 @@ This vignette was built within the following environment:
 
     ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value
-    ##  version  R version 4.6.1 (2026-06-24)
-    ##  os       Ubuntu 24.04.5 LTS
+    ##  version  R version 4.6.2 (2026-10-29)
+    ##  os       Ubuntu 26.04.1 LTS
     ##  system   x86_64, linux-gnu
     ##  ui       X11
     ##  language en-GB
     ##  collate  C.UTF-8
     ##  ctype    C.UTF-8
     ##  tz       UTC
-    ##  date     2026-10-21
+    ##  date     2026-10-30
     ##  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
     ##  quarto   NA
     ## 
@@ -1311,7 +1311,7 @@ This vignette was built within the following environment:
     ##  knitr         1.52     2026-09-06 [1] RSPM
     ##  lifecycle     1.0.5    2026-01-08 [1] RSPM
     ##  otel          0.2.0    2025-08-29 [1] RSPM
-    ##  permute     * 0.9-10-8 2026-10-21 [1] local
+    ##  permute     * 0.9-9000 2026-10-30 [1] local
     ##  pkgdown       2.2.1    2026-07-07 [1] any (@2.2.1)
     ##  R6            2.6.1    2025-02-15 [1] RSPM
     ##  ragg          1.5.2    2026-03-23 [1] RSPM
@@ -1325,8 +1325,8 @@ This vignette was built within the following environment:
     ##  yaml          2.3.12   2025-12-10 [1] RSPM
     ## 
     ##  [1] /home/runner/work/_temp/Library
-    ##  [2] /opt/R/4.6.1/lib/R/site-library
-    ##  [3] /opt/R/4.6.1/lib/R/library
+    ##  [2] /opt/R/4.6.2/lib/R/site-library
+    ##  [3] /opt/R/4.6.2/lib/R/library
     ##  * ── Packages attached to the search path.
     ## 
     ## ──────────────────────────────────────────────────────────────────────────────
