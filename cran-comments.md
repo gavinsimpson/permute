@@ -1,93 +1,54 @@
 Comments to CRAN maintainers for submission
 ===========================================
 
-## Version 0.9-10
+## Version 0.9-9000
 
-This is a minor release addressing a floating point issue in generating the
-number of permutations.
+This release adds formula-based permutation strata, symmetric grid designs,
+reusable permutation indices, sequential access to permutation sets, vector
+permutations, and partition designs. It also fixes permutation enumeration and
+constructor/update behaviour. See NEWS.md for the full list of changes.
 
-No adverse results are currently reported on CRAN's Check Results page for the package.
+## Test environments
 
-## Test Environments
+* Local: R 4.6.1, aarch64-apple-darwin23, macOS Tahoe 26.6.1.
+* GitHub Actions: macOS and Windows (R release), and Ubuntu (R devel, release,
+  and oldrel-1). Checks for this version are triggered by the release-preparation
+  push; results are pending.
+* win-builder and mac-builder: pending; the maintainer will initiate these checks.
 
-* Linux, Ubuntu (24.04) (r-oldrelease, r-release & r-devel)
-* MacOS X (r-release, locally and on GitHub, r-devel on Mac-builder)
-* win-builder (r-oldrelease, r-release & r-devel)
+## R CMD check information
 
-### `R CMD check` information
+The source package was built with `R CMD build --compact-vignettes=gs` and
+checked locally with `R CMD check --as-cran`.
 
-No errors, warnings, or notes were observed during any of these checks.
+Result: 0 errors, 0 warnings, 1 NOTE.
 
-### Reverse dependency checks
-
-I ran reverse dependency checks using the rdevel GitHub actions workflow. The results of these checks are summarised below. The pertinent result is:
-
-```
-------- Check for regressions ------
-No changes between old and new version
-```
-
-Full summary:
+The NOTE from the CRAN incoming-feasibility check is:
 
 ```
-------- Check results summary ------
-Check status summary:
-                  WARNING NOTE OK
-  Source packages       0    0  1
-  Reverse depends       1   11 18
-
-Check results summary:
-permute ... OK
-rdepends_BiodiversityR ... WARNING
-* checking whether package ‘BiodiversityR’ can be installed ... WARNING
-rdepends_LDM ... OK
-rdepends_LorMe ... OK
-rdepends_MiRKAT ... OK
-rdepends_MiscMetabar ... OK
-rdepends_NST ... OK
-rdepends_ProcMod ... OK
-rdepends_RHC ... OK
-rdepends_SYNCSA ... OK
-rdepends_Storm ... NOTE
-* checking DESCRIPTION meta-information ... NOTE
-rdepends_bipartite ... NOTE
-* checking compiled code ... NOTE
-rdepends_brainGraph ... OK
-rdepends_codyn ... NOTE
-* checking Rd files ... NOTE
-rdepends_douconca ... OK
-rdepends_ecostats ... OK
-rdepends_ggordiplots ... OK
-rdepends_iCAMP ... OK
-rdepends_indicspecies ... OK
-rdepends_mixAR ... OK
-rdepends_monoClust ... NOTE
-* checking Rd files ... NOTE
-rdepends_npcure ... NOTE
-* checking compiled code ... NOTE
-rdepends_pRF ... OK
-rdepends_pctax ... NOTE
-* checking R code for possible problems ... NOTE
-rdepends_permuco ... NOTE
-* checking compiled code ... NOTE
-rdepends_randomizationInference ... OK
-rdepends_rankdist ... NOTE
-* checking compiled code ... NOTE
-rdepends_readyomics ... OK
-rdepends_spaceNet ... NOTE
-* checking Rd files ... NOTE
-rdepends_text2map ... NOTE
-* checking DESCRIPTION meta-information ... NOTE
-rdepends_vegan ... NOTE
-* checking compiled code ... NOTE
-* checking tests ... NOTE
-
-------- Check for regressions ------
-No changes between old and new version
+Version contains large components (0.9-9000)
 ```
 
-#### Comments on the revdep checks
+This is expected for the requested version number and is reported by the
+incoming-feasibility checks enabled by `--as-cran`. Tests, examples, vignette
+rebuilding, and the PDF and HTML manuals were checked successfully. No
+`R CMD check` stages were skipped.
 
-I checked the log files for all packages raising NOTEs or WARNINGs and none of these are related to *permute*. As there is no practical change to the output of functions in this version of *permute*, this is not unexpected.
+## Previous reverse dependency checks
 
-The NOTEs primarily relate to problems with the respective package, not *permute*, or they are related to the Github Actions runner, but which don't affect the validity of the test results.
+The most recent locally audited GitHub Actions run checked 32 reverse
+dependencies, comparing CRAN permute 0.9-10 with development permute 0.9-10-7:
+
+https://github.com/gavinsimpson/permute/actions/runs/33990884341
+
+One regression was found in douconca 1.2.5.1: six whole-object reference
+comparisons fail because the nested permutation control metadata now includes
+`symmetric`. The statistical result payloads are unchanged. This was reported
+upstream, and a compatibility patch was proposed:
+
+https://github.com/Biometris/douconca/issues/2
+https://github.com/Biometris/douconca/pull/3
+
+All other non-OK results in that run also occurred with CRAN permute and were
+unrelated to these changes. Reverse dependency checks have not been rerun for
+this version bump.

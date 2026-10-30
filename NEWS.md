@@ -1,4 +1,4 @@
-# permute (development version)
+# permute 0.9-9000
 
 ## New features
 
