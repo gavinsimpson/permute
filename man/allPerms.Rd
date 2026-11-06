@@ -66,7 +66,8 @@ incredibly time consuming, to enumerate them all. Storing all possible
 permutations would also become problematic in such cases. To control this
 and guard against trying to evaluate too large a number of permutations, if
 the number of possible permutations is larger than
-\code{getMaxperm(control)}, \code{allPerms} exits with an error.
+\code{getMaxperm(control)} or is reported as \code{Inf} by \code{\link[=numPerms]{numPerms()}}, \code{allPerms}
+exits with an error.
 
 The \code{as.matrix} method sets the \code{control} and \code{seed}
 attributes to \code{NULL} and removes the \code{"permutationMatrix"} class,

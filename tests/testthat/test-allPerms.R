@@ -409,6 +409,16 @@ test_that("allPerms enforces maxperm", {
     )
 })
 
+test_that("allPerms rejects counts of Inf even when maxperm is Inf", {
+    blocks <- gl(1024, 2)
+    ctrl <- how(blocks = blocks, maxperm = Inf)
+
+    expect_error(
+        allPerms(length(blocks), control = ctrl),
+        "Number of possible permutations too large to enumerate"
+    )
+})
+
 test_that("allPerms has a stable print contract", {
     perms <- allPerms(3)
     printed <- NULL

@@ -18,7 +18,8 @@
 #' permutations would also become problematic in such cases. To control this
 #' and guard against trying to evaluate too large a number of permutations, if
 #' the number of possible permutations is larger than
-#' `getMaxperm(control)`, `allPerms` exits with an error.
+#' `getMaxperm(control)` or is reported as `Inf` by [numPerms()], `allPerms`
+#' exits with an error.
 #'
 #' The `as.matrix` method sets the `control` and `seed`
 #' attributes to `NULL` and removes the `"permutationMatrix"` class,
@@ -102,6 +103,8 @@
     ## esp with type = "free"
     if(nperms > getMaxperm(control))
         stop("Number of possible permutations too large (> 'maxperm')")
+    if(is.infinite(nperms))
+        stop("Number of possible permutations too large to enumerate")
 
     strataP <- getStrata(control, which = "plots")
     typeW <- getType(control, which = "within")

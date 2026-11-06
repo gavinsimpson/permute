@@ -38,6 +38,10 @@
 
 ## Bug fixes
 
+* Within-plot permutation counts that overflow now return `Inf` without
+  factorial warnings. `allPerms()` rejects counts of `Inf` even when
+  `maxperm = Inf`. Resolves #21.
+
 * Namespace-qualified calls to `how()`, `Within()`, and `Plots()` now retain
   valid constructor calls, fixing failures in `update()` and `shuffle()`.
   Resolves #43.

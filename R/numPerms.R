@@ -22,7 +22,7 @@
 #' permutation design, as returned by a call to [how()].
 #' @param check logical; should `control` be checked for problems?
 #' @returns The (numeric) number of possible permutations of observations in
-#' `object`.
+#' `object`, or `Inf` if the count exceeds the range of a double.
 #' @note In general, mirroring `"series"` designs doubles the number of
 #' permutations and mirroring `"grid"` designs can quadruple it (within
 #' levels of strata if present). For grids with `symmetric = TRUE`, at most
@@ -217,10 +217,12 @@
         1
     } else if(typeW == "free") {
         if(!is.null(PSTRATA)) {
-            if(constantW) {
-                factorial(tab[1])
+            sizes <- if (constantW) tab[1L] else tab
+            ## 171! exceeds the range of a double.
+            if (any(sizes >= 171L)) {
+                Inf
             } else {
-                prod(factorial(tab))
+                prod(factorial(sizes))
             }
         } else {
             exp(lfactorial(n))

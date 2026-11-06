@@ -16,7 +16,7 @@ permutation design, as returned by a call to \code{\link[=how]{how()}}.}
 }
 \value{
 The (numeric) number of possible permutations of observations in
-\code{object}.
+\code{object}, or \code{Inf} if the count exceeds the range of a double.
 }
 \description{
 \code{numPerms} calculates the maximum number of permutations possible under
