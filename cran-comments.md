@@ -1,54 +1,25 @@
-Comments to CRAN maintainers for submission
-===========================================
+## R CMD check results
 
-## Version 0.9-9000
+0 errors | 0 warnings | 0 notes
 
-This release adds formula-based permutation strata, symmetric grid designs,
-reusable permutation indices, sequential access to permutation sets, vector
-permutations, and partition designs. It also fixes permutation enumeration and
-constructor/update behaviour. See NEWS.md for the full list of changes.
+* Local macOS Tahoe (arm64), R 4.6.2 (`R CMD check --as-cran`, permute `0.10-0`).
+* Win-builder on Windows Server 2022, R-release and R-devel (permute `0.10-0`).
+  [R-release log](https://win-builder.r-project.org/tQ668O8Wx8Jx/00check.log),
+  [R-devel log](https://win-builder.r-project.org/539StIhfS3zz/00check.log).
+* GitHub Actions on Ubuntu (R oldrel-1, release, and devel), macOS and Windows
+  (R release), using permute `0.9-9000`. The jobs skipped manual checks with
+  `--no-manual` and incoming checks with `_R_CHECK_CRAN_INCOMING_=false`.
+  [GitHub Actions results](https://github.com/gavinsimpson/permute/actions/runs/42184494787).
 
-## Test environments
+## Reverse dependency checks
 
-* Local: R 4.6.1, aarch64-apple-darwin23, macOS Tahoe 26.6.1.
-* GitHub Actions: macOS and Windows (R release), and Ubuntu (R devel, release,
-  and oldrel-1). Checks for this version are triggered by the release-preparation
-  push; results are pending.
-* win-builder and mac-builder: pending; the maintainer will initiate these checks.
+We checked 32 CRAN reverse dependencies with CRAN permute `0.9-10` and the
+`0.10-0` release code. All 32 checks completed.
+[Reverse dependency check results](https://github.com/gavinsimpson/permute/actions/runs/42187921326).
 
-## R CMD check information
-
-The source package was built with `R CMD build --compact-vignettes=gs` and
-checked locally with `R CMD check --as-cran`.
-
-Result: 0 errors, 0 warnings, 1 NOTE.
-
-The NOTE from the CRAN incoming-feasibility check is:
-
-```
-Version contains large components (0.9-9000)
-```
-
-This is expected for the requested version number and is reported by the
-incoming-feasibility checks enabled by `--as-cran`. Tests, examples, vignette
-rebuilding, and the PDF and HTML manuals were checked successfully. No
-`R CMD check` stages were skipped.
-
-## Previous reverse dependency checks
-
-The most recent locally audited GitHub Actions run checked 32 reverse
-dependencies, comparing CRAN permute 0.9-10 with development permute 0.9-10-7:
-
-https://github.com/gavinsimpson/permute/actions/runs/33990884341
-
-One regression was found in douconca 1.2.5.1: six whole-object reference
-comparisons fail because the nested permutation control metadata now includes
-`symmetric`. The statistical result payloads are unchanged. This was reported
-upstream, and a compatibility patch was proposed:
-
-https://github.com/Biometris/douconca/issues/2
-https://github.com/Biometris/douconca/pull/3
-
-All other non-OK results in that run also occurred with CRAN permute and were
-unrelated to these changes. Reverse dependency checks have not been rerun for
-this version bump.
+One package had a new problem, douconca 1.2.6. Six tests fail because the saved
+copies include permutation setup details that changed. The calculated results
+match in all six cases. We supplied the authors with a patch on 6 September and
+followed up on 6 November with a way to test the results separately.
+[Patch](https://github.com/Biometris/douconca/pull/3),
+[follow-up](https://github.com/Biometris/douconca/issues/2#issuecomment-6679395162).
