@@ -116,7 +116,8 @@ incredibly time consuming, to enumerate them all. Storing all possible
 permutations would also become problematic in such cases. To control this
 and guard against trying to evaluate too large a number of permutations, if
 the number of possible permutations is larger than
-<code>getMaxperm(control)</code>, <code>allPerms</code> exits with an error.</p>
+<code>getMaxperm(control)</code> or is reported as <code>Inf</code> by <code><a href="numPerms.html">numPerms()</a></code>, <code>allPerms</code>
+exits with an error.</p>
 <p>The <code>as.matrix</code> method sets the <code>control</code> and <code>seed</code>
 attributes to <code>NULL</code> and removes the <code>"permutationMatrix"</code> class,
 resulting in a standard matrix object.</p>

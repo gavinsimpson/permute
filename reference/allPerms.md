@@ -77,7 +77,9 @@ mention incredibly time consuming, to enumerate them all. Storing all
 possible permutations would also become problematic in such cases. To
 control this and guard against trying to evaluate too large a number of
 permutations, if the number of possible permutations is larger than
-`getMaxperm(control)`, `allPerms` exits with an error.
+`getMaxperm(control)` or is reported as `Inf` by
+[`numPerms()`](https://gavinsimpson.github.io/permute/reference/numPerms.md),
+`allPerms` exits with an error.
 
 The `as.matrix` method sets the `control` and `seed` attributes to
 `NULL` and removes the `"permutationMatrix"` class, resulting in a

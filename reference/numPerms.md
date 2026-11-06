@@ -29,7 +29,7 @@ numPerms(object, control = how(), check = TRUE)
 ## Value
 
 The (numeric) number of possible permutations of observations in
-`object`.
+`object`, or `Inf` if the count exceeds the range of a double.
 
 ## Details
 

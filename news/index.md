@@ -56,6 +56,12 @@
 
 ### Bug fixes
 
+- Within-plot permutation counts that overflow now return `Inf` without
+  factorial warnings.
+  [`allPerms()`](https://gavinsimpson.github.io/permute/reference/allPerms.md)
+  rejects counts of `Inf` even when `maxperm = Inf`. Resolves
+  [\#21](https://github.com/gavinsimpson/permute/issues/21).
+
 - Namespace-qualified calls to
   [`how()`](https://gavinsimpson.github.io/permute/reference/how.md),
   [`Within()`](https://gavinsimpson.github.io/permute/reference/how.md),
