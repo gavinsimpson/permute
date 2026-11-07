@@ -38,6 +38,9 @@
 
 ## Bug fixes
 
+* `how()` now preserves arguments whose expressions evaluate to `NULL`, such
+  as `blocks = no_blocks` when `no_blocks` is `NULL`. Resolves #44.
+
 * Within-plot permutation counts that overflow now return `Inf` without
   factorial warnings. `allPerms()` rejects counts of `Inf` even when
   `maxperm = Inf`. Resolves #21.

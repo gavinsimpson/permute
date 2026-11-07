@@ -9,6 +9,60 @@ test_that("how() works with explicit NULL blocks arg", {
     expect_that(h, is_a("how"))
 })
 
+test_that("how() preserves blocks arguments that evaluate to NULL", {
+    ## Regression for GitHub issue #44
+    no_blocks <- NULL
+    controls <- list(
+        how(blocks = no_blocks),
+        permute::how(blocks = no_blocks),
+        how(blocks = identity(NULL))
+    )
+
+    for (ctrl in controls) {
+        expect_s3_class(ctrl, "how")
+        expect_null(getBlocks(ctrl))
+        expect_true("blocks" %in% names(getCall(ctrl)))
+        expect_null(getCall(ctrl)[["blocks"]])
+        updated <- update(ctrl, nperm = 9)
+        expect_null(getBlocks(updated))
+        expect_equal(getNperm(updated), 9)
+    }
+
+    blocked <- how(blocks = gl(2, 2))
+    expect_null(getBlocks(update(blocked, blocks = no_blocks)))
+})
+
+test_that("how() preserves evaluated NULL arguments and later arguments", {
+    no_value <- NULL
+    ctrl <- how(blocks = no_value, nperm = 7, all.perms = no_value,
+                complete = TRUE, data = no_value)
+    call <- getCall(ctrl)
+
+    expect_identical(names(call),
+                     c("", "blocks", "nperm", "complete", "all.perms", "data"))
+    for (argument in c("blocks", "all.perms", "data")) {
+        expect_null(call[[argument]])
+    }
+    expect_equal(getNperm(ctrl), 7)
+    expect_true(getComplete(ctrl))
+    expect_null(getAllperms(ctrl))
+
+    reconstructed <- eval(call)
+    expect_null(getBlocks(reconstructed))
+    expect_equal(getNperm(reconstructed), 7)
+    expect_true(getComplete(reconstructed))
+})
+
+test_that("how() stores NULL values independently of local variables", {
+    ctrl <- local({
+        local_blocks <- NULL
+        how(blocks = local_blocks)
+    })
+
+    expect_null(getBlocks(eval(getCall(ctrl))))
+    expect_null(getBlocks(update(ctrl, nperm = 11)))
+})
+
 test_that("namespace-qualified how calls can be updated and shuffled", {
     ## Reproduction of GitHub issue #43
     ctrl <- permute::how(blocks = gl(5, 4))

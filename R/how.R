@@ -219,7 +219,7 @@
         }
         for (i in args[!args %in% no.eval]) {
             if(!is.null(.ll[[i]])) {
-                .ll[[i]] <- eval(.ll[[i]], parent.frame())
+                .ll[i] <- list(eval(.ll[[i]], parent.frame()))
             }
         }
         if (formula.blocks && "blocks" %in% args) {
