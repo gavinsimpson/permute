@@ -38,6 +38,11 @@
 
 ## Bug fixes
 
+* Complete enumeration of whole-plot permutations within blocks now returns
+  original sample indices when within-plot permutation is disabled. This
+  fixes repeated indices and ensures the observed ordering is correctly
+  excluded for free, series, and grid plot permutations. Resolves #45.
+
 * `how()` now preserves arguments whose expressions evaluate to `NULL`, such
   as `blocks = no_blocks` when `no_blocks` is `NULL`. Resolves #44.
 

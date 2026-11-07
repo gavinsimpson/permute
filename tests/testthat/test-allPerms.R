@@ -157,6 +157,86 @@ test_that("allPerms; permuting plots only -- non-contiguous plots", {
                      info = "All permutations doesn't match reference")
 })
 
+test_that("whole-plot enumeration returns original sample indices", {
+    ## Regression for GitHub issue #45
+    expected <- rbind(1:8, c(1:4, 7:8, 5:6),
+                      c(3:4, 1:2, 5:8), c(3:4, 1:2, 7:8, 5:6))
+
+    ## Include interleaved blocks and plots as well as contiguous groups.
+    for (order in list(1:8, c(1L, 5L, 3L, 7L, 2L, 6L, 4L, 8L))) {
+        blocks <- gl(2, 4)[order]
+        plots <- gl(4, 2)[order]
+        reference <- matrix(match(expected[, order], order), ncol = 8L)
+
+        for (observed in c(FALSE, TRUE)) {
+            ctrl <- how(blocks = blocks, plots = Plots(plots, type = "free"),
+                        within = Within(type = "none"), observed = observed)
+            wanted <- if (observed) reference else reference[-1L, , drop = FALSE]
+            expect_identical(as.matrix(allPerms(8, ctrl)), wanted)
+        }
+    }
+})
+
+test_that("whole-plot enumeration preserves blocks for every plot type", {
+    for (type in c("free", "series", "grid", "partition")) {
+        mirrors <- if (type %in% c("series", "grid")) c(FALSE, TRUE) else FALSE
+        for (mirror in mirrors) {
+            ## Keep partition enumeration small enough for the default maxperm.
+            nplots <- if (type == "partition") 2L else 4L
+            block_size <- 2L * nplots
+            order <- as.vector(rbind(seq_len(block_size),
+                                     block_size + seq_len(block_size)))
+            blocks <- gl(2, block_size)[order]
+            plots <- factor(rep(seq_len(nplots), each = 2, times = 2))[order]
+            ctrl <- how(
+                blocks = blocks,
+                plots = Plots(plots, type = type, nrow = 2, ncol = 2,
+                              mirror = mirror, symmetric = TRUE),
+                within = Within(type = "none")
+            )
+
+            for (observed in c(FALSE, TRUE)) {
+                control <- update(ctrl, observed = observed)
+                p <- allPerms(length(blocks), control)
+
+                expect_equal(nrow(p), numPerms(length(blocks), control) - !observed)
+                expect_equal(nrow(unique(as.matrix(p))), nrow(p))
+                expect_identical(sum(apply(p, 1L, function(x) {
+                    identical(x, seq_along(blocks))
+                })), as.integer(observed))
+                expect_true(all(apply(p, 1L, function(x) {
+                    identical(sort(x), seq_along(blocks)) &&
+                        identical(blocks[x], blocks)
+                })))
+
+                if (type != "partition") {
+                    groups <- split(seq_along(plots), interaction(blocks, plots))
+                    expect_true(all(apply(p, 1L, function(x) {
+                        all(vapply(groups, function(g) {
+                            any(vapply(groups, function(source) {
+                                identical(x[g], source)
+                            }, logical(1)))
+                        }, logical(1)))
+                    })))
+                }
+            }
+        }
+    }
+})
+
+test_that("whole-plot enumeration allows plot sizes to differ between blocks", {
+    blocks <- factor(rep(1:2, c(4, 6)))
+    plots <- factor(rep(1:4, c(2, 2, 3, 3)))
+    ctrl <- how(blocks = blocks, plots = Plots(plots, type = "free"),
+                within = Within(type = "none"), observed = TRUE)
+
+    expect_identical(
+        as.matrix(allPerms(10, ctrl)),
+        rbind(1:10, c(1:4, 8:10, 5:7),
+              c(3:4, 1:2, 5:10), c(3:4, 1:2, 8:10, 5:7))
+    )
+})
+
 test_that("complete enumeration preserves exact row ordering", {
     free <- allPerms(3, how(observed = TRUE))
     expect_identical(

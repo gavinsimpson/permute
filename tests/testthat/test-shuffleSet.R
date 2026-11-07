@@ -3,6 +3,26 @@ library("permute")
 
 context("Testing shuffleSet()")
 
+test_that("complete whole-plot shuffles use original indices within blocks", {
+    ## Regression for GitHub issue #45, including automatic enumeration.
+    expected <- rbind(1:8, c(1:4, 7:8, 5:6),
+                      c(3:4, 1:2, 5:8), c(3:4, 1:2, 7:8, 5:6))
+
+    for (complete in c(FALSE, TRUE)) {
+        for (observed in c(FALSE, TRUE)) {
+            ctrl <- how(blocks = gl(2, 4),
+                        plots = Plots(strata = gl(4, 2), type = "free"),
+                        within = Within(type = "none"), complete = complete,
+                        observed = observed)
+            p <- shuffleSet(8, control = ctrl, quietly = TRUE)
+            wanted <- if (observed) expected else expected[-1L, , drop = FALSE]
+
+            expect_identical(as.matrix(p), wanted)
+            expect_identical(getNperm(attr(p, "control")), nrow(p))
+        }
+    }
+})
+
 ## test that shuffleSet interleves the separate block-level
 ## permutations correctly back into the original ordering
 ## This always generates odd, even, odd, ..., numbered vector

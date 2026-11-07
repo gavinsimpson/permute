@@ -180,7 +180,7 @@
     }
 
     if (!is.null(strataP) && typeP != "none") {
-        res <- combineAllPlots(res, obs, typeW, typeP, constantW, control)
+        res <- combineAllPlots(res, obs, typeW, constantW, control)
     }
 
     ## Enumeration helpers can return doubles; indices are always integers.
@@ -263,13 +263,12 @@
 }
 
 ## Combine within-plot enumerations with every plot-level permutation.
-`combineAllPlots` <- function(within.perms, obs, within.type, plot.type,
-                              constant, control) {
+`combineAllPlots` <- function(within.perms, obs, within.type, constant, control) {
     n <- length(obs)
     if (within.type == "none") {
         out <- allStrata(n, control = control)
-        if (plot.type == "partition")
-            out[] <- obs[out]
+        ## Convert block-local indices to original observation indices.
+        out[] <- obs[out]
         return(out)
     }
 
