@@ -17,13 +17,13 @@ Source:
 [`DESCRIPTION`](https://github.com/gavinsimpson/permute/blob/main/DESCRIPTION)
 
 Simpson G (2026). *permute: Functions for Generating Restricted
-Permutations of Data*. R package version 0.10-0,
+Permutations of Data*. R package version 0.10-0-1,
 <https://gavinsimpson.github.io/permute/>.
 
     @Manual{,
       title = {permute: Functions for Generating Restricted Permutations of Data},
       author = {Gavin L. Simpson},
       year = {2026},
-      note = {R package version 0.10-0},
+      note = {R package version 0.10-0-1},
       url = {https://gavinsimpson.github.io/permute/},
     }
