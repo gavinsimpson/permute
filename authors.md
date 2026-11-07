@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/gavinsimpson/permute/blob/v0.10-0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/gavinsimpson/permute/blob/main/DESCRIPTION)
 
 Simpson G (2026). *permute: Functions for Generating Restricted
 Permutations of Data*. R package version 0.10-0,

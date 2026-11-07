@@ -2,6 +2,8 @@
 
 ## permute 0.10-0
 
+CRAN release: 2026-11-06
+
 ### New features
 
 - [`Plots()`](https://gavinsimpson.github.io/permute/reference/how.md)
@@ -55,6 +57,18 @@
   `.Rd` manual files.
 
 ### Bug fixes
+
+- Complete enumeration of whole-plot permutations within blocks now
+  returns original sample indices when within-plot permutation is
+  disabled. This fixes repeated indices and ensures the observed
+  ordering is correctly excluded for free, series, and grid plot
+  permutations. Resolves
+  [\#45](https://github.com/gavinsimpson/permute/issues/45).
+
+- [`how()`](https://gavinsimpson.github.io/permute/reference/how.md) now
+  preserves arguments whose expressions evaluate to `NULL`, such as
+  `blocks = no_blocks` when `no_blocks` is `NULL`. Resolves
+  [\#44](https://github.com/gavinsimpson/permute/issues/44).
 
 - Within-plot permutation counts that overflow now return `Inf` without
   factorial warnings.
