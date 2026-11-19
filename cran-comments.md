@@ -1,25 +1,73 @@
+## Update
+
+This is an update from permute 0.10-0 to 0.10-1. It adds joint permutations
+of plot-level variables with unequal sample replication, and fixes whole-plot
+enumeration and evaluated NULL arguments. The package works with current
+CRAN dependencies and does not require an unreleased version of vegan.
+
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
-* Local macOS Tahoe (arm64), R 4.6.2 (`R CMD check --as-cran`, permute `0.10-0`).
-* Win-builder on Windows Server 2022, R-release and R-devel (permute `0.10-0`).
-  [R-release log](https://win-builder.r-project.org/tQ668O8Wx8Jx/00check.log),
-  [R-devel log](https://win-builder.r-project.org/539StIhfS3zz/00check.log).
-* GitHub Actions on Ubuntu (R oldrel-1, release, and devel), macOS and Windows
-  (R release), using permute `0.9-9000`. The jobs skipped manual checks with
-  `--no-manual` and incoming checks with `_R_CHECK_CRAN_INCOMING_=false`.
-  [GitHub Actions results](https://github.com/gavinsimpson/permute/actions/runs/42184494787).
+* Local macOS Tahoe 26.7.3 (arm64), R 4.6.2, using
+  `R CMD check --as-cran` on `permute_0.10-1.tar.gz`.
+* Current CRAN vegan 2.7-8 was installed in an isolated library for the check.
+* All 1,093 tests passed, with no skipped tests. Examples, incoming checks,
+  vignette rebuilding, and the PDF and HTML manuals were checked.
+* `R_RD4PDF=ae,hyper` selected available PDF fonts because the local Courier
+  font metrics are unavailable. This does not disable any checks.
+* The package URL check passed. The en-GB spelling check was reviewed;
+  the reported words were names, technical terms and API tokens.
 
 ## Reverse dependency checks
 
-We checked 32 CRAN reverse dependencies with CRAN permute `0.9-10` and the
-`0.10-0` release code. All 32 checks completed.
-[Reverse dependency check results](https://github.com/gavinsimpson/permute/actions/runs/42187921326).
+CRAN vegan 2.7-8 passed full local `R CMD check` with both released permute
+0.10-0 and candidate permute 0.10-1: 0 errors, 0 warnings and 0 notes in
+both checks. There were no new problems.
 
-One package had a new problem, douconca 1.2.6. Six tests fail because the saved
-copies include permutation setup details that changed. The calculated results
-match in all six cases. We supplied the authors with a patch on 6 September and
-followed up on 6 November with a way to test the results separately.
-[Patch](https://github.com/Biometris/douconca/pull/3),
-[follow-up](https://github.com/Biometris/douconca/issues/2#issuecomment-6679395162).
+All 32 CRAN reverse dependencies completed checks with released permute
+0.10-0 and development permute 0.10-0-1 at commit 3614506. The workflow's
+comparison found no changes between versions; this was independently
+confirmed using the downloaded artifacts and
+`tools::check_packages_in_dir_changes()`:
+[reverse dependency checks](https://github.com/gavinsimpson/permute/actions/runs/44522558910).
+
+For both versions, 23 reverse dependencies were OK, one had a warning and
+eight had notes. These were unchanged baseline issues:
+
+* BiodiversityR: an installation warning because the headless runner has
+  no DISPLAY, so Tk is unavailable.
+* LOCOM2, bipartite, npcure, permuco, rankdist and vegan: native-code
+  inspection notes because `nm` reported no symbols.
+* Storm: a trailing period in its DESCRIPTION Title field.
+* monoClust: unescaped braces in Rd documentation.
+* vegan: ordering differences in saved test output. Its full local checks
+  above were clean with both versions of permute.
+
+The reverse dependency workflow disables incoming checks with
+`_R_CHECK_CRAN_INCOMING_=FALSE` and allows unavailable suggested packages
+with `_R_CHECK_FORCE_SUGGESTS_=FALSE`. It is a baseline comparison, not a
+replacement for the full local CRAN-style package check.
+
+## GitHub validation
+
+The package-check matrix passed on all five configurations: Ubuntu
+R-devel, R-release and R-oldrel-1, plus macOS and Windows R-release.
+Ubuntu R-release reported Status: OK and all 1,093 tests passed. The
+initial Linux attempts failed during Ubuntu package downloads before
+checking permute; all three passed on retry:
+[package checks](https://github.com/gavinsimpson/permute/actions/runs/44522483057).
+
+Pkgdown and coverage also passed at commit 3614506.
+
+The GitHub package checks use `--no-manual` and disable incoming checks
+with `_R_CHECK_CRAN_INCOMING_=false`, so those CI jobs omit the PDF manual
+and CRAN incoming checks. Both were included in the full local check.
+
+## Candidate provenance
+
+The 0.10-1 candidate differs from commit 3614506 only in release metadata
+and documentation. These CI runs are not checks of the final 0.10-1 tarball;
+the exact tarball has been checked locally on macOS. Parsed expressions
+are identical across all 38 R source files. Both previously pending
+workflows completed successfully on 19 November 2026.

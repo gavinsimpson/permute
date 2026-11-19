@@ -57,13 +57,12 @@ For one variable, the convenience result is a vector or matrix, with factors
 represented by character labels.
 
 These objects require explicit extraction. A response permutation matrix
-consumer cannot interpret the repeated source indices. The accompanying
-vegan implementation accepts the design through \code{model = "constraints"}
-in \code{anova()} and \code{adonis2()}. It permutes stored constraint matrix rows and
-recomputes their centering, weighting and QR decomposition for each draw.
+consumer cannot interpret the repeated source indices. A compatible
+statistical method must apply them to the predictor variables or constraint
+matrix and recompute its fit for each draw, keeping the response fixed.
 
 Validity requires a permutation distribution that matches the experimental
-randomization, or a justified exchangeability assumption. Multiple selected
+randomisation, or a justified exchangeability assumption. Multiple selected
 variables move jointly. Separate tests of main effects or interactions need
 appropriate null-specific procedures. Conditioning on nuisance variables
 alone does not justify free permutations of the constraints.

@@ -1,4 +1,4 @@
-# permute 0.10-0-1
+# permute 0.10-1
 
 ## New features
 
@@ -7,8 +7,7 @@
   Balanced and unbalanced plots, higher-level blocks, vectors, named data
   frames and formulas are supported. Results have class `plotPermutations`;
   `permutationIndices()` and `permutedVariables()` extract expanded source
-  indices and values. The accompanying vegan implementation accepts these
-  designs with `model = "constraints"`.
+  indices and values.
 
 ## Bug fixes
 
