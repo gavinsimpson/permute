@@ -37,7 +37,8 @@ Plots(
   ncol = NULL,
   nrow = NULL,
   symmetric = FALSE,
-  data = NULL
+  data = NULL,
+  variables = NULL
 )
 }
 \arguments{
@@ -77,7 +78,7 @@ of the set of all permutations? Default is \code{FALSE} to facilitate usage
 in higher level functions.}
 
 \item{data}{A data frame in which to evaluate formula values supplied to
-\code{blocks} or \code{strata}. When \code{Plots()} is called inside \code{how()}, supply \code{data}
+\code{blocks}, \code{strata}, or \code{variables}. When \code{Plots()} is called inside \code{how()}, supply \code{data}
 to \code{how()} rather than to \code{Plots()}. A standalone call to \code{Plots()} can take
 its own \code{data} argument.}
 
@@ -101,6 +102,11 @@ mirroring in both spatial directions be disallowed?}
 \code{as.factor}, or a one-sided formula specifying the strata for permutation.
 Multiple variables and nested terms in a formula are combined into a single
 factor representing their interaction.}
+
+\item{variables}{Optional variables to permute jointly among plots, constant
+within each plot. A named data frame, atomic vector, or one-sided formula
+evaluated in \code{data}, retaining separate columns and their types. Requires \code{Plots(type = "free")} and
+\code{Within(type = "none")}. Plots can have unequal sizes.}
 }
 \value{
 For \code{how} a list with components for each of the possible
@@ -130,6 +136,14 @@ observations carrying the same group label are omitted. If \code{within} is
 not supplied, \code{how} uses \code{Within(type = "none")} for this design.
 Supplying any other within-plot type is an error.
 
+\code{Plots(type = "free", variables = ~ A + B)} permutes complete rows
+of variables jointly among plots, using one variable row per data row.
+All selected variables must be constant within each plot. Identical
+complete rows are handled through set partitions for balanced and
+unbalanced plots. \code{within} defaults to \code{Within(type = "none")}. Results
+have class \code{plotPermutations}; see \link{plotPermutations} for extraction and
+use with constraint matrix permutations.
+
 Argument \code{mirror} determines whether grid or series permutations can be
 mirrored. Consider the sequence 1,2,3,4. The relationship between
 consecutive observations is preserved if we reverse the sequence to 4,3,2,1.
@@ -147,7 +161,7 @@ To permute plots rather than the observations within plots (the levels of
 \code{strata}), use \code{Within(type = "none")} and \code{Plots(type = foo)}, where
 \code{foo} is how you want the plots to be permuted. However,
 note that the number of observations within each plot \strong{must} be
-equal!
+equal within each block, except when using \code{variables}.
 
 For some experiments, such as BACI designs, one might wish to use the same
 permutation within each plot. This is controlled by argument

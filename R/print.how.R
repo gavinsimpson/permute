@@ -36,6 +36,12 @@
                            prefix = pfix))
         writeLines(strwrap(paste("Permutation type:", ptype),
                            prefix = pfix))
+        if (!is.null(plots$variables)) {
+            writeLines(strwrap(paste("Variables:", plots$variables.name),
+                               prefix = pfix))
+            writeLines(strwrap("Distinct plot assignments expanded to data rows",
+                               prefix = pfix))
+        }
         if (ptype == "partition") {
             sizes <- as.integer(table(plotStr))
             txt <- paste("Group sizes:", paste(sizes, collapse = ", "))

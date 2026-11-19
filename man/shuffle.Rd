@@ -42,7 +42,11 @@ the number is taken from \code{control}.}
 suppressed?}
 }
 \value{
-For \code{shuffle} a vector of length \code{n} containing a
+With \code{Plots(variables = ...)}, \code{shuffle} and \code{permute} return an
+object of class \code{"plotPermutations"}; see \link{plotPermutations} for extracting
+indices and variable values.
+
+Otherwise, for \code{shuffle} a vector of length \code{n} containing a
 permutation of the observations 1, \ldots, n using the permutation scheme
 described by argument \code{control}.
 
@@ -51,7 +55,8 @@ of all permutations, or a random permutation from the design.
 
 For \code{permutator}, a zero-argument function with \code{nperm} and \code{n} attributes
 giving the number of permutations and observations. The function returns
-successive permutation-index vectors, then \code{NULL} after exhaustion.
+successive permutation-index vectors (or \code{plotPermutations} objects for a
+variable design), then \code{NULL} after exhaustion.
 }
 \description{
 Unrestricted and restricted permutation designs for time series, line

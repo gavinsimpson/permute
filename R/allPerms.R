@@ -45,7 +45,12 @@
 #' @param ... arguments to other methods.
 #' @param x an object of class `"allPerms"`, as returned by
 #' `allPerms`.
-#' @returns For `allPerms`, an object of class `"allPerms"`: a matrix
+#'
+#' @returns With `Plots(variables = ...)`, an object of class
+#' `"plotPermutations"`; see [plotPermutations] for extracting indices and
+#' variable values.
+#'
+#' Otherwise, for `allPerms`, an object of class `"allPerms"`: a matrix
 #' whose rows are the set of all possible permutations for the supplies number
 #' of observations and permutation scheme selected. The matrix has two
 #' additional attributes `control` and `observed`. Attribute
@@ -94,6 +99,11 @@
          v <- seq_len(n)
     ## number of observations in data
     n <- nobs(v)
+    if (isVariableDesign(control)) {
+        layout <- variableLayout(control, n)
+        indices <- allPerms(length(layout$first), layout$control, check = check)
+        return(expandPlotPermutations(indices, layout, control))
+    }
     checkPartitionDesign(control, n)
 
     ## get max number of permutations

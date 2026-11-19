@@ -10,6 +10,10 @@
 #' possible permutations. Set `check = FALSE` to always request exactly
 #' `nset` permutations, which need not be unique.
 #'
+#' For plot assignment designs, `x` must match the assignment vector in
+#' `Plots()`. The result is a character matrix of assignments expanded to
+#' the data rows. It is extracted using [permutedVariables()].
+#'
 #' @param x A non-empty, one-dimensional atomic vector to permute. Factors are
 #'   supported and are returned using their character labels.
 #' @param nset Numeric; the number of permutations to generate. If missing,
@@ -21,7 +25,9 @@
 #'   suppressed?
 #' @param ... Arguments passed to other methods.
 #'
-#' @returns An object of class `"permutations"`, inheriting from `"matrix"`.
+#' @returns For a plot assignment design, a character matrix with one
+#' assignment per row. Otherwise, an object of class `"permutations"`,
+#' inheriting from `"matrix"`.
 #'   Rows are permutations and columns correspond to the elements of `x`. The
 #'   object has `control` and `seed` attributes containing the checked design
 #'   and the random-number seed at the start of permutation generation.
@@ -55,6 +61,15 @@
     } else {
         indices <- shuffleSet(length(x), nset = nset, control = control,
                               check = check, quietly = quietly)
+    }
+
+    if (inherits(indices, "plotPermutations")) {
+        assignment <- getPlots(control)$variables
+        if (ncol(assignment) != 1L ||
+            !identical(as.character(x), as.character(assignment[[1L]]))) {
+            stop("For an assignment design, x must match Plots(variables).")
+        }
+        return(permutedVariables(indices))
     }
 
     if (is.factor(x)) {

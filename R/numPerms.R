@@ -97,6 +97,10 @@
     object <- seq_len(object)
   ## number of observations in data
   n <- nobs(object)
+  if (isVariableDesign(control)) {
+    layout <- variableLayout(control, n)
+    return(numPerms(length(layout$first), layout$control, check = check))
+  }
   checkPartitionDesign(control, n)
 
   # run check here unless instructed not to

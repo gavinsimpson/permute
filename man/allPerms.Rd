@@ -39,7 +39,11 @@ coerced to a matrix by \code{\link[base:as.matrix]{base::as.matrix()}}.}
 \code{allPerms}.}
 }
 \value{
-For \code{allPerms}, an object of class \code{"allPerms"}: a matrix
+With \code{Plots(variables = ...)}, an object of class
+\code{"plotPermutations"}; see \link{plotPermutations} for extracting indices and
+variable values.
+
+Otherwise, for \code{allPerms}, an object of class \code{"allPerms"}: a matrix
 whose rows are the set of all possible permutations for the supplies number
 of observations and permutation scheme selected. The matrix has two
 additional attributes \code{control} and \code{observed}. Attribute

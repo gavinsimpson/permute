@@ -153,6 +153,21 @@
 
     ## check the number of observations in object
     N <- nobs(object)
+    if (isVariableDesign(control)) {
+        layout <- variableLayout(control, N)
+        checked <- check(length(layout$first), layout$control,
+                         quietly = quietly, num_perms = num_perms)
+        reduced <- getControl(checked)
+        setNperm(control) <- getNperm(reduced)
+        setComplete(control) <- getComplete(reduced)
+        setMaxperm(control) <- getMaxperm(reduced)
+        cached <- getAllperms(reduced)
+        if (!is.null(cached)) {
+            control$all.perms <- expandPlotPermutations(cached, layout, control)
+        }
+        checked$control <- control
+        return(checked)
+    }
 
     ## sample permutation type
     typeW <- getType(control, which = "within")

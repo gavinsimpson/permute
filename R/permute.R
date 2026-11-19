@@ -3,12 +3,24 @@
 `permute` <- function(i, n, control, perms = NULL) {
     if (!is.null(perms)) {
         n <- if (!missing(n)) permutationNobs(n) else NULL
+        if (inherits(perms, "plotPermutations")) {
+            return(subsetPlotPermutation(perms, i, n))
+        }
         validatePermutationMatrix(perms, n = n, rows = integer())
         i <- validatePermutationRow(i, nrow(perms))
         validatePermutationMatrix(perms, n = n, rows = i)
         return(perms[i, , drop = TRUE])
     }
 
+    if (isVariableDesign(control)) {
+        n <- if (missing(n)) length(getStrata(control, which = "plots")) else permutationNobs(n)
+        variableLayout(control, n)
+        cached <- getAllperms(control)
+        if (getComplete(control) && !is.null(cached)) {
+            return(subsetPlotPermutation(cached, i, permutationNobs(n)))
+        }
+        return(shuffle(n, control))
+    }
     complete <- getComplete(control)
     ap <- getAllperms(control)
     perm <- if (complete && !is.null(ap)) {
@@ -46,7 +58,8 @@
         }
     }
 
-    validatePermutationMatrix(perms)
+    assignments <- inherits(perms, "plotPermutations")
+    if (!assignments) validatePermutationMatrix(perms)
     nr <- nrow(perms)
     nc <- ncol(perms)
     i <- 0L
@@ -56,7 +69,11 @@
             return(NULL)
         }
         i <<- i + 1L
-        perms[i, , drop = TRUE]
+        if (assignments) {
+            subsetPlotPermutation(perms, i)
+        } else {
+            perms[i, , drop = TRUE]
+        }
     }
     attr(iterator, "nperm") <- nr
     attr(iterator, "n") <- nc

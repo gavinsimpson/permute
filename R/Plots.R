@@ -7,7 +7,8 @@
   ncol = NULL,
   nrow = NULL,
   symmetric = FALSE,
-  data = NULL
+  data = NULL,
+  variables = NULL
 ) {
     plots.name <- deparse(substitute(strata))
     ## strata should also be a factor - coerce
@@ -17,6 +18,10 @@
     } else if(!is.null(strata) && !is.factor(strata)) {
         strata <- as.factor(strata)
     }
+
+    variables.name <- deparse(substitute(variables))
+    if (inherits(variables, "formula")) variables.name <- formulaRhsLabel(variables)
+    variables <- variablesToFrame(variables, data, variables.name)
 
     type <- match.arg(type)
 
@@ -34,6 +39,7 @@
     out <- list(strata = strata, type = type, mirror = mirror,
                 symmetric = symmetric,
                 ncol = ncol, nrow = nrow,
+                variables = variables, variables.name = variables.name,
                 plots.name = plots.name, call = .call)
     class(out) <- "Plots"
     out

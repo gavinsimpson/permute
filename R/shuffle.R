@@ -43,7 +43,12 @@
 #' @param check logical; should the permutation design be checked by [check()]?
 #' @param quietly logical; should messages from checking the design be
 #' suppressed?
-#' @returns For `shuffle` a vector of length `n` containing a
+#'
+#' @returns With `Plots(variables = ...)`, `shuffle` and `permute` return an
+#' object of class `"plotPermutations"`; see [plotPermutations] for extracting
+#' indices and variable values.
+#'
+#' Otherwise, for `shuffle` a vector of length `n` containing a
 #' permutation of the observations 1, \ldots, n using the permutation scheme
 #' described by argument `control`.
 #'
@@ -52,7 +57,8 @@
 #'
 #' For `permutator`, a zero-argument function with `nperm` and `n` attributes
 #' giving the number of permutations and observations. The function returns
-#' successive permutation-index vectors, then `NULL` after exhaustion.
+#' successive permutation-index vectors (or `plotPermutations` objects for a
+#' variable design), then `NULL` after exhaustion.
 #' @author Gavin Simpson
 #' @seealso [check()], a utility function for checking permutation
 #' scheme described by [how()].
@@ -214,6 +220,11 @@
         is.matrix(n) ||
         is.data.frame(n)) {
         n <- nobs(n)
+    }
+    if (isVariableDesign(control)) {
+        layout <- variableLayout(control, n)
+        indices <- shuffle(length(layout$first), layout$control)
+        return(expandPlotPermutations(indices, layout, control))
     }
     checkPartitionDesign(control, n)
     sn <- seq_len(n) ## sequence of samples in order of input
