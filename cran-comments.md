@@ -14,6 +14,12 @@ CRAN dependencies and does not require an unreleased version of vegan.
 * Current CRAN vegan 2.7-8 was installed in an isolated library for the check.
 * All 1,093 tests passed, with no skipped tests. Examples, incoming checks,
   vignette rebuilding, and the PDF and HTML manuals were checked.
+* Win-builder, Windows Server 2022 x64, checked permute 0.10-1 with
+  R-release 4.6.2 (ucrt) and R-devel (2026-11-17 r90926 ucrt). Both checks
+  reported 0 errors, 0 warnings and 0 notes. Incoming feasibility, examples,
+  tests, vignette rebuilding, and PDF and HTML manuals passed in both.
+  [R-release log](https://win-builder.r-project.org/0eSSTfCqLn4c/00check.log),
+  [R-devel log](https://win-builder.r-project.org/ebpw1Z0642h2/00check.log).
 
 ## Reverse dependency checks
 
