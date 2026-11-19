@@ -930,7 +930,7 @@ system.time(ppval <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.063   0.004   0.403
+    ##   0.094   0.004   0.554
 
 ``` r
 
@@ -950,7 +950,7 @@ system.time(ppval2 <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.207   0.002   0.209
+    ##   0.349   0.001   0.350
 
 ``` r
 
@@ -1505,34 +1505,34 @@ This vignette was built within the following environment:
     ##  quarto   NA
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
-    ##  package     * version  date (UTC) lib source
-    ##  bookdown      0.48     2026-08-28 [1] RSPM
-    ##  bslib         0.12.0   2026-08-04 [1] RSPM
-    ##  cachem        1.1.0    2024-05-16 [1] RSPM
-    ##  cli           3.6.6    2026-04-09 [1] RSPM
-    ##  desc          1.4.3    2023-12-10 [1] RSPM
-    ##  digest        0.6.39   2025-11-19 [1] RSPM
-    ##  evaluate      1.0.5    2025-08-27 [1] RSPM
-    ##  fastmap       1.2.0    2024-05-15 [1] RSPM
-    ##  fs            2.1.0    2026-04-18 [1] RSPM
-    ##  htmltools     0.5.9    2025-12-04 [1] RSPM
-    ##  jquerylib     0.1.4    2021-04-26 [1] RSPM
-    ##  jsonlite      2.0.0    2025-03-27 [1] RSPM
-    ##  knitr         1.52     2026-09-06 [1] RSPM
-    ##  lifecycle     1.0.5    2026-01-08 [1] RSPM
-    ##  otel          0.3.0    2026-11-07 [1] RSPM
-    ##  permute     * 0.10-0-1 2026-11-19 [1] local
-    ##  pkgdown       2.2.1    2026-07-07 [1] any (@2.2.1)
-    ##  R6            2.6.1    2025-02-15 [1] RSPM
-    ##  ragg          1.5.2    2026-03-23 [1] RSPM
-    ##  rlang         1.3.0    2026-07-05 [1] RSPM
-    ##  rmarkdown     2.32     2026-09-01 [1] RSPM
-    ##  sass          0.4.10   2025-04-11 [1] RSPM
-    ##  sessioninfo   1.2.4    2026-06-04 [1] RSPM
-    ##  systemfonts   1.3.3    2026-11-16 [1] RSPM
-    ##  textshaping   1.0.5    2026-03-06 [1] RSPM
-    ##  xfun          0.62     2026-10-16 [1] RSPM
-    ##  yaml          2.3.12   2025-12-10 [1] RSPM
+    ##  package     * version date (UTC) lib source
+    ##  bookdown      0.48    2026-08-28 [1] RSPM
+    ##  bslib         0.12.0  2026-08-04 [1] RSPM
+    ##  cachem        1.1.0   2024-05-16 [1] RSPM
+    ##  cli           3.6.6   2026-04-09 [1] RSPM
+    ##  desc          1.4.3   2023-12-10 [1] RSPM
+    ##  digest        0.6.39  2025-11-19 [1] RSPM
+    ##  evaluate      1.0.5   2025-08-27 [1] RSPM
+    ##  fastmap       1.2.0   2024-05-15 [1] RSPM
+    ##  fs            2.1.0   2026-04-18 [1] RSPM
+    ##  htmltools     0.5.9   2025-12-04 [1] RSPM
+    ##  jquerylib     0.1.4   2021-04-26 [1] RSPM
+    ##  jsonlite      2.0.0   2025-03-27 [1] RSPM
+    ##  knitr         1.52    2026-09-06 [1] RSPM
+    ##  lifecycle     1.0.5   2026-01-08 [1] RSPM
+    ##  otel          0.3.0   2026-11-07 [1] RSPM
+    ##  permute     * 0.10-1  2026-11-19 [1] local
+    ##  pkgdown       2.2.1   2026-07-07 [1] any (@2.2.1)
+    ##  R6            2.6.1   2025-02-15 [1] RSPM
+    ##  ragg          1.5.2   2026-03-23 [1] RSPM
+    ##  rlang         1.3.0   2026-07-05 [1] RSPM
+    ##  rmarkdown     2.32    2026-09-01 [1] RSPM
+    ##  sass          0.4.10  2025-04-11 [1] RSPM
+    ##  sessioninfo   1.2.4   2026-06-04 [1] RSPM
+    ##  systemfonts   1.3.3   2026-11-16 [1] RSPM
+    ##  textshaping   1.0.5   2026-03-06 [1] RSPM
+    ##  xfun          0.62    2026-10-16 [1] RSPM
+    ##  yaml          2.3.12  2025-12-10 [1] RSPM
     ## 
     ##  [1] /home/runner/work/_temp/Library
     ##  [2] /opt/R/4.6.2/lib/R/site-library

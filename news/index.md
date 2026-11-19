@@ -1,6 +1,6 @@
 # Changelog
 
-## permute 0.10-0-1
+## permute 0.10-1
 
 ### New features
 
@@ -12,8 +12,7 @@
   [`permutationIndices()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
   and
   [`permutedVariables()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
-  extract expanded source indices and values. The accompanying vegan
-  implementation accepts these designs with `model = "constraints"`.
+  extract expanded source indices and values.
 
 ### Bug fixes
 

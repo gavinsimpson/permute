@@ -15,7 +15,7 @@ formula evaluated in data. Factor levels and numeric precision are retained."><m
 
     <a class="navbar-brand me-2" href="../index.html">permute</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10-0-1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10-1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,12 +106,11 @@ return one data frame per draw, or a single data frame for a single draw.
 For one variable, the convenience result is a vector or matrix, with factors
 represented by character labels.</p>
 <p>These objects require explicit extraction. A response permutation matrix
-consumer cannot interpret the repeated source indices. The accompanying
-vegan implementation accepts the design through <code>model = "constraints"</code>
-in <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> and <code><a href="https://vegandevs.github.io/vegan/reference/adonis.html" class="external-link">adonis2()</a></code>. It permutes stored constraint matrix rows and
-recomputes their centering, weighting and QR decomposition for each draw.</p>
+consumer cannot interpret the repeated source indices. A compatible
+statistical method must apply them to the predictor variables or constraint
+matrix and recompute its fit for each draw, keeping the response fixed.</p>
 <p>Validity requires a permutation distribution that matches the experimental
-randomization, or a justified exchangeability assumption. Multiple selected
+randomisation, or a justified exchangeability assumption. Multiple selected
 variables move jointly. Separate tests of main effects or interactions need
 appropriate null-specific procedures. Conditioning on nuisance variables
 alone does not justify free permutations of the constraints.</p>
