@@ -52,10 +52,15 @@ as.allPerms(object, control)
 
 ## Value
 
-For `allPerms`, an object of class `"allPerms"`: a matrix whose rows are
-the set of all possible permutations for the supplies number of
-observations and permutation scheme selected. The matrix has two
-additional attributes `control` and `observed`. Attribute `control`
+With `Plots(variables = ...)`, an object of class `"plotPermutations"`;
+see
+[plotPermutations](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+for extracting indices and variable values.
+
+Otherwise, for `allPerms`, an object of class `"allPerms"`: a matrix
+whose rows are the set of all possible permutations for the supplies
+number of observations and permutation scheme selected. The matrix has
+two additional attributes `control` and `observed`. Attribute `control`
 contains the argument `control` (possibly updated via `check`).
 Attribute `observed` contains argument `observed`.
 

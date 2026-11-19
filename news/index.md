@@ -2,6 +2,19 @@
 
 ## permute 0.10-0-1
 
+### New features
+
+- `Plots(type = "free", variables = ~ A + B)` jointly permutes complete
+  rows of plot-level variables using the existing set partition
+  machinery. Balanced and unbalanced plots, higher-level blocks,
+  vectors, named data frames and formulas are supported. Results have
+  class `plotPermutations`;
+  [`permutationIndices()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+  and
+  [`permutedVariables()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+  extract expanded source indices and values. The accompanying vegan
+  implementation accepts these designs with `model = "constraints"`.
+
 ### Bug fixes
 
 - Complete enumeration of whole-plot permutations within blocks now

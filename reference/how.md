@@ -37,7 +37,8 @@ Plots(
   ncol = NULL,
   nrow = NULL,
   symmetric = FALSE,
-  data = NULL
+  data = NULL,
+  variables = NULL
 )
 ```
 
@@ -95,10 +96,10 @@ Plots(
 
 - data:
 
-  A data frame in which to evaluate formula values supplied to `blocks`
-  or `strata`. When `Plots()` is called inside `how()`, supply `data` to
-  `how()` rather than to `Plots()`. A standalone call to `Plots()` can
-  take its own `data` argument.
+  A data frame in which to evaluate formula values supplied to `blocks`,
+  `strata`, or `variables`. When `Plots()` is called inside `how()`,
+  supply `data` to `how()` rather than to `Plots()`. A standalone call
+  to `Plots()` can take its own `data` argument.
 
 - type:
 
@@ -133,6 +134,14 @@ Plots(
   variables and nested terms in a formula are combined into a single
   factor representing their interaction.
 
+- variables:
+
+  Optional variables to permute jointly among plots, constant within
+  each plot. A named data frame, atomic vector, or one-sided formula
+  evaluated in `data`, retaining separate columns and their types.
+  Requires `Plots(type = "free")` and `Within(type = "none")`. Plots can
+  have unequal sizes.
+
 ## Value
 
 For `how` a list with components for each of the possible arguments.
@@ -158,6 +167,15 @@ observations carrying the same group label are omitted. If `within` is
 not supplied, `how` uses `Within(type = "none")` for this design.
 Supplying any other within-plot type is an error.
 
+`Plots(type = "free", variables = ~ A + B)` permutes complete rows of
+variables jointly among plots, using one variable row per data row. All
+selected variables must be constant within each plot. Identical complete
+rows are handled through set partitions for balanced and unbalanced
+plots. `within` defaults to `Within(type = "none")`. Results have class
+`plotPermutations`; see
+[plotPermutations](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+for extraction and use with constraint matrix permutations.
+
 Argument `mirror` determines whether grid or series permutations can be
 mirrored. Consider the sequence 1,2,3,4. The relationship between
 consecutive observations is preserved if we reverse the sequence to
@@ -175,7 +193,8 @@ the row and column directions at the same time. It has no effect unless
 To permute plots rather than the observations within plots (the levels
 of `strata`), use `Within(type = "none")` and `Plots(type = foo)`, where
 `foo` is how you want the plots to be permuted. However, note that the
-number of observations within each plot **must** be equal!
+number of observations within each plot **must** be equal within each
+block, except when using `variables`.
 
 For some experiments, such as BACI designs, one might wish to use the
 same permutation within each plot. This is controlled by argument

@@ -47,10 +47,12 @@ as.matrix(x, ...)
 
 ## Value
 
-An object of class `"permutations"`, inheriting from `"matrix"`. Rows
-are permutations and columns correspond to the elements of `x`. The
-object has `control` and `seed` attributes containing the checked design
-and the random-number seed at the start of permutation generation.
+For a plot assignment design, a character matrix with one assignment per
+row. Otherwise, an object of class `"permutations"`, inheriting from
+`"matrix"`. Rows are permutations and columns correspond to the elements
+of `x`. The object has `control` and `seed` attributes containing the
+checked design and the random-number seed at the start of permutation
+generation.
 
 [`as.matrix()`](https://rdrr.io/r/base/matrix.html) returns an ordinary
 matrix with the permutation metadata removed.
@@ -63,6 +65,12 @@ Consequently, the number of rows returned can differ from `nset` when
 the design requests complete enumeration or when there are few possible
 permutations. Set `check = FALSE` to always request exactly `nset`
 permutations, which need not be unique.
+
+For plot assignment designs, `x` must match the assignment vector in
+[`Plots()`](https://gavinsimpson.github.io/permute/reference/how.md).
+The result is a character matrix of assignments expanded to the data
+rows. It is extracted using
+[`permutedVariables()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md).
 
 ## See also
 

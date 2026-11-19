@@ -75,7 +75,8 @@ designs for time series, line transects, spatial grids and blocking factors.</p>
 <span>  ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  symmetric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  data <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  variables <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -136,7 +137,7 @@ in higher level functions.</p></dd>
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>A data frame in which to evaluate formula values supplied to
-<code>blocks</code> or <code>strata</code>. When <code>Plots()</code> is called inside <code>how()</code>, supply <code>data</code>
+<code>blocks</code>, <code>strata</code>, or <code>variables</code>. When <code>Plots()</code> is called inside <code>how()</code>, supply <code>data</code>
 to <code>how()</code> rather than to <code>Plots()</code>. A standalone call to <code>Plots()</code> can take
 its own <code>data</code> argument.</p></dd>
 
@@ -173,6 +174,13 @@ mirroring in both spatial directions be disallowed?</p></dd>
 Multiple variables and nested terms in a formula are combined into a single
 factor representing their interaction.</p></dd>
 
+
+<dt id="arg-variables">variables<a class="anchor" aria-label="anchor" href="#arg-variables"></a></dt>
+<dd><p>Optional variables to permute jointly among plots, constant
+within each plot. A named data frame, atomic vector, or one-sided formula
+evaluated in <code>data</code>, retaining separate columns and their types. Requires <code>Plots(type = "free")</code> and
+<code>Within(type = "none")</code>. Plots can have unequal sizes.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -197,6 +205,13 @@ assigned to each group. Permutations that differ only by reordering
 observations carrying the same group label are omitted. If <code>within</code> is
 not supplied, <code>how</code> uses <code>Within(type = "none")</code> for this design.
 Supplying any other within-plot type is an error.</p>
+<p><code>Plots(type = "free", variables = ~ A + B)</code> permutes complete rows
+of variables jointly among plots, using one variable row per data row.
+All selected variables must be constant within each plot. Identical
+complete rows are handled through set partitions for balanced and
+unbalanced plots. <code>within</code> defaults to <code>Within(type = "none")</code>. Results
+have class <code>plotPermutations</code>; see <a href="plotPermutations.html">plotPermutations</a> for extraction and
+use with constraint matrix permutations.</p>
 <p>Argument <code>mirror</code> determines whether grid or series permutations can be
 mirrored. Consider the sequence 1,2,3,4. The relationship between
 consecutive observations is preserved if we reverse the sequence to 4,3,2,1.
@@ -212,7 +227,7 @@ row and column directions at the same time. It has no effect unless
 <code>strata</code>), use <code>Within(type = "none")</code> and <code>Plots(type = foo)</code>, where
 <code>foo</code> is how you want the plots to be permuted. However,
 note that the number of observations within each plot <strong>must</strong> be
-equal!</p>
+equal within each block, except when using <code>variables</code>.</p>
 <p>For some experiments, such as BACI designs, one might wish to use the same
 permutation within each plot. This is controlled by argument
 <code>constant</code>. If <code>constant = TRUE</code> then the same permutation will be

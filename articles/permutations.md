@@ -307,15 +307,17 @@ str(how())
     ##   ..$ nrow     : NULL
     ##   ..$ call     : language Within()
     ##   ..- attr(*, "class")= chr "Within"
-    ##  $ plots      :List of 8
-    ##   ..$ strata    : NULL
-    ##   ..$ type      : chr "none"
-    ##   ..$ mirror    : logi FALSE
-    ##   ..$ symmetric : logi FALSE
-    ##   ..$ ncol      : NULL
-    ##   ..$ nrow      : NULL
-    ##   ..$ plots.name: chr "NULL"
-    ##   ..$ call      : language Plots()
+    ##  $ plots      :List of 10
+    ##   ..$ strata        : NULL
+    ##   ..$ type          : chr "none"
+    ##   ..$ mirror        : logi FALSE
+    ##   ..$ symmetric     : logi FALSE
+    ##   ..$ ncol          : NULL
+    ##   ..$ nrow          : NULL
+    ##   ..$ variables     : NULL
+    ##   ..$ variables.name: chr "NULL"
+    ##   ..$ plots.name    : chr "NULL"
+    ##   ..$ call          : language Plots()
     ##   ..- attr(*, "class")= chr "Plots"
     ##  $ blocks     : NULL
     ##  $ nperm      : num 199
@@ -928,7 +930,7 @@ system.time(ppval <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.055   0.003   0.372
+    ##   0.063   0.004   0.403
 
 ``` r
 
@@ -948,7 +950,7 @@ system.time(ppval2 <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.188   0.000   0.188
+    ##   0.207   0.002   0.209
 
 ``` r
 
@@ -1160,7 +1162,7 @@ through a couple of simple examples. Firstly, generate a design object
 hh <- how()
 ```
 
-This design is one of complete randomization, so all of the settings in
+This design is one of complete randomisation, so all of the settings in
 the object take their default values. The default number of permutations
 is currently 199, and can be extracted using
 [`getNperm()`](https://gavinsimpson.github.io/permute/reference/get-methods.md)
@@ -1276,6 +1278,214 @@ because we do not guarantee that components of the call used to create
 always use the `setFoo<-()` replacement functions to update design
 objects from within your functions.
 
+## Permuting plot-level variables with unequal replication
+
+I previous versions of *permute*, permuting plots required that the
+individual plots contained the same number of samples. This was due to
+the permutation design shuffling the entire groups of samples around;
+you couldn’t swap one plot’s four samples with another’s three samples
+for example. There are valid permutations that for some situations where
+plots have varying numbers of samples. These are now supported in
+*permute*, but require updates to *vegan* to allow them to be used
+there.
+
+A plot-level treatment is constant across all samples belonging to a
+plot. Set `strata` to the plot IDs and `variables` to the treatment
+labels, both with one entry per original data row. `type = "free"`
+describes the free randomisation of treatment among plots.
+
+``` r
+
+dat <- data.frame(
+    plot_id = rep(LETTERS[1:4], c(2, 5, 3, 4)),
+    treatment = rep(c("T", "C", "T", "C"), c(2, 5, 3, 4))
+)
+ctrl <- how(
+    plots = Plots(~ plot_id, type = "free", variables = ~ treatment),
+    data = dat,
+    complete = TRUE,
+    observed = TRUE
+)
+numPerms(nrow(dat), ctrl)
+```
+
+    ## [1] 6
+
+``` r
+
+p <- allPerms(nrow(dat), ctrl)
+permutedVariables(p)
+```
+
+    ##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+    ## [1,] "T"  "T"  "T"  "T"  "T"  "T"  "T"  "C"  "C"  "C"   "C"   "C"   "C"   "C"  
+    ## [2,] "T"  "T"  "C"  "C"  "C"  "C"  "C"  "T"  "T"  "T"   "C"   "C"   "C"   "C"  
+    ## [3,] "T"  "T"  "C"  "C"  "C"  "C"  "C"  "C"  "C"  "C"   "T"   "T"   "T"   "T"  
+    ## [4,] "C"  "C"  "T"  "T"  "T"  "T"  "T"  "T"  "T"  "T"   "C"   "C"   "C"   "C"  
+    ## [5,] "C"  "C"  "T"  "T"  "T"  "T"  "T"  "C"  "C"  "C"   "T"   "T"   "T"   "T"  
+    ## [6,] "C"  "C"  "C"  "C"  "C"  "C"  "C"  "T"  "T"  "T"   "T"   "T"   "T"   "T"
+
+``` r
+
+sort(rowSums(permutedVariables(p) == "T"))
+```
+
+    ## [1] 5 6 7 7 8 9
+
+All four plots receive a treatment level: two plots are allocated to
+`"T"` and two to `"C"`. There are `choose(4, 2) = 6` ways to choose
+which plots are allocated to `"T"`; the remaining plots are allocated to
+`"C"`. The number of samples in plots allocated to `"T"` ranges from
+five to nine. If all plots contain the same number of samples, the same
+six plot allocations are possible and the sample count at each treatment
+level stays constant. Randomisation is at the plot level: a plot
+containing a single sample is randomised as one plot, just like a plot
+containing several samples.
+
+The design is reduced to one label per plot in order of first
+appearance; we ignore the samples for now, and just permute the
+`variables` labels among plots. The existing ordered set partition
+machinery enumerates distinct allocations, then each allocation is
+expanded through the original sample-to-plot map, which is where we
+bring back the samples, now with new, permuted labels. Plots with the
+same label contribute no redundant permutations because the design
+reuses the new ordered set partitions in *permute*. A `block` factor
+still restricts allocation among plots within each block, and every plot
+must belong to exactly one block.
+
+``` r
+
+dat$block <- rep(c("one", "one", "two", "two"), c(2, 5, 3, 4))
+bctrl <- how(
+    plots = Plots(~ plot_id, type = "free", variables = ~ treatment),
+    blocks = ~ block,
+    data = dat,
+    observed = TRUE
+)
+numPerms(nrow(dat), bctrl)
+```
+
+    ## [1] 4
+
+### Expanded indices
+
+[`shuffle()`](https://gavinsimpson.github.io/permute/reference/shuffle.md)
+generates one permutation. For this design, it returns an object of
+class `plotPermutations`, just as
+[`allPerms()`](https://gavinsimpson.github.io/permute/reference/allPerms.md)
+returned `p` above. Here we store the single permutation as `p1`.
+
+``` r
+
+set.seed(4)
+p1 <- shuffle(nrow(dat), ctrl)
+```
+
+[`permutedVariables()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+returns the permuted values of the variables selected in
+[`Plots()`](https://gavinsimpson.github.io/permute/reference/how.md).
+Here it returns the treatment level for each original sample.
+
+``` r
+
+permutedVariables(p1)
+```
+
+    ##  [1] "T" "T" "C" "C" "C" "C" "C" "T" "T" "T" "C" "C" "C" "C"
+
+To see which source rows supply these values, use
+[`permutationIndices()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md).
+It returns the expanded source row indices, which we store as `idx` and
+print.
+
+``` r
+
+idx <- permutationIndices(p1)
+idx
+```
+
+    ##  [1]  1  1  3  3  3  3  3  8  8  8 11 11 11 11
+
+Each source plot is represented by its first row. That row index is
+repeated for every sample in the receiving plot. Using `idx` to index
+the treatment column explicitly gives the same values as
+`permutedVariables(p1)`.
+
+``` r
+
+dat$treatment[idx]
+```
+
+    ##  [1] "T" "T" "C" "C" "C" "C" "C" "T" "T" "T" "C" "C" "C" "C"
+
+This indexing applies to the supplied treatment column. The response
+stays in its original sample order, and the statistical test recomputes
+its constraint fit for each new allocation. The prototype’s wrapper
+requires explicit extraction to avoid accidental use as a response
+permutation matrix.
+
+`permutations(dat$treatment, control = ctrl)` provides the expanded
+labels directly.
+[`permute()`](https://gavinsimpson.github.io/permute/reference/shuffle.md)
+and
+[`permutator()`](https://gavinsimpson.github.io/permute/reference/shuffle.md)
+support these whole-plot permutations through the same explicit
+extraction functions.
+
+The permutations must follow the experimental randomisation. A
+randomised whole-plot experiment can have arbitrary within-plot
+dependence and unequal fixed sampling counts. An observational analysis
+requires exchangeability of the plot labels conditional on its sampling
+layout and any specified blocks. This interface randomises the selected
+plot-level variables jointly. Additional covariates and term-wise tests
+require a statistical procedure with its own justified randomisation
+scheme.
+
+### Several variables per plot
+
+Select multiple variables using a formula or named data frame. Complete
+rows are permuted jointly, retaining factor levels and numeric
+precision. Each selected variable must be constant within a plot. For a
+two-factor model `Y ~ A * B`, use `variables = ~ A + B`; the fitted
+factor contrasts and interaction columns move together under the
+resulting source indices.
+
+``` r
+
+dat2 <- data.frame(
+    plot = rep(letters[1:6], c(1, 2, 3, 2, 4, 1)),
+    A = rep(c("a", "a", "a", "b", "b", "b"), c(1, 2, 3, 2, 4, 1)),
+    B = rep(c("x", "x", "y", "x", "y", "y"), c(1, 2, 3, 2, 4, 1))
+)
+ctrl2 <- how(
+    plots = Plots(~ plot, type = "free", variables = ~ A + B),
+    data = dat2, observed = TRUE
+)
+numPerms(nrow(dat2), ctrl2) # 6! / (2! 2!) = 180
+```
+
+    ## [1] 180
+
+``` r
+
+p2 <- allPerms(nrow(dat2), ctrl2)
+head(permutedVariables(p2, 1))
+```
+
+    ##     A B
+    ## 1   a x
+    ## 2   a x
+    ## 2.1 a x
+    ## 7   b x
+    ## 7.1 b x
+    ## 7.2 b x
+
+`permutedVariables(p2, i)` extracts one permutation as a data frame.
+Without `i`, a multi-variable set returns a list of data frames.
+Single-variable designs retain the vector or matrix convenience form.
+The whole-plot variable design currently requires
+`Within(type = "none")`.
+
 ## Computational details
 
 This vignette was built within the following environment:
@@ -1290,7 +1500,7 @@ This vignette was built within the following environment:
     ##  collate  C.UTF-8
     ##  ctype    C.UTF-8
     ##  tz       UTC
-    ##  date     2026-11-07
+    ##  date     2026-11-19
     ##  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
     ##  quarto   NA
     ## 
@@ -1310,8 +1520,8 @@ This vignette was built within the following environment:
     ##  jsonlite      2.0.0    2025-03-27 [1] RSPM
     ##  knitr         1.52     2026-09-06 [1] RSPM
     ##  lifecycle     1.0.5    2026-01-08 [1] RSPM
-    ##  otel          0.2.0    2025-08-29 [1] RSPM
-    ##  permute     * 0.10-0-1 2026-11-07 [1] local
+    ##  otel          0.3.0    2026-11-07 [1] RSPM
+    ##  permute     * 0.10-0-1 2026-11-19 [1] local
     ##  pkgdown       2.2.1    2026-07-07 [1] any (@2.2.1)
     ##  R6            2.6.1    2025-02-15 [1] RSPM
     ##  ragg          1.5.2    2026-03-23 [1] RSPM
@@ -1319,7 +1529,7 @@ This vignette was built within the following environment:
     ##  rmarkdown     2.32     2026-09-01 [1] RSPM
     ##  sass          0.4.10   2025-04-11 [1] RSPM
     ##  sessioninfo   1.2.4    2026-06-04 [1] RSPM
-    ##  systemfonts   1.3.2    2026-03-05 [1] RSPM
+    ##  systemfonts   1.3.3    2026-11-16 [1] RSPM
     ##  textshaping   1.0.5    2026-03-06 [1] RSPM
     ##  xfun          0.62     2026-10-16 [1] RSPM
     ##  yaml          2.3.12   2025-12-10 [1] RSPM

@@ -54,6 +54,10 @@ applying them directly to a vector.
   [`print(`*`<permutations>`*`)`](https://gavinsimpson.github.io/permute/reference/permutations.md)
   [`as.matrix(`*`<permutations>`*`)`](https://gavinsimpson.github.io/permute/reference/permutations.md)
   : Permute a vector of data
+- [`permutationIndices()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+  [`permutedVariables()`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+  [`print(`*`<plotPermutations>`*`)`](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+  : Extract expanded permutations of plot-level variables
 
 ## Define and inspect permutation designs
 

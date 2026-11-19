@@ -100,14 +100,18 @@ suppressed?</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>For <code>shuffle</code> a vector of length <code>n</code> containing a
+    <p>With <code>Plots(variables = ...)</code>, <code>shuffle</code> and <code>permute</code> return an
+object of class <code>"plotPermutations"</code>; see <a href="plotPermutations.html">plotPermutations</a> for extracting
+indices and variable values.</p>
+<p>Otherwise, for <code>shuffle</code> a vector of length <code>n</code> containing a
 permutation of the observations 1, ..., n using the permutation scheme
 described by argument <code>control</code>.</p>
 <p>For <code>permute</code>, the <code>i</code>th row of <code>perms</code>, the <code>i</code>th permutation from the set
 of all permutations, or a random permutation from the design.</p>
 <p>For <code>permutator</code>, a zero-argument function with <code>nperm</code> and <code>n</code> attributes
 giving the number of permutations and observations. The function returns
-successive permutation-index vectors, then <code>NULL</code> after exhaustion.</p>
+successive permutation-index vectors (or <code>plotPermutations</code> objects for a
+variable design), then <code>NULL</code> after exhaustion.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

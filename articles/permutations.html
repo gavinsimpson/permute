@@ -63,7 +63,7 @@
                         <h4 data-toc-skip class="author">Gavin L.
 Simpson</h4>
             
-            <h4 data-toc-skip class="date">2026-11-07</h4>
+            <h4 data-toc-skip class="date">2026-11-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gavinsimpson/permute/blob/main/vignettes/permutations.Rmd" class="external-link"><code>vignettes/permutations.Rmd</code></a></small>
       <div class="d-none name"><code>permutations.Rmd</code></div>
@@ -336,15 +336,17 @@ available for controlling the sorts of permutations returned by
 <span><span class="co">##   ..$ nrow     : NULL</span></span>
 <span><span class="co">##   ..$ call     : language Within()</span></span>
 <span><span class="co">##   ..- attr(*, "class")= chr "Within"</span></span>
-<span><span class="co">##  $ plots      :List of 8</span></span>
-<span><span class="co">##   ..$ strata    : NULL</span></span>
-<span><span class="co">##   ..$ type      : chr "none"</span></span>
-<span><span class="co">##   ..$ mirror    : logi FALSE</span></span>
-<span><span class="co">##   ..$ symmetric : logi FALSE</span></span>
-<span><span class="co">##   ..$ ncol      : NULL</span></span>
-<span><span class="co">##   ..$ nrow      : NULL</span></span>
-<span><span class="co">##   ..$ plots.name: chr "NULL"</span></span>
-<span><span class="co">##   ..$ call      : language Plots()</span></span>
+<span><span class="co">##  $ plots      :List of 10</span></span>
+<span><span class="co">##   ..$ strata        : NULL</span></span>
+<span><span class="co">##   ..$ type          : chr "none"</span></span>
+<span><span class="co">##   ..$ mirror        : logi FALSE</span></span>
+<span><span class="co">##   ..$ symmetric     : logi FALSE</span></span>
+<span><span class="co">##   ..$ ncol          : NULL</span></span>
+<span><span class="co">##   ..$ nrow          : NULL</span></span>
+<span><span class="co">##   ..$ variables     : NULL</span></span>
+<span><span class="co">##   ..$ variables.name: chr "NULL"</span></span>
+<span><span class="co">##   ..$ plots.name    : chr "NULL"</span></span>
+<span><span class="co">##   ..$ call          : language Plots()</span></span>
 <span><span class="co">##   ..- attr(*, "class")= chr "Plots"</span></span>
 <span><span class="co">##  $ blocks     : NULL</span></span>
 <span><span class="co">##  $ nperm      : num 199</span></span>
@@ -863,7 +865,7 @@ version of <code>pt.test()</code></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                              cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.055   0.003   0.372</span></span></code></pre>
+<span><span class="co">##   0.063   0.004   0.403</span></span></code></pre>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
@@ -874,7 +876,7 @@ computations over two CPU cores</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">ppval2</span> <span class="op">&lt;-</span> <span class="fu">ppt.test</span><span class="op">(</span><span class="va">jackal</span><span class="op">$</span><span class="va">Length</span>, <span class="va">jackal</span><span class="op">$</span><span class="va">Sex</span>, nperm <span class="op">=</span> <span class="fl">9999</span>,</span>
 <span>                               cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.188   0.000   0.188</span></span></code></pre>
+<span><span class="co">##   0.207   0.002   0.209</span></span></code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppval2</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0.0018</span></span></code></pre>
@@ -1090,7 +1092,7 @@ vector of length 1 or any object coercible to such.
 examples. Firstly, generate a design object</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This design is one of complete randomization, so all of the settings
+<p>This design is one of complete randomisation, so all of the settings
 in the object take their default values. The default number of
 permutations is currently 199, and can be extracted using
 <code><a href="../reference/get-methods.html">getNperm()</a></code></p>
@@ -1164,6 +1166,189 @@ objects from within your functions.</p>
 </div>
 </div>
 <div class="section level2">
+<h2 id="permuting-plot-level-variables-with-unequal-replication">Permuting plot-level variables with unequal replication<a class="anchor" aria-label="anchor" href="#permuting-plot-level-variables-with-unequal-replication"></a>
+</h2>
+<p>I previous versions of <em>permute</em>, permuting plots required
+that the individual plots contained the same number of samples. This was
+due to the permutation design shuffling the entire groups of samples
+around; you couldn’t swap one plot’s four samples with another’s three
+samples for example. There are valid permutations that for some
+situations where plots have varying numbers of samples. These are now
+supported in <em>permute</em>, but require updates to <em>vegan</em> to
+allow them to be used there.</p>
+<p>A plot-level treatment is constant across all samples belonging to a
+plot. Set <code>strata</code> to the plot IDs and <code>variables</code>
+to the treatment labels, both with one entry per original data row.
+<code>type = "free"</code> describes the free randomisation of treatment
+among plots.</p>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    plot_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    treatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"C"</span>, <span class="st">"T"</span>, <span class="st">"C"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span></span>
+<span>    plots <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Plots</a></span><span class="op">(</span><span class="op">~</span> <span class="va">plot_id</span>, type <span class="op">=</span> <span class="st">"free"</span>, variables <span class="op">=</span> <span class="op">~</span> <span class="va">treatment</span><span class="op">)</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">dat</span>,</span>
+<span>    complete <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    observed <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/numPerms.html">numPerms</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>, <span class="va">ctrl</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 6</span></span></code></pre>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/allPerms.html">allPerms</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>, <span class="va">ctrl</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotPermutations.html">permutedVariables</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]</span></span>
+<span><span class="co">## [1,] "T"  "T"  "T"  "T"  "T"  "T"  "T"  "C"  "C"  "C"   "C"   "C"   "C"   "C"  </span></span>
+<span><span class="co">## [2,] "T"  "T"  "C"  "C"  "C"  "C"  "C"  "T"  "T"  "T"   "C"   "C"   "C"   "C"  </span></span>
+<span><span class="co">## [3,] "T"  "T"  "C"  "C"  "C"  "C"  "C"  "C"  "C"  "C"   "T"   "T"   "T"   "T"  </span></span>
+<span><span class="co">## [4,] "C"  "C"  "T"  "T"  "T"  "T"  "T"  "T"  "T"  "T"   "C"   "C"   "C"   "C"  </span></span>
+<span><span class="co">## [5,] "C"  "C"  "T"  "T"  "T"  "T"  "T"  "C"  "C"  "C"   "T"   "T"   "T"   "T"  </span></span>
+<span><span class="co">## [6,] "C"  "C"  "C"  "C"  "C"  "C"  "C"  "T"  "T"  "T"   "T"   "T"   "T"   "T"</span></span></code></pre>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="../reference/plotPermutations.html">permutedVariables</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="op">==</span> <span class="st">"T"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 5 6 7 7 8 9</span></span></code></pre>
+<p>All four plots receive a treatment level: two plots are allocated to
+<code>"T"</code> and two to <code>"C"</code>. There are
+<code>choose(4, 2) = 6</code> ways to choose which plots are allocated
+to <code>"T"</code>; the remaining plots are allocated to
+<code>"C"</code>. The number of samples in plots allocated to
+<code>"T"</code> ranges from five to nine. If all plots contain the same
+number of samples, the same six plot allocations are possible and the
+sample count at each treatment level stays constant. Randomisation is at
+the plot level: a plot containing a single sample is randomised as one
+plot, just like a plot containing several samples.</p>
+<p>The design is reduced to one label per plot in order of first
+appearance; we ignore the samples for now, and just permute the
+<code>variables</code> labels among plots. The existing ordered set
+partition machinery enumerates distinct allocations, then each
+allocation is expanded through the original sample-to-plot map, which is
+where we bring back the samples, now with new, permuted labels. Plots
+with the same label contribute no redundant permutations because the
+design reuses the new ordered set partitions in <em>permute</em>. A
+<code>block</code> factor still restricts allocation among plots within
+each block, and every plot must belong to exactly one block.</p>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dat</span><span class="op">$</span><span class="va">block</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one"</span>, <span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"two"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">bctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span></span>
+<span>    plots <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Plots</a></span><span class="op">(</span><span class="op">~</span> <span class="va">plot_id</span>, type <span class="op">=</span> <span class="st">"free"</span>, variables <span class="op">=</span> <span class="op">~</span> <span class="va">treatment</span><span class="op">)</span>,</span>
+<span>    blocks <span class="op">=</span> <span class="op">~</span> <span class="va">block</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">dat</span>,</span>
+<span>    observed <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/numPerms.html">numPerms</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>, <span class="va">bctrl</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 4</span></span></code></pre>
+<div class="section level3">
+<h3 id="expanded-indices">Expanded indices<a class="anchor" aria-label="anchor" href="#expanded-indices"></a>
+</h3>
+<p><code><a href="../reference/shuffle.html">shuffle()</a></code> generates one permutation. For this design, it
+returns an object of class <code>plotPermutations</code>, just as
+<code><a href="../reference/allPerms.html">allPerms()</a></code> returned <code>p</code> above. Here we store the
+single permutation as <code>p1</code>.</p>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shuffle.html">shuffle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>, <span class="va">ctrl</span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="../reference/plotPermutations.html">permutedVariables()</a></code> returns the permuted values of the
+variables selected in <code><a href="../reference/how.html">Plots()</a></code>. Here it returns the
+treatment level for each original sample.</p>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotPermutations.html">permutedVariables</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##  [1] "T" "T" "C" "C" "C" "C" "C" "T" "T" "T" "C" "C" "C" "C"</span></span></code></pre>
+<p>To see which source rows supply these values, use
+<code><a href="../reference/plotPermutations.html">permutationIndices()</a></code>. It returns the expanded source row
+indices, which we store as <code>idx</code> and print.</p>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotPermutations.html">permutationIndices</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span></span>
+<span><span class="va">idx</span></span></code></pre></div>
+<pre><code><span><span class="co">##  [1]  1  1  3  3  3  3  3  8  8  8 11 11 11 11</span></span></code></pre>
+<p>Each source plot is represented by its first row. That row index is
+repeated for every sample in the receiving plot. Using <code>idx</code>
+to index the treatment column explicitly gives the same values as
+<code>permutedVariables(p1)</code>.</p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dat</span><span class="op">$</span><span class="va">treatment</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##  [1] "T" "T" "C" "C" "C" "C" "C" "T" "T" "T" "C" "C" "C" "C"</span></span></code></pre>
+<p>This indexing applies to the supplied treatment column. The response
+stays in its original sample order, and the statistical test recomputes
+its constraint fit for each new allocation. The prototype’s wrapper
+requires explicit extraction to avoid accidental use as a response
+permutation matrix.</p>
+<!--
+Restore this section once a CRAN release of vegan supports model = "constraints".
+Remove the HTML comment and re-enable the chunk's eval, include and purl options.
+
+## Model refitting and PERMANOVA
+
+The accompanying vegan implementation accepts this design with
+`adonis2(..., model = "constraints", permutations = ctrl)`
+and with `anova(fit, model = "constraints", permutations = ctrl)`
+for RDA, CCA, dbRDA and capscale. It uses the stored constraint matrix and
+recomputes its centring, row weights and QR decomposition for each draw.
+
+The following example computes a PERMANOVA test by refitting the treatment
+column. Complete enumeration includes the observed allocation here, so the
+exact p-value is the fraction of all statistics at least as large as the
+observed value. The tolerance includes numerical ties.
+
+
+
+For `B` independent Monte Carlo draws, use `shuffleSet(..., check = FALSE)` and
+`(1 + sum(null >= obs - tol)) / (B + 1)`. Repeated draws are possible.
+By default enumeration excludes the observed allocation, so an exhaustive
+set obtained with `observed = FALSE` instead uses the plus-one calculation.
+-->
+<p><code>permutations(dat$treatment, control = ctrl)</code> provides the
+expanded labels directly. <code><a href="../reference/shuffle.html">permute()</a></code> and
+<code><a href="../reference/shuffle.html">permutator()</a></code> support these whole-plot permutations through
+the same explicit extraction functions.</p>
+<p>The permutations must follow the experimental randomisation. A
+randomised whole-plot experiment can have arbitrary within-plot
+dependence and unequal fixed sampling counts. An observational analysis
+requires exchangeability of the plot labels conditional on its sampling
+layout and any specified blocks. This interface randomises the selected
+plot-level variables jointly. Additional covariates and term-wise tests
+require a statistical procedure with its own justified randomisation
+scheme.</p>
+</div>
+<div class="section level3">
+<h3 id="several-variables-per-plot">Several variables per plot<a class="anchor" aria-label="anchor" href="#several-variables-per-plot"></a>
+</h3>
+<p>Select multiple variables using a formula or named data frame.
+Complete rows are permuted jointly, retaining factor levels and numeric
+precision. Each selected variable must be constant within a plot. For a
+two-factor model <code>Y ~ A * B</code>, use
+<code>variables = ~ A + B</code>; the fitted factor contrasts and
+interaction columns move together under the resulting source
+indices.</p>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"y"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">ctrl2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/how.html">how</a></span><span class="op">(</span></span>
+<span>    plots <span class="op">=</span> <span class="fu"><a href="../reference/how.html">Plots</a></span><span class="op">(</span><span class="op">~</span> <span class="va">plot</span>, type <span class="op">=</span> <span class="st">"free"</span>, variables <span class="op">=</span> <span class="op">~</span> <span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">)</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">dat2</span>, observed <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/numPerms.html">numPerms</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">)</span>, <span class="va">ctrl2</span><span class="op">)</span> <span class="co"># 6! / (2! 2!) = 180</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 180</span></span></code></pre>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/allPerms.html">allPerms</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">)</span>, <span class="va">ctrl2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/plotPermutations.html">permutedVariables</a></span><span class="op">(</span><span class="va">p2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##     A B</span></span>
+<span><span class="co">## 1   a x</span></span>
+<span><span class="co">## 2   a x</span></span>
+<span><span class="co">## 2.1 a x</span></span>
+<span><span class="co">## 7   b x</span></span>
+<span><span class="co">## 7.1 b x</span></span>
+<span><span class="co">## 7.2 b x</span></span></code></pre>
+<p><code>permutedVariables(p2, i)</code> extracts one permutation as a
+data frame. Without <code>i</code>, a multi-variable set returns a list
+of data frames. Single-variable designs retain the vector or matrix
+convenience form. The whole-plot variable design currently requires
+<code>Within(type = "none")</code>.</p>
+</div>
+</div>
+<div class="section level2">
 <h2 id="computational-details">Computational details<a class="anchor" aria-label="anchor" href="#computational-details"></a>
 </h2>
 <p>This vignette was built within the following environment:</p>
@@ -1177,7 +1362,7 @@ objects from within your functions.</p>
 <span><span class="co">##  collate  C.UTF-8</span></span>
 <span><span class="co">##  ctype    C.UTF-8</span></span>
 <span><span class="co">##  tz       UTC</span></span>
-<span><span class="co">##  date     2026-11-07</span></span>
+<span><span class="co">##  date     2026-11-19</span></span>
 <span><span class="co">##  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)</span></span>
 <span><span class="co">##  quarto   NA</span></span>
 <span><span class="co">## </span></span>
@@ -1197,8 +1382,8 @@ objects from within your functions.</p>
 <span><span class="co">##  jsonlite      2.0.0    <span style="color: #555555;">2025-03-27</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  knitr         1.52     <span style="color: #555555;">2026-09-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  lifecycle     1.0.5    <span style="color: #555555;">2026-01-08</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  otel          0.2.0    <span style="color: #555555;">2025-08-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  permute     * 0.10-0-1 <span style="color: #555555;">2026-11-07</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
+<span><span class="co">##  otel          0.3.0    <span style="color: #555555;">2026-11-07</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  permute     * 0.10-0-1 <span style="color: #555555;">2026-11-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
 <span><span class="co">##  pkgdown       2.2.1    <span style="color: #555555;">2026-07-07</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">any (@2.2.1)</span></span></span>
 <span><span class="co">##  R6            2.6.1    <span style="color: #555555;">2025-02-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  ragg          1.5.2    <span style="color: #555555;">2026-03-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
@@ -1206,7 +1391,7 @@ objects from within your functions.</p>
 <span><span class="co">##  rmarkdown     2.32     <span style="color: #555555;">2026-09-01</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  sass          0.4.10   <span style="color: #555555;">2025-04-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  sessioninfo   1.2.4    <span style="color: #555555;">2026-06-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  systemfonts   1.3.2    <span style="color: #555555;">2026-03-05</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  systemfonts   1.3.3    <span style="color: #555555;">2026-11-16</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  textshaping   1.0.5    <span style="color: #555555;">2026-03-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  xfun          0.62     <span style="color: #555555;">2026-10-16</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  yaml          2.3.12   <span style="color: #555555;">2025-12-10</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>

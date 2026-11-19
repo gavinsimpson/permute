@@ -64,8 +64,13 @@ permutator(
 
 ## Value
 
-For `shuffle` a vector of length `n` containing a permutation of the
-observations 1, ..., n using the permutation scheme described by
+With `Plots(variables = ...)`, `shuffle` and `permute` return an object
+of class `"plotPermutations"`; see
+[plotPermutations](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+for extracting indices and variable values.
+
+Otherwise, for `shuffle` a vector of length `n` containing a permutation
+of the observations 1, ..., n using the permutation scheme described by
 argument `control`.
 
 For `permute`, the `i`th row of `perms`, the `i`th permutation from the
@@ -73,7 +78,8 @@ set of all permutations, or a random permutation from the design.
 
 For `permutator`, a zero-argument function with `nperm` and `n`
 attributes giving the number of permutations and observations. The
-function returns successive permutation-index vectors, then `NULL` after
+function returns successive permutation-index vectors (or
+`plotPermutations` objects for a variable design), then `NULL` after
 exhaustion.
 
 ## Details

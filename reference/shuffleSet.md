@@ -56,8 +56,14 @@ as.matrix(x, ...)
 
 ## Value
 
-A matrix of permutations, where each row is a separate permutation. As
-such, the returned matrix has `nset` rows and `n` columns.
+With `Plots(variables = ...)`, an object of class `"plotPermutations"`;
+see
+[plotPermutations](https://gavinsimpson.github.io/permute/reference/plotPermutations.md)
+for extracting indices and variable values.
+
+Otherwise, a matrix of permutations, where each row is a separate
+permutation. As such, the returned matrix has `nset` rows and `n`
+columns.
 
 ## Details
 
