@@ -14,10 +14,6 @@ CRAN dependencies and does not require an unreleased version of vegan.
 * Current CRAN vegan 2.7-8 was installed in an isolated library for the check.
 * All 1,093 tests passed, with no skipped tests. Examples, incoming checks,
   vignette rebuilding, and the PDF and HTML manuals were checked.
-* `R_RD4PDF=ae,hyper` selected available PDF fonts because the local Courier
-  font metrics are unavailable. This does not disable any checks.
-* The package URL check passed. The en-GB spelling check was reviewed;
-  the reported words were names, technical terms and API tokens.
 
 ## Reverse dependency checks
 
@@ -44,11 +40,6 @@ eight had notes. These were unchanged baseline issues:
 * vegan: ordering differences in saved test output. Its full local checks
   above were clean with both versions of permute.
 
-The reverse dependency workflow disables incoming checks with
-`_R_CHECK_CRAN_INCOMING_=FALSE` and allows unavailable suggested packages
-with `_R_CHECK_FORCE_SUGGESTS_=FALSE`. It is a baseline comparison, not a
-replacement for the full local CRAN-style package check.
-
 ## GitHub validation
 
 The package-check matrix passed on all five configurations: Ubuntu
@@ -57,17 +48,3 @@ Ubuntu R-release reported Status: OK and all 1,093 tests passed. The
 initial Linux attempts failed during Ubuntu package downloads before
 checking permute; all three passed on retry:
 [package checks](https://github.com/gavinsimpson/permute/actions/runs/44522483057).
-
-Pkgdown and coverage also passed at commit 3614506.
-
-The GitHub package checks use `--no-manual` and disable incoming checks
-with `_R_CHECK_CRAN_INCOMING_=false`, so those CI jobs omit the PDF manual
-and CRAN incoming checks. Both were included in the full local check.
-
-## Candidate provenance
-
-The 0.10-1 candidate differs from commit 3614506 only in release metadata
-and documentation. These CI runs are not checks of the final 0.10-1 tarball;
-the exact tarball has been checked locally on macOS. Parsed expressions
-are identical across all 38 R source files. Both previously pending
-workflows completed successfully on 19 November 2026.
