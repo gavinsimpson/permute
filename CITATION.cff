@@ -10,8 +10,11 @@ authors:
     family-names: Simpson
     email: ucfagls@gmail.com
     orcid: "https://orcid.org/0000-0002-9084-8413"
-version: "0.9-10"
-date-released: 2026-02-06
+  - given-names: Jari
+    family-names: Oksanen
+    orcid: "https://orcid.org/0000-0001-7102-9626"
+version: "0.10-1"
+date-released: 2026-11-19
 license: GPL-2.0-only
 repository-code: "https://github.com/gavinsimpson/permute"
 url: "https://gavinsimpson.github.io/permute"
