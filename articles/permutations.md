@@ -930,7 +930,7 @@ system.time(ppval <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.063   0.005   0.434
+    ##   0.091   0.008   0.550
 
 ``` r
 
@@ -950,7 +950,7 @@ system.time(ppval2 <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.221   0.001   0.222
+    ##   0.341   0.001   0.342
 
 ``` r
 
