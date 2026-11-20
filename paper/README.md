@@ -28,6 +28,5 @@ to the Open Journals draft action and uploads `paper/paper.pdf` as a workflow
 artifact. To run the same Inara build locally with Docker, follow the
 [Open Journals draft action instructions](https://github.com/openjournals/openjournals-draft-action).
 
-Before submission, replace the acknowledgements funding TODO, review all
-claims and references, and confirm that the manuscript remains within the
-JOSS word limit.
+Before submission, review all claims and references and confirm that the
+manuscript remains within the JOSS word limit.

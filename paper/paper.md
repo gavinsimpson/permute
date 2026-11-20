@@ -35,7 +35,7 @@ header-includes:
 
 # Summary
 
-Permutation tests compare a result from the observed data with results calculated after rearranging the data. Which rearrangements are valid under the null hypothesis depends on how the data were collected. For example, freely shuffling a time series would destroy its ordering. `permute` is an R package for specifying these restrictions and generating permutations that follow them.
+Permutation tests compare a result from the observed data with results calculated after rearranging the data. Which rearrangements are valid under the null hypothesis depends on how the data were collected. For example, freely shuffling a time series would destroy its ordering. `permute` is an R package for specifying these restrictions and generating permutations that follow them [@permute2026].
 
 The package draws on designs introduced by Cajo J. F. ter Braak in CANOCO 3.1 and refined in later versions [@terBraak1990; @terBraakSmilauer2012]. It supports free permutations, cyclic shifts for series and transects, toroidal shifts that wrap around rectangular grids, and designs with blocks, plots, or subplots. Users can generate a single permutation, a random set, or all possible permutations. The same design can be used in different statistical procedures.
 
@@ -79,7 +79,13 @@ Blocks are the outermost groups, and observations stay in their original block. 
 
 In the following design, sites stay within their blocks and observations stay within their sites. Within each block, the same cyclic time shift is applied to the observations at every site. `shuffleSet()` returns a matrix of permutation indices that can be reused.
 
-\begin{sidewaystable}[p]
+```{=latex}
+\begingroup
+\let\table\sidewaystable
+\let\endtable\endsidewaystable
+```
+
+\begin{table}[p]
 \centering
 \small
 \caption{Permutation design concepts in \texttt{permute} 0.10-1.}
@@ -104,7 +110,11 @@ Split-plot permutation & Whole plots and the samples within them can be rearrang
 Common within-plot permutation & The same rearrangement is applied within each plot in a block. & Plots must have equal sample counts. & \texttt{Within(constant = TRUE)} \\
 \bottomrule
 \end{tabular}
-\end{sidewaystable}
+\end{table}
+
+```{=latex}
+\endgroup
+```
 \clearpage
 
 ::: cell
@@ -133,7 +143,7 @@ perms <- shuffleSet(nrow(dat), control = ctrl)
 
 # Worked example
 
-R's `CO2` data record carbon dioxide uptake at seven ambient concentrations in twelve *Echinochloa crus-galli* plants from Quebec and Mississippi [@potvin1990]. Half the plants from each location were chilled overnight. To test for a chilling effect, we shuffle whole plants (plots) within each location (`Type`, the block), keeping each plant's measurements together.
+R's `CO2` data record carbon dioxide uptake at seven ambient concentrations in twelve *Echinochloa crus-galli* plants from Quebec and Mississippi [@potvin1990]. Half the plants from each location underwent daytime chilling, then overnight recovery. We test for a chilling effect by shuffling whole plants within location blocks (`Type`), keeping their measurements together.
 
 ::: cell
 ``` {.r .cell-code}
@@ -207,18 +217,18 @@ The mean difference was about -6.86 μmol m^-2^ s^-1^ (two-sided Monte Carlo *p*
 
 # Research impact statement
 
-`permute` began in `vegan` and became a separate package so other projects could reuse its code. It has been developed openly for over fifteen years and available on CRAN since 2011. At the time of writing, 25 CRAN packages depend on or import `permute`, and four Bioconductor packages import it. These include `vegan`, `permuco`, `randomizationInference`, `indicspecies`, and `codyn`, which support community ecology, experimental analysis, randomisation inference, indicator-species analysis, and temporal diversity research.
+`permute` began in `vegan` and became a separate package so other projects could reuse its code. It has been developed openly for over fifteen years and available on CRAN since 2011. On 20 November 2026, the source indexes listed 25 CRAN packages that depend on or import `permute` and four Bioconductor packages that import it. These include `vegan`, `permuco`, `randomizationInference`, `indicspecies`, and `codyn`, which support community ecology, experimental analysis, randomisation inference, indicator-species analysis, and temporal diversity research.
 
-At the time of writing, Google Scholar counted 415 direct citations. CRAN downloads reached at least 6.9 million, many likely via `vegan`, which requires `permute`.
+On the same date, Google Scholar listed 415 direct citations. CRAN Logs recorded about 6.9 million downloads from the RStudio CRAN mirror between 1 October 2012 and 20 November 2026. Many likely came via `vegan`, which requires `permute`.
 
 `vegan` uses `permute` to set up permutations for ordination and other ecological tests. Other packages can accept a design from `how()` or an existing matrix of permutations. This lets users specify the rules once and reuse the same set of permutations across analyses.
 
 # AI usage disclosure
 
-OpenAI Codex helped review JOSS requirements and R packaging practices, assess how `permute` meets them, set up the manuscript build, and assisted with editing the text for clarity and brevity.
+Gavin L. Simpson used OpenAI Codex (GPT-6.1 Sol and GPT-6.2-Sol) to review JOSS requirements and R packaging practices, assess `permute` against them, set up the manuscript build, and edit the text for clarity and brevity.
 
 # Acknowledgements
 
-We thank Cajo J. F. ter Braak for the CANOCO schemes that underpin `permute` and for his feedback. An Aarhus Universitets Forskningsfond (Aarhus University Research Foundation) starting grant (UFF-E-2021-7-20) to Gavin L. Simpson funded development in 2022--2026.
+We thank Cajo J. F. ter Braak for the CANOCO schemes that underpin `permute` and for his feedback. An Aarhus Universitets Forskningsfond (Aarhus University Research Foundation) starting grant (UFF-E-2021-7-20) to Gavin L. Simpson funded development in 2022--2026. The funder had no role in the work.
 
 # References

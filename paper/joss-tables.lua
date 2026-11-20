@@ -31,14 +31,35 @@ end, function(float)
 
   local caption = quarto.utils.as_blocks(float.caption_long)
   local title = pandoc.write(pandoc.Pandoc(caption), "latex"):gsub("%s+$", "")
-  return pandoc.RawBlock("latex", table.concat({
-    "\\begin{sidewaystable}[p]",
+  local environment = FORMAT == "markdown" and "table" or "sidewaystable"
+  local latex_table = table.concat({
+    "\\begin{" .. environment .. "}[p]",
     "\\centering",
     "\\small",
     "\\caption{" .. title .. "}",
     "\\label{" .. float.identifier .. "}",
     content[1].text,
-    "\\end{sidewaystable}",
+    "\\end{" .. environment .. "}",
+  }, "\n")
+
+  if FORMAT == "latex" then
+    return pandoc.RawBlock("latex", latex_table)
+  end
+
+  -- Inara reads the standard table's caption and label for JATS. Separate
+  -- raw LaTeX fences apply rotation to this table in the PDF build.
+  return pandoc.RawBlock("markdown", table.concat({
+    "```{=latex}",
+    "\\begingroup",
+    "\\let\\table\\sidewaystable",
+    "\\let\\endtable\\endsidewaystable",
+    "```",
+    "",
+    latex_table,
+    "",
+    "```{=latex}",
+    "\\endgroup",
+    "```",
   }, "\n"))
 end)
 
