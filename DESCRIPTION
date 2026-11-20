@@ -7,7 +7,7 @@ Authors@R: c(person(given = "Gavin L.", family = "Simpson",
 		                comment = c(ORCID = "0000-0002-9084-8413")),
              person(given = "R Core Team", role = "cph"),
              person(given = "Douglas M.", family = "Bates", role = "ctb"),
-             person(given = "Jari", family = "Oksanen", role = "ctb"))
+             person(given = "Jari", family = "Oksanen", role = "aut"))
 Depends: R (>= 3.6.0)
 Imports: stats
 Suggests: vegan (>= 2.0-0), testthat (>= 3.1.5), parallel, knitr, rmarkdown, bookdown, sessioninfo
