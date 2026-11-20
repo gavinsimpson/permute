@@ -9,20 +9,20 @@
 
 - **Douglas M. Bates**. Contributor.
 
-- **Jari Oksanen**. Contributor.
+- **Jari Oksanen**. Author.
 
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/gavinsimpson/permute/blob/v0.10-1/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/gavinsimpson/permute/blob/main/DESCRIPTION)
 
-Simpson G (2026). *permute: Functions for Generating Restricted
-Permutations of Data*. R package version 0.10-1,
+Simpson G, Oksanen J (2026). *permute: Functions for Generating
+Restricted Permutations of Data*. R package version 0.10-1,
 <https://gavinsimpson.github.io/permute/>.
 
     @Manual{,
       title = {permute: Functions for Generating Restricted Permutations of Data},
-      author = {Gavin L. Simpson},
+      author = {Gavin L. Simpson and Jari Oksanen},
       year = {2026},
       note = {R package version 0.10-1},
       url = {https://gavinsimpson.github.io/permute/},

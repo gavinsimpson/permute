@@ -930,7 +930,7 @@ system.time(ppval <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##   0.094   0.010   0.550
+    ##   0.063   0.005   0.434
 
 ``` r
 
@@ -950,7 +950,7 @@ system.time(ppval2 <- ppt.test(jackal$Length, jackal$Sex, nperm = 9999,
 ```
 
     ##    user  system elapsed 
-    ##    0.35    0.00    0.35
+    ##   0.221   0.001   0.222
 
 ``` r
 
@@ -1500,7 +1500,7 @@ This vignette was built within the following environment:
     ##  collate  C.UTF-8
     ##  ctype    C.UTF-8
     ##  tz       UTC
-    ##  date     2026-11-19
+    ##  date     2026-11-20
     ##  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
     ##  quarto   NA
     ## 
@@ -1521,7 +1521,7 @@ This vignette was built within the following environment:
     ##  knitr         1.52    2026-09-06 [1] RSPM
     ##  lifecycle     1.0.5   2026-01-08 [1] RSPM
     ##  otel          0.3.0   2026-11-07 [1] RSPM
-    ##  permute     * 0.10-1  2026-11-19 [1] local
+    ##  permute     * 0.10-1  2026-11-20 [1] local
     ##  pkgdown       2.2.1   2026-07-07 [1] any (@2.2.1)
     ##  R6            2.6.1   2025-02-15 [1] RSPM
     ##  ragg          1.5.2   2026-03-23 [1] RSPM

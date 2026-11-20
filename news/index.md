@@ -2,6 +2,8 @@
 
 ## permute 0.10-1
 
+CRAN release: 2026-11-19
+
 ### New features
 
 - `Plots(type = "free", variables = ~ A + B)` jointly permutes complete
