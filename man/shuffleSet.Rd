@@ -34,7 +34,11 @@ Details.}
 method only.}
 }
 \value{
-A matrix of permutations, where each row is a separate
+With \code{Plots(variables = ...)}, an object of class
+\code{"plotPermutations"}; see \link{plotPermutations} for extracting indices and
+variable values.
+
+Otherwise, a matrix of permutations, where each row is a separate
 permutation. As such, the returned matrix has \code{nset} rows and \code{n}
 columns.
 }

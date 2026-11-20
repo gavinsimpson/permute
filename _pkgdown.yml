@@ -12,6 +12,7 @@ reference:
   - shuffle
   - shuffleSet
   - permutations
+  - plotPermutations
 
 - title: Define and inspect permutation designs
   desc: >

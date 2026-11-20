@@ -30,7 +30,9 @@ suppressed?}
 \item{...}{Arguments passed to other methods.}
 }
 \value{
-An object of class \code{"permutations"}, inheriting from \code{"matrix"}.
+For a plot assignment design, a character matrix with one
+assignment per row. Otherwise, an object of class \code{"permutations"},
+inheriting from \code{"matrix"}.
 Rows are permutations and columns correspond to the elements of \code{x}. The
 object has \code{control} and \code{seed} attributes containing the checked design
 and the random-number seed at the start of permutation generation.
@@ -49,6 +51,10 @@ By default, the permutation design is checked in the same way as for
 \code{nset} when the design requests complete enumeration or when there are few
 possible permutations. Set \code{check = FALSE} to always request exactly
 \code{nset} permutations, which need not be unique.
+
+For plot assignment designs, \code{x} must match the assignment vector in
+\code{Plots()}. The result is a character matrix of assignments expanded to
+the data rows. It is extracted using \code{\link[=permutedVariables]{permutedVariables()}}.
 }
 \examples{
 \dontshow{suppressWarnings(RNGversion("3.5.0"))}

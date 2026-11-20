@@ -1,4 +1,25 @@
-# permute (development version)
+# permute 0.10-1
+
+## New features
+
+* `Plots(type = "free", variables = ~ A + B)` jointly permutes complete
+  rows of plot-level variables using the existing set partition machinery.
+  Balanced and unbalanced plots, higher-level blocks, vectors, named data
+  frames and formulas are supported. Results have class `plotPermutations`;
+  `permutationIndices()` and `permutedVariables()` extract expanded source
+  indices and values.
+
+## Bug fixes
+
+* Complete enumeration of whole-plot permutations within blocks now returns
+  original sample indices when within-plot permutation is disabled. This
+  fixes repeated indices and ensures the observed ordering is correctly
+  excluded for free, series, and grid plot permutations. Resolves #45.
+
+* `how()` now preserves arguments whose expressions evaluate to `NULL`, such
+  as `blocks = no_blocks` when `no_blocks` is `NULL`. Resolves #44.
+
+# permute 0.10-0
 
 ## New features
 
@@ -37,6 +58,14 @@
   manual files.
 
 ## Bug fixes
+
+* Within-plot permutation counts that overflow now return `Inf` without
+  factorial warnings. `allPerms()` rejects counts of `Inf` even when
+  `maxperm = Inf`. Resolves #21.
+
+* Namespace-qualified calls to `how()`, `Within()`, and `Plots()` now retain
+  valid constructor calls, fixing failures in `update()` and `shuffle()`.
+  Resolves #43.
 
 * `allPerms()` now records the number of returned permutations in the
   attached control object after applying the `observed` setting.

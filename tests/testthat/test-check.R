@@ -147,6 +147,21 @@ test_that("check reports and records complete enumeration below minperm", {
     expect_null(getAllperms(checked$control))
 })
 
+test_that("counts of Inf allow sampling within plots", {
+    plots <- gl(2, 200)
+    n <- length(plots)
+    for (constant in c(FALSE, TRUE)) {
+        ctrl <- how(plots = Plots(plots), within = Within(constant = constant),
+                    nperm = 3)
+
+        expect_no_warning(checked <- check(n, ctrl, quietly = TRUE))
+        expect_identical(checked$n, Inf)
+        expect_false(getComplete(checked$control))
+        expect_equal(getNperm(checked$control), 3)
+        expect_equal(dim(shuffleSet(n, control = ctrl)), c(3L, n))
+    }
+})
+
 test_that("check and its summary have stable print contracts", {
     checked <- check(4, how(nperm = 2, minperm = 0, make = FALSE),
                      quietly = TRUE)

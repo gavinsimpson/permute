@@ -22,6 +22,14 @@
 #' not supplied, `how` uses `Within(type = "none")` for this design.
 #' Supplying any other within-plot type is an error.
 #'
+#' `Plots(type = "free", variables = ~ A + B)` permutes complete rows
+#' of variables jointly among plots, using one variable row per data row.
+#' All selected variables must be constant within each plot. Identical
+#' complete rows are handled through set partitions for balanced and
+#' unbalanced plots. `within` defaults to `Within(type = "none")`. Results
+#' have class `plotPermutations`; see [plotPermutations] for extraction and
+#' use with constraint matrix permutations.
+#'
 #' Argument `mirror` determines whether grid or series permutations can be
 #' mirrored. Consider the sequence 1,2,3,4. The relationship between
 #' consecutive observations is preserved if we reverse the sequence to 4,3,2,1.
@@ -39,7 +47,7 @@
 #' `strata`), use `Within(type = "none")` and `Plots(type = foo)`, where
 #' `foo` is how you want the plots to be permuted. However,
 #' note that the number of observations within each plot **must** be
-#' equal!
+#' equal within each block, except when using `variables`.
 #'
 #' For some experiments, such as BACI designs, one might wish to use the same
 #' permutation within each plot. This is controlled by argument
@@ -71,7 +79,7 @@
 #' `as.factor`), or a one-sided formula, the levels of which define the
 #' blocking structure.
 #' @param data A data frame in which to evaluate formula values supplied to
-#' `blocks` or `strata`. When `Plots()` is called inside `how()`, supply `data`
+#' `blocks`, `strata`, or `variables`. When `Plots()` is called inside `how()`, supply `data`
 #' to `how()` rather than to `Plots()`. A standalone call to `Plots()` can take
 #' its own `data` argument.
 #' @param nperm numeric; the number of permutations.
@@ -108,6 +116,10 @@
 #' `as.factor`, or a one-sided formula specifying the strata for permutation.
 #' Multiple variables and nested terms in a formula are combined into a single
 #' factor representing their interaction.
+#' @param variables Optional variables to permute jointly among plots, constant
+#' within each plot. A named data frame, atomic vector, or one-sided formula
+#' evaluated in `data`, retaining separate columns and their types. Requires `Plots(type = "free")` and
+#' `Within(type = "none")`. Plots can have unequal sizes.
 #' @returns For `how` a list with components for each of the possible
 #' arguments.
 #' @author Gavin Simpson
@@ -191,7 +203,8 @@
     ## A partition permutation already permutes the observations by
     ## assigning them to groups. If within was not explicitly supplied,
     ## do not apply a second permutation within those groups.
-    if (missing(within) && identical(getType(plots), "partition")) {
+    if (missing(within) && (identical(getType(plots), "partition") ||
+                            !is.null(plots$variables))) {
         within <- Within(type = "none")
     }
 
@@ -219,7 +232,7 @@
         }
         for (i in args[!args %in% no.eval]) {
             if(!is.null(.ll[[i]])) {
-                .ll[[i]] <- eval(.ll[[i]], parent.frame())
+                .ll[i] <- list(eval(.ll[[i]], parent.frame()))
             }
         }
         if (formula.blocks && "blocks" %in% args) {
@@ -254,6 +267,7 @@
             ## standalone and updateable.
             if (!nested.plots || missing(data)) {
                 pcall[["strata"]] <- getStrata(plots)
+                pcall["variables"] <- list(plots$variables)
             }
             pcall <- dropCallArgument(pcall, "data")
         }
@@ -262,7 +276,7 @@
 
     ## finsh off
     if (length(.call) > 1L) {
-        .ll <- c(as.list(.call[[1]]), .ll)
+        .ll <- c(list(.call[[1L]]), .ll)
         names(.ll) <- names(.call)
         .call <- as.call(.ll)
     }

@@ -17,7 +17,7 @@
     ## next. sapply() over-simplifies to wrong dimensions so not used.
     ## Note: the lapply() result is reversed with `rev` to undo the reversing
     ## of `x` earlier; ensures everything is correct block order.
-    out <- rev(lapply(seq_len(nb), function(i, m, ind) m[[i]][ind[, i] ,],
+    out <- rev(lapply(seq_len(nb), function(i, m, ind) m[[i]][ind[, i], , drop = FALSE],
                       m = x, ind = rowind))
     do.call(cbind, out) ## return
 }

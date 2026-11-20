@@ -18,7 +18,8 @@
 #' permutations would also become problematic in such cases. To control this
 #' and guard against trying to evaluate too large a number of permutations, if
 #' the number of possible permutations is larger than
-#' `getMaxperm(control)`, `allPerms` exits with an error.
+#' `getMaxperm(control)` or is reported as `Inf` by [numPerms()], `allPerms`
+#' exits with an error.
 #'
 #' The `as.matrix` method sets the `control` and `seed`
 #' attributes to `NULL` and removes the `"permutationMatrix"` class,
@@ -44,7 +45,12 @@
 #' @param ... arguments to other methods.
 #' @param x an object of class `"allPerms"`, as returned by
 #' `allPerms`.
-#' @returns For `allPerms`, an object of class `"allPerms"`: a matrix
+#'
+#' @returns With `Plots(variables = ...)`, an object of class
+#' `"plotPermutations"`; see [plotPermutations] for extracting indices and
+#' variable values.
+#'
+#' Otherwise, for `allPerms`, an object of class `"allPerms"`: a matrix
 #' whose rows are the set of all possible permutations for the supplies number
 #' of observations and permutation scheme selected. The matrix has two
 #' additional attributes `control` and `observed`. Attribute
@@ -93,6 +99,11 @@
          v <- seq_len(n)
     ## number of observations in data
     n <- nobs(v)
+    if (isVariableDesign(control)) {
+        layout <- variableLayout(control, n)
+        indices <- allPerms(length(layout$first), layout$control, check = check)
+        return(expandPlotPermutations(indices, layout, control))
+    }
     checkPartitionDesign(control, n)
 
     ## get max number of permutations
@@ -102,6 +113,8 @@
     ## esp with type = "free"
     if(nperms > getMaxperm(control))
         stop("Number of possible permutations too large (> 'maxperm')")
+    if(is.infinite(nperms))
+        stop("Number of possible permutations too large to enumerate")
 
     strataP <- getStrata(control, which = "plots")
     typeW <- getType(control, which = "within")
@@ -177,7 +190,7 @@
     }
 
     if (!is.null(strataP) && typeP != "none") {
-        res <- combineAllPlots(res, obs, typeW, typeP, constantW, control)
+        res <- combineAllPlots(res, obs, typeW, constantW, control)
     }
 
     ## Enumeration helpers can return doubles; indices are always integers.
@@ -260,13 +273,12 @@
 }
 
 ## Combine within-plot enumerations with every plot-level permutation.
-`combineAllPlots` <- function(within.perms, obs, within.type, plot.type,
-                              constant, control) {
+`combineAllPlots` <- function(within.perms, obs, within.type, constant, control) {
     n <- length(obs)
     if (within.type == "none") {
         out <- allStrata(n, control = control)
-        if (plot.type == "partition")
-            out[] <- obs[out]
+        ## Convert block-local indices to original observation indices.
+        out[] <- obs[out]
         return(out)
     }
 

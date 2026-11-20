@@ -59,7 +59,12 @@
 #' `shuffleSet`.
 #' @param ... arguments passed to other methods. For the `as.matrix`
 #' method only.
-#' @returns A matrix of permutations, where each row is a separate
+#'
+#' @returns With `Plots(variables = ...)`, an object of class
+#' `"plotPermutations"`; see [plotPermutations] for extracting indices and
+#' variable values.
+#'
+#' Otherwise, a matrix of permutations, where each row is a separate
 #' permutation. As such, the returned matrix has `nset` rows and `n`
 #' columns.
 #' @author Gavin L. Simpson
@@ -143,6 +148,13 @@
         is.matrix(n) ||
         is.data.frame(n)) {
         n <- nobs(n)
+    }
+    if (isVariableDesign(control)) {
+        layout <- variableLayout(control, n)
+        indices <- shuffleSet(length(layout$first), nset = nset,
+                              control = layout$control, check = check,
+                              quietly = quietly)
+        return(expandPlotPermutations(indices, layout, control))
     }
     checkPartitionDesign(control, n)
     sn <- seq_len(n) ## sequence of samples in order of input

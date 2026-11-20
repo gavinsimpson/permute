@@ -1,93 +1,56 @@
-Comments to CRAN maintainers for submission
-===========================================
+## Update
 
-## Version 0.9-10
+This is an update from permute 0.10-0 to 0.10-1. It adds joint permutations
+of plot-level variables with unequal sample replication, and fixes whole-plot
+enumeration and evaluated NULL arguments. The package works with current
+CRAN dependencies and does not require an unreleased version of vegan.
 
-This is a minor release addressing a floating point issue in generating the
-number of permutations.
+## R CMD check results
 
-No adverse results are currently reported on CRAN's Check Results page for the package.
+0 errors | 0 warnings | 0 notes
 
-## Test Environments
+* Local macOS Tahoe 26.7.3 (arm64), R 4.6.2, using
+  `R CMD check --as-cran` on `permute_0.10-1.tar.gz`.
+* Current CRAN vegan 2.7-8 was installed in an isolated library for the check.
+* All 1,093 tests passed, with no skipped tests. Examples, incoming checks,
+  vignette rebuilding, and the PDF and HTML manuals were checked.
+* Win-builder, Windows Server 2022 x64, checked permute 0.10-1 with
+  R-release 4.6.2 (ucrt) and R-devel (2026-11-17 r90926 ucrt). Both checks
+  reported 0 errors, 0 warnings and 0 notes. Incoming feasibility, examples,
+  tests, vignette rebuilding, and PDF and HTML manuals passed in both.
+  [R-release log](https://win-builder.r-project.org/0eSSTfCqLn4c/00check.log),
+  [R-devel log](https://win-builder.r-project.org/ebpw1Z0642h2/00check.log).
 
-* Linux, Ubuntu (24.04) (r-oldrelease, r-release & r-devel)
-* MacOS X (r-release, locally and on GitHub, r-devel on Mac-builder)
-* win-builder (r-oldrelease, r-release & r-devel)
+## Reverse dependency checks
 
-### `R CMD check` information
+CRAN vegan 2.7-8 passed full local `R CMD check` with both released permute
+0.10-0 and candidate permute 0.10-1: 0 errors, 0 warnings and 0 notes in
+both checks. There were no new problems.
 
-No errors, warnings, or notes were observed during any of these checks.
+All 32 CRAN reverse dependencies completed checks with released permute
+0.10-0 and development permute 0.10-0-1 at commit 3614506. The workflow's
+comparison found no changes between versions; this was independently
+confirmed using the downloaded artifacts and
+`tools::check_packages_in_dir_changes()`:
+[reverse dependency checks](https://github.com/gavinsimpson/permute/actions/runs/44522558910).
 
-### Reverse dependency checks
+For both versions, 23 reverse dependencies were OK, one had a warning and
+eight had notes. These were unchanged baseline issues:
 
-I ran reverse dependency checks using the rdevel GitHub actions workflow. The results of these checks are summarised below. The pertinent result is:
+* BiodiversityR: an installation warning because the headless runner has
+  no DISPLAY, so Tk is unavailable.
+* LOCOM2, bipartite, npcure, permuco, rankdist and vegan: native-code
+  inspection notes because `nm` reported no symbols.
+* Storm: a trailing period in its DESCRIPTION Title field.
+* monoClust: unescaped braces in Rd documentation.
+* vegan: ordering differences in saved test output. Its full local checks
+  above were clean with both versions of permute.
 
-```
-------- Check for regressions ------
-No changes between old and new version
-```
+## GitHub validation
 
-Full summary:
-
-```
-------- Check results summary ------
-Check status summary:
-                  WARNING NOTE OK
-  Source packages       0    0  1
-  Reverse depends       1   11 18
-
-Check results summary:
-permute ... OK
-rdepends_BiodiversityR ... WARNING
-* checking whether package ‘BiodiversityR’ can be installed ... WARNING
-rdepends_LDM ... OK
-rdepends_LorMe ... OK
-rdepends_MiRKAT ... OK
-rdepends_MiscMetabar ... OK
-rdepends_NST ... OK
-rdepends_ProcMod ... OK
-rdepends_RHC ... OK
-rdepends_SYNCSA ... OK
-rdepends_Storm ... NOTE
-* checking DESCRIPTION meta-information ... NOTE
-rdepends_bipartite ... NOTE
-* checking compiled code ... NOTE
-rdepends_brainGraph ... OK
-rdepends_codyn ... NOTE
-* checking Rd files ... NOTE
-rdepends_douconca ... OK
-rdepends_ecostats ... OK
-rdepends_ggordiplots ... OK
-rdepends_iCAMP ... OK
-rdepends_indicspecies ... OK
-rdepends_mixAR ... OK
-rdepends_monoClust ... NOTE
-* checking Rd files ... NOTE
-rdepends_npcure ... NOTE
-* checking compiled code ... NOTE
-rdepends_pRF ... OK
-rdepends_pctax ... NOTE
-* checking R code for possible problems ... NOTE
-rdepends_permuco ... NOTE
-* checking compiled code ... NOTE
-rdepends_randomizationInference ... OK
-rdepends_rankdist ... NOTE
-* checking compiled code ... NOTE
-rdepends_readyomics ... OK
-rdepends_spaceNet ... NOTE
-* checking Rd files ... NOTE
-rdepends_text2map ... NOTE
-* checking DESCRIPTION meta-information ... NOTE
-rdepends_vegan ... NOTE
-* checking compiled code ... NOTE
-* checking tests ... NOTE
-
-------- Check for regressions ------
-No changes between old and new version
-```
-
-#### Comments on the revdep checks
-
-I checked the log files for all packages raising NOTEs or WARNINGs and none of these are related to *permute*. As there is no practical change to the output of functions in this version of *permute*, this is not unexpected.
-
-The NOTEs primarily relate to problems with the respective package, not *permute*, or they are related to the Github Actions runner, but which don't affect the validity of the test results.
+The package-check matrix passed on all five configurations: Ubuntu
+R-devel, R-release and R-oldrel-1, plus macOS and Windows R-release.
+Ubuntu R-release reported Status: OK and all 1,093 tests passed. The
+initial Linux attempts failed during Ubuntu package downloads before
+checking permute; all three passed on retry:
+[package checks](https://github.com/gavinsimpson/permute/actions/runs/44522483057).

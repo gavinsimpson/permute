@@ -7,7 +7,8 @@
   ncol = NULL,
   nrow = NULL,
   symmetric = FALSE,
-  data = NULL
+  data = NULL,
+  variables = NULL
 ) {
     plots.name <- deparse(substitute(strata))
     ## strata should also be a factor - coerce
@@ -18,6 +19,10 @@
         strata <- as.factor(strata)
     }
 
+    variables.name <- deparse(substitute(variables))
+    if (inherits(variables, "formula")) variables.name <- formulaRhsLabel(variables)
+    variables <- variablesToFrame(variables, data, variables.name)
+
     type <- match.arg(type)
 
     ## process the call to make it standalone
@@ -26,7 +31,7 @@
         .ll <- as.list(.call[-1])
         for (i in seq_along(.ll))
             .ll[i] <- list(eval(.ll[[i]], parent.frame()))
-        .ll <- c(as.list(.call[[1]]), .ll)
+        .ll <- c(list(.call[[1L]]), .ll)
         names(.ll) <- names(.call)
         .call <- as.call(.ll)
     }
@@ -34,6 +39,7 @@
     out <- list(strata = strata, type = type, mirror = mirror,
                 symmetric = symmetric,
                 ncol = ncol, nrow = nrow,
+                variables = variables, variables.name = variables.name,
                 plots.name = plots.name, call = .call)
     class(out) <- "Plots"
     out

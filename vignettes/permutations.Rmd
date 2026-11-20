@@ -451,7 +451,7 @@ I illustrate the behaviour of the `getFoo()` and `setFoo<-()` functions through 
 ```{r, get-set-eg0}
 hh <- how()
 ```
-This design is one of complete randomization, so all of the settings in the object take their default values. The default number of permutations is currently `r getNperm(hh)`, and can be extracted using `getNperm()`
+This design is one of complete randomisation, so all of the settings in the object take their default values. The default number of permutations is currently `r getNperm(hh)`, and can be extracted using `getNperm()`
 ```{r, get-set-eg1}
 getNperm(hh)
 ```
@@ -492,6 +492,175 @@ hh <- update(hh, plots = update(getPlots(hh), type = "series"))
 getType(hh, which = "plots")
 ```
 However, this approach is not assured of working within a function because we do not guarantee that components of the call used to create `hh` can be found from the execution frame where `update()` is called. To be safe, always use the `setFoo<-()` replacement functions to update design objects from within your functions.
+
+# Permuting plot-level variables with unequal replication
+
+I previous versions of *permute*, permuting plots required that the individual plots contained the same number of samples. This was due to the permutation design shuffling the entire groups of samples around; you couldn't swap one plot's four samples with another's three samples for example. There are valid permutations that for some situations where plots have varying numbers of samples. These are now supported in *permute*, but require updates to *vegan* to allow them to be used there.
+
+A plot-level treatment is constant across all samples belonging to a plot.
+Set `strata` to the plot IDs and `variables` to the treatment labels, both
+with one entry per original data row. `type = "free"` describes the free
+randomisation of treatment among plots.
+
+```{r plot-variables}
+dat <- data.frame(
+    plot_id = rep(LETTERS[1:4], c(2, 5, 3, 4)),
+    treatment = rep(c("T", "C", "T", "C"), c(2, 5, 3, 4))
+)
+ctrl <- how(
+    plots = Plots(~ plot_id, type = "free", variables = ~ treatment),
+    data = dat,
+    complete = TRUE,
+    observed = TRUE
+)
+numPerms(nrow(dat), ctrl)
+p <- allPerms(nrow(dat), ctrl)
+permutedVariables(p)
+sort(rowSums(permutedVariables(p) == "T"))
+```
+
+All four plots receive a treatment level: two plots are allocated to `"T"`
+and two to `"C"`. There are `choose(4, 2) = 6` ways to choose which plots are
+allocated to `"T"`; the remaining plots are allocated to `"C"`. The number of
+samples in plots allocated to `"T"` ranges from five to nine. If all plots
+contain the same number of samples, the same six plot allocations are possible
+and the sample count at each treatment level stays constant. Randomisation is
+at the plot level: a plot containing a single sample is randomised as one plot,
+just like a plot containing several samples.
+
+The design is reduced to one label per plot in order of first appearance; we ignore the samples for now, and just permute the `variables` labels among plots.
+The existing ordered set partition machinery enumerates distinct allocations,
+then each allocation is expanded through the original sample-to-plot map, which is where we bring back the samples, now with new, permuted labels.
+Plots with the same label contribute no redundant permutations because the design reuses the new ordered set partitions in *permute*. A `block`
+factor still restricts allocation among plots within each block, and every plot
+must belong to exactly one block.
+
+```{r plot-blocks}
+dat$block <- rep(c("one", "one", "two", "two"), c(2, 5, 3, 4))
+bctrl <- how(
+    plots = Plots(~ plot_id, type = "free", variables = ~ treatment),
+    blocks = ~ block,
+    data = dat,
+    observed = TRUE
+)
+numPerms(nrow(dat), bctrl)
+```
+
+## Expanded indices
+
+`shuffle()` generates one permutation. For this design, it returns an object
+of class `plotPermutations`, just as `allPerms()` returned `p` above. Here we
+store the single permutation as `p1`.
+
+```{r plot-permutation}
+set.seed(4)
+p1 <- shuffle(nrow(dat), ctrl)
+```
+
+`permutedVariables()` returns the permuted values of the variables selected
+in `Plots()`. Here it returns the treatment level for each original sample.
+
+```{r plot-values}
+permutedVariables(p1)
+```
+
+To see which source rows supply these values, use `permutationIndices()`.
+It returns the expanded source row indices, which we store as `idx` and print.
+
+```{r plot-indices}
+idx <- permutationIndices(p1)
+idx
+```
+
+Each source plot is represented by its first row. That row index is repeated
+for every sample in the receiving plot. Using `idx` to index the treatment
+column explicitly gives the same values as `permutedVariables(p1)`.
+
+```{r plot-index-values}
+dat$treatment[idx]
+```
+
+This indexing applies to the supplied treatment column. The response stays
+in its original sample order, and the statistical test recomputes its
+constraint fit for each new allocation. The prototype's wrapper requires explicit
+extraction to avoid accidental use as a response permutation matrix.
+
+<!--
+Restore this section once a CRAN release of vegan supports model = "constraints".
+Remove the HTML comment and re-enable the chunk's eval, include and purl options.
+
+## Model refitting and PERMANOVA
+
+The accompanying vegan implementation accepts this design with
+`adonis2(..., model = "constraints", permutations = ctrl)`
+and with `anova(fit, model = "constraints", permutations = ctrl)`
+for RDA, CCA, dbRDA and capscale. It uses the stored constraint matrix and
+recomputes its centring, row weights and QR decomposition for each draw.
+
+The following example computes a PERMANOVA test by refitting the treatment
+column. Complete enumeration includes the observed allocation here, so the
+exact p-value is the fraction of all statistics at least as large as the
+observed value. The tolerance includes numerical ties.
+
+```{r plot-permanova, eval=FALSE, include=FALSE, purl=FALSE}
+library("vegan")
+D <- dist(c(1, 2, 4, 5, 8, 11, 12, 13, 16, 17, 18, 20, 25, 30))
+stat <- function(treatment) {
+    df <- data.frame(treatment = factor(treatment))
+    adonis2(D ~ treatment, data = df,
+            permutations = 0)$R2[1L]
+}
+obs <- stat(dat$treatment)
+null <- apply(permutedVariables(p), 1L, stat)
+tol <- sqrt(.Machine$double.eps) * max(1, abs(obs))
+mean(null >= obs - tol)
+```
+
+For `B` independent Monte Carlo draws, use `shuffleSet(..., check = FALSE)` and
+`(1 + sum(null >= obs - tol)) / (B + 1)`. Repeated draws are possible.
+By default enumeration excludes the observed allocation, so an exhaustive
+set obtained with `observed = FALSE` instead uses the plus-one calculation.
+-->
+
+`permutations(dat$treatment, control = ctrl)` provides the expanded
+labels directly. `permute()` and `permutator()` support these whole-plot permutations
+through the same explicit extraction functions.
+
+The permutations must follow the experimental randomisation. A
+randomised whole-plot experiment can have arbitrary within-plot dependence
+and unequal fixed sampling counts. An observational analysis requires
+exchangeability of the plot labels conditional on its sampling layout and
+any specified blocks. This interface randomises the selected plot-level variables jointly.
+Additional covariates and term-wise tests require a statistical procedure
+with its own justified randomisation scheme.
+
+## Several variables per plot
+
+Select multiple variables using a formula or named data frame. Complete rows
+are permuted jointly, retaining factor levels and numeric precision. Each
+selected variable must be constant within a plot. For a two-factor model
+`Y ~ A * B`, use `variables = ~ A + B`; the fitted factor contrasts and
+interaction columns move together under the resulting source indices.
+
+```{r multiple-plot-variables}
+dat2 <- data.frame(
+    plot = rep(letters[1:6], c(1, 2, 3, 2, 4, 1)),
+    A = rep(c("a", "a", "a", "b", "b", "b"), c(1, 2, 3, 2, 4, 1)),
+    B = rep(c("x", "x", "y", "x", "y", "y"), c(1, 2, 3, 2, 4, 1))
+)
+ctrl2 <- how(
+    plots = Plots(~ plot, type = "free", variables = ~ A + B),
+    data = dat2, observed = TRUE
+)
+numPerms(nrow(dat2), ctrl2) # 6! / (2! 2!) = 180
+p2 <- allPerms(nrow(dat2), ctrl2)
+head(permutedVariables(p2, 1))
+```
+
+`permutedVariables(p2, i)` extracts one permutation as a data frame. Without `i`,
+a multi-variable set returns a list of data frames. Single-variable designs
+retain the vector or matrix convenience form. The whole-plot variable design
+currently requires `Within(type = "none")`.
 
 # Computational details
 
