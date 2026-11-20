@@ -29,3 +29,5 @@ docs
 
 # Apple stuff
 .DS_Store
+
+/.luarc.json
