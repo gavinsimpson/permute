@@ -1,6 +1,9 @@
 project:
   type: default
 
+filters:
+  - joss-tables.lua
+
 format:
   markdown:
     variant: +yaml_metadata_block

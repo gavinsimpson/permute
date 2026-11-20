@@ -22,16 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: 1.10.18
-
-      - name: Render JOSS Markdown from Quarto
-        run: quarto render paper/paper.qmd
-
-      - name: Check that paper.md is synchronized
-        run: git diff --exit-code -- paper/paper.md
-
       - name: Build JOSS PDF
         uses: openjournals/openjournals-draft-action@master
         with:
